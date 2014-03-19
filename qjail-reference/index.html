@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Finch - Qjail Reference</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dreamcat4">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- google_prettify/sons-of-obsidian.css -->
+    <!-- google_prettify/desert.css -->
+    <!-- google_prettify/sunburst.css -->
+    <!-- google_prettify/twitter-bootstrap.css -->
+    <!-- google_prettify/default.css -->
+
+<link href='/finch/assets/stylesheets/bootstrap.min-5534befd4bd1fd0a071242cecfe33975.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/poole-1a356f402a16003f83bb8aa793032345.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/style-cf56b256a9bd3b065ef200cb5c12edb6.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/google_prettify/default-twitter-merge-1166e58c1abf61b4fad842210480488b.css' type='text/css' rel='stylesheet' media='all'>
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="/finch/assets/media/favicon.ico">
+    <!-- <link rel="apple-touch-icon" href="media/apple-touch-icon.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="72x72" href="media/apple-touch-icon-72x72.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="114x114" href="media/apple-touch-icon-114x114.png"> -->
+ 
+  </head>
+
+  <body class="theme-base-08">
+
+    <div class="sidebar">
+      <div class="container sidebar-sticky">
+    
+        <div class="sidebar-about">
+    
+              <h1 style="margin-bottom: -10px;">
+                <a class="sidebar-nav-item" href="/finch">Finch</a>
+              </h1>
+    
+          <!-- <p class="lead">FreeBSD... in a chroot!</p> -->
+    
+          <p class="lead">Freebsd... <strong><i>in a chroot!</i></strong></p>
+          <!-- <p class="lead">Freebsd <strong><i>in a chroot!</i></strong></p> -->
+    
+          <!-- <div class="lead">Freebsd... <strong></div>
+            <div class="lead"><i>&nbsp&nbsp&nbsp&nbsp&nbspin a chroot!</i></strong></div> -->
+    
+        </div>
+    
+        <ul class="sidebar-nav">
+    
+                <li class="sidebar-nav-item"><a href="/finch/install">Install</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/usage">Usage</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/manpage">Manpage</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/faq">FAQ</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-how-to">Jails How To</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                <li>
+                  <a href="/finch/qjail-reference" class="sidebar-nav-item-active">Qjail Reference</a>
+                </li>
+                <li class="sidebar-nav-item"><a href="/finch/upgrading">Upgrading</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/bugs">Bugs</a></li>
+    
+              <!-- <li><a href="/finch/bugs">Bugs</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/bugs">Bugs</a></li> -->
+              <!-- <li><a href="/finch/faq">FAQ</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/faq">FAQ</a></li> -->
+              <!-- <li><a href="/finch/finch-8">Finch 8</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/finch-8">Finch 8</a></li> -->
+              <!-- <li><a href="/finch">Index</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch">Index</a></li> -->
+              <!-- <li><a href="/finch/install">Install</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/install">Install</a></li> -->
+              <!-- <li><a href="/finch/jails-how-to">Jails How To</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-how-to">Jails How To</a></li> -->
+              <!-- <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li> -->
+              <!-- <li><a href="/finch/jails-ssh">Jails Ssh</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-ssh">Jails Ssh</a></li> -->
+              <!-- <li><a href="/finch/manpage">Manpage</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/manpage">Manpage</a></li> -->
+              <!-- <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li> -->
+              <!-- <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li> -->
+              <!-- <li class="active"><a href="/finch/qjail-reference" class="active">Qjail Reference</a></li> -->
+              <!-- <li class="sidebar-nav-item-active"> -->
+              <!-- <li>
+                <a href="/finch/qjail-reference" class="sidebar-nav-item-active">Qjail Reference</a>
+              </li> -->
+              <!-- <li><a href="/finch/upgrading">Upgrading</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/upgrading">Upgrading</a></li> -->
+              <!-- <li><a href="/finch/usage">Usage</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/usage">Usage</a></li> -->
+    
+              <!-- <a href="https://github.com/dreamcat4/finch/issues">Bugtracker</a> -->
+    
+                <!-- <li class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"> -->
+    
+    
+    
+                  <!-- <a href=""></a> -->
+    
+                  <!-- 
+                    
+                      <li><a href="/finch/bugs">Bugs</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/faq">FAQ</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/finch-8">Finch 8</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch">Index</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/install">Install</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/manpage">Manpage</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li>
+                    
+                  
+                      <li class="active"><a href="/finch/qjail-reference" class="active">Qjail Reference</a></li>
+                    
+                    
+                  
+                    
+                      <li><a href="/finch/upgrading">Upgrading</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/usage">Usage</a></li>
+                    
+                   -->
+    
+    
+                </li>
+              <!-- {% endif %}
+            {% endif %}
+          {% endfor %} -->
+    
+          <!-- <li class="sidebar-nav-item"><a href="dreamcat4/finch/archive/v.zip">Download</a></li> -->
+          <!-- <li class="sidebar-nav-item"><a href="https://github.com/dreamcat4/finch">GitHub Project</a></li> -->
+          <!-- <li class="sidebar-nav-item">Currently v</li> -->
+    
+          <!-- <li class="sidebar-nav-item"><a href="https://github.com/dreamcat4/finch">GitHub Project</a></li> -->
+          
+          <p></p>
+          <!-- <p></p> -->
+        </ul>
+        <!-- <p> -->
+        <p>
+          <!-- <class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="https://github.com/dreamcat4/finch">GitHub Project</a> -->
+          <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="https://github.com/dreamcat4/finch">GitHub Project</a> -->
+    
+          <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="#toc_0">Back to Top</a> -->
+    
+          <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="/finch/qjail-reference">Back to Top</a>
+    
+          <!-- © 2014. All rights reserved. -->
+        </p>
+    
+        <!-- <p>&copy; {--{ site.time | date: '%Y' }--}. All rights reserved.</p> -->
+      </div>
+    </div>
+    
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <!-- <div class="container-narrow"> -->
+          <!-- <a class="brand" href="/finch/">Finch</a> -->
+    
+          <!-- <p class="navbar-left"> -->
+          <div class="navbar-left">
+    
+            <!-- Project hosted on Github <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a> -->
+    
+            <ul class="nav">
+                  <li><a href="/finch">Home</a></li>
+    
+                
+                  <li><a href="/finch/manpage">Manpage</a></li>
+                
+                
+                  <li><a href="/finch/install">Install</a></li>
+                
+                
+                  <li><a href="/finch/faq">FAQ</a></li>
+                
+    
+            </ul>
+    
+          <!-- </p> -->
+          </div>
+    
+    
+          <!-- <p class="footer-center">
+          </p> -->
+    
+          <!-- <p class="navbar-right"> -->
+          <div class="navbar-right">
+    
+            <!-- &copy; Dreamcat4 2014,  -->
+            <!-- FreeBSD Licensing terms. -->
+    
+    
+            <ul class="nav">
+    
+                
+                  <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                
+                
+                  <li><a href="/finch/upgrading">Upgrading</a></li>
+                
+                
+                  <li><a href="/finch/bugs">Bugs</a></li>
+                
+    
+              <!--  -->
+    
+              <!-- 
+                
+                  <li><a href="/finch/bugs">Bugs</a></li>
+                
+              
+                
+                  <li><a href="/finch/faq">FAQ</a></li>
+                
+              
+                
+                  <li><a href="/finch/finch-8">Finch 8</a></li>
+                
+              
+                
+                  <li><a href="/finch">Index</a></li>
+                
+              
+                
+                  <li><a href="/finch/install">Install</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                
+              
+                
+                  <li><a href="/finch/manpage">Manpage</a></li>
+                
+              
+                
+                  <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                
+              
+                
+                  <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li>
+                
+              
+                  <li class="active"><a href="/finch/qjail-reference" class="active">Qjail Reference</a></li>
+                
+                
+              
+                
+                  <li><a href="/finch/upgrading">Upgrading</a></li>
+                
+              
+                
+                  <li><a href="/finch/usage">Usage</a></li>
+                
+               -->
+            </ul>
+    
+          <!-- </p> -->
+          </div>
+    
+        <!-- </div> -->
+      </div>
+    </div>
+    
+
+    <div class="logo"></div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        <p><strong><em>WORK IN PROGRESS</em></strong> - This website is still being worked upon.</p>
+        <h1 id="toc_0">Qjail Reference</h1>
+
+<p><ul>
+<li>
+<a href="#toc_0">Qjail Reference</a>
+<ul>
+<li>
+<a href="#toc_1">Basic commands</a>
+</li>
+<li>
+<a href="#toc_2">Disk</a>
+<ul>
+<li>
+<a href="#toc_3">Permit nullfs mounts whilst inside a jail</a>
+</li>
+<li>
+<a href="#toc_4">Permit zfs mounts whilst inside a jail</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_5">Network</a>
+<ul>
+<li>
+<a href="#toc_6">Change a jail&#39;s network interface</a>
+</li>
+<li>
+<a href="#toc_7">Change a jail&#39;s ip address</a>
+</li>
+<li>
+<a href="#toc_8">Enable ping (ICMP raw sockets)</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_9">Avoid</a>
+<ul>
+<li>
+<a href="#toc_10">(has issues) Vnet / Vimage</a>
+</li>
+<li>
+<a href="#toc_11">(useless) Quotas</a>
+</li>
+<li>
+<a href="#toc_12">(doesn&#39;t work) cpuset.id</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</p>
+
+<h2 id="toc_1">Basic commands</h2>
+
+<pre><code># Creating, modifying and deleting jails
+qjail [create|config|delete] &lt;options&gt; &quot;$jailname&quot;
+
+# Starting / stopping jails
+qjail [start|stop|restart] &quot;$jailname&quot;
+
+# Login to a jail (as root)
+qjail console &quot;$jailname&quot;
+
+# Report the current status of all jails
+qjail list
+
+# Display a jail&#39;s configuration settings
+qjail config -d &quot;$jailname&quot;
+</code></pre>
+
+<h2 id="toc_2">Disk</h2>
+
+<h3 id="toc_3">Permit nullfs mounts whilst inside a jail</h3>
+
+<p>This feature is disabled by default. It enables the <code>mount_nullfs</code> command whilst inside the jail. This feature is not required for any nullfs entries in the jail&#39;s fstab file.</p>
+
+<pre><code>qjail config -l &quot;$jailname&quot;
+</code></pre>
+
+<h3 id="toc_4">Permit zfs mounts whilst inside a jail</h3>
+
+<p>This feature is disabled by default.</p>
+
+<pre><code>qjail config -x &quot;$jailname&quot;
+</code></pre>
+
+<p>Enabling it allows you to use the command <code>zfs jail</code> whilst inside a jail. However we do not recommended this method for mounting your datasets because of the following restrictions:</p>
+
+<ul>
+<li>Using this feature will allows you to create or mount a zfs dataset into one specific jail.</li>
+<li>This method cannot be used to mount the same zfs dataset across multiple jails.</li>
+<li>For the duration that a dataset is configured to the jail, it cannot be mounted elsewhere.</li>
+<li>The mounted dataset will also be accessible from the host machine (and inside Finch&#39;s chroot).</li>
+<li>However when the jail is stopped, the zfs dataset will be automatically unmounted, becoming unavailable in the host environment until the jail is restarted.</li>
+</ul>
+
+<p>To avoid the above restrictions, use our <strong><a href="mounting-filesystems">Finch-prescribed method</a></strong> for mounting your datasets.</p>
+
+<h2 id="toc_5">Network</h2>
+
+<h3 id="toc_6">Change a jail&#39;s network interface</h3>
+
+<pre><code>export new_network_interface=&quot;re0&quot;
+qjail config -c &quot;$new_network_interface&quot; &quot;$jailname&quot;
+</code></pre>
+
+<h3 id="toc_7">Change a jail&#39;s ip address</h3>
+
+<pre><code>export new_ip_address=&quot;192.168.1.202&quot;
+qjail config -4 &quot;$new_ip_address&quot; &quot;$jailname&quot;
+</code></pre>
+
+<h3 id="toc_8">Enable ping (ICMP raw sockets)</h3>
+
+<pre><code># Enable raw sockets (allow &quot;ping&quot; command)
+qjail config -k &quot;$jailname&quot;
+
+# Disable raw sockets
+qjail config -K &quot;$jailname&quot;
+</code></pre>
+
+<h2 id="toc_9">Avoid</h2>
+
+<h3 id="toc_10">(has issues) Vnet / Vimage</h3>
+
+<p><strong>Advantages:</strong></p>
+
+<ul>
+<li>Unwanted open ports of the host system are not duplicated onto the jail&#39;s IP address.</li>
+<li>The jail is allocated it&#39;s own unique MAC address, which is visible on your local LAN.</li>
+</ul>
+
+<p><strong>Disadvantages:</strong></p>
+
+<ul>
+<li>Each jail takes a lot longer to start / stop - the extra delay soon adds up for many jails.</li>
+<li>The possible network configurations are more difficult to understand.</li>
+<li>There is no working example provided in the qjail documentation.</li>
+<li>Therefore, proper configuration can be tricky.</li>
+<li><code>options VIMAGE</code> must have been compiled into the kernel. Currently that isn&#39;t enabled on NASFree.</li>
+</ul>
+
+<p>The main reason we don&#39;t recommend Vnet / Vimage jails is that during testing, the feature was not found to work or function correctly. This appears to be because qjail&#39;s <code>qjail.vnet.be</code> script will auto-create network addresses in the range <code>10.${jid}.0.XXX</code> with a subnet <code>netmask 0xff000000</code>. If your host machine&#39;s gateway route does not happen to also be a <code>10.0.0.0</code> style private network, then it will sit on a different subnet and the jail cannot route packets to it. For example:</p>
+
+<pre><code>$ route change default 192.168.1.1
+route: writing to routing socket: Network is unreachable
+change net default: gateway 192.168.1.1 fib 0: Network is unreachable
+</code></pre>
+
+<p>However if your host machine does happen to be on a <code>10.0.0.0</code> subnet, then you may have much better luck. In which case, Vnet jails may be configured in the following way:</p>
+
+<pre><code># Give an appropriate server name to your jail
+export jailname=&quot;vnet-jail&quot;
+
+# Create the jail without any ip address
+qjail create &quot;$jailname&quot;
+
+# Find your default NIC
+default_nic=&quot;$(route get default 2&gt; /dev/null | grep -o &quot;interface.*&quot; | cut -d &#39; &#39; -f 2)&quot;
+
+# Enable vnet/vimage in bridge-epair mode
+qjail config -w &quot;$default_nic&quot; &quot;$jailname&quot;
+printf &quot;none\nbe\n&quot; | qjail config -v &quot;$jailname&quot;
+
+# Start the jail
+qjail start &quot;$jailname&quot;
+
+# Check ifconfig settings - look for the bridge and epair devices
+ifconfig
+echo &quot;ifconfig&quot; | qjail console &quot;$jailname&quot;
+
+# Check network connectivity
+echo &quot;ping -c 1 google.com&quot; | qjail console &quot;$jailname&quot;
+</code></pre>
+
+<p>Please <strong><a href="bugs">let us know</a></strong> if you think anything here is incorrect, or can provide alternative configuration steps to get these Vnet jails working on hosts which are setup to be outside of the <code>10.0.0.0</code> subnet. For example on <code>192.168.1.XXX</code> machines, etc.</p>
+
+<h3 id="toc_11">(useless) Quotas</h3>
+
+<pre><code># allow.quotas NOT recommended as does not limit total filesystem usage on a per-jail basis.
+# allow.quotas allows you to allocate limits to individual user accounts inside your jails.
+# qjail config -q &quot;$jailname&quot;
+</code></pre>
+
+<p>Solution: Create a zfs dataset instead, for the jails and assign quota limits per dataset. User mount_nullfs your zfs dataset onto /finch/usr/jails (move the jails folder onto the dataset).</p>
+
+<h3 id="toc_12">(doesn&#39;t work) cpuset.id</h3>
+
+<p>Assigning a jail to specific CPU cores. For example: a quad-core CPU: <code>cpuset -g | grep -o -e mask.*</code> should say <code>mask: 0, 1, 2, 3</code></p>
+
+<pre><code># If the cpu set parameter is written: &quot;0&quot;, &quot;0-3&quot; &quot;2,3&quot; etc.
+
+# Then assign this jail to the first core
+export jail_cpu_set=&quot;0&quot;
+qjail config -p &quot;$jail_cpu_set&quot; &quot;$jailname&quot;
+</code></pre>
+
+<p>This feature is documented in <code>man jail</code>. However it didn&#39;t work during testing. The error was:</p>
+
+<pre><code>jail: $jailname: unknown parameter: cpuset.id`
+</code></pre>
+
+<p>I&#39;m not entirely certain if the syntax shown above is correct. Please <strong><a href="bugs">let us know</a></strong> if you have found otherwise.</p>
+
+      </div>
+
+      <!-- last linebreak for manpage -->
+      <p style="line-height: 0px;">&nbsp;</p> 
+
+      <div class="footer">
+        <hr class="footer-hr">
+      
+        <!-- order is backwards b/c footer-left style isnt loaded -->
+        <div class="footer-left" style="float: left; position: absolute;">
+          <!-- Project hosted on Github <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a> -->
+          Project hosted on Github @ <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a>.
+        </div>
+        <div class="footer-right" style="float: right; position: relative;">
+          &copy; Dreamcat4 2014, 
+           FreeBSD License.
+        </div>
+      
+        <div style="clear: both;"></div>​
+      </div>
+      
+
+    </div> <!-- /container -->
+
+    <!-- Google Prettify -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint ";
+  }
+  prettyPrint();
+</script>
+<!-- end Google Prettify -->
+    
+    
+  </body>
+</html>

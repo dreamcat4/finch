@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Finch - Install</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dreamcat4">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- google_prettify/sons-of-obsidian.css -->
+    <!-- google_prettify/desert.css -->
+    <!-- google_prettify/sunburst.css -->
+    <!-- google_prettify/twitter-bootstrap.css -->
+    <!-- google_prettify/default.css -->
+
+<link href='/finch/assets/stylesheets/bootstrap.min-5534befd4bd1fd0a071242cecfe33975.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/poole-1a356f402a16003f83bb8aa793032345.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/style-cf56b256a9bd3b065ef200cb5c12edb6.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/google_prettify/default-twitter-merge-1166e58c1abf61b4fad842210480488b.css' type='text/css' rel='stylesheet' media='all'>
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="/finch/assets/media/favicon.ico">
+    <!-- <link rel="apple-touch-icon" href="media/apple-touch-icon.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="72x72" href="media/apple-touch-icon-72x72.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="114x114" href="media/apple-touch-icon-114x114.png"> -->
+ 
+  </head>
+
+  <body class="theme-base-08">
+
+    <div class="sidebar">
+      <div class="container sidebar-sticky">
+    
+        <div class="sidebar-about">
+    
+              <h1 style="margin-bottom: -10px;">
+                <a class="sidebar-nav-item" href="/finch">Finch</a>
+              </h1>
+    
+          <!-- <p class="lead">FreeBSD... in a chroot!</p> -->
+    
+          <p class="lead">Freebsd... <strong><i>in a chroot!</i></strong></p>
+          <!-- <p class="lead">Freebsd <strong><i>in a chroot!</i></strong></p> -->
+    
+          <!-- <div class="lead">Freebsd... <strong></div>
+            <div class="lead"><i>&nbsp&nbsp&nbsp&nbsp&nbspin a chroot!</i></strong></div> -->
+    
+        </div>
+    
+        <ul class="sidebar-nav">
+    
+                <li>
+                  <a href="/finch/install" class="sidebar-nav-item-active">Install</a>
+                </li>
+                <li class="sidebar-nav-item"><a href="/finch/usage">Usage</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/manpage">Manpage</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/faq">FAQ</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-how-to">Jails How To</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/qjail-reference">Qjail Reference</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/upgrading">Upgrading</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/bugs">Bugs</a></li>
+    
+              <!-- <li><a href="/finch/bugs">Bugs</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/bugs">Bugs</a></li> -->
+              <!-- <li><a href="/finch/faq">FAQ</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/faq">FAQ</a></li> -->
+              <!-- <li><a href="/finch/finch-8">Finch 8</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/finch-8">Finch 8</a></li> -->
+              <!-- <li><a href="/finch">Index</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch">Index</a></li> -->
+              <!-- <li class="active"><a href="/finch/install" class="active">Install</a></li> -->
+              <!-- <li class="sidebar-nav-item-active"> -->
+              <!-- <li>
+                <a href="/finch/install" class="sidebar-nav-item-active">Install</a>
+              </li> -->
+              <!-- <li><a href="/finch/jails-how-to">Jails How To</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-how-to">Jails How To</a></li> -->
+              <!-- <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li> -->
+              <!-- <li><a href="/finch/jails-ssh">Jails Ssh</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-ssh">Jails Ssh</a></li> -->
+              <!-- <li><a href="/finch/manpage">Manpage</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/manpage">Manpage</a></li> -->
+              <!-- <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li> -->
+              <!-- <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li> -->
+              <!-- <li><a href="/finch/qjail-reference">Qjail Reference</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/qjail-reference">Qjail Reference</a></li> -->
+              <!-- <li><a href="/finch/upgrading">Upgrading</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/upgrading">Upgrading</a></li> -->
+              <!-- <li><a href="/finch/usage">Usage</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/usage">Usage</a></li> -->
+    
+              <!-- <a href="https://github.com/dreamcat4/finch/issues">Bugtracker</a> -->
+    
+                <!-- <li class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"> -->
+    
+    
+    
+                  <!-- <a href=""></a> -->
+    
+                  <!-- 
+                    
+                      <li><a href="/finch/bugs">Bugs</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/faq">FAQ</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/finch-8">Finch 8</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch">Index</a></li>
+                    
+                  
+                      <li class="active"><a href="/finch/install" class="active">Install</a></li>
+                    
+                    
+                  
+                    
+                      <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/manpage">Manpage</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/qjail-reference">Qjail Reference</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/upgrading">Upgrading</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/usage">Usage</a></li>
+                    
+                   -->
+    
+    
+                </li>
+              <!-- {% endif %}
+            {% endif %}
+          {% endfor %} -->
+    
+          <!-- <li class="sidebar-nav-item"><a href="dreamcat4/finch/archive/v.zip">Download</a></li> -->
+          <!-- <li class="sidebar-nav-item"><a href="https://github.com/dreamcat4/finch">GitHub Project</a></li> -->
+          <!-- <li class="sidebar-nav-item">Currently v</li> -->
+    
+          <!-- <li class="sidebar-nav-item"><a href="https://github.com/dreamcat4/finch">GitHub Project</a></li> -->
+          
+          <p></p>
+          <!-- <p></p> -->
+        </ul>
+        <!-- <p> -->
+        <p>
+          <!-- <class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="https://github.com/dreamcat4/finch">GitHub Project</a> -->
+          <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="https://github.com/dreamcat4/finch">GitHub Project</a> -->
+    
+          <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="#toc_0">Back to Top</a> -->
+    
+          <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="/finch/install">Back to Top</a>
+    
+          <!-- © 2014. All rights reserved. -->
+        </p>
+    
+        <!-- <p>&copy; {--{ site.time | date: '%Y' }--}. All rights reserved.</p> -->
+      </div>
+    </div>
+    
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <!-- <div class="container-narrow"> -->
+          <!-- <a class="brand" href="/finch/">Finch</a> -->
+    
+          <!-- <p class="navbar-left"> -->
+          <div class="navbar-left">
+    
+            <!-- Project hosted on Github <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a> -->
+    
+            <ul class="nav">
+                  <li><a href="/finch">Home</a></li>
+    
+                
+                  <li><a href="/finch/manpage">Manpage</a></li>
+                
+                  <li class="active"><a href="/finch/install" class="active">Install</a></li>
+                
+                
+                
+                  <li><a href="/finch/faq">FAQ</a></li>
+                
+    
+            </ul>
+    
+          <!-- </p> -->
+          </div>
+    
+    
+          <!-- <p class="footer-center">
+          </p> -->
+    
+          <!-- <p class="navbar-right"> -->
+          <div class="navbar-right">
+    
+            <!-- &copy; Dreamcat4 2014,  -->
+            <!-- FreeBSD Licensing terms. -->
+    
+    
+            <ul class="nav">
+    
+                
+                  <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                
+                
+                  <li><a href="/finch/upgrading">Upgrading</a></li>
+                
+                
+                  <li><a href="/finch/bugs">Bugs</a></li>
+                
+    
+              <!--  -->
+    
+              <!-- 
+                
+                  <li><a href="/finch/bugs">Bugs</a></li>
+                
+              
+                
+                  <li><a href="/finch/faq">FAQ</a></li>
+                
+              
+                
+                  <li><a href="/finch/finch-8">Finch 8</a></li>
+                
+              
+                
+                  <li><a href="/finch">Index</a></li>
+                
+              
+                  <li class="active"><a href="/finch/install" class="active">Install</a></li>
+                
+                
+              
+                
+                  <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                
+              
+                
+                  <li><a href="/finch/manpage">Manpage</a></li>
+                
+              
+                
+                  <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                
+              
+                
+                  <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li>
+                
+              
+                
+                  <li><a href="/finch/qjail-reference">Qjail Reference</a></li>
+                
+              
+                
+                  <li><a href="/finch/upgrading">Upgrading</a></li>
+                
+              
+                
+                  <li><a href="/finch/usage">Usage</a></li>
+                
+               -->
+            </ul>
+    
+          <!-- </p> -->
+          </div>
+    
+        <!-- </div> -->
+      </div>
+    </div>
+    
+
+    <div class="logo"></div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        <p><strong><em>WORK IN PROGRESS</em></strong> - This website is still being worked upon.</p>
+        <p><ul>
+<li>
+<a href="#toc_0">Install</a>
+</li>
+<li>
+<a href="#toc_1">Installer options</a>
+</li>
+<li>
+<a href="#toc_2">Post-Install Steps</a>
+<ul>
+<li>
+<a href="#toc_3">NAS4Free</a>
+<ul>
+<li>
+<a href="#toc_4">Configure root &amp; administrator accounts</a>
+</li>
+<li>
+<a href="#toc_5">Add bootup / shutdown scripts</a>
+</li>
+<li>
+<a href="#toc_6">Start the Finch FreeBSD installation process</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_7">FreeNAS</a>
+<ul>
+<li>
+<a href="#toc_8">Configure root &amp; administrator accounts</a>
+</li>
+<li>
+<a href="#toc_9">Add bootup / shutdown scripts</a>
+</li>
+<li>
+<a href="#toc_10">Start the Finch FreeBSD installation process</a>
+</li>
+<li>
+<a href="#toc_11">FreeNAS services not working after reboot ?</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_12">FreeBSD-GENERIC</a>
+<ul>
+<li>
+<a href="#toc_13">Configure root &amp; administrator accounts</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</p>
+
+<h1 id="toc_0">Install</h1>
+
+<ul>
+<li>Check that your system matches the <a href="/#toc_1">Platform Requirements</a>.</li>
+<li>Login as the <code>root</code> user. Then copy-paste these 3 commands into your terminal window:</li>
+</ul>
+
+<pre><code>/bin/sh
+alias finch-bootstrap=&quot;fetch -q -o - http://git.io/HxXrsw | sh -s --&quot;
+finch-bootstrap --help
+</code></pre>
+
+<ul>
+<li>Where typing <a href="#toc_1"><code>finch-bootstrap --help</code></a> will show you the available installer options.</li>
+<li>Under normal conditions the default settings should be fine.</li>
+</ul>
+
+<p>To install Finch,</p>
+
+<pre><code>finch-bootstrap install --dir &quot;/path/to/finch&quot;
+</code></pre>
+
+<p>Then follow the platform-specific <strong><em><a href="#toc_2">post install steps</a></em></strong>, which you must do after running the installer.</p>
+
+<ul>
+<li>The Finch &quot;bootstrap&quot; installer will run it&#39;s preflight checks and ask for confirmation before continuing.</li>
+<li><p>You will be guided through the remainder of the installation process.</p></li>
+<li><p>Follow carefully any instructions being printed by the <code>finch-bootstrap</code> installer. Those messages provide valuable information about your Finch setup and help to avoid any unnecessary issues.</p></li>
+<li><p>On FreeNAS / NAS4Free it is worth configuring SMTP email in the Web GUI. Be sure to also set a &quot;to:&quot; destination address in your SMARTD email settings. Then you will be emailed progress updates during installation.</p></li>
+</ul>
+
+<h1 id="toc_1">Installer options</h1>
+
+<pre><code>$ finch-bootstrap --help
+
+Usage:
+    $ finch-bootstrap &quot;command&quot; [--options]
+
+Example:
+    $ finch-bootstrap install --dir &quot;/mnt/disk0/finch&quot;
+
+Commands:
+
+    install   - Install a new copy of Finch FreeBSD.
+    uninstall - Uninstall a copy of Finch FreeBSD.
+    update    - Update the finch command and finch scripts to the latest version.
+    move      - Move/rename the paths/locations to this copy of finch.
+
+Options:
+
+    -d, --dir &quot;{realpath}&quot;
+         The fulle installation &quot;/path/to/finch&quot;. Defaults to &quot;\$PWD/finch&quot;.
+         ~ if not set a new subdirectory will be created here named &quot;finch&quot;.
+         Internally referred to as &quot;$finch_realpath&quot; - the chroot directory.
+
+    -y, --yes
+         Do not prompt for user confirmation before continuing. Useful
+         for unattended operations or launching from other scripts.
+
+    -f, --force
+         Do not exit when a potential problem is encountered. Continue
+         regardless of all warnings and errors.
+
+    -e, --dest-dir &quot;{dest_dir}&quot;
+         (move) A destination path where to move this installation.
+         Where the current location is specified by &quot;--dir {realpath}&quot;.
+
+    -t, --txz-distfiles-dir &quot;{txz_distfiles_dir}&quot;
+         (install) A local folder from which to obtain the FreeBSD &quot;.txz&quot;
+         distribution files from (&quot;distfiles&quot;), &quot;base.txz&quot;... etc. With this
+         option *nothing* will be downloaded from ftp://ftp.freebsd.org.
+         You will be locally responsible for ensuring a correct set of
+         distribution files is present. All &quot;*.txz&quot; files found in the folder
+         will be unpacked / installed to the target directory (&quot;--dir {dir}&quot;).
+
+    -x, --debug
+         Debugging output. Switches on &quot;set -x&quot; to echo all commands.
+
+    -h, --help
+         Display this message and exit.
+
+Bugs:
+    Can be reported at http://dreamcat4.github.io/finch/bugs
+
+Created by:
+    Dreamcat4, &quot;dreamcat4@gmail.com&quot; (C 2014). FreeBSD License.
+</code></pre>
+
+<h1 id="toc_2">Post-Install Steps</h1>
+
+<p>Choose your platform from the list below.</p>
+
+<ul>
+<li><a href="#toc_3">NAS4Free</a></li>
+<li><a href="#toc_7">FreeNAS</a></li>
+<li><a href="#toc_12">FreeBSD-GENERIC</a></li>
+</ul>
+
+<h2 id="toc_3">NAS4Free</h2>
+
+<p>These steps should be followed after installation.</p>
+
+<h3 id="toc_4">Configure root &amp; administrator accounts</h3>
+
+<ul>
+<li>In the NAS4Free Web GUI Go to <code>Access|Users</code></li>
+<li>Click the spanner icon, <code>Edit User</code></li>
+<li>Select Group <strong><code>wheel</code></strong></li>
+<li>Select <strong><code>bash</code></strong> as The User&#39;s login shell.</li>
+<li>Click --&gt; <code>Save</code> --&gt; <code>Apply changes</code>.</li>
+</ul>
+
+<h3 id="toc_5">Add bootup / shutdown scripts</h3>
+
+<ul>
+<li>In the NAS4Free Web GUI</li>
+</ul>
+
+<p>Go to <code>System|Advanced|Command Scripts</code></p>
+
+<ul>
+<li>Click <code>+</code> and add the folowing <code>POSTINIT</code> script</li>
+</ul>
+
+<pre><code>$ &quot;/data/finch/etc/finch/postinit&quot;
+</code></pre>
+
+<ul>
+<li>Click <code>+</code> and add the folowing <code>SHUTDOWN</code> script</li>
+</ul>
+
+<pre><code>$ &quot;/data/finch/etc/finch/shutdown&quot;
+</code></pre>
+
+<h3 id="toc_6">Start the Finch FreeBSD installation process</h3>
+
+<ul>
+<li>Reboot your NAS4Free system. Installation will begin on next boot.</li>
+<li>To check progress login on the command line and type:</li>
+</ul>
+
+<pre><code>$ &quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&quot;
+</code></pre>
+
+<ul>
+<li>Installation will take anywhere from 20 minutes up to 1 hour.</li>
+</ul>
+
+<h2 id="toc_7">FreeNAS</h2>
+
+<p>These steps should be followed after installation.</p>
+
+<h3 id="toc_8">Configure root &amp; administrator accounts</h3>
+
+<ul>
+<li>In the FreeNAS Web GUI Expand <code>+ Account</code> --&gt; <code>+ Users</code> --&gt; <code>View Users</code></li>
+<li>Select the account from the list of all users. Click to highlight the entry.</li>
+<li>Click the <code>Modify User</code> button that appears.</li>
+<li>Select Shell: <strong><code>bash</code></strong>.</li>
+<li>Select <code>Auxilary Groups</code> &gt;&gt; <strong><code>wheel</code></strong>.</li>
+<li>Click <code>OK</code> to close the window and save changes.</li>
+</ul>
+
+<h3 id="toc_9">Add bootup / shutdown scripts</h3>
+
+<ul>
+<li>In the FreeNAS Web GUI:</li>
+</ul>
+
+<p>Expand <code>+ System</code> --&gt; <code>+ Init/Shutdown Scripts</code> --&gt; <code>Add Init/Shutdown Script</code></p>
+
+<ul>
+<li>Select Type: <code>Script</code> and add the folowing <code>POSTINIT</code> script:</li>
+</ul>
+
+<pre><code>$ &quot;/path/to/finch/etc/finch/postinit&quot;
+</code></pre>
+
+<ul>
+<li>Select Type: <code>Script</code> and add the folowing <code>SHUTDOWN</code> script:</li>
+</ul>
+
+<pre><code>$ &quot;/path/to/finch/etc/finch/shutdown&quot;
+</code></pre>
+
+<h3 id="toc_10">Start the Finch FreeBSD installation process</h3>
+
+<ul>
+<li>Reboot your FreeNAS system. Installation will begin on next boot.</li>
+<li>To check progress login on the command line and type:</li>
+</ul>
+
+<pre><code>$ &quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&quot;
+</code></pre>
+
+<ul>
+<li>Installation will take anywhere from 20 minutes up to 1 hour.</li>
+</ul>
+
+<h3 id="toc_11">FreeNAS services not working after reboot ?</h3>
+
+<ul>
+<li>You will find that FreeNAS services do not start correctly after Finch installation.</li>
+<li>The problem occurs whilst Finch is installing FreeBSD, during the first reboot.</li>
+</ul>
+
+<p>FreeNAS services are not started until after all <code>POSTINIT</code> scripts have finished execution. So after the first reboot (during Finch installation) the <code>etc/finch/postinit</code> will take much longer to complete. Anywhere from <strong><em>20 minutes</em></strong> up to <strong><em>1 hour</em></strong>.</p>
+
+<p><strong><em>Symptom:</em></strong></p>
+
+<ul>
+<li>The service will not start up properly after the first reboot.
+For example - ssh: error: &quot;connection refused&quot;</li>
+<li>Other FreeNAS services may also be offline.</li>
+</ul>
+
+<p><strong><em>Solution #1:</em></strong></p>
+
+<ul>
+<li>Re-enable the service (toggle the switch on-&gt;off-&gt;on) in the FreeNAS Web GUI.
+This has been found to work for the ssh service.</li>
+</ul>
+
+<p><strong><em>Solution #2:</em></strong></p>
+
+<ul>
+<li>Wait until Finch has finished installing everything.
+The daemon is will start normally once Finch POSTINIT has completed.</li>
+</ul>
+
+<h2 id="toc_12">FreeBSD-GENERIC</h2>
+
+<p>These steps should be followed after installation.</p>
+
+<h3 id="toc_13">Configure root &amp; administrator accounts</h3>
+
+<ul>
+<li>Be a member of group wheel</li>
+</ul>
+
+<pre><code>$ &quot;pw user mod $USER -G wheel&quot;
+</code></pre>
+
+<ul>
+<li>Set `bash` or `sh` as your default login shell</li>
+</ul>
+
+<pre><code>$ &quot;pw user mod $USER -s /usr/local/bin/bash&quot;
+</code></pre>
+
+<ul>
+<li>Close any open terminals or shells and log back in again</li>
+</ul>
+
+<pre><code>$ &quot;. /etc/profile&quot; will re-source profile for this shell
+</code></pre>
+
+<ul>
+<li>Reboot or issue &quot;finch refresh&quot; on the command line.</li>
+</ul>
+
+      </div>
+
+      <!-- last linebreak for manpage -->
+      <p style="line-height: 0px;">&nbsp;</p> 
+
+      <div class="footer">
+        <hr class="footer-hr">
+      
+        <!-- order is backwards b/c footer-left style isnt loaded -->
+        <div class="footer-left" style="float: left; position: absolute;">
+          <!-- Project hosted on Github <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a> -->
+          Project hosted on Github @ <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a>.
+        </div>
+        <div class="footer-right" style="float: right; position: relative;">
+          &copy; Dreamcat4 2014, 
+           FreeBSD License.
+        </div>
+      
+        <div style="clear: both;"></div>​
+      </div>
+      
+
+    </div> <!-- /container -->
+
+    <!-- Google Prettify -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint ";
+  }
+  prettyPrint();
+</script>
+<!-- end Google Prettify -->
+    
+    
+  </body>
+</html>

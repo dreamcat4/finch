@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Finch - FAQ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dreamcat4">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- google_prettify/sons-of-obsidian.css -->
+    <!-- google_prettify/desert.css -->
+    <!-- google_prettify/sunburst.css -->
+    <!-- google_prettify/twitter-bootstrap.css -->
+    <!-- google_prettify/default.css -->
+
+<link href='/finch/assets/stylesheets/bootstrap.min-5534befd4bd1fd0a071242cecfe33975.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/poole-1a356f402a16003f83bb8aa793032345.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/style-cf56b256a9bd3b065ef200cb5c12edb6.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/google_prettify/default-twitter-merge-1166e58c1abf61b4fad842210480488b.css' type='text/css' rel='stylesheet' media='all'>
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="/finch/assets/media/favicon.ico">
+    <!-- <link rel="apple-touch-icon" href="media/apple-touch-icon.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="72x72" href="media/apple-touch-icon-72x72.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="114x114" href="media/apple-touch-icon-114x114.png"> -->
+ 
+  </head>
+
+  <body class="theme-base-08">
+
+    <div class="sidebar">
+      <div class="container sidebar-sticky">
+    
+        <div class="sidebar-about">
+    
+              <h1 style="margin-bottom: -10px;">
+                <a class="sidebar-nav-item" href="/finch">Finch</a>
+              </h1>
+    
+          <!-- <p class="lead">FreeBSD... in a chroot!</p> -->
+    
+          <p class="lead">Freebsd... <strong><i>in a chroot!</i></strong></p>
+          <!-- <p class="lead">Freebsd <strong><i>in a chroot!</i></strong></p> -->
+    
+          <!-- <div class="lead">Freebsd... <strong></div>
+            <div class="lead"><i>&nbsp&nbsp&nbsp&nbsp&nbspin a chroot!</i></strong></div> -->
+    
+        </div>
+    
+        <ul class="sidebar-nav">
+    
+                <li class="sidebar-nav-item"><a href="/finch/install">Install</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/usage">Usage</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/manpage">Manpage</a></li>
+                <li>
+                  <a href="/finch/faq" class="sidebar-nav-item-active">FAQ</a>
+                </li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-how-to">Jails How To</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/qjail-reference">Qjail Reference</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/upgrading">Upgrading</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/bugs">Bugs</a></li>
+    
+              <!-- <li><a href="/finch/bugs">Bugs</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/bugs">Bugs</a></li> -->
+              <!-- <li class="active"><a href="/finch/faq" class="active">FAQ</a></li> -->
+              <!-- <li class="sidebar-nav-item-active"> -->
+              <!-- <li>
+                <a href="/finch/faq" class="sidebar-nav-item-active">FAQ</a>
+              </li> -->
+              <!-- <li><a href="/finch/finch-8">Finch 8</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/finch-8">Finch 8</a></li> -->
+              <!-- <li><a href="/finch">Index</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch">Index</a></li> -->
+              <!-- <li><a href="/finch/install">Install</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/install">Install</a></li> -->
+              <!-- <li><a href="/finch/jails-how-to">Jails How To</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-how-to">Jails How To</a></li> -->
+              <!-- <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li> -->
+              <!-- <li><a href="/finch/jails-ssh">Jails Ssh</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-ssh">Jails Ssh</a></li> -->
+              <!-- <li><a href="/finch/manpage">Manpage</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/manpage">Manpage</a></li> -->
+              <!-- <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li> -->
+              <!-- <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li> -->
+              <!-- <li><a href="/finch/qjail-reference">Qjail Reference</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/qjail-reference">Qjail Reference</a></li> -->
+              <!-- <li><a href="/finch/upgrading">Upgrading</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/upgrading">Upgrading</a></li> -->
+              <!-- <li><a href="/finch/usage">Usage</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/usage">Usage</a></li> -->
+    
+              <!-- <a href="https://github.com/dreamcat4/finch/issues">Bugtracker</a> -->
+    
+                <!-- <li class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"> -->
+    
+    
+    
+                  <!-- <a href=""></a> -->
+    
+                  <!-- 
+                    
+                      <li><a href="/finch/bugs">Bugs</a></li>
+                    
+                  
+                      <li class="active"><a href="/finch/faq" class="active">FAQ</a></li>
+                    
+                    
+                  
+                    
+                      <li><a href="/finch/finch-8">Finch 8</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch">Index</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/install">Install</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/manpage">Manpage</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/qjail-reference">Qjail Reference</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/upgrading">Upgrading</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/usage">Usage</a></li>
+                    
+                   -->
+    
+    
+                </li>
+              <!-- {% endif %}
+            {% endif %}
+          {% endfor %} -->
+    
+          <!-- <li class="sidebar-nav-item"><a href="dreamcat4/finch/archive/v.zip">Download</a></li> -->
+          <!-- <li class="sidebar-nav-item"><a href="https://github.com/dreamcat4/finch">GitHub Project</a></li> -->
+          <!-- <li class="sidebar-nav-item">Currently v</li> -->
+    
+          <!-- <li class="sidebar-nav-item"><a href="https://github.com/dreamcat4/finch">GitHub Project</a></li> -->
+          
+          <p></p>
+          <!-- <p></p> -->
+        </ul>
+        <!-- <p> -->
+        <p>
+          <!-- <class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="https://github.com/dreamcat4/finch">GitHub Project</a> -->
+          <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="https://github.com/dreamcat4/finch">GitHub Project</a> -->
+    
+          <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="#toc_0">Back to Top</a> -->
+    
+          <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="/finch/faq">Back to Top</a>
+    
+          <!-- © 2014. All rights reserved. -->
+        </p>
+    
+        <!-- <p>&copy; {--{ site.time | date: '%Y' }--}. All rights reserved.</p> -->
+      </div>
+    </div>
+    
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <!-- <div class="container-narrow"> -->
+          <!-- <a class="brand" href="/finch/">Finch</a> -->
+    
+          <!-- <p class="navbar-left"> -->
+          <div class="navbar-left">
+    
+            <!-- Project hosted on Github <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a> -->
+    
+            <ul class="nav">
+                  <li><a href="/finch">Home</a></li>
+    
+                
+                  <li><a href="/finch/manpage">Manpage</a></li>
+                
+                
+                  <li><a href="/finch/install">Install</a></li>
+                
+                  <li class="active"><a href="/finch/faq" class="active">FAQ</a></li>
+                
+                
+    
+            </ul>
+    
+          <!-- </p> -->
+          </div>
+    
+    
+          <!-- <p class="footer-center">
+          </p> -->
+    
+          <!-- <p class="navbar-right"> -->
+          <div class="navbar-right">
+    
+            <!-- &copy; Dreamcat4 2014,  -->
+            <!-- FreeBSD Licensing terms. -->
+    
+    
+            <ul class="nav">
+    
+                
+                  <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                
+                
+                  <li><a href="/finch/upgrading">Upgrading</a></li>
+                
+                
+                  <li><a href="/finch/bugs">Bugs</a></li>
+                
+    
+              <!--  -->
+    
+              <!-- 
+                
+                  <li><a href="/finch/bugs">Bugs</a></li>
+                
+              
+                  <li class="active"><a href="/finch/faq" class="active">FAQ</a></li>
+                
+                
+              
+                
+                  <li><a href="/finch/finch-8">Finch 8</a></li>
+                
+              
+                
+                  <li><a href="/finch">Index</a></li>
+                
+              
+                
+                  <li><a href="/finch/install">Install</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                
+              
+                
+                  <li><a href="/finch/manpage">Manpage</a></li>
+                
+              
+                
+                  <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                
+              
+                
+                  <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li>
+                
+              
+                
+                  <li><a href="/finch/qjail-reference">Qjail Reference</a></li>
+                
+              
+                
+                  <li><a href="/finch/upgrading">Upgrading</a></li>
+                
+              
+                
+                  <li><a href="/finch/usage">Usage</a></li>
+                
+               -->
+            </ul>
+    
+          <!-- </p> -->
+          </div>
+    
+        <!-- </div> -->
+      </div>
+    </div>
+    
+
+    <div class="logo"></div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        <p><strong><em>WORK IN PROGRESS</em></strong> - This website is still being worked upon.</p>
+        <h1 id="toc_0">Frequently Asked Questions</h1>
+
+<p>If it can&#39;t be found here, then send an email to <a href="mailto:dreamcat4@gmail.com">dreamcat4@gmail.com</a> and we&#39;ll try to answer it.</p>
+
+<p><ul>
+<li>
+<a href="#toc_0">Frequently Asked Questions</a>
+<ul>
+<li>
+<a href="#toc_1">Installation</a>
+<ul>
+<li>
+<a href="#toc_2">Why install FreeBSD into a chroot ?</a>
+</li>
+<li>
+<a href="#toc_3">Why not install Finch onto USB / compact flash aswell ?</a>
+</li>
+<li>
+<a href="#toc_4">Why only UFS or ZFS partitions ?</a>
+</li>
+<li>
+<a href="#toc_5">FreeNAS services not working after reboot ?</a>
+</li>
+<li>
+<a href="#toc_6">Can I install multiple copies of Finch ?</a>
+</li>
+<li>
+<a href="#toc_7">Can I move the location of Finch after installation ?</a>
+</li>
+<li>
+<a href="#toc_8">Can finch be installed onto pfSense ?</a>
+</li>
+<li>
+<a href="#toc_9">Why does Finch install ... ?</a>
+<ul>
+<li>
+<a href="#toc_10">qjail</a>
+</li>
+<li>
+<a href="#toc_11">sudo</a>
+</li>
+<li>
+<a href="#toc_12">bash</a>
+</li>
+<li>
+<a href="#toc_13">nano</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_14">FreeNAS / NAS4Free</a>
+<ul>
+<li>
+<a href="#toc_15">Will Finch interfere with my FreeNAS / NAS4Free configuration ?</a>
+</li>
+<li>
+<a href="#toc_16">Why do I need Finch ?</a>
+</li>
+<li>
+<a href="#toc_17">How does Finch compare to &#39;thebrig&#39; ?</a>
+</li>
+<li>
+<a href="#toc_18">Is finch + qjail compatible with FreeNAS jails / plugins ?</a>
+</li>
+<li>
+<a href="#toc_19">Will qjail conflict with my FreeNAS jails / plugins ?</a>
+</li>
+<li>
+<a href="#toc_20">Can I recompile my kernel with Finch ?</a>
+</li>
+<li>
+<a href="#toc_21">Can I Compile FreeNAS or NAS4Free in Finch ?</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_22">General</a>
+<ul>
+<li>
+<a href="#toc_23">What about ez-jail ?</a>
+</li>
+<li>
+<a href="#toc_24">What about zjail ?</a>
+</li>
+<li>
+<a href="#toc_25">How to install my own programs in Finch ?</a>
+</li>
+<li>
+<a href="#toc_26">Can I run VirtualBox VMs in Finch ?</a>
+</li>
+<li>
+<a href="#toc_27">Can I run an Xserver / X-Windows in Finch ?</a>
+</li>
+<li>
+<a href="#toc_28">Finch&#39;s colorful prompt dissapears after &#39;su&#39; or &#39;sh&#39; command</a>
+</li>
+<li>
+<a href="#toc_29">I get a pkg error (pkg-ng)</a>
+</li>
+<li>
+<a href="#toc_30">What is the &#39;subr&#39; folder for?</a>
+</li>
+<li>
+<a href="#toc_31">Why are Finch scripts prefixed with &#39;ibps_*&#39; ?</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_32">FreeBSD</a>
+<ul>
+<li>
+<a href="#toc_33">Isn&#39;t there already a FreeBSD port called Finch ?</a>
+</li>
+<li>
+<a href="#toc_34">Will you ever write a &#39;C&#39; implementation of Finch ?</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_35">Qjail</a>
+<ul>
+<li>
+<a href="#toc_36">Why isn&#39;t &quot;ping&quot; working in my jails ?</a>
+</li>
+<li>
+<a href="#toc_37">qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</p>
+
+<h2 id="toc_1">Installation</h2>
+
+<h3 id="toc_2">Why install FreeBSD into a chroot ?</h3>
+
+<p>For some FreeBSD distributions, the base system image <code>/</code> is loaded from a compressed archive file into a RAMDISK. All files are wiped clean every boot. This makes it very hard to install 3rd party software. By installing FreeBSD into a chroot, Finch provides a permanent and dedicated space where additional software packages can be installed. In the context of a server OS such as FreeBSD, the FreeBSD chroot is most useful as a staging area for FreeBSD jails. We therefore also include another tool: the <code>qjail</code> jails management tool. So that any webservers or other server-side software and daemons can then be installed into their own individual FreeBSD jails.</p>
+
+<h3 id="toc_3">Why not install Finch onto USB / compact flash aswell ?</h3>
+
+<p>Because NAND Flash (of the type found on CompactFlash cards, SD cards, and USB thumbdrives) is a relatively slow and low-endurance storage medium. With a limited write lifecycle and potential of failed writes / bad blocks. They are not a suitable medium for the frequent small write profile demanded by a typical operating system.</p>
+
+<h3 id="toc_4">Why only UFS or ZFS partitions ?</h3>
+
+<p>Because FreeBSD assumes / expects certain filesystem features. If you install FreeBSD onto a FAT32 partition then it is not clearly known what kinds of background problems might occur. You may have slightly better luck with other, more &quot;UFS-like&quot; filesystems, such as linux EXT2/3/4. However don&#39;t assume it&#39;s going to work properly. Do your research before attempting such things. Same goes for network-mounted filesystems such as NFS.</p>
+
+<h3 id="toc_5">FreeNAS services not working after reboot ?</h3>
+
+<ul>
+<li>You will find that FreeNAS services do not start correctly after Finch installation.</li>
+<li>The problem occurs whilst Finch is installing FreeBSD, during the first reboot.</li>
+</ul>
+
+<p>FreeNAS services are not started until after all <code>POSTINIT</code> scripts have finished execution. So after the first reboot (during Finch installation) the <code>etc/finch/postinit</code> will take much longer to complete. Anywhere from <strong><em>20 minutes</em></strong> up to <strong><em>1 hour</em></strong>.</p>
+
+<p><strong><em>Symptom:</em></strong></p>
+
+<ul>
+<li>The service will not start up properly after the first reboot.
+For example - ssh: error: &quot;connection refused&quot;</li>
+<li>Other FreeNAS services may also be offline.</li>
+</ul>
+
+<p><strong><em>Solution #1:</em></strong></p>
+
+<ul>
+<li>Re-enable the service (toggle the switch on-&gt;off-&gt;on) in the FreeNAS Web GUI.
+This has been found to work for the ssh service.</li>
+</ul>
+
+<p><strong><em>Solution #2:</em></strong></p>
+
+<ul>
+<li>Wait until Finch has finished installing everything.
+The daemon is will start normally once Finch POSTINIT has completed.</li>
+</ul>
+
+<h3 id="toc_6">Can I install multiple copies of Finch ?</h3>
+
+<p>Yes. Multiple instances of Finch can be installed and operated concurrently alongside one another. </p>
+
+<h3 id="toc_7">Can I move the location of Finch after installation ?</h3>
+
+<p>Yes. Finch instances can be moved or relocated at any point after initial installation with the <code>finch bootstrap move</code> subcommand. Be careful when moving across disks or filesystems. In those instances, first make a backup.</p>
+
+<h3 id="toc_8">Can finch be installed onto pfSense ?</h3>
+
+<p>It isn&#39;t likely to work - you are on your own. We don&#39;t officially support pfsense because it is based on a much older version of FreeBSD. Being on stable means it lags behind the other platforms we support, thus making pfSense the odd-one-out. This is an important consideration in terms of Finch because we want to uniformly support a broad range of modern features.</p>
+
+<p>FreeBSD-GERNEIC has just got to 10.0-RELEASE whilst the <em>newest</em> psSense in HEAD remains on the same 8.3-RELEASE <em>which it has been on for the last</em> <strong><em>2 years</em></strong>. Wheras <em>both</em> FreeNAS and NAS4Free are now officially on 9.2-RELEASE. If you wish to provide contributions &amp; patches for pfSense they are welcome... so long as they don&#39;t interfere too much with the existing Finch codebase or make a whole big mess everywhere.</p>
+
+<h3 id="toc_9">Why does Finch install ... ?</h3>
+
+<h4 id="toc_10">qjail</h4>
+
+<p>Because FreeBSD jails are such a commonly requested feature. The qjail tool does an adequate job. Finch installs qjail and pre-configures it to reduce the number of installation steps that would otherwise be required to arrive at a solution.</p>
+
+<h4 id="toc_11">sudo</h4>
+
+<p>Finch isn&#39;t trying to prescribe or mandate some specific security model. However in Finch the <em>chroot</em> command is being frequently invoked. So sudo provides a convenient and practical way to permit <code>wheel</code> users to execute this necessary <em>chroot</em> command. Finch will auto-configure sudo by adding the following directive to your sudoers file if it doesn&#39;t exist already: <code>%wheel ALL=(ALL) NOPASSWD: ALL</code>.</p>
+
+<h4 id="toc_12">bash</h4>
+
+<ul>
+<li>Because the generic FreeBSD bourne-shell <code>/bin/sh</code> doesn&#39;t have a <code>-l,--login</code> option that guarantees <code>/etc/profile</code> will be sourced. Wheras <code>bash -l</code> works flawlessly.</li>
+<li>The generic FreeBSD bourne-shell <code>/bin/sh</code> does not have commandline auto-completion.</li>
+<li>Neither <code>csh</code> or <code>tcsh</code> have a POSIX.2 or <code>bourne shell</code> compatibility mode.</li>
+<li>Because we didn&#39;t write any login shell functions for <code>csh</code> or <code>tcsh</code>.</li>
+<li>Because both FreeNAS and NAS4Free already come with Bash pre-installed.</li>
+<li>Bash is bourne-shell compatible and POSIX.2 compliant without requiring modification or any special compatibility mode.</li>
+<li>Because bash is a modern shell with many advanced features.</li>
+<li>Because bash by is by a large margin the most widespread and commonly-used UNIX shell.</li>
+<li>Because installing Bash does not require very much hard disk space.</li>
+<li>Because installing Bash does not prevent users from using Finch with FreeBSD&#39;s generic <code>/bin/sh</code>. (They are reminded to <code>. /etc/profile</code> however).</li>
+<li>Because installing Bash does not prevent a user from installing other alternative POSIX.2 / bourne-compatible shell(s).</li>
+<li>Because recommending one specific shell to all users does help to reduce the total number of shell-related problems / complaints / issues.</li>
+</ul>
+
+<h4 id="toc_13">nano</h4>
+
+<ul>
+<li>Because so few people voluntarily want to use <code>vi</code> as their editor.</li>
+<li>Because FreeBSD&#39;s default editor <code>ee</code> isn&#39;t there on NAS4Free.</li>
+<li>Because FreeBSD&#39;s default editor <code>ee</code> can often be slow / unresponsive.</li>
+<li>Wheras Nano is a straightforward, no hassle text editor which is small and fast.</li>
+<li>Because FreeNAS and NAS4Free platforms come with Nano pre-installed.</li>
+</ul>
+
+<h2 id="toc_14">FreeNAS / NAS4Free</h2>
+
+<h3 id="toc_15">Will Finch interfere with my FreeNAS / NAS4Free configuration ?</h3>
+
+<p>Finch installs everything it needs into it&#39;s own subfolder on one of your data drives. Which are entirely seperate and isolated from the host system. Finch can be disabled entirely by removing the <code>POSTINIT</code> boot script from your FreeNAS or NAS4Free configuration.</p>
+
+<p><strong><em>Finch will:</em></strong></p>
+
+<ul>
+<li>Add 1 line your host&#39;s <code>/etc/profile</code> POSIX login shell configuration file.</li>
+<li>Auto configure <code>sudo</code> as <code>%wheel ALL=(ALL) NOPASSWD: ALL</code> for administrative accounts.</li>
+<li>Symlink the <code>finch</code> executable into <code>/usr/sbin</code> so that it is on your <code>$PATH</code>.</li>
+</ul>
+
+<p><strong><em>Finch  won&#39;t:</em></strong></p>
+
+<ul>
+<li>Interfere with the FreeBSD Kernel running on your NAS box.<sup>1</sup></li>
+<li>Touch, modify or write to your FreeNAS / NAS4Free configuration.</li>
+<li>Interfere with any running services on your NAS box (ssh, ftp, etc).<sup>2</sup></li>
+</ul>
+
+<p><sup>1</sup> However you may wish to load extra kernel modules for programs such as VirtualBox. <br><sup>2</sup> Running intensive 3rd party software inside Finch may slow down your existing NAS services.</p>
+
+<h3 id="toc_16">Why do I need Finch ?</h3>
+
+<p>Because you may install any arbitrary software inside Finch&#39;s chroot.</p>
+
+<p><strong>NAS4Free:</strong></p>
+
+<ul>
+<li>To install arbitrary software, hassle-free.</li>
+<li>To manage jails with <code>qjail</code>, hassle-free.</li>
+</ul>
+
+<p><strong>FreeNAS:</strong></p>
+
+<ul>
+<li>To install arbitrary software, hassle-free.</li>
+<li>If you need to use tools other than warden <sup>1.</sup></li>
+</ul>
+
+<p><sup>1</sup> FreeNAS already comes with a tool (made by IX Systems) called <code>warden</code> which provides the &#39;Plugins&#39; and &#39;Jails&#39; tabs in the FreeNAS Web GUI. Finch comes with <code>qjail</code> - a FOSS tool for jails management. There are different advantages / disadvantages to each one.</p>
+
+<h3 id="toc_17">How does Finch compare to &#39;thebrig&#39; ?</h3>
+
+<p>In short, Finch can do a lot more than <code>theBrig</code>. Finch is also more flexible and future-proof.</p>
+
+<ul>
+<li>Finch is not strictly limited to NAS4Free and jails.</li>
+<li>Finch supports other platforms such as FreeNAS and official FreeBSD.</li>
+<li>Finch does not expect that you want manage your FreeBSD jails manually.</li>
+<li>Finch has no breakable PHP interface. There is no WebGUI like theBrig. Finch is a command line tool.</li>
+</ul>
+
+<h3 id="toc_18">Is finch + qjail compatible with FreeNAS jails / plugins ?</h3>
+
+<p>Yes and No. FreeNAS uses &quot;Warden&quot; to provide it&#39;s jails and plugins features. Warden is a component of PCBSD / trueOS / FreeNAS and produced by iXsystems incorporated. Wheras finch will install the freely available &quot;qjail&quot; FreeBSD port (which is a fork of the &quot;ez-jail&quot; port). With sufficient effort, it may be possible to modify, migrate or re-create an existing FreeNAS jail within qjail.</p>
+
+<p>You can still continue to use all your FreeNAS plugins exactly as before. They are being managed by Warden behind-the-scenes. Wheras for jails both warden and qjail approximate each other&#39;s functionality to a large extent. But they do each have their own set of advantages and disadvantages. It is up to you which one you would prefer to use.</p>
+
+<h3 id="toc_19">Will qjail conflict with my FreeNAS jails / plugins ?</h3>
+
+<p>No. The two environments are entirely independent can happily co-exist. They are not aware of each other.</p>
+
+<h3 id="toc_20">Can I recompile my kernel with Finch ?</h3>
+
+<p>Yes. There are 2 known caveats:</p>
+
+<p>1) Be careful if changing the kernel IDENT string.</p>
+
+<p>Don&#39;t remove any existing references to <code>nas4free</code> or <code>freenas</code> (whichever applicable). Finch uses <code>uname</code> to determine what platform it is on. Removing such substring from the kernel IDENT string <u>will</u> cause issues and prevent Finch from starting. However it is OK to change other substrings in the kernel IDENT string. Here is the shellcode Finch uses to determine which platform it is running on:</p>
+
+<pre><code>if [ &quot;`uname -iv | grep -i freenas`&quot; ] || [ &quot;`uname -iv | grep -i nas4free`&quot; ]; then
+  # Platform specific code here
+else
+  # FreeBSD GENERIC code here
+fi
+</code></pre>
+
+<p>2) The new kernel will normally be installed into <code>/path/to/finch/boot/kernel</code>. You will have to do something extra to boot the new kernel. What is required varies depending upon your specific platform.</p>
+
+<h3 id="toc_21">Can I Compile FreeNAS or NAS4Free in Finch ?</h3>
+
+<p>We simply don&#39;t know yet. Where are those FreeNAS and NAS4Free developers when you need them eh? Like the several other desirable but untested uses for Finch, will be glad update this section with better information just as soon as someone has <strong><a href="bugs">let us know</a></strong> about it.</p>
+
+<h2 id="toc_22">General</h2>
+
+<h3 id="toc_23">What about ez-jail ?</h3>
+
+<p>It&#39;s allright as far as we know. You&#39;re welcome to install and use ez-jail instead of qjail if that&#39;s what you are used to / prefer. Just don&#39;t try using them <em>both</em>... they operate on the same folders and so conflicts are likely to occur. Finch doesn&#39;t provide official support for ez-jail however it should work just fine.</p>
+
+<h3 id="toc_24">What about zjail ?</h3>
+
+<p>Zfs jails. There may be some interest in this. However use at your own risk. It has not been tested in any way, and it&#39;s zfs-related features may / may not work inside a chroot. Zjail is written entirely in Perl, and requires several Perl module dependancies. Their project website is here: <a href="http://sourceforge.net/projects/zjails/">http://sourceforge.net/projects/zjails/</a>. It may be possible to try out zjail without it interfering with qjail and similar jails management tools. Since zjail does not use the <code>/usr/jails</code> folder.</p>
+
+<h3 id="toc_25">How to install my own programs in Finch ?</h3>
+
+<p>Lets say you want to use <code>ezjail</code><sup>1</sup> instead of <code>qjail</code>. First we would install ezjail into our Finch system:</p>
+
+<pre><code># Enter the finch chroot environment, as root
+sudo finch chroot
+
+# Either a) install with pkg-ng
+ASSUME_ALWAYS_YES=&quot;yes&quot; pkg install &quot;ezjail&quot;
+
+# Or b) compile from the ports tree
+cd &quot;/usr/ports/sysutils/ezjail&quot; &amp;&amp; make &quot;config-recursive&quot; &quot;install&quot; &quot;clean&quot;
+
+# If it has an rc.d service, enable that in Finch&#39;s rc.conf file
+echo &quot;ezjail_enable=\&quot;YES\&quot;&quot; &gt;&gt; &quot;/etc/rc.conf&quot;
+
+# Leave the chroot
+exit
+</code></pre>
+
+<p>Now we can add the command to our exports. The Finch exports feature is explained on the <strong><a href="usage#toc_4">usage page</a></strong>.</p>
+
+<pre><code># Add the command to our finch exports list
+finch export &quot;ezjail-admin&quot;
+
+# Check that it can be invoked from the host environment
+ezjail-admin --help
+man ezjail
+</code></pre>
+
+<p><strong><em>Note:</em></strong> <sup>1</sup> It is not recommend to install the <code>ez-jail</code> program if you are also intending to use the qjail program. Conflicts can arise since the <code>/usr/jails</code> directory is the same for both programs.</p>
+
+<h3 id="toc_26">Can I run VirtualBox VMs in Finch ?</h3>
+
+<p>In truth we simply aren&#39;t sure yet. Why not be the first to report back your findings? <strong><a href="bugs">Let us know</a></strong> what happens. Same goes for <code>xen</code> and <code>bhyve</code>.</p>
+
+<h3 id="toc_27">Can I run an Xserver / X-Windows in Finch ?</h3>
+
+<p>Again we don&#39;t know / haven&#39;t tried. Where are the brave pioneers, waiting in the wings to recount their glorious tales of woe, adventure and misfortune ? Please <strong><a href="bugs">let us know</a></strong>. Just send us an email or something.</p>
+
+<h3 id="toc_28">Finch&#39;s colorful prompt dissapears after &#39;su&#39; or &#39;sh&#39; command</h3>
+
+<p>If you type <code>su &lt;user&gt;</code> or <code>sh</code>, your prompt may turn into <code>#</code>, or start looking like this:</p>
+
+<pre><code>[user@hostname /path/to/pwd]
+</code></pre>
+
+<p><strong><em>Solution:</em></strong></p>
+
+<ul>
+<li>Type <code>. /etc/profile</code> to re-source the Finch login profile and reload the <code>PS1=</code> prompt.</li>
+<li>Use <code>sudo su -l</code> instead of plain <code>su</code>.</li>
+</ul>
+
+<h3 id="toc_29">I get a pkg error (pkg-ng)</h3>
+
+<p>There are many pkg errors. Unfortunately Finch cannot give direct support and in most cases you are likely to arrive at a solution far quicker by searching with google, or scouring the FreeBSD Forums.</p>
+
+<p>However one (1) such error is known to occur upon entering an NON-interactive shell:</p>
+
+<pre><code># pkg install ...
+pkg: PACKAGESITE in pkg.conf is deprecated. Please create a repository configuration file
+Updating repository catalogue
+pkg: Warning: use of ftp:// URL scheme with SRV records is deprecated: switch to pkg+ftp://
+pkg: ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/amd64/packages-current/Latest//digests.txz: File unavailable (e.g., file not found, no access)
+pkg: Unable to find catalogs
+</code></pre>
+
+<p>The cause of the problem was never discovered. But the solution was to exit from the current shell. And then instead run <code>pkg</code> from within an <u>interactive</u> login shell, for example <code>bash -l</code>.</p>
+
+<h3 id="toc_30">What is the &#39;subr&#39; folder for?</h3>
+
+<p>Most of the the Finch scripts are held within a folder named <code>subr</code>. It simply means <em>subroutines</em> and is (for multi-file sh scripts) an analogue of the &#39;C&#39; language&#39;s <code>include/</code>. The name subr is taken from FreeBSD&#39;s naming of it&#39;s <code>rc.conf</code> subroutines file <code>/etc/rc.subr</code> (see <code>man rc.subr</code>).</p>
+
+<h3 id="toc_31">Why are Finch scripts prefixed with &#39;ibps_*&#39; ?</h3>
+
+<p>For manageability, Finch is split into many individual subroutine files, each one with a specific purpose. Each subroutine source file is prefixed with an matrix identifier which can be any appropriate combination of these <code>ibps</code> identifiers, where <code>i=install</code>, <code>b=boot</code>, <code>p=profile</code>, and <code>s=shutdown</code>. In the special case of <code>__p__</code> we also load this same set for the functions needed by the Finch executable.</p>
+
+<p>It is a crude dependancy loading mechanism, which is performed by the script in <code>subr/_____load</code>. The purpose of the mechanism is to load only the necessary sub-set of subroutine files (as marked by the developer) and avoid loading functions that we don&#39;t need for that given task. Rather than all of them all of the time. Thus keeping load times under control for the various Finch shell scripts.</p>
+
+<h2 id="toc_32">FreeBSD</h2>
+
+<h3 id="toc_33">Isn&#39;t there already a FreeBSD port called Finch ?</h3>
+
+<p>Yes indeed. And we are aware of it. However on balance we decided that there was no significant harm to come from also using Finch as our project&#39;s name. For us &quot;Finch&quot; is by far the most apt, compelling, concise, and fit-for-purpose name. Nothing else could be found to serve as a good enough substitute or alternative. The other project can be found as <code>net-im/finch</code> in the FreeBSD ports tree. In most cases these 2 projects shouldn&#39;t present any major conflicts with one another. Mainly because:</p>
+
+<ul>
+<li>The types of systems which need <em>this finch</em> are restricted FreeBSD distributions. For example FreeNAS and NAS4Free. That usually means they are unable to install FreeBSD ports or pkgs including the <em>finch IM client</em>.</li>
+<li>And moreso, server-oriented FreeBSD distributions don&#39;t usually include the huge number of X-Windows dependencies that are required by the <em>finch IM client</em>. Which makes the <em>finch im client</em> very difficult and / or unlikely to be installed on the same systems where <em>this finch</em> is also installed.</li>
+</ul>
+
+<p>It is also worth mentioning that as a system utility, we install <em>this finch</em> into <code>/usr/sbin/</code>. Wheras the <em>finch IM client</em> installs it&#39;s <em>finch command</em> into <code>/usr/local/bin/</code>. Which, by lucky co-incidence avoids any direct files conflict. The <em>finch im client</em> happens to be the one with a lower priority on FreeBSD&#39;s default search path. We recommend renaming the <em>im client</em> executable by symlinking it to <code>finch-im</code>. For example:</p>
+
+<pre><code>$ ln -sf &quot;/usr/local/bin/finch&quot; &quot;/usr/local/bin/finch-im&quot;
+</code></pre>
+
+<p>Will get you access back for the other one. Not too sure about the man pages though.</p>
+
+<h3 id="toc_34">Will you ever write a &#39;C&#39; implementation of Finch ?</h3>
+
+<p>No plans for doing this. But will support and co-operate with any developer(s) wishing to improve or re-purpose the Finch tool.</p>
+
+<p><strong>Suggested improvement:</strong></p>
+
+<p>Currently we use FreeBSD&#39;s stock <code>chroot (8)</code> command line program. But a specially compiled &#39;C&#39; program could be run setuid root, in theory calling FreeBSD&#39;s chroot(3) &#39;C&#39; function with regular user permissions. Which would open the possibility for finch to also work for ordinary user accounts.</p>
+
+<h2 id="toc_35">Qjail</h2>
+
+<h3 id="toc_36">Why isn&#39;t &quot;ping&quot; working in my jails ?</h3>
+
+<p>Because raw sockets (ICMP &quot;ping&quot;) is disabled by default. You can switch this feature on/off at any time.</p>
+
+<pre><code># Enable raw sockets (allow &quot;ping&quot; command)
+qjail config -k &quot;$jailname&quot;
+
+# Disable raw sockets
+qjail config -K &quot;$jailname&quot;
+</code></pre>
+
+<h3 id="toc_37">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</h3>
+
+<p>This feature is documented both in the <code>qjail</code> manpage and the <code>jail</code> manpage. However it doesn&#39;t seem to work. Tested as broken on FreeBSD 9.1, 9.2, 10.0, on single &amp; dual core CPU.</p>
+
+<pre><code># For a quad-core CPU: &quot;cpuset -g | grep -o -e mask.*&quot; shouly say &quot;mask: 0, 1, 2, 3&quot;
+# Then valid cpu sets might be: &quot;0&quot;, &quot;0-3&quot; &quot;2,3&quot; etc, where &quot;0&quot; is the first core.
+export jail_cpu_set=&quot;0&quot;
+qjail config -p &quot;$jail_cpu_set&quot; &quot;$jailname&quot;
+
+qjail start myjail
+
+jail: test: unknown parameter: cpuset.id
+Error: /usr/sbin/jail failed to start jail myjail.
+because of errors in jail.conf file.
+</code></pre>
+
+      </div>
+
+      <!-- last linebreak for manpage -->
+      <p style="line-height: 0px;">&nbsp;</p> 
+
+      <div class="footer">
+        <hr class="footer-hr">
+      
+        <!-- order is backwards b/c footer-left style isnt loaded -->
+        <div class="footer-left" style="float: left; position: absolute;">
+          <!-- Project hosted on Github <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a> -->
+          Project hosted on Github @ <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a>.
+        </div>
+        <div class="footer-right" style="float: right; position: relative;">
+          &copy; Dreamcat4 2014, 
+           FreeBSD License.
+        </div>
+      
+        <div style="clear: both;"></div>​
+      </div>
+      
+
+    </div> <!-- /container -->
+
+    <!-- Google Prettify -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint ";
+  }
+  prettyPrint();
+</script>
+<!-- end Google Prettify -->
+    
+    
+  </body>
+</html>

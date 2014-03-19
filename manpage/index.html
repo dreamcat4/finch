@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Finch - Manpage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dreamcat4">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- google_prettify/sons-of-obsidian.css -->
+    <!-- google_prettify/desert.css -->
+    <!-- google_prettify/sunburst.css -->
+    <!-- google_prettify/twitter-bootstrap.css -->
+    <!-- google_prettify/default.css -->
+
+<link href='/finch/assets/stylesheets/bootstrap.min-5534befd4bd1fd0a071242cecfe33975.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/poole-1a356f402a16003f83bb8aa793032345.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/style-cf56b256a9bd3b065ef200cb5c12edb6.css' type='text/css' rel='stylesheet' media='all'>
+<link href='/finch/assets/stylesheets/google_prettify/default-twitter-merge-1166e58c1abf61b4fad842210480488b.css' type='text/css' rel='stylesheet' media='all'>
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="/finch/assets/media/favicon.ico">
+    <!-- <link rel="apple-touch-icon" href="media/apple-touch-icon.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="72x72" href="media/apple-touch-icon-72x72.png"> -->
+    <!-- <link rel="apple-touch-icon" sizes="114x114" href="media/apple-touch-icon-114x114.png"> -->
+ 
+  </head>
+
+  <body class="theme-base-08">
+
+    <div class="sidebar">
+      <div class="container sidebar-sticky">
+    
+        <div class="sidebar-about">
+    
+              <h1 style="margin-bottom: -10px;">
+                <a class="sidebar-nav-item" href="/finch">Finch</a>
+              </h1>
+    
+          <!-- <p class="lead">FreeBSD... in a chroot!</p> -->
+    
+          <p class="lead">Freebsd... <strong><i>in a chroot!</i></strong></p>
+          <!-- <p class="lead">Freebsd <strong><i>in a chroot!</i></strong></p> -->
+    
+          <!-- <div class="lead">Freebsd... <strong></div>
+            <div class="lead"><i>&nbsp&nbsp&nbsp&nbsp&nbspin a chroot!</i></strong></div> -->
+    
+        </div>
+    
+        <ul class="sidebar-nav">
+    
+                <li class="sidebar-nav-item"><a href="/finch/install">Install</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/usage">Usage</a></li>
+                <li>
+                  <a href="/finch/manpage" class="sidebar-nav-item-active">Manpage</a>
+                </li>
+                <li class="sidebar-nav-item"><a href="/finch/faq">FAQ</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-how-to">Jails How To</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/qjail-reference">Qjail Reference</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/upgrading">Upgrading</a></li>
+                <li class="sidebar-nav-item"><a href="/finch/bugs">Bugs</a></li>
+    
+              <!-- <li><a href="/finch/bugs">Bugs</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/bugs">Bugs</a></li> -->
+              <!-- <li><a href="/finch/faq">FAQ</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/faq">FAQ</a></li> -->
+              <!-- <li><a href="/finch/finch-8">Finch 8</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/finch-8">Finch 8</a></li> -->
+              <!-- <li><a href="/finch">Index</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch">Index</a></li> -->
+              <!-- <li><a href="/finch/install">Install</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/install">Install</a></li> -->
+              <!-- <li><a href="/finch/jails-how-to">Jails How To</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-how-to">Jails How To</a></li> -->
+              <!-- <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li> -->
+              <!-- <li><a href="/finch/jails-ssh">Jails Ssh</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/jails-ssh">Jails Ssh</a></li> -->
+              <!-- <li class="active"><a href="/finch/manpage" class="active">Manpage</a></li> -->
+              <!-- <li class="sidebar-nav-item-active"> -->
+              <!-- <li>
+                <a href="/finch/manpage" class="sidebar-nav-item-active">Manpage</a>
+              </li> -->
+              <!-- <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li> -->
+              <!-- <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li> -->
+              <!-- <li><a href="/finch/qjail-reference">Qjail Reference</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/qjail-reference">Qjail Reference</a></li> -->
+              <!-- <li><a href="/finch/upgrading">Upgrading</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/upgrading">Upgrading</a></li> -->
+              <!-- <li><a href="/finch/usage">Usage</a></li> -->
+              <!-- <li class="sidebar-nav-item"><a href="/finch/usage">Usage</a></li> -->
+    
+              <!-- <a href="https://github.com/dreamcat4/finch/issues">Bugtracker</a> -->
+    
+                <!-- <li class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"> -->
+    
+    
+    
+                  <!-- <a href=""></a> -->
+    
+                  <!-- 
+                    
+                      <li><a href="/finch/bugs">Bugs</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/faq">FAQ</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/finch-8">Finch 8</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch">Index</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/install">Install</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                    
+                  
+                      <li class="active"><a href="/finch/manpage" class="active">Manpage</a></li>
+                    
+                    
+                  
+                    
+                      <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/qjail-reference">Qjail Reference</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/upgrading">Upgrading</a></li>
+                    
+                  
+                    
+                      <li><a href="/finch/usage">Usage</a></li>
+                    
+                   -->
+    
+    
+                </li>
+              <!-- {% endif %}
+            {% endif %}
+          {% endfor %} -->
+    
+          <!-- <li class="sidebar-nav-item"><a href="dreamcat4/finch/archive/v.zip">Download</a></li> -->
+          <!-- <li class="sidebar-nav-item"><a href="https://github.com/dreamcat4/finch">GitHub Project</a></li> -->
+          <!-- <li class="sidebar-nav-item">Currently v</li> -->
+    
+          <!-- <li class="sidebar-nav-item"><a href="https://github.com/dreamcat4/finch">GitHub Project</a></li> -->
+          
+          <p></p>
+          <!-- <p></p> -->
+        </ul>
+        <!-- <p> -->
+        <p>
+          <!-- <class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="https://github.com/dreamcat4/finch">GitHub Project</a> -->
+          <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="https://github.com/dreamcat4/finch">GitHub Project</a> -->
+    
+          <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="#toc_0">Back to Top</a> -->
+    
+          <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="/finch/manpage">Back to Top</a>
+    
+          <!-- © 2014. All rights reserved. -->
+        </p>
+    
+        <!-- <p>&copy; {--{ site.time | date: '%Y' }--}. All rights reserved.</p> -->
+      </div>
+    </div>
+    
+
+    <div class="navbar">
+      <div class="navbar-inner">
+        <!-- <div class="container-narrow"> -->
+          <!-- <a class="brand" href="/finch/">Finch</a> -->
+    
+          <!-- <p class="navbar-left"> -->
+          <div class="navbar-left">
+    
+            <!-- Project hosted on Github <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a> -->
+    
+            <ul class="nav">
+                  <li><a href="/finch">Home</a></li>
+    
+                  <li class="active"><a href="/finch/manpage" class="active">Manpage</a></li>
+                
+                
+                
+                  <li><a href="/finch/install">Install</a></li>
+                
+                
+                  <li><a href="/finch/faq">FAQ</a></li>
+                
+    
+            </ul>
+    
+          <!-- </p> -->
+          </div>
+    
+    
+          <!-- <p class="footer-center">
+          </p> -->
+    
+          <!-- <p class="navbar-right"> -->
+          <div class="navbar-right">
+    
+            <!-- &copy; Dreamcat4 2014,  -->
+            <!-- FreeBSD Licensing terms. -->
+    
+    
+            <ul class="nav">
+    
+                
+                  <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                
+                
+                  <li><a href="/finch/upgrading">Upgrading</a></li>
+                
+                
+                  <li><a href="/finch/bugs">Bugs</a></li>
+                
+    
+              <!--  -->
+    
+              <!-- 
+                
+                  <li><a href="/finch/bugs">Bugs</a></li>
+                
+              
+                
+                  <li><a href="/finch/faq">FAQ</a></li>
+                
+              
+                
+                  <li><a href="/finch/finch-8">Finch 8</a></li>
+                
+              
+                
+                  <li><a href="/finch">Index</a></li>
+                
+              
+                
+                  <li><a href="/finch/install">Install</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-how-to">Jails How To</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-ip-addresses">Jails Ip Addresses</a></li>
+                
+              
+                
+                  <li><a href="/finch/jails-ssh">Jails Ssh</a></li>
+                
+              
+                  <li class="active"><a href="/finch/manpage" class="active">Manpage</a></li>
+                
+                
+              
+                
+                  <li><a href="/finch/mounting-filesystems">Mounting Filesystems</a></li>
+                
+              
+                
+                  <li><a href="/finch/portsnap_override-8">Portsnap_override 8</a></li>
+                
+              
+                
+                  <li><a href="/finch/qjail-reference">Qjail Reference</a></li>
+                
+              
+                
+                  <li><a href="/finch/upgrading">Upgrading</a></li>
+                
+              
+                
+                  <li><a href="/finch/usage">Usage</a></li>
+                
+               -->
+            </ul>
+    
+          <!-- </p> -->
+          </div>
+    
+        <!-- </div> -->
+      </div>
+    </div>
+    
+
+    <div class="logo"></div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        <p><strong><em>WORK IN PROGRESS</em></strong> - This website is still being worked upon.</p>
+        <!-- 1e39d7b98d6a922eebab27b099570b19 -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>finch(8) - FreeBSD in a chroot</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+  <style type='text/css' media='all'>
+  /* style: html_customizations */
+  .content {
+   max-width: 118ex;
+  }
+  .mp {
+   text-align:left;
+   display: inline;
+   
+   max-width: 115ex;
+   margin-right: 0px;
+   
+   padding: 0 0 0 0px;
+   
+   background-color: #fee;
+   position: center}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#NAME">NAME</a>
+    <a href="#SYNOPSIS">SYNOPSIS</a>
+    <a href="#COMMANDS">COMMANDS</a>
+    <a href="#DESCRIPTION">DESCRIPTION</a>
+    <a href="#USAGE">USAGE</a>
+    <a href="#STARTING-STOPPING">STARTING / STOPPING</a>
+    <a href="#USER-CONFIGURATION">USER CONFIGURATION</a>
+    <a href="#EXPORTS">EXPORTS</a>
+    <a href="#UPGRADING">UPGRADING</a>
+    <a href="#EXECUTABLE">EXECUTABLE</a>
+    <a href="#STARTUP-SHUTDOWN">STARTUP / SHUTDOWN</a>
+    <a href="#DIRECTORIES">DIRECTORIES</a>
+    <a href="#WEBSITE">WEBSITE</a>
+    <a href="#BUGS">BUGS</a>
+    <a href="#SEE-ALSO">SEE ALSO</a>
+    <a href="#Created-by">Created by</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>finch(8)</li>
+    <li class='tc'>FreeBSD in a chroot</li>
+    <li class='tr'>finch(8)</li>
+  </ol>
+
+  <h2 id="NAME">NAME</h2>
+<p class="man-name">
+  <code>finch</code> - <span class="man-whatis">FreeBSD in a chroot</span>
+</p>
+
+<h2 id="SYNOPSIS">SYNOPSIS</h2>
+
+<pre><code>finch &lt;cmd> [args]
+finch --help
+</code></pre>
+
+<h2 id="COMMANDS">COMMANDS</h2>
+
+<pre><code>start     - Mount Finch and start it's rc.d services.
+stop      - Stop Finch's rc.d services and unmount "finch/dev".
+restart   - Same as `finch stop` followed by `finch start`.
+status    - Report on Finch service status (enabled/disabled).
+chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
+export    - Map a new command into Finch exports (`finch export &lt;cmd>`).
+-export   - Remove a command from Finch exports (`finch -export &lt;cmd>`).
+&lt;export>  - Run a command listed in Finch exports (`finch &lt;export>`).
+update    - Update the Finch scripts (this program) to the latest version.
+refresh   - Refresh /finch/etc/ files (resolv.conf, localtime &amp; passwd).
+bootstrap - Run the curl-based online installation script `finch-bootstrap`.
+realpath  - The real path to Finch ("$finch_realpath", "/path/to/finch").
+--version - Print the current version of Finch and exit.
+-h,--help - Display this message and exit.
+</code></pre>
+
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+
+<p><em>Finch</em> is FreeBSD <em>running inside a <code>chroot</code></em>. Finch is best used as a way to extend the functionality of restricted USB-based FreeBSD distributions, usually FREENAS and NAS4FREE. For added convenience, Finch also includes the <code>qjail</code> jails management tool. Since FreeBSD jails are such a popular request.</p>
+
+<p>Recommended system configuration:</p>
+
+<p><code>Restricted FreeBSD host &lt;--> Finch &lt;--> qjail &lt;--> your jails</code></p>
+
+<h2 id="USAGE">USAGE</h2>
+
+<p>Chroot into the Finch environment by typing <code>finch chroot</code>. All other operations may be performed by
+issuing relevant subcommand. <code>finch --help</code> for more information. Or visit the website at
+<a href="http://dreamcat4.github.io/finch/usage" data-bare-link="true">http://dreamcat4.github.io/finch/usage</a>.</p>
+
+<h2 id="STARTING-STOPPING">STARTING / STOPPING</h2>
+
+<p>You may manually start or stop Finch at any time simply by issuing the relevant finch subcommand <code>finch start</code> or <code>finch stop</code>. See <code>finch --help</code> for more information. However the boot-time mechanisms for running Finch are platform-specific.</p>
+
+<p>On FreeNAS and NAS4Free hosts, the Finch <em>POSTINIT</em> and <em>SHUTDOWN</em> scripts must be entered into the relevant web-based configuration pages. Which will tell FreeNAS / NAS4Free to automatically start and stop Finch at bootup and shutdown.</p>
+
+<p>For other platforms such as FreeBSD-GENERIC where the traditional rc.d mechanism is properly
+supported, the Finch service can be started / stopped in the normal manner with it's <em>rc.d</em> script.
+The necessary rc.conf statements are automatically added to the system's <em>/etc/rc.conf</em> file for you
+during installation. To prevent conflicts between multiple installed instances, the Finch rc.d script is given a unique name: <em>/etc/rc.d/finch-path.to.finch</em>.</p>
+
+<h2 id="USER-CONFIGURATION">USER CONFIGURATION</h2>
+
+<p>To execute the <code>finch</code> command, your user account must be a member of group <code>wheel</code>. This is
+because on FreeBSD the <code>chroot</code> command requires root user level access privileges. Therefore, to
+run Finch commands also requires at least administrator level permissions.</p>
+
+<p>Finch will auto-configure sudo for all <code>wheel</code> users without a password, by ensuring the sudo entry
+<em>%wheel ALL=(ALL) NOPASSWD: ALL</em>) is included in your host's sudoers file. This auto-configuration
+is considered necessary as to use Finch effectively requires a frequent invocation of the <code>chroot</code>
+command. The necessary configuration is handled automatically.</p>
+
+<p>It is also highly recommended to configure the default user login shell to the <code>bash</code>. Finch
+automatically adds it's login profile to <code>/etc/profile</code>, which is automatically sourced by the
+<em>bash</em> shell.</p>
+
+<p>The Finch login profile adds further convenience whilst invoking commands through <em>sudo</em> or from the
+Finch <em>exports</em> list. This Finch login profile is not exclusively only for <em>bash</em>. It may be sourced
+by any POSIX.2 compatible shell, (bourne-style shell), for example FreeBSD's <code>/bin/sh</code>. In which
+case, please consult the shell's documentation for loading <em>/etc/profile</em>.</p>
+
+<h2 id="EXPORTS">EXPORTS</h2>
+
+<p>The Finch <em>exports</em> feature provides a way to auto-chroot for certain
+frequently-used commands. If not present on the host environment, the command is searched for and
+executed within the Finch chroot environment instead. Of course whilst inside the chroot, the root
+tree and filesystem are not accessible. This is worth remembering.</p>
+
+<h2 id="UPGRADING">UPGRADING</h2>
+
+<p>Updating Finch administrative scripts is trivial, and can be done at any time with <code>finch update</code>. Upgrading the version of FreeBSD located inside Finch's chroot is a more delicate and involved
+process. Full instructions are up on the website at <a href="http://dreamcat4.github.io/finch/upgrading" data-bare-link="true">http://dreamcat4.github.io/finch/upgrading</a>.</p>
+
+<h2 id="EXECUTABLE">EXECUTABLE</h2>
+
+<pre><code>$finch_realpath/usr/sbin/finch --&gt; /usr/sbin/finch
+For additional instances, manually symlink finch2,3 into /usr/sbin/
+</code></pre>
+
+<h2 id="STARTUP-SHUTDOWN">STARTUP / SHUTDOWN</h2>
+
+<pre><code>$finch_realpath/etc/finch/postinit
+$finch_realpath/etc/finch/shutdown
+- OR -
+$finch_realpath/etc/rc.d/finch --&gt; /etc/rc.d/finch-path.to.finch
+</code></pre>
+
+<h2 id="DIRECTORIES">DIRECTORIES</h2>
+
+<pre><code>$finch_realpath/etc/finch/
+$finch_realpath/var/db/finch/
+$finch_realpath/var/log/finch/
+$finch_realpath/var/distfiles/finch/
+</code></pre>
+
+<h2 id="WEBSITE">WEBSITE</h2>
+
+<p>For the most up-to-date documentation please visit the project homepage at <a href="http://dreamcat4.github.io/finch" data-bare-link="true">http://dreamcat4.github.io/finch</a>.</p>
+
+<h2 id="BUGS">BUGS</h2>
+
+<p>Can be reported at <a href="http://dreamcat4.github.io/finch/bugs" data-bare-link="true">http://dreamcat4.github.io/finch/bugs</a>.</p>
+
+<h2 id="SEE-ALSO">SEE ALSO</h2>
+
+<p><span class="man-ref">chroot<span class="s">(8)</span></span>, <span class="man-ref">qjail<span class="s">(8)</span></span></p>
+
+<h2 id="Created-by">Created by</h2>
+
+<p>Dreamcat4, "dreamcat4@gmail.com" (C 2014). FreeBSD License.</p>
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'>dreamcat4-finch</li>
+    <li class='tc'>March 2014</li>
+    <li class='tr'>finch(8)</li>
+  </ol>
+
+  </div>
+</body>
+</html>
+
+      </div>
+
+      <!-- last linebreak for manpage -->
+      <p style="line-height: 0px;">&nbsp;</p> 
+
+      <div class="footer">
+        <hr class="footer-hr">
+      
+        <!-- order is backwards b/c footer-left style isnt loaded -->
+        <div class="footer-left" style="float: left; position: absolute;">
+          <!-- Project hosted on Github <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a> -->
+          Project hosted on Github @ <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a>.
+        </div>
+        <div class="footer-right" style="float: right; position: relative;">
+          &copy; Dreamcat4 2014, 
+           FreeBSD License.
+        </div>
+      
+        <div style="clear: both;"></div>​
+      </div>
+      
+
+    </div> <!-- /container -->
+
+    <!-- Google Prettify -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+<script>
+  var pres = document.getElementsByTagName("pre");
+  for (var i=0; i < pres.length; ++i) {
+    pres[i].className = "prettyprint ";
+  }
+  prettyPrint();
+</script>
+<!-- end Google Prettify -->
+    
+    
+  </body>
+</html>

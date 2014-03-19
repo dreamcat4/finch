@@ -1,0 +1,15 @@
+title : Site Title
+tagline: Site Tagline
+author :
+  name : First-name Last-name
+  email : blah@email.test
+  github : username
+  twitter : username
+  feedburner : feedname
+
+navigation :
+  - archive
+  - tags
+  - categories
+  - pages
+  - about

@@ -1,0 +1,2590 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+  <channel>
+    <title>Finch</title>
+    <description>FreeBSD... in a chroot!</description>
+    <link/>
+    <pubDate>2014-03-19</pubDate>
+    <item>
+      <title>Bugs</title>
+      <link>/finch/bugs</link>
+      <description>&lt;h1 id="toc_0"&gt;How to submit a problem report&lt;/h1&gt;
+
+&lt;h2 id="toc_1"&gt;If a fix is available&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Check through &lt;strong&gt;&lt;a href="https://github.com/dreamcat4/finch/issues"&gt;Finch issues&lt;/a&gt;&lt;/strong&gt; for existing problem reports.&lt;/li&gt;
+&lt;li&gt;Try updating with &lt;strong&gt;&lt;code&gt;finch update&lt;/code&gt;&lt;/strong&gt;. In case the problem was already fixed.&lt;/li&gt;
+&lt;li&gt;There may be relevant information in the &lt;strong&gt;&lt;a href="faq"&gt;Finch FAQ&lt;/a&gt;&lt;/strong&gt; or at &lt;strong&gt;&lt;a href="https://github.com/dreamcat4/finch/issues"&gt;Finch issues&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;No luck?&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id="toc_2"&gt;Find the log files&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Save any direct Terminal output to a text file.&lt;/li&gt;
+&lt;li&gt;Obtain the Finch Log files (see below).&lt;/li&gt;
+&lt;li&gt;Be aware that &lt;code&gt;boot.log&lt;/code&gt; and &lt;code&gt;shutdown.log&lt;/code&gt; only record details of the last time Finch was started or stopped.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Log files can be found at:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$finch_realpath/var/log/finch/install.log
+$finch_realpath/var/log/finch/boot.log
+$finch_realpath/var/log/finch/shutdown.log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Where &lt;code&gt;$finch_realpath&lt;/code&gt; is the directory where you installed Finch FreeBSD.&lt;/p&gt;
+
+&lt;h2 id="toc_3"&gt;Untracked&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Send an email to: &lt;a href="mailto:dreamcat4@gmail.com"&gt;dreamcat4@gmail.com&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Try to be as precise and descriptive as possible.&lt;/li&gt;
+&lt;li&gt;Include terminal output and log files with your message.&lt;/li&gt;
+&lt;li&gt;Upload any screenshots to &lt;a href="http://imgur.com"&gt;imgur.com&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_4"&gt;Tracked&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Upload terminal output and log files to &lt;a href="http://pastie.org"&gt;pastie.org&lt;/a&gt; / &lt;a href="https://gist.github.com/"&gt;gist.github.com&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Upload any screenshots to &lt;a href="http://imgur.com"&gt;imgur.com&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/join"&gt;Signup&lt;/a&gt; for a GitHub account.&lt;/li&gt;
+&lt;li&gt;If the problem was already reported, then comment on the existing issue.&lt;/li&gt;
+&lt;li&gt;If the problem has not been reported yet, then &lt;a href="https://github.com/dreamcat4/finch/issues/new"&gt;open a new issue&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    <item>
+      <title>FAQ</title>
+      <link>/finch/faq</link>
+      <description>&lt;h1 id="toc_0"&gt;Frequently Asked Questions&lt;/h1&gt;
+
+&lt;p&gt;If it can&amp;#39;t be found here, then send an email to &lt;a href="mailto:dreamcat4@gmail.com"&gt;dreamcat4@gmail.com&lt;/a&gt; and we&amp;#39;ll try to answer it.&lt;/p&gt;
+
+&lt;p&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_0"&gt;Frequently Asked Questions&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_1"&gt;Installation&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_2"&gt;Why install FreeBSD into a chroot ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_3"&gt;Why not install Finch onto USB / compact flash aswell ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_4"&gt;Why only UFS or ZFS partitions ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;FreeNAS services not working after reboot ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_6"&gt;Can I install multiple copies of Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_7"&gt;Can I move the location of Finch after installation ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_8"&gt;Can finch be installed onto pfSense ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_9"&gt;Why does Finch install ... ?&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_10"&gt;qjail&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_11"&gt;sudo&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_12"&gt;bash&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_13"&gt;nano&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_14"&gt;FreeNAS / NAS4Free&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_15"&gt;Will Finch interfere with my FreeNAS / NAS4Free configuration ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_16"&gt;Why do I need Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_17"&gt;How does Finch compare to &amp;#39;thebrig&amp;#39; ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_18"&gt;Is finch + qjail compatible with FreeNAS jails / plugins ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_19"&gt;Will qjail conflict with my FreeNAS jails / plugins ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_20"&gt;Can I recompile my kernel with Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_21"&gt;Can I Compile FreeNAS or NAS4Free in Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_22"&gt;General&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_23"&gt;What about ez-jail ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_24"&gt;What about zjail ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_25"&gt;How to install my own programs in Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_26"&gt;Can I run VirtualBox VMs in Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_27"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_28"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_29"&gt;I get a pkg error (pkg-ng)&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_30"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_31"&gt;Why are Finch scripts prefixed with &amp;#39;ibps_*&amp;#39; ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_32"&gt;FreeBSD&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_33"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_34"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_35"&gt;Qjail&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_36"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_37"&gt;qjail config -p &amp;lt;cpuset&amp;gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;Installation&lt;/h2&gt;
+
+&lt;h3 id="toc_2"&gt;Why install FreeBSD into a chroot ?&lt;/h3&gt;
+
+&lt;p&gt;For some FreeBSD distributions, the base system image &lt;code&gt;/&lt;/code&gt; is loaded from a compressed archive file into a RAMDISK. All files are wiped clean every boot. This makes it very hard to install 3rd party software. By installing FreeBSD into a chroot, Finch provides a permanent and dedicated space where additional software packages can be installed. In the context of a server OS such as FreeBSD, the FreeBSD chroot is most useful as a staging area for FreeBSD jails. We therefore also include another tool: the &lt;code&gt;qjail&lt;/code&gt; jails management tool. So that any webservers or other server-side software and daemons can then be installed into their own individual FreeBSD jails.&lt;/p&gt;
+
+&lt;h3 id="toc_3"&gt;Why not install Finch onto USB / compact flash aswell ?&lt;/h3&gt;
+
+&lt;p&gt;Because NAND Flash (of the type found on CompactFlash cards, SD cards, and USB thumbdrives) is a relatively slow and low-endurance storage medium. With a limited write lifecycle and potential of failed writes / bad blocks. They are not a suitable medium for the frequent small write profile demanded by a typical operating system.&lt;/p&gt;
+
+&lt;h3 id="toc_4"&gt;Why only UFS or ZFS partitions ?&lt;/h3&gt;
+
+&lt;p&gt;Because FreeBSD assumes / expects certain filesystem features. If you install FreeBSD onto a FAT32 partition then it is not clearly known what kinds of background problems might occur. You may have slightly better luck with other, more &amp;quot;UFS-like&amp;quot; filesystems, such as linux EXT2/3/4. However don&amp;#39;t assume it&amp;#39;s going to work properly. Do your research before attempting such things. Same goes for network-mounted filesystems such as NFS.&lt;/p&gt;
+
+&lt;h3 id="toc_5"&gt;FreeNAS services not working after reboot ?&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You will find that FreeNAS services do not start correctly after Finch installation.&lt;/li&gt;
+&lt;li&gt;The problem occurs whilst Finch is installing FreeBSD, during the first reboot.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;FreeNAS services are not started until after all &lt;code&gt;POSTINIT&lt;/code&gt; scripts have finished execution. So after the first reboot (during Finch installation) the &lt;code&gt;etc/finch/postinit&lt;/code&gt; will take much longer to complete. Anywhere from &lt;strong&gt;&lt;em&gt;20 minutes&lt;/em&gt;&lt;/strong&gt; up to &lt;strong&gt;&lt;em&gt;1 hour&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Symptom:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The service will not start up properly after the first reboot.
+For example - ssh: error: &amp;quot;connection refused&amp;quot;&lt;/li&gt;
+&lt;li&gt;Other FreeNAS services may also be offline.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Solution #1:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Re-enable the service (toggle the switch on-&amp;gt;off-&amp;gt;on) in the FreeNAS Web GUI.
+This has been found to work for the ssh service.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Solution #2:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Wait until Finch has finished installing everything.
+The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_6"&gt;Can I install multiple copies of Finch ?&lt;/h3&gt;
+
+&lt;p&gt;Yes. Multiple instances of Finch can be installed and operated concurrently alongside one another. &lt;/p&gt;
+
+&lt;h3 id="toc_7"&gt;Can I move the location of Finch after installation ?&lt;/h3&gt;
+
+&lt;p&gt;Yes. Finch instances can be moved or relocated at any point after initial installation with the &lt;code&gt;finch bootstrap move&lt;/code&gt; subcommand. Be careful when moving across disks or filesystems. In those instances, first make a backup.&lt;/p&gt;
+
+&lt;h3 id="toc_8"&gt;Can finch be installed onto pfSense ?&lt;/h3&gt;
+
+&lt;p&gt;It isn&amp;#39;t likely to work - you are on your own. We don&amp;#39;t officially support pfsense because it is based on a much older version of FreeBSD. Being on stable means it lags behind the other platforms we support, thus making pfSense the odd-one-out. This is an important consideration in terms of Finch because we want to uniformly support a broad range of modern features.&lt;/p&gt;
+
+&lt;p&gt;FreeBSD-GERNEIC has just got to 10.0-RELEASE whilst the &lt;em&gt;newest&lt;/em&gt; psSense in HEAD remains on the same 8.3-RELEASE &lt;em&gt;which it has been on for the last&lt;/em&gt; &lt;strong&gt;&lt;em&gt;2 years&lt;/em&gt;&lt;/strong&gt;. Wheras &lt;em&gt;both&lt;/em&gt; FreeNAS and NAS4Free are now officially on 9.2-RELEASE. If you wish to provide contributions &amp;amp; patches for pfSense they are welcome... so long as they don&amp;#39;t interfere too much with the existing Finch codebase or make a whole big mess everywhere.&lt;/p&gt;
+
+&lt;h3 id="toc_9"&gt;Why does Finch install ... ?&lt;/h3&gt;
+
+&lt;h4 id="toc_10"&gt;qjail&lt;/h4&gt;
+
+&lt;p&gt;Because FreeBSD jails are such a commonly requested feature. The qjail tool does an adequate job. Finch installs qjail and pre-configures it to reduce the number of installation steps that would otherwise be required to arrive at a solution.&lt;/p&gt;
+
+&lt;h4 id="toc_11"&gt;sudo&lt;/h4&gt;
+
+&lt;p&gt;Finch isn&amp;#39;t trying to prescribe or mandate some specific security model. However in Finch the &lt;em&gt;chroot&lt;/em&gt; command is being frequently invoked. So sudo provides a convenient and practical way to permit &lt;code&gt;wheel&lt;/code&gt; users to execute this necessary &lt;em&gt;chroot&lt;/em&gt; command. Finch will auto-configure sudo by adding the following directive to your sudoers file if it doesn&amp;#39;t exist already: &lt;code&gt;%wheel ALL=(ALL) NOPASSWD: ALL&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id="toc_12"&gt;bash&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Because the generic FreeBSD bourne-shell &lt;code&gt;/bin/sh&lt;/code&gt; doesn&amp;#39;t have a &lt;code&gt;-l,--login&lt;/code&gt; option that guarantees &lt;code&gt;/etc/profile&lt;/code&gt; will be sourced. Wheras &lt;code&gt;bash -l&lt;/code&gt; works flawlessly.&lt;/li&gt;
+&lt;li&gt;The generic FreeBSD bourne-shell &lt;code&gt;/bin/sh&lt;/code&gt; does not have commandline auto-completion.&lt;/li&gt;
+&lt;li&gt;Neither &lt;code&gt;csh&lt;/code&gt; or &lt;code&gt;tcsh&lt;/code&gt; have a POSIX.2 or &lt;code&gt;bourne shell&lt;/code&gt; compatibility mode.&lt;/li&gt;
+&lt;li&gt;Because we didn&amp;#39;t write any login shell functions for &lt;code&gt;csh&lt;/code&gt; or &lt;code&gt;tcsh&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Because both FreeNAS and NAS4Free already come with Bash pre-installed.&lt;/li&gt;
+&lt;li&gt;Bash is bourne-shell compatible and POSIX.2 compliant without requiring modification or any special compatibility mode.&lt;/li&gt;
+&lt;li&gt;Because bash is a modern shell with many advanced features.&lt;/li&gt;
+&lt;li&gt;Because bash by is by a large margin the most widespread and commonly-used UNIX shell.&lt;/li&gt;
+&lt;li&gt;Because installing Bash does not require very much hard disk space.&lt;/li&gt;
+&lt;li&gt;Because installing Bash does not prevent users from using Finch with FreeBSD&amp;#39;s generic &lt;code&gt;/bin/sh&lt;/code&gt;. (They are reminded to &lt;code&gt;. /etc/profile&lt;/code&gt; however).&lt;/li&gt;
+&lt;li&gt;Because installing Bash does not prevent a user from installing other alternative POSIX.2 / bourne-compatible shell(s).&lt;/li&gt;
+&lt;li&gt;Because recommending one specific shell to all users does help to reduce the total number of shell-related problems / complaints / issues.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id="toc_13"&gt;nano&lt;/h4&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Because so few people voluntarily want to use &lt;code&gt;vi&lt;/code&gt; as their editor.&lt;/li&gt;
+&lt;li&gt;Because FreeBSD&amp;#39;s default editor &lt;code&gt;ee&lt;/code&gt; isn&amp;#39;t there on NAS4Free.&lt;/li&gt;
+&lt;li&gt;Because FreeBSD&amp;#39;s default editor &lt;code&gt;ee&lt;/code&gt; can often be slow / unresponsive.&lt;/li&gt;
+&lt;li&gt;Wheras Nano is a straightforward, no hassle text editor which is small and fast.&lt;/li&gt;
+&lt;li&gt;Because FreeNAS and NAS4Free platforms come with Nano pre-installed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_14"&gt;FreeNAS / NAS4Free&lt;/h2&gt;
+
+&lt;h3 id="toc_15"&gt;Will Finch interfere with my FreeNAS / NAS4Free configuration ?&lt;/h3&gt;
+
+&lt;p&gt;Finch installs everything it needs into it&amp;#39;s own subfolder on one of your data drives. Which are entirely seperate and isolated from the host system. Finch can be disabled entirely by removing the &lt;code&gt;POSTINIT&lt;/code&gt; boot script from your FreeNAS or NAS4Free configuration.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Finch will:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Add 1 line your host&amp;#39;s &lt;code&gt;/etc/profile&lt;/code&gt; POSIX login shell configuration file.&lt;/li&gt;
+&lt;li&gt;Auto configure &lt;code&gt;sudo&lt;/code&gt; as &lt;code&gt;%wheel ALL=(ALL) NOPASSWD: ALL&lt;/code&gt; for administrative accounts.&lt;/li&gt;
+&lt;li&gt;Symlink the &lt;code&gt;finch&lt;/code&gt; executable into &lt;code&gt;/usr/sbin&lt;/code&gt; so that it is on your &lt;code&gt;$PATH&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Finch  won&amp;#39;t:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Interfere with the FreeBSD Kernel running on your NAS box.&lt;sup&gt;1&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;Touch, modify or write to your FreeNAS / NAS4Free configuration.&lt;/li&gt;
+&lt;li&gt;Interfere with any running services on your NAS box (ssh, ftp, etc).&lt;sup&gt;2&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; However you may wish to load extra kernel modules for programs such as VirtualBox. &lt;br&gt;&lt;sup&gt;2&lt;/sup&gt; Running intensive 3rd party software inside Finch may slow down your existing NAS services.&lt;/p&gt;
+
+&lt;h3 id="toc_16"&gt;Why do I need Finch ?&lt;/h3&gt;
+
+&lt;p&gt;Because you may install any arbitrary software inside Finch&amp;#39;s chroot.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;NAS4Free:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To install arbitrary software, hassle-free.&lt;/li&gt;
+&lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;FreeNAS:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To install arbitrary software, hassle-free.&lt;/li&gt;
+&lt;li&gt;If you need to use tools other than warden &lt;sup&gt;1.&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; FreeNAS already comes with a tool (made by IX Systems) called &lt;code&gt;warden&lt;/code&gt; which provides the &amp;#39;Plugins&amp;#39; and &amp;#39;Jails&amp;#39; tabs in the FreeNAS Web GUI. Finch comes with &lt;code&gt;qjail&lt;/code&gt; - a FOSS tool for jails management. There are different advantages / disadvantages to each one.&lt;/p&gt;
+
+&lt;h3 id="toc_17"&gt;How does Finch compare to &amp;#39;thebrig&amp;#39; ?&lt;/h3&gt;
+
+&lt;p&gt;In short, Finch can do a lot more than &lt;code&gt;theBrig&lt;/code&gt;. Finch is also more flexible and future-proof.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Finch is not strictly limited to NAS4Free and jails.&lt;/li&gt;
+&lt;li&gt;Finch supports other platforms such as FreeNAS and official FreeBSD.&lt;/li&gt;
+&lt;li&gt;Finch does not expect that you want manage your FreeBSD jails manually.&lt;/li&gt;
+&lt;li&gt;Finch has no breakable PHP interface. There is no WebGUI like theBrig. Finch is a command line tool.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_18"&gt;Is finch + qjail compatible with FreeNAS jails / plugins ?&lt;/h3&gt;
+
+&lt;p&gt;Yes and No. FreeNAS uses &amp;quot;Warden&amp;quot; to provide it&amp;#39;s jails and plugins features. Warden is a component of PCBSD / trueOS / FreeNAS and produced by iXsystems incorporated. Wheras finch will install the freely available &amp;quot;qjail&amp;quot; FreeBSD port (which is a fork of the &amp;quot;ez-jail&amp;quot; port). With sufficient effort, it may be possible to modify, migrate or re-create an existing FreeNAS jail within qjail.&lt;/p&gt;
+
+&lt;p&gt;You can still continue to use all your FreeNAS plugins exactly as before. They are being managed by Warden behind-the-scenes. Wheras for jails both warden and qjail approximate each other&amp;#39;s functionality to a large extent. But they do each have their own set of advantages and disadvantages. It is up to you which one you would prefer to use.&lt;/p&gt;
+
+&lt;h3 id="toc_19"&gt;Will qjail conflict with my FreeNAS jails / plugins ?&lt;/h3&gt;
+
+&lt;p&gt;No. The two environments are entirely independent can happily co-exist. They are not aware of each other.&lt;/p&gt;
+
+&lt;h3 id="toc_20"&gt;Can I recompile my kernel with Finch ?&lt;/h3&gt;
+
+&lt;p&gt;Yes. There are 2 known caveats:&lt;/p&gt;
+
+&lt;p&gt;1) Be careful if changing the kernel IDENT string.&lt;/p&gt;
+
+&lt;p&gt;Don&amp;#39;t remove any existing references to &lt;code&gt;nas4free&lt;/code&gt; or &lt;code&gt;freenas&lt;/code&gt; (whichever applicable). Finch uses &lt;code&gt;uname&lt;/code&gt; to determine what platform it is on. Removing such substring from the kernel IDENT string &lt;u&gt;will&lt;/u&gt; cause issues and prevent Finch from starting. However it is OK to change other substrings in the kernel IDENT string. Here is the shellcode Finch uses to determine which platform it is running on:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;if [ &amp;quot;`uname -iv | grep -i freenas`&amp;quot; ] || [ &amp;quot;`uname -iv | grep -i nas4free`&amp;quot; ]; then
+  # Platform specific code here
+else
+  # FreeBSD GENERIC code here
+fi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;2) The new kernel will normally be installed into &lt;code&gt;/path/to/finch/boot/kernel&lt;/code&gt;. You will have to do something extra to boot the new kernel. What is required varies depending upon your specific platform.&lt;/p&gt;
+
+&lt;h3 id="toc_21"&gt;Can I Compile FreeNAS or NAS4Free in Finch ?&lt;/h3&gt;
+
+&lt;p&gt;We simply don&amp;#39;t know yet. Where are those FreeNAS and NAS4Free developers when you need them eh? Like the several other desirable but untested uses for Finch, will be glad update this section with better information just as soon as someone has &lt;strong&gt;&lt;a href="bugs"&gt;let us know&lt;/a&gt;&lt;/strong&gt; about it.&lt;/p&gt;
+
+&lt;h2 id="toc_22"&gt;General&lt;/h2&gt;
+
+&lt;h3 id="toc_23"&gt;What about ez-jail ?&lt;/h3&gt;
+
+&lt;p&gt;It&amp;#39;s allright as far as we know. You&amp;#39;re welcome to install and use ez-jail instead of qjail if that&amp;#39;s what you are used to / prefer. Just don&amp;#39;t try using them &lt;em&gt;both&lt;/em&gt;... they operate on the same folders and so conflicts are likely to occur. Finch doesn&amp;#39;t provide official support for ez-jail however it should work just fine.&lt;/p&gt;
+
+&lt;h3 id="toc_24"&gt;What about zjail ?&lt;/h3&gt;
+
+&lt;p&gt;Zfs jails. There may be some interest in this. However use at your own risk. It has not been tested in any way, and it&amp;#39;s zfs-related features may / may not work inside a chroot. Zjail is written entirely in Perl, and requires several Perl module dependancies. Their project website is here: &lt;a href="http://sourceforge.net/projects/zjails/"&gt;http://sourceforge.net/projects/zjails/&lt;/a&gt;. It may be possible to try out zjail without it interfering with qjail and similar jails management tools. Since zjail does not use the &lt;code&gt;/usr/jails&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;h3 id="toc_25"&gt;How to install my own programs in Finch ?&lt;/h3&gt;
+
+&lt;p&gt;Lets say you want to use &lt;code&gt;ezjail&lt;/code&gt;&lt;sup&gt;1&lt;/sup&gt; instead of &lt;code&gt;qjail&lt;/code&gt;. First we would install ezjail into our Finch system:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enter the finch chroot environment, as root
+sudo finch chroot
+
+# Either a) install with pkg-ng
+ASSUME_ALWAYS_YES=&amp;quot;yes&amp;quot; pkg install &amp;quot;ezjail&amp;quot;
+
+# Or b) compile from the ports tree
+cd &amp;quot;/usr/ports/sysutils/ezjail&amp;quot; &amp;amp;&amp;amp; make &amp;quot;config-recursive&amp;quot; &amp;quot;install&amp;quot; &amp;quot;clean&amp;quot;
+
+# If it has an rc.d service, enable that in Finch&amp;#39;s rc.conf file
+echo &amp;quot;ezjail_enable=\&amp;quot;YES\&amp;quot;&amp;quot; &amp;gt;&amp;gt; &amp;quot;/etc/rc.conf&amp;quot;
+
+# Leave the chroot
+exit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now we can add the command to our exports. The Finch exports feature is explained on the &lt;strong&gt;&lt;a href="usage#toc_4"&gt;usage page&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Add the command to our finch exports list
+finch export &amp;quot;ezjail-admin&amp;quot;
+
+# Check that it can be invoked from the host environment
+ezjail-admin --help
+man ezjail
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/strong&gt; &lt;sup&gt;1&lt;/sup&gt; It is not recommend to install the &lt;code&gt;ez-jail&lt;/code&gt; program if you are also intending to use the qjail program. Conflicts can arise since the &lt;code&gt;/usr/jails&lt;/code&gt; directory is the same for both programs.&lt;/p&gt;
+
+&lt;h3 id="toc_26"&gt;Can I run VirtualBox VMs in Finch ?&lt;/h3&gt;
+
+&lt;p&gt;In truth we simply aren&amp;#39;t sure yet. Why not be the first to report back your findings? &lt;strong&gt;&lt;a href="bugs"&gt;Let us know&lt;/a&gt;&lt;/strong&gt; what happens. Same goes for &lt;code&gt;xen&lt;/code&gt; and &lt;code&gt;bhyve&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id="toc_27"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/h3&gt;
+
+&lt;p&gt;Again we don&amp;#39;t know / haven&amp;#39;t tried. Where are the brave pioneers, waiting in the wings to recount their glorious tales of woe, adventure and misfortune ? Please &lt;strong&gt;&lt;a href="bugs"&gt;let us know&lt;/a&gt;&lt;/strong&gt;. Just send us an email or something.&lt;/p&gt;
+
+&lt;h3 id="toc_28"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/h3&gt;
+
+&lt;p&gt;If you type &lt;code&gt;su &amp;lt;user&amp;gt;&lt;/code&gt; or &lt;code&gt;sh&lt;/code&gt;, your prompt may turn into &lt;code&gt;#&lt;/code&gt;, or start looking like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;[user@hostname /path/to/pwd]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Solution:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Type &lt;code&gt;. /etc/profile&lt;/code&gt; to re-source the Finch login profile and reload the &lt;code&gt;PS1=&lt;/code&gt; prompt.&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;sudo su -l&lt;/code&gt; instead of plain &lt;code&gt;su&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_29"&gt;I get a pkg error (pkg-ng)&lt;/h3&gt;
+
+&lt;p&gt;There are many pkg errors. Unfortunately Finch cannot give direct support and in most cases you are likely to arrive at a solution far quicker by searching with google, or scouring the FreeBSD Forums.&lt;/p&gt;
+
+&lt;p&gt;However one (1) such error is known to occur upon entering an NON-interactive shell:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# pkg install ...
+pkg: PACKAGESITE in pkg.conf is deprecated. Please create a repository configuration file
+Updating repository catalogue
+pkg: Warning: use of ftp:// URL scheme with SRV records is deprecated: switch to pkg+ftp://
+pkg: ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/amd64/packages-current/Latest//digests.txz: File unavailable (e.g., file not found, no access)
+pkg: Unable to find catalogs
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The cause of the problem was never discovered. But the solution was to exit from the current shell. And then instead run &lt;code&gt;pkg&lt;/code&gt; from within an &lt;u&gt;interactive&lt;/u&gt; login shell, for example &lt;code&gt;bash -l&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id="toc_30"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/h3&gt;
+
+&lt;p&gt;Most of the the Finch scripts are held within a folder named &lt;code&gt;subr&lt;/code&gt;. It simply means &lt;em&gt;subroutines&lt;/em&gt; and is (for multi-file sh scripts) an analogue of the &amp;#39;C&amp;#39; language&amp;#39;s &lt;code&gt;include/&lt;/code&gt;. The name subr is taken from FreeBSD&amp;#39;s naming of it&amp;#39;s &lt;code&gt;rc.conf&lt;/code&gt; subroutines file &lt;code&gt;/etc/rc.subr&lt;/code&gt; (see &lt;code&gt;man rc.subr&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h3 id="toc_31"&gt;Why are Finch scripts prefixed with &amp;#39;ibps_*&amp;#39; ?&lt;/h3&gt;
+
+&lt;p&gt;For manageability, Finch is split into many individual subroutine files, each one with a specific purpose. Each subroutine source file is prefixed with an matrix identifier which can be any appropriate combination of these &lt;code&gt;ibps&lt;/code&gt; identifiers, where &lt;code&gt;i=install&lt;/code&gt;, &lt;code&gt;b=boot&lt;/code&gt;, &lt;code&gt;p=profile&lt;/code&gt;, and &lt;code&gt;s=shutdown&lt;/code&gt;. In the special case of &lt;code&gt;__p__&lt;/code&gt; we also load this same set for the functions needed by the Finch executable.&lt;/p&gt;
+
+&lt;p&gt;It is a crude dependancy loading mechanism, which is performed by the script in &lt;code&gt;subr/_____load&lt;/code&gt;. The purpose of the mechanism is to load only the necessary sub-set of subroutine files (as marked by the developer) and avoid loading functions that we don&amp;#39;t need for that given task. Rather than all of them all of the time. Thus keeping load times under control for the various Finch shell scripts.&lt;/p&gt;
+
+&lt;h2 id="toc_32"&gt;FreeBSD&lt;/h2&gt;
+
+&lt;h3 id="toc_33"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/h3&gt;
+
+&lt;p&gt;Yes indeed. And we are aware of it. However on balance we decided that there was no significant harm to come from also using Finch as our project&amp;#39;s name. For us &amp;quot;Finch&amp;quot; is by far the most apt, compelling, concise, and fit-for-purpose name. Nothing else could be found to serve as a good enough substitute or alternative. The other project can be found as &lt;code&gt;net-im/finch&lt;/code&gt; in the FreeBSD ports tree. In most cases these 2 projects shouldn&amp;#39;t present any major conflicts with one another. Mainly because:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The types of systems which need &lt;em&gt;this finch&lt;/em&gt; are restricted FreeBSD distributions. For example FreeNAS and NAS4Free. That usually means they are unable to install FreeBSD ports or pkgs including the &lt;em&gt;finch IM client&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;And moreso, server-oriented FreeBSD distributions don&amp;#39;t usually include the huge number of X-Windows dependencies that are required by the &lt;em&gt;finch IM client&lt;/em&gt;. Which makes the &lt;em&gt;finch im client&lt;/em&gt; very difficult and / or unlikely to be installed on the same systems where &lt;em&gt;this finch&lt;/em&gt; is also installed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It is also worth mentioning that as a system utility, we install &lt;em&gt;this finch&lt;/em&gt; into &lt;code&gt;/usr/sbin/&lt;/code&gt;. Wheras the &lt;em&gt;finch IM client&lt;/em&gt; installs it&amp;#39;s &lt;em&gt;finch command&lt;/em&gt; into &lt;code&gt;/usr/local/bin/&lt;/code&gt;. Which, by lucky co-incidence avoids any direct files conflict. The &lt;em&gt;finch im client&lt;/em&gt; happens to be the one with a lower priority on FreeBSD&amp;#39;s default search path. We recommend renaming the &lt;em&gt;im client&lt;/em&gt; executable by symlinking it to &lt;code&gt;finch-im&lt;/code&gt;. For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ln -sf &amp;quot;/usr/local/bin/finch&amp;quot; &amp;quot;/usr/local/bin/finch-im&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Will get you access back for the other one. Not too sure about the man pages though.&lt;/p&gt;
+
+&lt;h3 id="toc_34"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/h3&gt;
+
+&lt;p&gt;No plans for doing this. But will support and co-operate with any developer(s) wishing to improve or re-purpose the Finch tool.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Suggested improvement:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Currently we use FreeBSD&amp;#39;s stock &lt;code&gt;chroot (8)&lt;/code&gt; command line program. But a specially compiled &amp;#39;C&amp;#39; program could be run setuid root, in theory calling FreeBSD&amp;#39;s chroot(3) &amp;#39;C&amp;#39; function with regular user permissions. Which would open the possibility for finch to also work for ordinary user accounts.&lt;/p&gt;
+
+&lt;h2 id="toc_35"&gt;Qjail&lt;/h2&gt;
+
+&lt;h3 id="toc_36"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/h3&gt;
+
+&lt;p&gt;Because raw sockets (ICMP &amp;quot;ping&amp;quot;) is disabled by default. You can switch this feature on/off at any time.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enable raw sockets (allow &amp;quot;ping&amp;quot; command)
+qjail config -k &amp;quot;$jailname&amp;quot;
+
+# Disable raw sockets
+qjail config -K &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_37"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/h3&gt;
+
+&lt;p&gt;This feature is documented both in the &lt;code&gt;qjail&lt;/code&gt; manpage and the &lt;code&gt;jail&lt;/code&gt; manpage. However it doesn&amp;#39;t seem to work. Tested as broken on FreeBSD 9.1, 9.2, 10.0, on single &amp;amp; dual core CPU.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# For a quad-core CPU: &amp;quot;cpuset -g | grep -o -e mask.*&amp;quot; shouly say &amp;quot;mask: 0, 1, 2, 3&amp;quot;
+# Then valid cpu sets might be: &amp;quot;0&amp;quot;, &amp;quot;0-3&amp;quot; &amp;quot;2,3&amp;quot; etc, where &amp;quot;0&amp;quot; is the first core.
+export jail_cpu_set=&amp;quot;0&amp;quot;
+qjail config -p &amp;quot;$jail_cpu_set&amp;quot; &amp;quot;$jailname&amp;quot;
+
+qjail start myjail
+
+jail: test: unknown parameter: cpuset.id
+Error: /usr/sbin/jail failed to start jail myjail.
+because of errors in jail.conf file.
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    <item>
+      <title>Finch 8</title>
+      <link>/finch/finch-8</link>
+      <description>&lt;!-- 1e39d7b98d6a922eebab27b099570b19 --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta http-equiv='content-type' value='text/html;charset=utf8'&gt;
+  &lt;meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'&gt;
+  &lt;title&gt;finch(8) - FreeBSD in a chroot&lt;/title&gt;
+  &lt;style type='text/css' media='all'&gt;
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp &gt; p,.mp &gt; pre,.mp &gt; ul,.mp &gt; ol,.mp &gt; dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  &lt;/style&gt;
+  &lt;style type='text/css' media='all'&gt;
+  /* style: html_customizations */
+  .content {
+   max-width: 118ex;
+  }
+  .mp {
+   text-align:left;
+   display: inline;
+   
+   max-width: 115ex;
+   margin-right: 0px;
+   
+   padding: 0 0 0 0px;
+   
+   background-color: #fee;
+   position: center}
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+--&gt;
+&lt;body id='manpage'&gt;
+  &lt;div class='mp' id='man'&gt;
+
+  &lt;div class='man-navigation' style='display:none'&gt;
+    &lt;a href="#NAME"&gt;NAME&lt;/a&gt;
+    &lt;a href="#SYNOPSIS"&gt;SYNOPSIS&lt;/a&gt;
+    &lt;a href="#COMMANDS"&gt;COMMANDS&lt;/a&gt;
+    &lt;a href="#DESCRIPTION"&gt;DESCRIPTION&lt;/a&gt;
+    &lt;a href="#USAGE"&gt;USAGE&lt;/a&gt;
+    &lt;a href="#STARTING-STOPPING"&gt;STARTING / STOPPING&lt;/a&gt;
+    &lt;a href="#USER-CONFIGURATION"&gt;USER CONFIGURATION&lt;/a&gt;
+    &lt;a href="#EXPORTS"&gt;EXPORTS&lt;/a&gt;
+    &lt;a href="#UPGRADING"&gt;UPGRADING&lt;/a&gt;
+    &lt;a href="#EXECUTABLE"&gt;EXECUTABLE&lt;/a&gt;
+    &lt;a href="#STARTUP-SHUTDOWN"&gt;STARTUP / SHUTDOWN&lt;/a&gt;
+    &lt;a href="#DIRECTORIES"&gt;DIRECTORIES&lt;/a&gt;
+    &lt;a href="#WEBSITE"&gt;WEBSITE&lt;/a&gt;
+    &lt;a href="#BUGS"&gt;BUGS&lt;/a&gt;
+    &lt;a href="#SEE-ALSO"&gt;SEE ALSO&lt;/a&gt;
+    &lt;a href="#Created-by"&gt;Created by&lt;/a&gt;
+  &lt;/div&gt;
+
+  &lt;ol class='man-decor man-head man head'&gt;
+    &lt;li class='tl'&gt;finch(8)&lt;/li&gt;
+    &lt;li class='tc'&gt;FreeBSD in a chroot&lt;/li&gt;
+    &lt;li class='tr'&gt;finch(8)&lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;h2 id="NAME"&gt;NAME&lt;/h2&gt;
+&lt;p class="man-name"&gt;
+  &lt;code&gt;finch&lt;/code&gt; - &lt;span class="man-whatis"&gt;FreeBSD in a chroot&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;h2 id="SYNOPSIS"&gt;SYNOPSIS&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;finch &amp;lt;cmd&gt; [args]
+finch --help
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="COMMANDS"&gt;COMMANDS&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;start     - Mount Finch and start it's rc.d services.
+stop      - Stop Finch's rc.d services and unmount "finch/dev".
+restart   - Same as `finch stop` followed by `finch start`.
+status    - Report on Finch service status (enabled/disabled).
+chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
+export    - Map a new command into Finch exports (`finch export &amp;lt;cmd&gt;`).
+-export   - Remove a command from Finch exports (`finch -export &amp;lt;cmd&gt;`).
+&amp;lt;export&gt;  - Run a command listed in Finch exports (`finch &amp;lt;export&gt;`).
+update    - Update the Finch scripts (this program) to the latest version.
+refresh   - Refresh /finch/etc/ files (resolv.conf, localtime &amp;amp; passwd).
+bootstrap - Run the curl-based online installation script `finch-bootstrap`.
+realpath  - The real path to Finch ("$finch_realpath", "/path/to/finch").
+--version - Print the current version of Finch and exit.
+-h,--help - Display this message and exit.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="DESCRIPTION"&gt;DESCRIPTION&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Finch&lt;/em&gt; is FreeBSD &lt;em&gt;running inside a &lt;code&gt;chroot&lt;/code&gt;&lt;/em&gt;. Finch is best used as a way to extend the functionality of restricted USB-based FreeBSD distributions, usually FREENAS and NAS4FREE. For added convenience, Finch also includes the &lt;code&gt;qjail&lt;/code&gt; jails management tool. Since FreeBSD jails are such a popular request.&lt;/p&gt;
+
+&lt;p&gt;Recommended system configuration:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Restricted FreeBSD host &amp;lt;--&gt; Finch &amp;lt;--&gt; qjail &amp;lt;--&gt; your jails&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id="USAGE"&gt;USAGE&lt;/h2&gt;
+
+&lt;p&gt;Chroot into the Finch environment by typing &lt;code&gt;finch chroot&lt;/code&gt;. All other operations may be performed by
+issuing relevant subcommand. &lt;code&gt;finch --help&lt;/code&gt; for more information. Or visit the website at
+&lt;a href="http://dreamcat4.github.io/finch/usage" data-bare-link="true"&gt;http://dreamcat4.github.io/finch/usage&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="STARTING-STOPPING"&gt;STARTING / STOPPING&lt;/h2&gt;
+
+&lt;p&gt;You may manually start or stop Finch at any time simply by issuing the relevant finch subcommand &lt;code&gt;finch start&lt;/code&gt; or &lt;code&gt;finch stop&lt;/code&gt;. See &lt;code&gt;finch --help&lt;/code&gt; for more information. However the boot-time mechanisms for running Finch are platform-specific.&lt;/p&gt;
+
+&lt;p&gt;On FreeNAS and NAS4Free hosts, the Finch &lt;em&gt;POSTINIT&lt;/em&gt; and &lt;em&gt;SHUTDOWN&lt;/em&gt; scripts must be entered into the relevant web-based configuration pages. Which will tell FreeNAS / NAS4Free to automatically start and stop Finch at bootup and shutdown.&lt;/p&gt;
+
+&lt;p&gt;For other platforms such as FreeBSD-GENERIC where the traditional rc.d mechanism is properly
+supported, the Finch service can be started / stopped in the normal manner with it's &lt;em&gt;rc.d&lt;/em&gt; script.
+The necessary rc.conf statements are automatically added to the system's &lt;em&gt;/etc/rc.conf&lt;/em&gt; file for you
+during installation. To prevent conflicts between multiple installed instances, the Finch rc.d script is given a unique name: &lt;em&gt;/etc/rc.d/finch-path.to.finch&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id="USER-CONFIGURATION"&gt;USER CONFIGURATION&lt;/h2&gt;
+
+&lt;p&gt;To execute the &lt;code&gt;finch&lt;/code&gt; command, your user account must be a member of group &lt;code&gt;wheel&lt;/code&gt;. This is
+because on FreeBSD the &lt;code&gt;chroot&lt;/code&gt; command requires root user level access privileges. Therefore, to
+run Finch commands also requires at least administrator level permissions.&lt;/p&gt;
+
+&lt;p&gt;Finch will auto-configure sudo for all &lt;code&gt;wheel&lt;/code&gt; users without a password, by ensuring the sudo entry
+&lt;em&gt;%wheel ALL=(ALL) NOPASSWD: ALL&lt;/em&gt;) is included in your host's sudoers file. This auto-configuration
+is considered necessary as to use Finch effectively requires a frequent invocation of the &lt;code&gt;chroot&lt;/code&gt;
+command. The necessary configuration is handled automatically.&lt;/p&gt;
+
+&lt;p&gt;It is also highly recommended to configure the default user login shell to the &lt;code&gt;bash&lt;/code&gt;. Finch
+automatically adds it's login profile to &lt;code&gt;/etc/profile&lt;/code&gt;, which is automatically sourced by the
+&lt;em&gt;bash&lt;/em&gt; shell.&lt;/p&gt;
+
+&lt;p&gt;The Finch login profile adds further convenience whilst invoking commands through &lt;em&gt;sudo&lt;/em&gt; or from the
+Finch &lt;em&gt;exports&lt;/em&gt; list. This Finch login profile is not exclusively only for &lt;em&gt;bash&lt;/em&gt;. It may be sourced
+by any POSIX.2 compatible shell, (bourne-style shell), for example FreeBSD's &lt;code&gt;/bin/sh&lt;/code&gt;. In which
+case, please consult the shell's documentation for loading &lt;em&gt;/etc/profile&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id="EXPORTS"&gt;EXPORTS&lt;/h2&gt;
+
+&lt;p&gt;The Finch &lt;em&gt;exports&lt;/em&gt; feature provides a way to auto-chroot for certain
+frequently-used commands. If not present on the host environment, the command is searched for and
+executed within the Finch chroot environment instead. Of course whilst inside the chroot, the root
+tree and filesystem are not accessible. This is worth remembering.&lt;/p&gt;
+
+&lt;h2 id="UPGRADING"&gt;UPGRADING&lt;/h2&gt;
+
+&lt;p&gt;Updating Finch administrative scripts is trivial, and can be done at any time with &lt;code&gt;finch update&lt;/code&gt;. Upgrading the version of FreeBSD located inside Finch's chroot is a more delicate and involved
+process. Full instructions are up on the website at &lt;a href="http://dreamcat4.github.io/finch/upgrading" data-bare-link="true"&gt;http://dreamcat4.github.io/finch/upgrading&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="EXECUTABLE"&gt;EXECUTABLE&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$finch_realpath/usr/sbin/finch --&amp;gt; /usr/sbin/finch
+For additional instances, manually symlink finch2,3 into /usr/sbin/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="STARTUP-SHUTDOWN"&gt;STARTUP / SHUTDOWN&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$finch_realpath/etc/finch/postinit
+$finch_realpath/etc/finch/shutdown
+- OR -
+$finch_realpath/etc/rc.d/finch --&amp;gt; /etc/rc.d/finch-path.to.finch
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="DIRECTORIES"&gt;DIRECTORIES&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$finch_realpath/etc/finch/
+$finch_realpath/var/db/finch/
+$finch_realpath/var/log/finch/
+$finch_realpath/var/distfiles/finch/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="WEBSITE"&gt;WEBSITE&lt;/h2&gt;
+
+&lt;p&gt;For the most up-to-date documentation please visit the project homepage at &lt;a href="http://dreamcat4.github.io/finch" data-bare-link="true"&gt;http://dreamcat4.github.io/finch&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="BUGS"&gt;BUGS&lt;/h2&gt;
+
+&lt;p&gt;Can be reported at &lt;a href="http://dreamcat4.github.io/finch/bugs" data-bare-link="true"&gt;http://dreamcat4.github.io/finch/bugs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="SEE-ALSO"&gt;SEE ALSO&lt;/h2&gt;
+
+&lt;p&gt;&lt;span class="man-ref"&gt;chroot&lt;span class="s"&gt;(8)&lt;/span&gt;&lt;/span&gt;, &lt;span class="man-ref"&gt;qjail&lt;span class="s"&gt;(8)&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id="Created-by"&gt;Created by&lt;/h2&gt;
+
+&lt;p&gt;Dreamcat4, "dreamcat4@gmail.com" (C 2014). FreeBSD License.&lt;/p&gt;
+
+
+  &lt;ol class='man-decor man-foot man foot'&gt;
+    &lt;li class='tl'&gt;dreamcat4-finch&lt;/li&gt;
+    &lt;li class='tc'&gt;March 2014&lt;/li&gt;
+    &lt;li class='tr'&gt;finch(8)&lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</description>
+    </item>
+    <item>
+      <title>Index</title>
+      <link>/finch</link>
+      <description>&lt;p&gt;! Do not delete.
+! This page is intentionally left blank.
+! Needed for rendering / in a pages context.
+! The real page is as _root/index.md.&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Install</title>
+      <link>/finch/install</link>
+      <description>&lt;p&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_0"&gt;Install&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_1"&gt;Installer options&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_2"&gt;Post-Install Steps&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_3"&gt;NAS4Free&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_4"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;Add bootup / shutdown scripts&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_6"&gt;Start the Finch FreeBSD installation process&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_7"&gt;FreeNAS&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_8"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_9"&gt;Add bootup / shutdown scripts&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_10"&gt;Start the Finch FreeBSD installation process&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_11"&gt;FreeNAS services not working after reboot ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_12"&gt;FreeBSD-GENERIC&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_13"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;h1 id="toc_0"&gt;Install&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Check that your system matches the &lt;a href="/#toc_1"&gt;Platform Requirements&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Login as the &lt;code&gt;root&lt;/code&gt; user. Then copy-paste these 3 commands into your terminal window:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;/bin/sh
+alias finch-bootstrap=&amp;quot;fetch -q -o - http://git.io/HxXrsw | sh -s --&amp;quot;
+finch-bootstrap --help
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Where typing &lt;a href="#toc_1"&gt;&lt;code&gt;finch-bootstrap --help&lt;/code&gt;&lt;/a&gt; will show you the available installer options.&lt;/li&gt;
+&lt;li&gt;Under normal conditions the default settings should be fine.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To install Finch,&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;finch-bootstrap install --dir &amp;quot;/path/to/finch&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="#toc_2"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The Finch &amp;quot;bootstrap&amp;quot; installer will run it&amp;#39;s preflight checks and ask for confirmation before continuing.&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;You will be guided through the remainder of the installation process.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Follow carefully any instructions being printed by the &lt;code&gt;finch-bootstrap&lt;/code&gt; installer. Those messages provide valuable information about your Finch setup and help to avoid any unnecessary issues.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;On FreeNAS / NAS4Free it is worth configuring SMTP email in the Web GUI. Be sure to also set a &amp;quot;to:&amp;quot; destination address in your SMARTD email settings. Then you will be emailed progress updates during installation.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id="toc_1"&gt;Installer options&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;$ finch-bootstrap --help
+
+Usage:
+    $ finch-bootstrap &amp;quot;command&amp;quot; [--options]
+
+Example:
+    $ finch-bootstrap install --dir &amp;quot;/mnt/disk0/finch&amp;quot;
+
+Commands:
+
+    install   - Install a new copy of Finch FreeBSD.
+    uninstall - Uninstall a copy of Finch FreeBSD.
+    update    - Update the finch command and finch scripts to the latest version.
+    move      - Move/rename the paths/locations to this copy of finch.
+
+Options:
+
+    -d, --dir &amp;quot;{realpath}&amp;quot;
+         The fulle installation &amp;quot;/path/to/finch&amp;quot;. Defaults to &amp;quot;\$PWD/finch&amp;quot;.
+         ~ if not set a new subdirectory will be created here named &amp;quot;finch&amp;quot;.
+         Internally referred to as &amp;quot;$finch_realpath&amp;quot; - the chroot directory.
+
+    -y, --yes
+         Do not prompt for user confirmation before continuing. Useful
+         for unattended operations or launching from other scripts.
+
+    -f, --force
+         Do not exit when a potential problem is encountered. Continue
+         regardless of all warnings and errors.
+
+    -e, --dest-dir &amp;quot;{dest_dir}&amp;quot;
+         (move) A destination path where to move this installation.
+         Where the current location is specified by &amp;quot;--dir {realpath}&amp;quot;.
+
+    -t, --txz-distfiles-dir &amp;quot;{txz_distfiles_dir}&amp;quot;
+         (install) A local folder from which to obtain the FreeBSD &amp;quot;.txz&amp;quot;
+         distribution files from (&amp;quot;distfiles&amp;quot;), &amp;quot;base.txz&amp;quot;... etc. With this
+         option *nothing* will be downloaded from ftp://ftp.freebsd.org.
+         You will be locally responsible for ensuring a correct set of
+         distribution files is present. All &amp;quot;*.txz&amp;quot; files found in the folder
+         will be unpacked / installed to the target directory (&amp;quot;--dir {dir}&amp;quot;).
+
+    -x, --debug
+         Debugging output. Switches on &amp;quot;set -x&amp;quot; to echo all commands.
+
+    -h, --help
+         Display this message and exit.
+
+Bugs:
+    Can be reported at http://dreamcat4.github.io/finch/bugs
+
+Created by:
+    Dreamcat4, &amp;quot;dreamcat4@gmail.com&amp;quot; (C 2014). FreeBSD License.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id="toc_2"&gt;Post-Install Steps&lt;/h1&gt;
+
+&lt;p&gt;Choose your platform from the list below.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="#toc_3"&gt;NAS4Free&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_7"&gt;FreeNAS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_12"&gt;FreeBSD-GENERIC&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_3"&gt;NAS4Free&lt;/h2&gt;
+
+&lt;p&gt;These steps should be followed after installation.&lt;/p&gt;
+
+&lt;h3 id="toc_4"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the NAS4Free Web GUI Go to &lt;code&gt;Access|Users&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Click the spanner icon, &lt;code&gt;Edit User&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select Group &lt;strong&gt;&lt;code&gt;wheel&lt;/code&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;strong&gt;&lt;code&gt;bash&lt;/code&gt;&lt;/strong&gt; as The User&amp;#39;s login shell.&lt;/li&gt;
+&lt;li&gt;Click --&amp;gt; &lt;code&gt;Save&lt;/code&gt; --&amp;gt; &lt;code&gt;Apply changes&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_5"&gt;Add bootup / shutdown scripts&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the NAS4Free Web GUI&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Go to &lt;code&gt;System|Advanced|Command Scripts&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Click &lt;code&gt;+&lt;/code&gt; and add the folowing &lt;code&gt;POSTINIT&lt;/code&gt; script&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;/data/finch/etc/finch/postinit&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Click &lt;code&gt;+&lt;/code&gt; and add the folowing &lt;code&gt;SHUTDOWN&lt;/code&gt; script&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;/data/finch/etc/finch/shutdown&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_6"&gt;Start the Finch FreeBSD installation process&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Reboot your NAS4Free system. Installation will begin on next boot.&lt;/li&gt;
+&lt;li&gt;To check progress login on the command line and type:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Installation will take anywhere from 20 minutes up to 1 hour.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_7"&gt;FreeNAS&lt;/h2&gt;
+
+&lt;p&gt;These steps should be followed after installation.&lt;/p&gt;
+
+&lt;h3 id="toc_8"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the FreeNAS Web GUI Expand &lt;code&gt;+ Account&lt;/code&gt; --&amp;gt; &lt;code&gt;+ Users&lt;/code&gt; --&amp;gt; &lt;code&gt;View Users&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select the account from the list of all users. Click to highlight the entry.&lt;/li&gt;
+&lt;li&gt;Click the &lt;code&gt;Modify User&lt;/code&gt; button that appears.&lt;/li&gt;
+&lt;li&gt;Select Shell: &lt;strong&gt;&lt;code&gt;bash&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;Auxilary Groups&lt;/code&gt; &amp;gt;&amp;gt; &lt;strong&gt;&lt;code&gt;wheel&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Click &lt;code&gt;OK&lt;/code&gt; to close the window and save changes.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_9"&gt;Add bootup / shutdown scripts&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the FreeNAS Web GUI:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Expand &lt;code&gt;+ System&lt;/code&gt; --&amp;gt; &lt;code&gt;+ Init/Shutdown Scripts&lt;/code&gt; --&amp;gt; &lt;code&gt;Add Init/Shutdown Script&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the folowing &lt;code&gt;POSTINIT&lt;/code&gt; script:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;/path/to/finch/etc/finch/postinit&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the folowing &lt;code&gt;SHUTDOWN&lt;/code&gt; script:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;/path/to/finch/etc/finch/shutdown&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_10"&gt;Start the Finch FreeBSD installation process&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Reboot your FreeNAS system. Installation will begin on next boot.&lt;/li&gt;
+&lt;li&gt;To check progress login on the command line and type:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Installation will take anywhere from 20 minutes up to 1 hour.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_11"&gt;FreeNAS services not working after reboot ?&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You will find that FreeNAS services do not start correctly after Finch installation.&lt;/li&gt;
+&lt;li&gt;The problem occurs whilst Finch is installing FreeBSD, during the first reboot.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;FreeNAS services are not started until after all &lt;code&gt;POSTINIT&lt;/code&gt; scripts have finished execution. So after the first reboot (during Finch installation) the &lt;code&gt;etc/finch/postinit&lt;/code&gt; will take much longer to complete. Anywhere from &lt;strong&gt;&lt;em&gt;20 minutes&lt;/em&gt;&lt;/strong&gt; up to &lt;strong&gt;&lt;em&gt;1 hour&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Symptom:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The service will not start up properly after the first reboot.
+For example - ssh: error: &amp;quot;connection refused&amp;quot;&lt;/li&gt;
+&lt;li&gt;Other FreeNAS services may also be offline.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Solution #1:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Re-enable the service (toggle the switch on-&amp;gt;off-&amp;gt;on) in the FreeNAS Web GUI.
+This has been found to work for the ssh service.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Solution #2:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Wait until Finch has finished installing everything.
+The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_12"&gt;FreeBSD-GENERIC&lt;/h2&gt;
+
+&lt;p&gt;These steps should be followed after installation.&lt;/p&gt;
+
+&lt;h3 id="toc_13"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Be a member of group wheel&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;pw user mod $USER -G wheel&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Set `bash` or `sh` as your default login shell&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;pw user mod $USER -s /usr/local/bin/bash&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Close any open terminals or shells and log back in again&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;. /etc/profile&amp;quot; will re-source profile for this shell
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Reboot or issue &amp;quot;finch refresh&amp;quot; on the command line.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    <item>
+      <title>Jails How To</title>
+      <link>/finch/jails-how-to</link>
+      <description>&lt;h1 id="toc_0"&gt;Jails - How To&lt;/h1&gt;
+
+&lt;p&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_0"&gt;Jails - How To&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_1"&gt;Pre-requisites&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_2"&gt;Create a new jail&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_3"&gt;Login for the first time&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_4"&gt;Install a webserver&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;What next ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;Pre-requisites&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="/#toc_2"&gt;Install Finch&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="jails-ip-addresses"&gt;Reserve an IP address&lt;/a&gt;&lt;/strong&gt; for your new jail.&lt;/li&gt;
+&lt;li&gt;Decide whether you need &lt;strong&gt;&lt;a href="jails-ssh"&gt;ssh access&lt;/a&gt;&lt;/strong&gt; for this jail.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_2"&gt;Create a new jail&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enter the finch chroot environment, as root
+sudo finch chroot
+
+# Read the page &amp;quot;jail-ip-addresses&amp;quot; before choosing a jail IP address
+export jail_ip=&amp;quot;192.168.1.201&amp;quot;
+
+# Give an appropriate server name to your jail
+export jailname=&amp;quot;nginx&amp;quot;
+
+# Create a basic jail, with local console access
+qjail create -4 &amp;quot;$jail_ip&amp;quot; &amp;quot;$jailname&amp;quot;
+
+# (optional) enable raw sockets to allow &amp;quot;ping&amp;quot; command
+qjail config -k &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_3"&gt;Login for the first time&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;# Start the jail
+qjail start &amp;quot;$jailname&amp;quot;
+
+# Login to our new jail as root
+qjail console &amp;quot;$jailname&amp;quot;
+
+# (optional) set the root password
+passwd
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_4"&gt;Install a webserver&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;# Either a) install with pkg-ng
+ASSUME_ALWAYS_YES=&amp;quot;yes&amp;quot; pkg install &amp;quot;nginx&amp;quot;    
+
+# Or b) compile from the ports tree
+cd &amp;quot;/usr/ports/www/nginx&amp;quot; &amp;amp;&amp;amp; make &amp;quot;config-recursive&amp;quot; &amp;quot;install&amp;quot; &amp;quot;clean&amp;quot;
+
+# Enable nginx rc.d service inside the jail
+printf &amp;quot;\n\nnginx_enable=\&amp;quot;YES\&amp;quot;\n\n&amp;quot; &amp;gt;&amp;gt; &amp;quot;/etc/rc.conf&amp;quot;
+
+# Exit from the jail
+exit
+
+# Restart the nginx jail - should start the nginx rc.d script
+qjail restart &amp;quot;$jailname&amp;quot;
+
+# Check that nginx is running
+fetch -o - &amp;quot;http://$jail_ip&amp;quot; # or open &amp;quot;http://$jail_ip&amp;quot; in a web brower
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_5"&gt;What next ?&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Learn how to mount user data into your jails with &lt;strong&gt;&lt;a href="mounting-filesystems"&gt;Mounting filesystems&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Read the &lt;strong&gt;&lt;a href="jails-ssh"&gt;Jails ssh How To&lt;/a&gt;&lt;/strong&gt; to create a jail with ssh access.&lt;/li&gt;
+&lt;li&gt;Consult the &lt;strong&gt;&lt;a href="qjail-reference"&gt;Qjail reference&lt;/a&gt;&lt;/strong&gt; page for more jails.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    <item>
+      <title>Jails Ip Addresses</title>
+      <link>/finch/jails-ip-addresses</link>
+      <description>&lt;h1 id="toc_0"&gt;Jails - IP Addresses&lt;/h1&gt;
+
+&lt;p&gt;Each time a jail is started, FreeBSD&amp;#39;s jail(8) utility will tell ifconfig to create a simple alias to your jail&amp;#39;s designated ip address. However that only occurs on the FreeBSD host machine. In most situations, your local network is under the control of a local router. So to prevent ip address conflicts elsewhere you should reserve your jail&amp;#39;s ip address on your local router too.&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;Reservation Strategies&lt;/h2&gt;
+
+&lt;h4 id="toc_2"&gt;1) Use High-IPs&lt;/h4&gt;
+
+&lt;p&gt;Most router DHCP servers usually allocate ips in ascending order. So one strategy is simply give jails a high-enough ip addresses that they will not be likely to cause conflicts.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;For example: start your jails at &amp;quot;192.168.1.100&amp;quot;, or &amp;quot;192.168.1.200&amp;quot; etc.&lt;/li&gt;
+&lt;li&gt;Not the most flexible / efficient way to allocate IP addresses. There may be some wastage.&lt;/li&gt;
+&lt;li&gt;Be aware that the highest IP address is going to be about &amp;quot;192.168.1.255&amp;quot;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id="toc_3"&gt;2) Alter the DHCP range&lt;/h4&gt;
+
+&lt;p&gt;Optionally, you may also decide restrict your home router&amp;#39;s DHCP allocation range. The requires going into your router&amp;#39;s DHCP settings and changing the first / last IP address.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A DHCP range of &amp;quot;192.168.1.2&amp;quot; --&amp;gt; &amp;quot;192.168.1.100&amp;quot; will not conflict with jails that start at &amp;quot;.101&amp;quot;.&lt;/li&gt;
+&lt;li&gt;Or you could make the DHCP start at a higher IP, leaving the lower IP range available for jails.&lt;/li&gt;
+&lt;li&gt;Still not the most flexible / efficient way to allocate IP addresses. There may be some wastage.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id="toc_4"&gt;3) Static DHCP - Multi-IP&lt;/h4&gt;
+
+&lt;p&gt;This option depends entirely on your router&amp;#39;s capabilities. Unfortunately for most home routers it&amp;#39;s not possible to assign multiple static IPs to the a single mac address. Normally only 1 IP can be assigned to each MAC address and no more. However if your specific router supports it, then by all means use this method.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;With static DHCP you can assign &lt;em&gt;any arbitrary IP address&lt;/em&gt; within the same mixed DHCP range.&lt;/li&gt;
+&lt;li&gt;The same DHCP server is then aware of your jail&amp;#39;s IP address and won&amp;#39;t assign it to any other devices.&lt;/li&gt;
+&lt;li&gt;Feature usually not capable of assigning multiple IPs to only 1 MAC address.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id="toc_5"&gt;4) Static DHCP - fake MAC address&lt;/h4&gt;
+
+&lt;p&gt;If your router does not support method 3), you may still be able to use Static DHCP. Just create your &amp;quot;static DHCP&amp;quot; entries with FAKE mac addresses.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Be sure that the MAC addresses you choose are not real, and do not exist on your LAN.&lt;/li&gt;
+&lt;li&gt;Locally administered MAC addresses should start with the byte &lt;code&gt;0x02:&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Protects the jail IP address(es) from being grabbed away by the regular DHCP pool.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    <item>
+      <title>Jails Ssh</title>
+      <link>/finch/jails-ssh</link>
+      <description>&lt;h1 id="toc_0"&gt;Jails - Ssh&lt;/h1&gt;
+
+&lt;p&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_0"&gt;Jails - Ssh&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_1"&gt;Terminal access via FreeBSD host&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_2"&gt;3 ways to create a jail with ssh access&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_3"&gt;Create a jail with ssh enabled&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_4"&gt;Part A - Create the jail&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;Part B - Create an account for ssh&amp;#39;ing into your jail&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_6"&gt;Create a jail with ssh enabled for root&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_7"&gt;Turn on ssh in an existing jail&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;Terminal access via FreeBSD host&lt;/h2&gt;
+
+&lt;p&gt;If you create a jail without specifying ssh, it will not be enabled on that jail. However if we can ssh into the FreeBSD host machine then we may use that same route to access any of our jails.&lt;/p&gt;
+
+&lt;p&gt;The command &lt;code&gt;qjail console $jailname&lt;/code&gt; will launch a root login shell and enter you into the chosen jail.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ssh &amp;quot;$freebsd_host&amp;quot;
+sudo qjail console &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Or as one single command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ssh &amp;quot;$freebsd_host&amp;quot; sudo finch chroot qjail console &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This can be made into a very simple shell function or a batch file on Windows. For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;qjail-remote-console ()
+{
+  if [ &amp;quot;$#&amp;quot; -gt &amp;quot;0&amp;quot; ]; then
+    local freebsd_host=&amp;quot;192.168.1.XXX&amp;quot;     # the freebsd host system
+
+    ssh &amp;quot;$freebsd_host&amp;quot; sudo finch chroot qjail console &amp;quot;$@&amp;quot;
+
+  else
+    echo &amp;quot;usage: qjail-remote-console &amp;lt;jailname&amp;gt;&amp;quot;
+  fi
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; The &lt;code&gt;qjail console&lt;/code&gt; command only provides a login for tty / terminal access. It does not enable ssh inside the jail. Almost all other ssh-based services are designed to connect to a real ssh daemon and won&amp;#39;t work with this method.&lt;/p&gt;
+
+&lt;h2 id="toc_2"&gt;3 ways to create a jail with ssh access&lt;/h2&gt;
+
+&lt;p&gt;It&amp;#39;s best to decide upon ssh access &lt;strong&gt;before&lt;/strong&gt; creating your jails. There are 2-3 ssh templates (known as &lt;code&gt;flavors&lt;/code&gt;) to choose from.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Firstly, the qjail flavor &lt;code&gt;ssh-default&lt;/code&gt; is provided by &lt;code&gt;qjail&lt;/code&gt;. And is documented in the qjail manpage (enabled with the &lt;code&gt;-c&lt;/code&gt; switch on &lt;code&gt;qjail create&lt;/code&gt;, or &lt;code&gt;-h&lt;/code&gt; switch on &lt;code&gt;qjail config&lt;/code&gt;). We do not encourage it&amp;#39;s use however because you are forced into using a specific username.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Using a &lt;code&gt;finch&lt;/code&gt; template - RECOMMENDED. Finch installs for you 2 templates (known as &lt;code&gt;flavors&lt;/code&gt;) which will provide ssh access in a more flexible way than qjail&amp;#39;s built-in method. They are are documented below further down on this page. Choose either the &amp;quot;finch-ssh&amp;quot; or &amp;quot;finch-ssh-root&amp;quot; flavor when creating your jail. The only difference is that &amp;quot;finch-ssh&amp;quot; will forbid root account ssh logins. Wheras &amp;quot;finsh-ssh-root&amp;quot; will permit ssh logins for all user accounts, including the &lt;code&gt;root&lt;/code&gt; user. It&amp;#39;s a personal security choice. You only need to follow ONE of the 2 documented procedures (not both of them).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Finally the last method is to manually turn on ssh for an existing jail. Because you might have already created your jail without the necessary ssh flavor, or have deferred the decision to switch on ssh until later on.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;After enabling ssh access, you can login over ssh with a username and password. This will in turn allow you to setup passwordless ssh access. So as a final step (after choosing one of the 3 available solutions on &lt;em&gt;this&lt;/em&gt; page), then why not head on over to &lt;a href="http://www.commandlinefu.com/commands/view/188/copy-your-ssh-public-key-to-a-server-from-a-machine-that-doesnt-have-ssh-copy-id"&gt;commandlinefu.com&lt;/a&gt; where you can learn how to scp over your ssh keys (&lt;code&gt;~/.ssh/id_rsa.pub&lt;/code&gt;) and edit your &lt;code&gt;~/.ssh/authorized_keys&lt;/code&gt; file.&lt;/p&gt;
+
+&lt;h2 id="toc_3"&gt;Create a jail with ssh enabled&lt;/h2&gt;
+
+&lt;p&gt;This flavor does not permit ssh logins for the root account.&lt;/p&gt;
+
+&lt;h3 id="toc_4"&gt;Part A - Create the jail&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enter the finch chroot environment, as root
+sudo finch chroot
+
+# Read the page &amp;quot;jail-ip-addresses&amp;quot; before choosing a jail IP address
+export jail_ip=&amp;quot;192.168.1.202&amp;quot;
+
+# Give an appropriate server name to your jail
+export jailname=&amp;quot;ssh&amp;quot;
+
+# Create a jail with the &amp;quot;finch-ssh&amp;quot; flavor
+qjail create -f finch-ssh -4 &amp;quot;$jail_ip&amp;quot; &amp;quot;$jailname&amp;quot;
+
+# Start the jail
+qjail start &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_5"&gt;Part B - Create an account for ssh&amp;#39;ing into your jail&lt;/h3&gt;
+
+&lt;p&gt;In the example below we assume that you want a wheel account to use for administering your jail. However superuser privileges are not a requirement for ssh&amp;#39;ing. In which case just omit the &lt;code&gt;&amp;quot;-G wheel&amp;quot;&lt;/code&gt; part to create a regular account.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 1. Login locally (as root)
+qjail console &amp;quot;$jailname&amp;quot;
+
+# 2. Create an account
+export username=&amp;quot;admin&amp;quot; # put here your own username
+pw user add &amp;quot;$username&amp;quot; -c &amp;quot;$username&amp;#39;s account&amp;quot; -m -G wheel
+
+# 3. Set a password. Otherwise we are not permitted to login over ssh
+passwd &amp;quot;$username&amp;quot;
+exit
+
+# Test the connection - ssh into the jail
+export username=&amp;quot;admin&amp;quot; # put again your chosen username
+ssh &amp;quot;${username}@${jail_ip}&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_6"&gt;Create a jail with ssh enabled for root&lt;/h2&gt;
+
+&lt;p&gt;This flavor does permit ssh logins for the &lt;code&gt;root&lt;/code&gt; account. And regular users too.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enter the finch chroot environment, as root
+sudo finch chroot
+
+# Read the page &amp;quot;jail-ip-addresses&amp;quot; before choosing a jail IP address
+export jail_ip=&amp;quot;192.168.1.203&amp;quot;
+
+# Give an appropriate server name to your jail
+export jailname=&amp;quot;root-ssh&amp;quot;
+
+# Create a jail with the &amp;quot;finch-ssh-root&amp;quot; flavor
+qjail create -f finch-ssh-root -4 &amp;quot;$jail_ip&amp;quot; &amp;quot;$jailname&amp;quot;
+
+# Start the jail
+qjail start &amp;quot;$jailname&amp;quot;
+
+# Set a password. Otherwise we are not permitted to login over ssh
+qjail console &amp;quot;$jailname&amp;quot;
+passwd &amp;quot;root&amp;quot;
+exit
+
+# Test the connection - ssh into the jail
+export username=&amp;quot;root&amp;quot; # put again your chosen username
+ssh &amp;quot;${username}@${jail_ip}&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_7"&gt;Turn on ssh in an existing jail&lt;/h2&gt;
+
+&lt;p&gt;For an existing jail, we can manually copy over the same ssh configuration files, as would have been used in creating a new jail.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Set to the name of your existing jail
+export jailname=&amp;quot;nginx&amp;quot;
+
+# 1. Either forbid the root account to have ssh access
+cp -Rf &amp;quot;/usr/jails/flavors/finch-ssh/etc/ssh&amp;quot; &amp;quot;/usr/jails/${jailname}/etc/&amp;quot;
+
+# 2. Or permit the root account to have ssh access
+cp -Rf &amp;quot;/usr/jails/flavors/finch-ssh-root/etc/ssh&amp;quot; &amp;quot;/usr/jails/${jailname}/etc/&amp;quot;
+
+# Edit the jail&amp;#39;s rc.conf file to enable the ssh daemon
+printf &amp;quot;\n\nsshd_enable=\&amp;quot;YES\&amp;quot;\n\n&amp;quot; &amp;gt;&amp;gt;  &amp;quot;/usr/jails/${jailname}/etc/rc.conf&amp;quot;
+
+# Make sure you have created your chosen ssh login accounts.
+# You must also set a password as per the previous the example(s) above ^^
+
+# Restart the jail - to start the ssh daemon
+qjail restart &amp;quot;$jailname&amp;quot;
+
+# Test the connection - ssh into the jail
+export username=&amp;quot;root&amp;quot; # put again your chosen username
+ssh &amp;quot;${username}@${jail_ip}&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    <item>
+      <title>Manpage</title>
+      <link>/finch/manpage</link>
+      <description>&lt;!-- 1e39d7b98d6a922eebab27b099570b19 --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta http-equiv='content-type' value='text/html;charset=utf8'&gt;
+  &lt;meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'&gt;
+  &lt;title&gt;finch(8) - FreeBSD in a chroot&lt;/title&gt;
+  &lt;style type='text/css' media='all'&gt;
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp &gt; p,.mp &gt; pre,.mp &gt; ul,.mp &gt; ol,.mp &gt; dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  &lt;/style&gt;
+  &lt;style type='text/css' media='all'&gt;
+  /* style: html_customizations */
+  .content {
+   max-width: 118ex;
+  }
+  .mp {
+   text-align:left;
+   display: inline;
+   
+   max-width: 115ex;
+   margin-right: 0px;
+   
+   padding: 0 0 0 0px;
+   
+   background-color: #fee;
+   position: center}
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+--&gt;
+&lt;body id='manpage'&gt;
+  &lt;div class='mp' id='man'&gt;
+
+  &lt;div class='man-navigation' style='display:none'&gt;
+    &lt;a href="#NAME"&gt;NAME&lt;/a&gt;
+    &lt;a href="#SYNOPSIS"&gt;SYNOPSIS&lt;/a&gt;
+    &lt;a href="#COMMANDS"&gt;COMMANDS&lt;/a&gt;
+    &lt;a href="#DESCRIPTION"&gt;DESCRIPTION&lt;/a&gt;
+    &lt;a href="#USAGE"&gt;USAGE&lt;/a&gt;
+    &lt;a href="#STARTING-STOPPING"&gt;STARTING / STOPPING&lt;/a&gt;
+    &lt;a href="#USER-CONFIGURATION"&gt;USER CONFIGURATION&lt;/a&gt;
+    &lt;a href="#EXPORTS"&gt;EXPORTS&lt;/a&gt;
+    &lt;a href="#UPGRADING"&gt;UPGRADING&lt;/a&gt;
+    &lt;a href="#EXECUTABLE"&gt;EXECUTABLE&lt;/a&gt;
+    &lt;a href="#STARTUP-SHUTDOWN"&gt;STARTUP / SHUTDOWN&lt;/a&gt;
+    &lt;a href="#DIRECTORIES"&gt;DIRECTORIES&lt;/a&gt;
+    &lt;a href="#WEBSITE"&gt;WEBSITE&lt;/a&gt;
+    &lt;a href="#BUGS"&gt;BUGS&lt;/a&gt;
+    &lt;a href="#SEE-ALSO"&gt;SEE ALSO&lt;/a&gt;
+    &lt;a href="#Created-by"&gt;Created by&lt;/a&gt;
+  &lt;/div&gt;
+
+  &lt;ol class='man-decor man-head man head'&gt;
+    &lt;li class='tl'&gt;finch(8)&lt;/li&gt;
+    &lt;li class='tc'&gt;FreeBSD in a chroot&lt;/li&gt;
+    &lt;li class='tr'&gt;finch(8)&lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;h2 id="NAME"&gt;NAME&lt;/h2&gt;
+&lt;p class="man-name"&gt;
+  &lt;code&gt;finch&lt;/code&gt; - &lt;span class="man-whatis"&gt;FreeBSD in a chroot&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;h2 id="SYNOPSIS"&gt;SYNOPSIS&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;finch &amp;lt;cmd&gt; [args]
+finch --help
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="COMMANDS"&gt;COMMANDS&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;start     - Mount Finch and start it's rc.d services.
+stop      - Stop Finch's rc.d services and unmount "finch/dev".
+restart   - Same as `finch stop` followed by `finch start`.
+status    - Report on Finch service status (enabled/disabled).
+chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
+export    - Map a new command into Finch exports (`finch export &amp;lt;cmd&gt;`).
+-export   - Remove a command from Finch exports (`finch -export &amp;lt;cmd&gt;`).
+&amp;lt;export&gt;  - Run a command listed in Finch exports (`finch &amp;lt;export&gt;`).
+update    - Update the Finch scripts (this program) to the latest version.
+refresh   - Refresh /finch/etc/ files (resolv.conf, localtime &amp;amp; passwd).
+bootstrap - Run the curl-based online installation script `finch-bootstrap`.
+realpath  - The real path to Finch ("$finch_realpath", "/path/to/finch").
+--version - Print the current version of Finch and exit.
+-h,--help - Display this message and exit.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="DESCRIPTION"&gt;DESCRIPTION&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Finch&lt;/em&gt; is FreeBSD &lt;em&gt;running inside a &lt;code&gt;chroot&lt;/code&gt;&lt;/em&gt;. Finch is best used as a way to extend the functionality of restricted USB-based FreeBSD distributions, usually FREENAS and NAS4FREE. For added convenience, Finch also includes the &lt;code&gt;qjail&lt;/code&gt; jails management tool. Since FreeBSD jails are such a popular request.&lt;/p&gt;
+
+&lt;p&gt;Recommended system configuration:&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;Restricted FreeBSD host &amp;lt;--&gt; Finch &amp;lt;--&gt; qjail &amp;lt;--&gt; your jails&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id="USAGE"&gt;USAGE&lt;/h2&gt;
+
+&lt;p&gt;Chroot into the Finch environment by typing &lt;code&gt;finch chroot&lt;/code&gt;. All other operations may be performed by
+issuing relevant subcommand. &lt;code&gt;finch --help&lt;/code&gt; for more information. Or visit the website at
+&lt;a href="http://dreamcat4.github.io/finch/usage" data-bare-link="true"&gt;http://dreamcat4.github.io/finch/usage&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="STARTING-STOPPING"&gt;STARTING / STOPPING&lt;/h2&gt;
+
+&lt;p&gt;You may manually start or stop Finch at any time simply by issuing the relevant finch subcommand &lt;code&gt;finch start&lt;/code&gt; or &lt;code&gt;finch stop&lt;/code&gt;. See &lt;code&gt;finch --help&lt;/code&gt; for more information. However the boot-time mechanisms for running Finch are platform-specific.&lt;/p&gt;
+
+&lt;p&gt;On FreeNAS and NAS4Free hosts, the Finch &lt;em&gt;POSTINIT&lt;/em&gt; and &lt;em&gt;SHUTDOWN&lt;/em&gt; scripts must be entered into the relevant web-based configuration pages. Which will tell FreeNAS / NAS4Free to automatically start and stop Finch at bootup and shutdown.&lt;/p&gt;
+
+&lt;p&gt;For other platforms such as FreeBSD-GENERIC where the traditional rc.d mechanism is properly
+supported, the Finch service can be started / stopped in the normal manner with it's &lt;em&gt;rc.d&lt;/em&gt; script.
+The necessary rc.conf statements are automatically added to the system's &lt;em&gt;/etc/rc.conf&lt;/em&gt; file for you
+during installation. To prevent conflicts between multiple installed instances, the Finch rc.d script is given a unique name: &lt;em&gt;/etc/rc.d/finch-path.to.finch&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id="USER-CONFIGURATION"&gt;USER CONFIGURATION&lt;/h2&gt;
+
+&lt;p&gt;To execute the &lt;code&gt;finch&lt;/code&gt; command, your user account must be a member of group &lt;code&gt;wheel&lt;/code&gt;. This is
+because on FreeBSD the &lt;code&gt;chroot&lt;/code&gt; command requires root user level access privileges. Therefore, to
+run Finch commands also requires at least administrator level permissions.&lt;/p&gt;
+
+&lt;p&gt;Finch will auto-configure sudo for all &lt;code&gt;wheel&lt;/code&gt; users without a password, by ensuring the sudo entry
+&lt;em&gt;%wheel ALL=(ALL) NOPASSWD: ALL&lt;/em&gt;) is included in your host's sudoers file. This auto-configuration
+is considered necessary as to use Finch effectively requires a frequent invocation of the &lt;code&gt;chroot&lt;/code&gt;
+command. The necessary configuration is handled automatically.&lt;/p&gt;
+
+&lt;p&gt;It is also highly recommended to configure the default user login shell to the &lt;code&gt;bash&lt;/code&gt;. Finch
+automatically adds it's login profile to &lt;code&gt;/etc/profile&lt;/code&gt;, which is automatically sourced by the
+&lt;em&gt;bash&lt;/em&gt; shell.&lt;/p&gt;
+
+&lt;p&gt;The Finch login profile adds further convenience whilst invoking commands through &lt;em&gt;sudo&lt;/em&gt; or from the
+Finch &lt;em&gt;exports&lt;/em&gt; list. This Finch login profile is not exclusively only for &lt;em&gt;bash&lt;/em&gt;. It may be sourced
+by any POSIX.2 compatible shell, (bourne-style shell), for example FreeBSD's &lt;code&gt;/bin/sh&lt;/code&gt;. In which
+case, please consult the shell's documentation for loading &lt;em&gt;/etc/profile&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id="EXPORTS"&gt;EXPORTS&lt;/h2&gt;
+
+&lt;p&gt;The Finch &lt;em&gt;exports&lt;/em&gt; feature provides a way to auto-chroot for certain
+frequently-used commands. If not present on the host environment, the command is searched for and
+executed within the Finch chroot environment instead. Of course whilst inside the chroot, the root
+tree and filesystem are not accessible. This is worth remembering.&lt;/p&gt;
+
+&lt;h2 id="UPGRADING"&gt;UPGRADING&lt;/h2&gt;
+
+&lt;p&gt;Updating Finch administrative scripts is trivial, and can be done at any time with &lt;code&gt;finch update&lt;/code&gt;. Upgrading the version of FreeBSD located inside Finch's chroot is a more delicate and involved
+process. Full instructions are up on the website at &lt;a href="http://dreamcat4.github.io/finch/upgrading" data-bare-link="true"&gt;http://dreamcat4.github.io/finch/upgrading&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="EXECUTABLE"&gt;EXECUTABLE&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$finch_realpath/usr/sbin/finch --&amp;gt; /usr/sbin/finch
+For additional instances, manually symlink finch2,3 into /usr/sbin/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="STARTUP-SHUTDOWN"&gt;STARTUP / SHUTDOWN&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$finch_realpath/etc/finch/postinit
+$finch_realpath/etc/finch/shutdown
+- OR -
+$finch_realpath/etc/rc.d/finch --&amp;gt; /etc/rc.d/finch-path.to.finch
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="DIRECTORIES"&gt;DIRECTORIES&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;$finch_realpath/etc/finch/
+$finch_realpath/var/db/finch/
+$finch_realpath/var/log/finch/
+$finch_realpath/var/distfiles/finch/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="WEBSITE"&gt;WEBSITE&lt;/h2&gt;
+
+&lt;p&gt;For the most up-to-date documentation please visit the project homepage at &lt;a href="http://dreamcat4.github.io/finch" data-bare-link="true"&gt;http://dreamcat4.github.io/finch&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="BUGS"&gt;BUGS&lt;/h2&gt;
+
+&lt;p&gt;Can be reported at &lt;a href="http://dreamcat4.github.io/finch/bugs" data-bare-link="true"&gt;http://dreamcat4.github.io/finch/bugs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="SEE-ALSO"&gt;SEE ALSO&lt;/h2&gt;
+
+&lt;p&gt;&lt;span class="man-ref"&gt;chroot&lt;span class="s"&gt;(8)&lt;/span&gt;&lt;/span&gt;, &lt;span class="man-ref"&gt;qjail&lt;span class="s"&gt;(8)&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 id="Created-by"&gt;Created by&lt;/h2&gt;
+
+&lt;p&gt;Dreamcat4, "dreamcat4@gmail.com" (C 2014). FreeBSD License.&lt;/p&gt;
+
+
+  &lt;ol class='man-decor man-foot man foot'&gt;
+    &lt;li class='tl'&gt;dreamcat4-finch&lt;/li&gt;
+    &lt;li class='tc'&gt;March 2014&lt;/li&gt;
+    &lt;li class='tr'&gt;finch(8)&lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</description>
+    </item>
+    <item>
+      <title>Mounting Filesystems</title>
+      <link>/finch/mounting-filesystems</link>
+      <description>&lt;h1 id="toc_0"&gt;Mounting filesystems&lt;/h1&gt;
+
+&lt;p&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_0"&gt;Mounting filesystems&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_1"&gt;The Nullfs restriction&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_2"&gt;The Solution&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_3"&gt;Example&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_4"&gt;Zfs&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;Existing dataset&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_6"&gt;New dataset&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_7"&gt;Jail - fstab&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_8"&gt;Jail - sharedfs mount&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_9"&gt;Non-zfs&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_10"&gt;Finch&amp;#39;s fstab&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;The Nullfs restriction&lt;/h2&gt;
+
+&lt;p&gt;The restriction: &lt;em&gt;you can&amp;#39;t &lt;code&gt;mount_nullfs&lt;/code&gt; twice in a row !&lt;/em&gt; It&amp;#39;s because...&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;FreeBSD&amp;#39;s implementation of nullfs only ever creates a single-layer overlay. Therefore it is not possible to stack multiple nullfs layers on top of each other.&lt;/li&gt;
+&lt;li&gt;In other words, it&amp;#39;s not possible to daisy-chain nullfs mounts.&lt;/li&gt;
+&lt;li&gt;You will acutally be mounting whatever was previously underneath it (usually an empty directory).&lt;/li&gt;
+&lt;li&gt;If you have nullfs mounted some toplevel (global host folder) into finch&amp;#39;s chroot, then for example, a jail fstab entry inside finch cannot pick it up.&lt;/li&gt;
+&lt;li&gt;The restriction rears it&amp;#39;s head because typically we want to mirror some of our data that available on the host system into the Finch subdirectory (by using nullfs). Then in turn from within Finch into our guest jails. Making then a second layer of indirection (which we can&amp;#39;t have).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_2"&gt;The Solution&lt;/h3&gt;
+
+&lt;p&gt;For a trouble-free life, please follow these steps when mounting your user data:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Unmount your data from it&amp;#39;s existing mountpoint on the host system.&lt;/li&gt;
+&lt;li&gt;Directly mount your user data into a location inside the Finch chroot. For example:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;    $finch_realpath/mnt/my_data
+    $finch_realpath/usr/jails/sharedfs/my_data
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Make a &lt;code&gt;nullfs&lt;/code&gt; mapping from the new location inside Finch ---&amp;gt; back to outside where the folders previously used to be.&lt;/li&gt;
+&lt;li&gt;Add a nullfs entry to your jail&amp;#39;s fstab file &lt;a href="#toc_8"&gt;as decribed later on&lt;/a&gt; to also mapthe data into your jail(s).&lt;sup&gt;1&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You should end up with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;HOST (nullfs mappings) &amp;lt;---- FINCH (your data is mounted here) ----&amp;gt; JAILS (nullfs mappings)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It might seem a little odd, but the best place to mount your user data folders is somewhere inside the Finch chroot. Being located in the middle means that it can be seen from either side of the fence.&lt;/p&gt;
+
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; Not necessary for mounts within &lt;code&gt;usr/jails/sharedfs&lt;/code&gt;, which is automatically mounted into &lt;em&gt;all jails&lt;/em&gt;. More information &lt;a href="#toc_9"&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id="toc_3"&gt;Example&lt;/h1&gt;
+
+&lt;h2 id="toc_4"&gt;Zfs&lt;/h2&gt;
+
+&lt;p&gt;In this following example, we show you how to mount or remount zfs partitions (a.k.a. &amp;quot;datasets&amp;quot;). All of our datasets are on one single zfs pool, shown here as &lt;code&gt;disk0&lt;/code&gt;, and with no altroot setting (&lt;code&gt;altroot=&amp;#39;/&amp;#39;&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h3 id="toc_5"&gt;Existing dataset&lt;/h3&gt;
+
+&lt;p&gt;Let us suppose we already have an existing dataset, named &lt;code&gt;my_dataset&lt;/code&gt;. OR we can find out a dataset&amp;#39;s name and current mountpoint with the &lt;code&gt;zfs list&lt;/code&gt; command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ zfs list
+NAME                                      USED  AVAIL  REFER  MOUNTPOINT
+disk0                                    68.9G   616G  67.1G  /mnt/disk0
+disk0/my_dataset                          144K   616G   144K  /mnt/disk0/my_dataset
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If we have:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;finch_realpath=&amp;quot;/mnt/disk0/finch&amp;quot; # &amp;lt;---- our finch chroot
+zfspool=&amp;quot;disk0&amp;quot;                   # &amp;lt;---- our zfs pool
+dataset=&amp;quot;disk0/my_dataset&amp;quot;        # &amp;lt;---- our zfs dataset
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can move our dataset&amp;#39;s mountpoint to be inside of our Finch chroot:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;zfs set mountpoint=&amp;quot;${finch_realpath}/mnt/disk0/my_dataset&amp;quot; &amp;quot;$dataset&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can also put back (replace) the previous mountpoint so it&amp;#39;s the same as before:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;mkdir -p /mnt/disk0/my_dataset
+mount_nullfs &amp;quot;${finch_realpath}/mnt/disk0/my_dataset&amp;quot; &amp;quot;/mnt/disk0/my_dataset&amp;quot; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_6"&gt;New dataset&lt;/h3&gt;
+
+&lt;p&gt;For a new dataset, we do almost exactly the same as &amp;quot;existing dataset&amp;quot; situation above. Except for this part:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dataset=&amp;quot;disk0/new_dataset&amp;quot;
+zfs create &amp;quot;$dataset&amp;quot;
+zfs set mountpoint=&amp;quot;${finch_realpath}/mnt/${dataset}&amp;quot; &amp;quot;$dataset&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_7"&gt;Jail - fstab&lt;/h3&gt;
+
+&lt;p&gt;Now we can add the dataset to our jail&amp;#39;s fstab file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;jailname=&amp;quot;my_jail&amp;quot;   # &amp;lt;---- The name of our jail
+finch qjail create &amp;quot;$jailname&amp;quot;
+
+# Create an emtpy folder where we will nullfs mount our data
+mkdir -p &amp;quot;${finch_realpath}/usr/jails/${jailname}/mnt/${dataset}&amp;quot;
+
+# Edit the jail&amp;#39;s fstab file in a text editor...
+nano &amp;quot;${finch_realpath}/usr/local/etc/qjail.fstab/${jailname}&amp;quot;
+
+# ...and add the following line (not the &amp;gt;&amp;gt;&amp;gt; arrows!)
+&amp;gt;&amp;gt;&amp;gt;
+/mnt/$dataset /usr/jails/my_jail/mnt/$dataset nullfs ro 0 0
+&amp;gt;&amp;gt;&amp;gt;
+
+# Restart the jail
+finch qjail restart &amp;quot;$jailname&amp;quot;
+
+# Check that it mounted
+df
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_8"&gt;Jail - sharedfs mount&lt;/h3&gt;
+
+&lt;p&gt;The above example showed you how to mount ONE dataset to ONE jail only. But what if you have a data partition which you want to share amongst ALL of your jails?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dataset=&amp;quot;disk0/new_dataset&amp;quot;
+zfs create &amp;quot;$dataset&amp;quot;
+zfs set mountpoint=&amp;quot;${finch_realpath}/usr/jails/sharedfs/${dataset}&amp;quot; &amp;quot;$dataset&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Will mount the dataset &lt;em&gt;inside&lt;/em&gt; qjail&amp;#39;s &lt;code&gt;sharedfs&lt;/code&gt; folder. That is a special folder which qjail mounts in all of your jails. So no need to add any extra jail fstab entry. There is already the necessary line for sharedfs in every jail&amp;#39;s fstab file.&lt;/p&gt;
+
+&lt;h2 id="toc_9"&gt;Non-zfs&lt;/h2&gt;
+
+&lt;p&gt;Let us suppose you have a FAT32, NTFS, or EXT (linux) data partition. Follow the above ZFS steps. But don&amp;#39;t issue any zfs commands. Whenever you hit a zfs command &lt;em&gt;perform an equivalent step&lt;/em&gt;. Use the same paths / locations as in the zfs guide.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In FreeNAS and FreeBSD-GENERIC, edit the global &lt;code&gt;/etc/fstab&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;In NAS4Free, navigate to &lt;code&gt;Disks | Mount Point | Management&lt;/code&gt; in the Web GUI.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_10"&gt;Finch&amp;#39;s fstab&lt;/h2&gt;
+
+&lt;p&gt;Finch does also have it&amp;#39;s own &lt;code&gt;fstab&lt;/code&gt; file should you feel inclined to use it. However it is not usually necessary since your host system already has it&amp;#39;s own fstab file or equivalent mechanism.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Located at &lt;code&gt;$finch_realpath/etc/fstab&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Works just the same as your host&amp;#39;s &lt;code&gt;/etc/fstab&lt;/code&gt; file.&lt;/li&gt;
+&lt;li&gt;Mounts can be from and disks or folders available on the host system. Toplevel / global scope.&lt;/li&gt;
+&lt;li&gt;Fstab entries will be mounted just before &lt;code&gt;finch start&lt;/code&gt; and unmounted after &lt;code&gt;finch stop&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    <item>
+      <title>Portsnap_override 8</title>
+      <link>/finch/portsnap_override-8</link>
+      <description>&lt;!-- bfdcb539f14880db789815b0fb07b93c --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta http-equiv='content-type' value='text/html;charset=utf8'&gt;
+  &lt;meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'&gt;
+  &lt;title&gt;portsnap_override(8) - Run portsnap from a shell script (no tty).&lt;/title&gt;
+  &lt;style type='text/css' media='all'&gt;
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp &gt; p,.mp &gt; pre,.mp &gt; ul,.mp &gt; ol,.mp &gt; dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  &lt;/style&gt;
+  &lt;style type='text/css' media='all'&gt;
+  /* style: html_customizations */
+  .content {
+   max-width: 118ex;
+  }
+  .mp {
+   text-align:left;
+   display: inline;
+   
+   max-width: 115ex;
+   margin-right: 0px;
+   
+   padding: 0 0 0 0px;
+   
+   background-color: #fee;
+   position: center}
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+--&gt;
+&lt;body id='manpage'&gt;
+  &lt;div class='mp' id='man'&gt;
+
+  &lt;div class='man-navigation' style='display:none'&gt;
+    &lt;a href="#NAME"&gt;NAME&lt;/a&gt;
+    &lt;a href="#SYNOPSIS"&gt;SYNOPSIS&lt;/a&gt;
+    &lt;a href="#DESCRIPTION"&gt;DESCRIPTION&lt;/a&gt;
+    &lt;a href="#FILES"&gt;FILES&lt;/a&gt;
+    &lt;a href="#BUGS"&gt;BUGS&lt;/a&gt;
+    &lt;a href="#SEE-ALSO"&gt;SEE ALSO&lt;/a&gt;
+    &lt;a href="#Created-by"&gt;Created by&lt;/a&gt;
+  &lt;/div&gt;
+
+  &lt;ol class='man-decor man-head man head'&gt;
+    &lt;li class='tl'&gt;portsnap_override(8)&lt;/li&gt;
+    &lt;li class='tc'&gt;FreeBSD in a chroot&lt;/li&gt;
+    &lt;li class='tr'&gt;portsnap_override(8)&lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;h2 id="NAME"&gt;NAME&lt;/h2&gt;
+&lt;p class="man-name"&gt;
+  &lt;code&gt;portsnap_override&lt;/code&gt; - &lt;span class="man-whatis"&gt;Run portsnap from a shell script (no tty).&lt;/span&gt;
+&lt;/p&gt;
+
+&lt;h2 id="SYNOPSIS"&gt;SYNOPSIS&lt;/h2&gt;
+
+&lt;p&gt;Temporarily circumvent the tty check within &lt;code&gt;portsnap fetch&lt;/code&gt; subcommand.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;portsnap override on
+portsnap override off
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="DESCRIPTION"&gt;DESCRIPTION&lt;/h2&gt;
+
+&lt;p&gt;Prevent &lt;code&gt;portsnap fetch&lt;/code&gt; from failing when run from a shell script (no tty). Future
+versions of &lt;em&gt;portsnap&lt;/em&gt; may break this script and render it useless.&lt;/p&gt;
+
+&lt;p&gt;To use, just add the following "guard" lines before &amp;amp; after portsnap:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;portsnap_override "on";
+portsnap "fetch";
+portsnap_override "off";
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;portsnap_override on&lt;/code&gt; will perform the following actions:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Rewrite portsnap's "fetch" argument "cron".
+mv "portsnap" --&amp;gt; "portsnap-interactive"
+ln -s "portsnap-non-interactive" --&amp;gt; "portsnap"
+# Override the "jot" command to return a random delay of 0 seconds.
+mv "jot" --&amp;gt; "jot-disabled"
+ln -s "jot_0" --&amp;gt; "jot"
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;portsnap_override off&lt;/code&gt; just returns the &lt;em&gt;portsnap&lt;/em&gt; and &lt;em&gt;jot&lt;/em&gt; programs back to
+normal.&lt;/p&gt;
+
+&lt;p&gt;WARNING !!! You must remove this override straight afterwards!&lt;/p&gt;
+
+&lt;p&gt;Do not cancel, kill or abort parent script or process (&lt;em&gt;kill&lt;/em&gt; / CTRL^C)
+whilst portsnap is running. That will leave two important FreeBSD programs
+temporarily disabled: &lt;em&gt;/usr/bin/jot&lt;/em&gt;, and &lt;em&gt;/usr/sbin/portsnap&lt;/em&gt;. The
+situation can be rectified by issuing $ portsnap_override "off" manually.&lt;/p&gt;
+
+&lt;p&gt;Tested with: $FreeBSD: release/9.1.0/usr.sbin/portsnap/portsnap/portsnap.sh 235310 2012-05-12 00:49:14Z eadler $&lt;/p&gt;
+
+&lt;h2 id="FILES"&gt;FILES&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;/usr/sbin/portsnap_override
+/usr/sbin/portsnap_non_interactive
+/usr/bin/jot_0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="BUGS"&gt;BUGS&lt;/h2&gt;
+
+&lt;p&gt;Can be reported at &lt;a href="http://dreamcat4.github.io/finch/bugs" data-bare-link="true"&gt;http://dreamcat4.github.io/finch/bugs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="SEE-ALSO"&gt;SEE ALSO&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;portsnap(8), jot(1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="Created-by"&gt;Created by&lt;/h2&gt;
+
+&lt;p&gt;Dreamcat4, "dreamcat4@gmail.com" (C 2014). FreeBSD License.&lt;/p&gt;
+
+
+  &lt;ol class='man-decor man-foot man foot'&gt;
+    &lt;li class='tl'&gt;dreamcat4-finch&lt;/li&gt;
+    &lt;li class='tc'&gt;February 2014&lt;/li&gt;
+    &lt;li class='tr'&gt;portsnap_override(8)&lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</description>
+    </item>
+    <item>
+      <title>Qjail Reference</title>
+      <link>/finch/qjail-reference</link>
+      <description>&lt;h1 id="toc_0"&gt;Qjail Reference&lt;/h1&gt;
+
+&lt;p&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_0"&gt;Qjail Reference&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_1"&gt;Basic commands&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_2"&gt;Disk&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_3"&gt;Permit nullfs mounts whilst inside a jail&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_4"&gt;Permit zfs mounts whilst inside a jail&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;Network&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_6"&gt;Change a jail&amp;#39;s network interface&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_7"&gt;Change a jail&amp;#39;s ip address&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_8"&gt;Enable ping (ICMP raw sockets)&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_9"&gt;Avoid&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_10"&gt;(has issues) Vnet / Vimage&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_11"&gt;(useless) Quotas&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_12"&gt;(doesn&amp;#39;t work) cpuset.id&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;Basic commands&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;# Creating, modifying and deleting jails
+qjail [create|config|delete] &amp;lt;options&amp;gt; &amp;quot;$jailname&amp;quot;
+
+# Starting / stopping jails
+qjail [start|stop|restart] &amp;quot;$jailname&amp;quot;
+
+# Login to a jail (as root)
+qjail console &amp;quot;$jailname&amp;quot;
+
+# Report the current status of all jails
+qjail list
+
+# Display a jail&amp;#39;s configuration settings
+qjail config -d &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_2"&gt;Disk&lt;/h2&gt;
+
+&lt;h3 id="toc_3"&gt;Permit nullfs mounts whilst inside a jail&lt;/h3&gt;
+
+&lt;p&gt;This feature is disabled by default. It enables the &lt;code&gt;mount_nullfs&lt;/code&gt; command whilst inside the jail. This feature is not required for any nullfs entries in the jail&amp;#39;s fstab file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;qjail config -l &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_4"&gt;Permit zfs mounts whilst inside a jail&lt;/h3&gt;
+
+&lt;p&gt;This feature is disabled by default.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;qjail config -x &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Enabling it allows you to use the command &lt;code&gt;zfs jail&lt;/code&gt; whilst inside a jail. However we do not recommended this method for mounting your datasets because of the following restrictions:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Using this feature will allows you to create or mount a zfs dataset into one specific jail.&lt;/li&gt;
+&lt;li&gt;This method cannot be used to mount the same zfs dataset across multiple jails.&lt;/li&gt;
+&lt;li&gt;For the duration that a dataset is configured to the jail, it cannot be mounted elsewhere.&lt;/li&gt;
+&lt;li&gt;The mounted dataset will also be accessible from the host machine (and inside Finch&amp;#39;s chroot).&lt;/li&gt;
+&lt;li&gt;However when the jail is stopped, the zfs dataset will be automatically unmounted, becoming unavailable in the host environment until the jail is restarted.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To avoid the above restrictions, use our &lt;strong&gt;&lt;a href="mounting-filesystems"&gt;Finch-prescribed method&lt;/a&gt;&lt;/strong&gt; for mounting your datasets.&lt;/p&gt;
+
+&lt;h2 id="toc_5"&gt;Network&lt;/h2&gt;
+
+&lt;h3 id="toc_6"&gt;Change a jail&amp;#39;s network interface&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;export new_network_interface=&amp;quot;re0&amp;quot;
+qjail config -c &amp;quot;$new_network_interface&amp;quot; &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_7"&gt;Change a jail&amp;#39;s ip address&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;export new_ip_address=&amp;quot;192.168.1.202&amp;quot;
+qjail config -4 &amp;quot;$new_ip_address&amp;quot; &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_8"&gt;Enable ping (ICMP raw sockets)&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enable raw sockets (allow &amp;quot;ping&amp;quot; command)
+qjail config -k &amp;quot;$jailname&amp;quot;
+
+# Disable raw sockets
+qjail config -K &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_9"&gt;Avoid&lt;/h2&gt;
+
+&lt;h3 id="toc_10"&gt;(has issues) Vnet / Vimage&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Advantages:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Unwanted open ports of the host system are not duplicated onto the jail&amp;#39;s IP address.&lt;/li&gt;
+&lt;li&gt;The jail is allocated it&amp;#39;s own unique MAC address, which is visible on your local LAN.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Disadvantages:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Each jail takes a lot longer to start / stop - the extra delay soon adds up for many jails.&lt;/li&gt;
+&lt;li&gt;The possible network configurations are more difficult to understand.&lt;/li&gt;
+&lt;li&gt;There is no working example provided in the qjail documentation.&lt;/li&gt;
+&lt;li&gt;Therefore, proper configuration can be tricky.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;options VIMAGE&lt;/code&gt; must have been compiled into the kernel. Currently that isn&amp;#39;t enabled on NASFree.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The main reason we don&amp;#39;t recommend Vnet / Vimage jails is that during testing, the feature was not found to work or function correctly. This appears to be because qjail&amp;#39;s &lt;code&gt;qjail.vnet.be&lt;/code&gt; script will auto-create network addresses in the range &lt;code&gt;10.${jid}.0.XXX&lt;/code&gt; with a subnet &lt;code&gt;netmask 0xff000000&lt;/code&gt;. If your host machine&amp;#39;s gateway route does not happen to also be a &lt;code&gt;10.0.0.0&lt;/code&gt; style private network, then it will sit on a different subnet and the jail cannot route packets to it. For example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ route change default 192.168.1.1
+route: writing to routing socket: Network is unreachable
+change net default: gateway 192.168.1.1 fib 0: Network is unreachable
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;However if your host machine does happen to be on a &lt;code&gt;10.0.0.0&lt;/code&gt; subnet, then you may have much better luck. In which case, Vnet jails may be configured in the following way:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Give an appropriate server name to your jail
+export jailname=&amp;quot;vnet-jail&amp;quot;
+
+# Create the jail without any ip address
+qjail create &amp;quot;$jailname&amp;quot;
+
+# Find your default NIC
+default_nic=&amp;quot;$(route get default 2&amp;gt; /dev/null | grep -o &amp;quot;interface.*&amp;quot; | cut -d &amp;#39; &amp;#39; -f 2)&amp;quot;
+
+# Enable vnet/vimage in bridge-epair mode
+qjail config -w &amp;quot;$default_nic&amp;quot; &amp;quot;$jailname&amp;quot;
+printf &amp;quot;none\nbe\n&amp;quot; | qjail config -v &amp;quot;$jailname&amp;quot;
+
+# Start the jail
+qjail start &amp;quot;$jailname&amp;quot;
+
+# Check ifconfig settings - look for the bridge and epair devices
+ifconfig
+echo &amp;quot;ifconfig&amp;quot; | qjail console &amp;quot;$jailname&amp;quot;
+
+# Check network connectivity
+echo &amp;quot;ping -c 1 google.com&amp;quot; | qjail console &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Please &lt;strong&gt;&lt;a href="bugs"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you think anything here is incorrect, or can provide alternative configuration steps to get these Vnet jails working on hosts which are setup to be outside of the &lt;code&gt;10.0.0.0&lt;/code&gt; subnet. For example on &lt;code&gt;192.168.1.XXX&lt;/code&gt; machines, etc.&lt;/p&gt;
+
+&lt;h3 id="toc_11"&gt;(useless) Quotas&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# allow.quotas NOT recommended as does not limit total filesystem usage on a per-jail basis.
+# allow.quotas allows you to allocate limits to individual user accounts inside your jails.
+# qjail config -q &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Solution: Create a zfs dataset instead, for the jails and assign quota limits per dataset. User mount_nullfs your zfs dataset onto /finch/usr/jails (move the jails folder onto the dataset).&lt;/p&gt;
+
+&lt;h3 id="toc_12"&gt;(doesn&amp;#39;t work) cpuset.id&lt;/h3&gt;
+
+&lt;p&gt;Assigning a jail to specific CPU cores. For example: a quad-core CPU: &lt;code&gt;cpuset -g | grep -o -e mask.*&lt;/code&gt; should say &lt;code&gt;mask: 0, 1, 2, 3&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# If the cpu set parameter is written: &amp;quot;0&amp;quot;, &amp;quot;0-3&amp;quot; &amp;quot;2,3&amp;quot; etc.
+
+# Then assign this jail to the first core
+export jail_cpu_set=&amp;quot;0&amp;quot;
+qjail config -p &amp;quot;$jail_cpu_set&amp;quot; &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This feature is documented in &lt;code&gt;man jail&lt;/code&gt;. However it didn&amp;#39;t work during testing. The error was:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;jail: $jailname: unknown parameter: cpuset.id`
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I&amp;#39;m not entirely certain if the syntax shown above is correct. Please &lt;strong&gt;&lt;a href="bugs"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you have found otherwise.&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Upgrading</title>
+      <link>/finch/upgrading</link>
+      <description>&lt;h1 id="toc_0"&gt;Upgrading Finch FreeBSD&lt;/h1&gt;
+
+&lt;p&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_0"&gt;Upgrading Finch FreeBSD&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_1"&gt;Introduction&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_2"&gt;Warning&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_3"&gt;Check your EDITOR and PAGER&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_4"&gt;Minor updates to FreeBSD&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;Major upgrade of FreeBSD&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_6"&gt;AFTER the host system&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_7"&gt;BEFORE the host system&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Let&amp;#39;s say we installed Finch onto a FreeBSD 9.2-RELEASE host system. But now we would like to upgrade to FreeBSD 10.0-RELEASE. Then we must also upgrade Finch to match. Otherwise the finch chroot environment may not function properly until both systems are put back on the same page. Same goes for any jails you may have installed inside Finch.&lt;/p&gt;
+
+&lt;p&gt;We can upgrade Finch FreeBSD in much the same way as any official FreeBSD distribution with &lt;a href="http://www.freebsd.org/cgi/man.cgi?query=freebsd-update"&gt;&lt;code&gt;freebsd-update&lt;/code&gt;&lt;/a&gt;. However for a Finch installation we must add some extra steps at certain points during the process. We can also upgrade any jails, if they are present.&lt;/p&gt;
+
+&lt;h3 id="toc_2"&gt;Warning&lt;/h3&gt;
+
+&lt;p&gt;We cannot know beforehand or be held responsible for any failures / breakages / data loss caused by freebsd-update. You have been warned. That having been said, FreeBSD update is not commonly known to fail or leave your system broken. Breakages tend to be few, minor in nature, and accompanied by a documented procedure with which to apply a relevant fix or workaround.&lt;/p&gt;
+
+&lt;p&gt;If you have sufficient time and disk space then consider making a full backup beforehand. Just in case anything else goes wrong. The power might be interrupted, an unforeseen error may occur, etc.&lt;/p&gt;
+
+&lt;h3 id="toc_3"&gt;Check your EDITOR and PAGER&lt;/h3&gt;
+
+&lt;p&gt;In all likelihood you may be asked to merge the occasional configuration file. In which case freebsd-update will open the program set in your &lt;code&gt;$EDITOR&lt;/code&gt; environment variable. Not everyone can use &amp;quot;vi&amp;quot;. So please be adequately prepared with an appropriate text editor &lt;em&gt;beforehand&lt;/em&gt; which you feel comfortable with. Same goes for the pager. You might not need to change anything. Finch should have already set them up for you as &lt;code&gt;nano&lt;/code&gt;, and &lt;code&gt;less&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# What&amp;#39;s your current default text editor ?
+echo &amp;quot;$EDITOR&amp;quot;
+
+# Possible editors: `vi`, `ee`, `nano`.
+export EDITOR=&amp;quot;nano&amp;quot;
+
+# Check that it is on your &amp;quot;$PATH&amp;quot;.
+command -v &amp;quot;$EDITOR&amp;quot; # or `which &amp;quot;$EDITOR&amp;quot;` for tcsh shell
+
+# freebsd-update also uses your &amp;quot;$PAGER&amp;quot;
+export PAGER=&amp;quot;less&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id="toc_4"&gt;Minor updates to FreeBSD&lt;/h1&gt;
+
+&lt;p&gt;How to update the &lt;strong&gt;patch level&lt;/strong&gt;. For example &lt;code&gt;9.2.1-p9&lt;/code&gt; --&amp;gt; &lt;code&gt;9.2.1-p21&lt;/code&gt;. Minor updates are for bugs, security fixes etc. Do the same as a regular FreeBSD update. Nothing extra special needs to be done for Finch.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enter the finch chroot environment, as root
+sudo finch chroot
+
+# Updating can be done interactively at any time
+freebsd-update fetch install
+
+# Go ahead and install the new patch level
+freebsd-update install
+
+# (optional) Update binaries inside your jails
+qjail update -b
+
+# To revert the last set of applied changes
+freebsd-update rollback
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You may also check for updates in a cron job, and recieve an email report when new updates become available. However installation of updates still needs to be performed manually. Consult the &lt;a href="http://www.freebsd.org/cgi/man.cgi?query=freebsd-update"&gt;&lt;code&gt;freebsd-update&lt;/code&gt;&lt;/a&gt; manpage for more details.&lt;/p&gt;
+
+&lt;h1 id="toc_5"&gt;Major upgrade of FreeBSD&lt;/h1&gt;
+
+&lt;p&gt;How to update to a higher &lt;strong&gt;point release&lt;/strong&gt;, or a &lt;strong&gt;major version&lt;/strong&gt;. For example &lt;code&gt;9.1-RELEASE&lt;/code&gt; --&amp;gt; &lt;code&gt;9.2-RELEASE&lt;/code&gt; or &lt;code&gt;9.2-RELEASE&lt;/code&gt; --&amp;gt; &lt;code&gt;10.0-RELEASE&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/strong&gt; You may upgrade Finch &lt;em&gt;before or after&lt;/em&gt; upgrading the host system. The process can be done &lt;em&gt;either way round&lt;/em&gt;. However the procedure is a little bit different in each case. &lt;/p&gt;
+
+&lt;h2 id="toc_6"&gt;AFTER the host system&lt;/h2&gt;
+
+&lt;p&gt;Use this procedure if you need to upgrade Finch AFTER upgrading the host system.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# We assume you have already followed the official proceedure
+# for upgrading FreeBSD on your host system. For example:
+#
+# On FreeNAS / NAS4Free:
+#   * Backup config. Upgrade FreeNAS / NAS4Free. Restore config.
+#
+# On FreeBSD GENERIC: 
+#   * Ran $ freebsd-update as per official FreeBSD guidelines.
+#
+
+# Enter the finch chroot environment, as root
+sudo finch chroot
+
+# Check the current version of finch
+cat &amp;quot;/var/db/finch/installed&amp;quot;
+FreeBSD-amd64-9.2-RELEASE
+
+# Put here the newer target version of FreeBSD you want to upgrade to
+export new_release=&amp;quot;10.0-RELEASE&amp;quot;
+
+# We must spoof the &amp;quot;uname&amp;quot; command to match the contents of &amp;quot;/var/db/finch/installed&amp;quot;
+# to avoid the error &amp;quot;freebsd-update: Cannot upgrade from X.Y-RELEASE to itself&amp;quot;.
+uname_override on
+
+# Fetch the upgrade. You will be prompted to confirm the action.
+# Please note that this step usually takes a while. Maybe an hour.
+freebsd-update -r &amp;quot;$new_release&amp;quot; upgrade
+
+# Return the &amp;quot;uname&amp;quot; program back to normal.
+uname_override off
+
+# Apply the changes. Upgrade Finch.
+# This is an an interactive task. You may be asked to merge certain files.
+freebsd-update install
+
+# &amp;lt;-- ... snip ... --&amp;gt;
+
+# If all goes well, you should see this message at the very end:
+Kernel updates have been installed.  Please reboot and run
+&amp;quot;/usr/sbin/freebsd-update install&amp;quot; again to finish installing updates.
+
+# We are asked to reboot into the new FreeBSD kernel. Then rerun the same command.
+# Hoever we are already on the new Kernel. so just run it again (no reboot required).
+freebsd-update install
+
+# You may have got a few errors like: &amp;quot;ln: ///.cshrc: No such file or directory&amp;quot;
+# Sorry the cause isn&amp;#39;t known.
+# We recommend to ignore such errors if they are about non-essential files.
+
+# Tell Finch that we have updated FreeBSD. So Finch doesn&amp;#39;t keep pestering us about it.
+echo &amp;quot;FreeBSD-`uname -m`-`uname -r | cut -d- -f1-2`&amp;quot; &amp;gt; &amp;quot;/var/db/finch/installed&amp;quot;
+
+# Optional
+
+# For MAJOR version updates only (FreeBSD 9 -&amp;gt; 10). SKIP for MINOR versions (9.1 --&amp;gt; 9.2).
+# Brute-force rebuild of all installed ports. BEWARE: Can often lead to breakages or build errors.
+portmaster -f
+
+# For jails, update the jails&amp;#39; binaries.
+qjail update -b
+
+# Remove any original FreeBSD distfiles (if present) - they are no longer valid.
+rm -rf /var/distfiles/finch
+
+# All done.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_7"&gt;BEFORE the host system&lt;/h2&gt;
+
+&lt;p&gt;Use this procedure if you need to upgrade Finch BEFORE upgrading the host system.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enter the finch chroot environment, as root
+sudo finch chroot
+
+# Check the current version of finch
+cat &amp;quot;/var/db/finch/installed&amp;quot;
+FreeBSD-amd64-9.1-RELEASE
+
+# Put here the newer target version of FreeBSD you want to upgrade to
+export new_release=&amp;quot;10.0-RELEASE&amp;quot;
+
+# Fetch the upgrade. You will be prompted to confirm the action.
+# Please note that this step usually takes a while. Maybe an hour.
+freebsd-update -r &amp;quot;$new_release&amp;quot; upgrade
+
+# Apply the changes. Upgrade Finch.
+# This is an an interactive task. You may be asked to merge certain files.
+freebsd-update install
+
+# &amp;lt;-- ... snip ... --&amp;gt;
+
+# If all goes well, you should see this message at the very end:
+Kernel updates have been installed.  Please reboot and run
+&amp;quot;/usr/sbin/freebsd-update install&amp;quot; again to finish installing updates.
+
+# At this point, we assume you will now follow the official proceedure
+# for upgrading FreeBSD on your host system. For example:
+#
+# On FreeNAS / NAS4Free:
+#   * Backup config. Upgrade FreeNAS / NAS4Free. Restore config.
+#
+# On FreeBSD GENERIC: 
+#   * Run $ freebsd-update as per official FreeBSD guidelines.
+#
+
+# Host system updates completed successfully ?
+# At this point, we assume you have booted into the new kernel.
+
+# Re-enter our chroot environment
+sudo finch chroot
+
+# Finish applying Finch&amp;#39;s FreeBSD updates.
+freebsd-update install
+
+# You may have got a few errors like: &amp;quot;ln: ///.cshrc: No such file or directory&amp;quot;
+# Sorry the cause isn&amp;#39;t known.
+# We recommend to ignore such errors if they are about non-essential files.
+
+# Update our records, and so that finch does not keep pestering us to update FreeBSD.
+echo &amp;quot;FreeBSD-`uname -m`-`uname -r | cut -d- -f1-2`&amp;quot; &amp;gt; &amp;quot;/var/db/finch/installed&amp;quot;
+
+# Optional
+
+# For MAJOR version updates only (FreeBSD 9 -&amp;gt; 10). SKIP for MINOR versions (9.1 --&amp;gt; 9.2).
+# Brute-force rebuild of all installed ports. BEWARE: Can often lead to breakages or build errors.
+portmaster -f
+
+# For jails, update the jails&amp;#39; binaries.
+qjail update -b
+
+# Remove any original FreeBSD distfiles (if present) - they are no longer valid.
+rm -rf /var/distfiles/finch
+
+# All done.
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    <item>
+      <title>Usage</title>
+      <link>/finch/usage</link>
+      <description>&lt;h1 id="toc_0"&gt;Using Finch&lt;/h1&gt;
+
+&lt;p&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_0"&gt;Using Finch&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_1"&gt;User Setup&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_2"&gt;How to &amp;#39;su&amp;#39; and preserve Finch&amp;#39;s login profile&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_3"&gt;The &amp;#39;finch&amp;#39; command&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_4"&gt;Read the manpages&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;Finch exports&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_6"&gt;Refreshing &amp;#39;/etc&amp;#39; files&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;User Setup&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Set your user account to be a member of group &lt;code&gt;wheel&lt;/code&gt;. &lt;sup&gt;1&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;It is recommended to set &lt;code&gt;bash&lt;/code&gt; to be your user login shell &lt;sup&gt;2&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;Issue a &lt;a href="#toc_6"&gt;&lt;code&gt;finch refresh&lt;/code&gt;&lt;/a&gt; after changing users or groups.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; Only members of the &lt;code&gt;wheel&lt;/code&gt; administrative group can use Finch. For more information please see the finch &lt;a href="manpage#USAGE"&gt;manpage&lt;/a&gt;. &lt;sup&gt;2&lt;/sup&gt; Always use a POSIX.2 or Bourne-type compatible shell. Finch installs Bash by default. For more information please see the &lt;a href="faq#toc_8"&gt;bash FAQ entry&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id="toc_2"&gt;How to &amp;#39;su&amp;#39; and preserve Finch&amp;#39;s login profile&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;# Assuming a bash shell
+sudo su -l
+
+# Or with /bin/sh
+sudo su
+. /etc/profile
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_3"&gt;The &amp;#39;finch&amp;#39; command&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;finch:
+     Access the Finch FreeBSD chroot environment. `man finch` for more info.
+
+Usage:
+     $ finch &amp;lt;command&amp;gt; [args]
+
+Commands:
+
+     start     - Mount Finch and start it&amp;#39;s rc.d services.
+     stop      - Stop Finch&amp;#39;s rc.d services and unmount &amp;quot;finch/dev&amp;quot;.
+     restart   - Same as `finch stop` followed by `finch start`.
+     status    - Report on Finch service status (enabled/disabled).
+     chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
+     export    - Map a new command into Finch exports (`finch export &amp;lt;cmd&amp;gt;`).
+     -export   - Remove a command from Finch exports (`finch -export &amp;lt;cmd&amp;gt;`).
+     &amp;lt;export&amp;gt;  - Run a command listed in Finch exports (`finch &amp;lt;export&amp;gt;`).
+     update    - Update the Finch scripts (this program) to the latest version.
+     refresh   - Refresh /finch/etc/ files (resolv.conf, localtime &amp;amp; passwd).
+     bootstrap - Run the curl-based online installation script `finch-bootstrap`.
+     realpath  - The real path to Finch (&amp;quot;$finch_realpath&amp;quot;, &amp;quot;/path/to/finch&amp;quot;).
+     --version - Print the current version of Finch and exit.
+     -h,--help - Display this message and exit.
+
+Realpath:
+     /mnt/disk0/finch
+
+Exports:
+     man, pkg, qjail
+
+Version:
+     1.00a, fe29d3d3fa, Thu Feb 20 21:33:07 GMT 2014.
+
+Bugs:
+     Can be reported at http://dreamcat4.github.io/finch/bugs
+
+Created by:
+     Dreamcat4, &amp;quot;dreamcat4@gmail.com&amp;quot; (C 2014). FreeBSD License.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_4"&gt;Read the manpages&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;# Learn about finch
+man finch
+
+# Learn about qjail
+man qjail
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_5"&gt;Finch exports&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Finch exports are a way to auto-chroot for certain frequently-used commands (for example &lt;code&gt;qjail&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;We call such commands &lt;code&gt;exports&lt;/code&gt; because they are &amp;quot;exports&amp;quot; of Finch into the host&amp;#39;s shell environment.&lt;/li&gt;
+&lt;li&gt;Exports are just a convenience. You can run any command with &lt;code&gt;finch chroot &amp;lt;cmd&amp;gt;&lt;/code&gt;. Even if it isn&amp;#39;t in Finch&amp;#39;s exports list.&lt;/li&gt;
+&lt;li&gt;Bear in mind: whilst inside the chroot, the FreeBSD host environment and root tree are inaccessible. It is worth remembering.&lt;/li&gt;
+&lt;li&gt;Exports are maintained as a folder of symlinks. Location: &lt;code&gt;$finch_realpath/etc/finch/exports/&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;If a command already exists in the host environment, then that will take higher priority and be executed instead. Because it comes first on the search path &lt;code&gt;$PATH&lt;/code&gt;. For example: &lt;code&gt;pkg&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;An INTERACTIVE shell will source &lt;code&gt;/etc/profile&lt;/code&gt;, and set the finch exports directory onto your $PATH statement.&lt;/li&gt;
+&lt;li&gt;Another way to run exports is with &lt;code&gt;finch &amp;lt;export&amp;gt;&lt;/code&gt;. Doing so explicitly will ensure that the command is only searched for inside the Finch chroot (and not the host&amp;#39;s shell also).&lt;/li&gt;
+&lt;li&gt;As with all Finch, we rely upon FreeBSD&amp;#39;s &lt;code&gt;chroot&lt;/code&gt; C program. Only the root user, or members of group &amp;quot;wheel&amp;quot; can run Finch commands... so that also includes Finch&amp;#39;s &amp;quot;exports&amp;quot;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_6"&gt;Refreshing &amp;#39;/etc&amp;#39; files&lt;/h2&gt;
+
+&lt;p&gt;It is necessary to refresh certain &lt;code&gt;/etc&lt;/code&gt; files in the Finch system if they have changed in the host system such as:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;DNS settings in &lt;code&gt;/etc/resolv.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Time zone setting in &lt;code&gt;/etc/localtime&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Adding or modifying user accounts.&lt;/li&gt;
+&lt;li&gt;Adding or modifying user groups.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Just issue a &lt;code&gt;finch refresh&lt;/code&gt;, &lt;code&gt;finch restart&lt;/code&gt;, or reboot your host system.&lt;/p&gt;
+</description>
+    </item>
+  </channel>
+</rss>

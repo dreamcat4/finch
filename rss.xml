@@ -35,15 +35,17 @@
     <item>
       <title>Index</title>
       <link>/finch</link>
-      <description>&lt;h1 id="toc_0"&gt;FreeBSD in a chroot!&lt;/h1&gt;
+      <description>&lt;h1 id="toc_0"&gt;FreeBSD in a chroot&lt;/h1&gt;
 
 &lt;!-- &lt;mark&gt;highlighted&lt;/mark&gt; --&gt;
 
 &lt;!-- _This is an underlined sentence_.  and a ~~strikethrough definition~~  --&gt;
 
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;NEW PROJECT&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;- Version 1.00b Released.&lt;/em&gt;&lt;/p&gt;
+
 &lt;p&gt;&lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_0"&gt;FreeBSD in a chroot!&lt;/a&gt;
+&lt;a href="#toc_0"&gt;FreeBSD in a chroot&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;a href="#toc_1"&gt;Requirements&lt;/a&gt;

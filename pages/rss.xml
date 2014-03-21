@@ -769,6 +769,8 @@ $finch_realpath/var/distfiles/finch/
 
 &lt;!-- _This is an underlined sentence_.  and a ~~strikethrough definition~~  --&gt;
 
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;NEW PROJECT&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;- Version 1.00b Released.&lt;/em&gt;&lt;/p&gt;
+
 &lt;p&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;a href="#toc_0"&gt;FreeBSD in a chroot!&lt;/a&gt;
@@ -2627,7 +2629,7 @@ Exports:
      man, pkg, qjail
 
 Version:
-     1.00a, fe29d3d3fa, Thu Feb 20 21:33:07 GMT 2014.
+     1.00b, 2180681d76, Fri Mar 21 19:32:06 GMT 2014.
 
 Bugs:
      Can be reported at http://dreamcat4.github.io/finch/bugs

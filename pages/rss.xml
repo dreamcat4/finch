@@ -763,7 +763,7 @@ $finch_realpath/var/distfiles/finch/
     <item>
       <title>Index</title>
       <link>/finch</link>
-      <description>&lt;h1 id="toc_0"&gt;FreeBSD in a chroot!&lt;/h1&gt;
+      <description>&lt;h1 id="toc_0"&gt;FreeBSD in a chroot&lt;/h1&gt;
 
 &lt;!-- &lt;mark&gt;highlighted&lt;/mark&gt; --&gt;
 
@@ -773,7 +773,7 @@ $finch_realpath/var/distfiles/finch/
 
 &lt;p&gt;&lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_0"&gt;FreeBSD in a chroot!&lt;/a&gt;
+&lt;a href="#toc_0"&gt;FreeBSD in a chroot&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
 &lt;a href="#toc_1"&gt;Requirements&lt;/a&gt;

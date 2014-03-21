@@ -50,7 +50,7 @@
   </url>
   <url>
     <loc>/finch/finch-8</loc>
-    <lastmod>2014-03-19</lastmod>
+    <lastmod>2014-03-21</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
@@ -86,7 +86,7 @@
   </url>
   <url>
     <loc>/finch/manpage</loc>
-    <lastmod>2014-03-19</lastmod>
+    <lastmod>2014-03-21</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
@@ -98,7 +98,7 @@
   </url>
   <url>
     <loc>/finch/portsnap_override-8</loc>
-    <lastmod>2014-03-19</lastmod>
+    <lastmod>2014-03-21</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>

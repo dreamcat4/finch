@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-03-19</pubDate>
+    <pubDate>2014-03-21</pubDate>
     <item>
       <title>Bugs</title>
       <link>/finch/bugs</link>
@@ -527,7 +527,7 @@ because of errors in jail.conf file.
     <item>
       <title>Finch 8</title>
       <link>/finch/finch-8</link>
-      <description>&lt;!-- 1e39d7b98d6a922eebab27b099570b19 --&gt;
+      <description>&lt;!-- 19c0b136c4ef2473c1f27251fddbdd6c --&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -746,7 +746,7 @@ $finch_realpath/var/distfiles/finch/
 
 &lt;h2 id="Created-by"&gt;Created by&lt;/h2&gt;
 
-&lt;p&gt;Dreamcat4, "dreamcat4@gmail.com" (C 2014). FreeBSD License.&lt;/p&gt;
+&lt;p&gt;Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.&lt;/p&gt;
 
 
   &lt;ol class='man-decor man-foot man foot'&gt;
@@ -887,16 +887,16 @@ finch-bootstrap --help
 &lt;a href="#toc_7"&gt;FreeNAS&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_8"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
+&lt;a href="#toc_8"&gt;FreeNAS services not working after reboot ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_9"&gt;Add bootup / shutdown scripts&lt;/a&gt;
+&lt;a href="#toc_9"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_10"&gt;Start the Finch FreeBSD installation process&lt;/a&gt;
+&lt;a href="#toc_10"&gt;Add bootup / shutdown scripts&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_11"&gt;FreeNAS services not working after reboot ?&lt;/a&gt;
+&lt;a href="#toc_11"&gt;Start the Finch FreeBSD installation process&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -998,7 +998,7 @@ Bugs:
     Can be reported at http://dreamcat4.github.io/finch/bugs
 
 Created by:
-    Dreamcat4, &amp;quot;dreamcat4@gmail.com&amp;quot; (C 2014). FreeBSD License.
+    Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h1 id="toc_2"&gt;Post-Install Steps&lt;/h1&gt;
@@ -1065,54 +1065,7 @@ Created by:
 
 &lt;p&gt;These steps should be followed after installation.&lt;/p&gt;
 
-&lt;h3 id="toc_8"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;In the FreeNAS Web GUI Expand &lt;code&gt;+ Account&lt;/code&gt; --&amp;gt; &lt;code&gt;+ Users&lt;/code&gt; --&amp;gt; &lt;code&gt;View Users&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Select the account from the list of all users. Click to highlight the entry.&lt;/li&gt;
-&lt;li&gt;Click the &lt;code&gt;Modify User&lt;/code&gt; button that appears.&lt;/li&gt;
-&lt;li&gt;Select Shell: &lt;strong&gt;&lt;code&gt;bash&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;Select &lt;code&gt;Auxilary Groups&lt;/code&gt; &amp;gt;&amp;gt; &lt;strong&gt;&lt;code&gt;wheel&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;Click &lt;code&gt;OK&lt;/code&gt; to close the window and save changes.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id="toc_9"&gt;Add bootup / shutdown scripts&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;In the FreeNAS Web GUI:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Expand &lt;code&gt;+ System&lt;/code&gt; --&amp;gt; &lt;code&gt;+ Init/Shutdown Scripts&lt;/code&gt; --&amp;gt; &lt;code&gt;Add Init/Shutdown Script&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the folowing &lt;code&gt;POSTINIT&lt;/code&gt; script:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;/path/to/finch/etc/finch/postinit&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the folowing &lt;code&gt;SHUTDOWN&lt;/code&gt; script:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;/path/to/finch/etc/finch/shutdown&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id="toc_10"&gt;Start the Finch FreeBSD installation process&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Reboot your FreeNAS system. Installation will begin on next boot.&lt;/li&gt;
-&lt;li&gt;To check progress login on the command line and type:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Installation will take anywhere from 20 minutes up to 1 hour.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id="toc_11"&gt;FreeNAS services not working after reboot ?&lt;/h3&gt;
+&lt;h3 id="toc_8"&gt;FreeNAS services not working after reboot ?&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;You will find that FreeNAS services do not start correctly after Finch installation.&lt;/li&gt;
@@ -1141,6 +1094,53 @@ This has been found to work for the ssh service.&lt;/li&gt;
 &lt;ul&gt;
 &lt;li&gt;Wait until Finch has finished installing everything.
 The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_9"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the FreeNAS Web GUI Expand &lt;code&gt;+ Account&lt;/code&gt; --&amp;gt; &lt;code&gt;+ Users&lt;/code&gt; --&amp;gt; &lt;code&gt;View Users&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select the account from the list of all users. Click to highlight the entry.&lt;/li&gt;
+&lt;li&gt;Click the &lt;code&gt;Modify User&lt;/code&gt; button that appears.&lt;/li&gt;
+&lt;li&gt;Select Shell: &lt;strong&gt;&lt;code&gt;bash&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;Auxilary Groups&lt;/code&gt; &amp;gt;&amp;gt; &lt;strong&gt;&lt;code&gt;wheel&lt;/code&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Click &lt;code&gt;OK&lt;/code&gt; to close the window and save changes.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_10"&gt;Add bootup / shutdown scripts&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the FreeNAS Web GUI:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Expand &lt;code&gt;+ System&lt;/code&gt; --&amp;gt; &lt;code&gt;+ Init/Shutdown Scripts&lt;/code&gt; --&amp;gt; &lt;code&gt;Add Init/Shutdown Script&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the folowing &lt;code&gt;POSTINIT&lt;/code&gt; script:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;/path/to/finch/etc/finch/postinit&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the folowing &lt;code&gt;SHUTDOWN&lt;/code&gt; script:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;/path/to/finch/etc/finch/shutdown&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_11"&gt;Start the Finch FreeBSD installation process&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Reboot your FreeNAS system. Installation will begin on next boot.&lt;/li&gt;
+&lt;li&gt;To check progress login on the command line and type:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;$ &amp;quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Installation will take anywhere from 20 minutes up to 1 hour.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id="toc_12"&gt;FreeBSD-GENERIC&lt;/h2&gt;
@@ -1505,7 +1505,7 @@ ssh &amp;quot;${username}@${jail_ip}&amp;quot;
     <item>
       <title>Manpage</title>
       <link>/finch/manpage</link>
-      <description>&lt;!-- 1e39d7b98d6a922eebab27b099570b19 --&gt;
+      <description>&lt;!-- 19c0b136c4ef2473c1f27251fddbdd6c --&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -1724,7 +1724,7 @@ $finch_realpath/var/distfiles/finch/
 
 &lt;h2 id="Created-by"&gt;Created by&lt;/h2&gt;
 
-&lt;p&gt;Dreamcat4, "dreamcat4@gmail.com" (C 2014). FreeBSD License.&lt;/p&gt;
+&lt;p&gt;Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.&lt;/p&gt;
 
 
   &lt;ol class='man-decor man-foot man foot'&gt;
@@ -1930,7 +1930,7 @@ zfs set mountpoint=&amp;quot;${finch_realpath}/usr/jails/sharedfs/${dataset}&amp
     <item>
       <title>Portsnap_override 8</title>
       <link>/finch/portsnap_override-8</link>
-      <description>&lt;!-- bfdcb539f14880db789815b0fb07b93c --&gt;
+      <description>&lt;!-- 27ae384ac62f31c872bfaa9bb248b073 --&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -2083,12 +2083,12 @@ situation can be rectified by issuing $ portsnap_override "off" manually.&lt;/p&
 
 &lt;h2 id="Created-by"&gt;Created by&lt;/h2&gt;
 
-&lt;p&gt;Dreamcat4, "dreamcat4@gmail.com" (C 2014). FreeBSD License.&lt;/p&gt;
+&lt;p&gt;Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.&lt;/p&gt;
 
 
   &lt;ol class='man-decor man-foot man foot'&gt;
     &lt;li class='tl'&gt;dreamcat4-finch&lt;/li&gt;
-    &lt;li class='tc'&gt;February 2014&lt;/li&gt;
+    &lt;li class='tc'&gt;March 2014&lt;/li&gt;
     &lt;li class='tr'&gt;portsnap_override(8)&lt;/li&gt;
   &lt;/ol&gt;
 
@@ -2633,7 +2633,7 @@ Bugs:
      Can be reported at http://dreamcat4.github.io/finch/bugs
 
 Created by:
-     Dreamcat4, &amp;quot;dreamcat4@gmail.com&amp;quot; (C 2014). FreeBSD License.
+     Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id="toc_4"&gt;Read the manpages&lt;/h2&gt;

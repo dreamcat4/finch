@@ -350,16 +350,16 @@
 <a href="#toc_7">FreeNAS</a>
 <ul>
 <li>
-<a href="#toc_8">Configure root &amp; administrator accounts</a>
+<a href="#toc_8">FreeNAS services not working after reboot ?</a>
 </li>
 <li>
-<a href="#toc_9">Add bootup / shutdown scripts</a>
+<a href="#toc_9">Configure root &amp; administrator accounts</a>
 </li>
 <li>
-<a href="#toc_10">Start the Finch FreeBSD installation process</a>
+<a href="#toc_10">Add bootup / shutdown scripts</a>
 </li>
 <li>
-<a href="#toc_11">FreeNAS services not working after reboot ?</a>
+<a href="#toc_11">Start the Finch FreeBSD installation process</a>
 </li>
 </ul>
 </li>
@@ -461,7 +461,7 @@ Bugs:
     Can be reported at http://dreamcat4.github.io/finch/bugs
 
 Created by:
-    Dreamcat4, &quot;dreamcat4@gmail.com&quot; (C 2014). FreeBSD License.
+    Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
 </code></pre>
 
 <h1 id="toc_2">Post-Install Steps</h1>
@@ -528,54 +528,7 @@ Created by:
 
 <p>These steps should be followed after installation.</p>
 
-<h3 id="toc_8">Configure root &amp; administrator accounts</h3>
-
-<ul>
-<li>In the FreeNAS Web GUI Expand <code>+ Account</code> --&gt; <code>+ Users</code> --&gt; <code>View Users</code></li>
-<li>Select the account from the list of all users. Click to highlight the entry.</li>
-<li>Click the <code>Modify User</code> button that appears.</li>
-<li>Select Shell: <strong><code>bash</code></strong>.</li>
-<li>Select <code>Auxilary Groups</code> &gt;&gt; <strong><code>wheel</code></strong>.</li>
-<li>Click <code>OK</code> to close the window and save changes.</li>
-</ul>
-
-<h3 id="toc_9">Add bootup / shutdown scripts</h3>
-
-<ul>
-<li>In the FreeNAS Web GUI:</li>
-</ul>
-
-<p>Expand <code>+ System</code> --&gt; <code>+ Init/Shutdown Scripts</code> --&gt; <code>Add Init/Shutdown Script</code></p>
-
-<ul>
-<li>Select Type: <code>Script</code> and add the folowing <code>POSTINIT</code> script:</li>
-</ul>
-
-<pre><code>$ &quot;/path/to/finch/etc/finch/postinit&quot;
-</code></pre>
-
-<ul>
-<li>Select Type: <code>Script</code> and add the folowing <code>SHUTDOWN</code> script:</li>
-</ul>
-
-<pre><code>$ &quot;/path/to/finch/etc/finch/shutdown&quot;
-</code></pre>
-
-<h3 id="toc_10">Start the Finch FreeBSD installation process</h3>
-
-<ul>
-<li>Reboot your FreeNAS system. Installation will begin on next boot.</li>
-<li>To check progress login on the command line and type:</li>
-</ul>
-
-<pre><code>$ &quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&quot;
-</code></pre>
-
-<ul>
-<li>Installation will take anywhere from 20 minutes up to 1 hour.</li>
-</ul>
-
-<h3 id="toc_11">FreeNAS services not working after reboot ?</h3>
+<h3 id="toc_8">FreeNAS services not working after reboot ?</h3>
 
 <ul>
 <li>You will find that FreeNAS services do not start correctly after Finch installation.</li>
@@ -604,6 +557,53 @@ This has been found to work for the ssh service.</li>
 <ul>
 <li>Wait until Finch has finished installing everything.
 The daemon is will start normally once Finch POSTINIT has completed.</li>
+</ul>
+
+<h3 id="toc_9">Configure root &amp; administrator accounts</h3>
+
+<ul>
+<li>In the FreeNAS Web GUI Expand <code>+ Account</code> --&gt; <code>+ Users</code> --&gt; <code>View Users</code></li>
+<li>Select the account from the list of all users. Click to highlight the entry.</li>
+<li>Click the <code>Modify User</code> button that appears.</li>
+<li>Select Shell: <strong><code>bash</code></strong>.</li>
+<li>Select <code>Auxilary Groups</code> &gt;&gt; <strong><code>wheel</code></strong>.</li>
+<li>Click <code>OK</code> to close the window and save changes.</li>
+</ul>
+
+<h3 id="toc_10">Add bootup / shutdown scripts</h3>
+
+<ul>
+<li>In the FreeNAS Web GUI:</li>
+</ul>
+
+<p>Expand <code>+ System</code> --&gt; <code>+ Init/Shutdown Scripts</code> --&gt; <code>Add Init/Shutdown Script</code></p>
+
+<ul>
+<li>Select Type: <code>Script</code> and add the folowing <code>POSTINIT</code> script:</li>
+</ul>
+
+<pre><code>$ &quot;/path/to/finch/etc/finch/postinit&quot;
+</code></pre>
+
+<ul>
+<li>Select Type: <code>Script</code> and add the folowing <code>SHUTDOWN</code> script:</li>
+</ul>
+
+<pre><code>$ &quot;/path/to/finch/etc/finch/shutdown&quot;
+</code></pre>
+
+<h3 id="toc_11">Start the Finch FreeBSD installation process</h3>
+
+<ul>
+<li>Reboot your FreeNAS system. Installation will begin on next boot.</li>
+<li>To check progress login on the command line and type:</li>
+</ul>
+
+<pre><code>$ &quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&quot;
+</code></pre>
+
+<ul>
+<li>Installation will take anywhere from 20 minutes up to 1 hour.</li>
 </ul>
 
 <h2 id="toc_12">FreeBSD-GENERIC</h2>

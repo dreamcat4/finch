@@ -339,7 +339,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;h3 id="toc_17"&gt;How does Finch compare to &amp;#39;theBrig&amp;#39; ?&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Finch is not just for hosting jails. You may recompile your FreeBSD kernel, run VirtualBox or other hypervisors.&lt;/li&gt;
+&lt;li&gt;Finch is not just for hosting jails. You may also recompile your FreeBSD kernel, run VirtualBox or other hypervisors.&lt;/li&gt;
 &lt;li&gt;Finch supports other platforms e.g. FreeNAS and the official FreeBSD.&lt;/li&gt;
 &lt;li&gt;Finch does not expect that you want to manage your FreeBSD jails manually.&lt;/li&gt;
 &lt;li&gt;Finch provides everything you need, already pre-configured for you.&lt;/li&gt;

@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-03-21</pubDate>
+    <pubDate>2014-03-24</pubDate>
     <item>
       <title>Bugs</title>
       <link>/finch/bugs</link>
@@ -121,7 +121,7 @@ $finch_realpath/var/log/finch/shutdown.log
 &lt;a href="#toc_16"&gt;Why do I need Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_17"&gt;How does Finch compare to &amp;#39;thebrig&amp;#39; ?&lt;/a&gt;
+&lt;a href="#toc_17"&gt;How does Finch compare to &amp;#39;theBrig&amp;#39; ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_18"&gt;Is finch + qjail compatible with FreeNAS jails / plugins ?&lt;/a&gt;
@@ -296,7 +296,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;h3 id="toc_15"&gt;Will Finch interfere with my FreeNAS / NAS4Free configuration ?&lt;/h3&gt;
 
-&lt;p&gt;Finch installs everything it needs into it&amp;#39;s own subfolder on one of your data drives. Which are entirely seperate and isolated from the host system. Finch can be disabled entirely by removing the &lt;code&gt;POSTINIT&lt;/code&gt; boot script from your FreeNAS or NAS4Free configuration.&lt;/p&gt;
+&lt;p&gt;Finch installs everything it needs into it&amp;#39;s own subfolder on one of your data drives. Which are entirely seperate and isolated from the host system. Finch can be disabled entirely by removing it&amp;#39;s &lt;code&gt;POSTINIT&lt;/code&gt; boot script from your FreeNAS or NAS4Free configuration.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Finch will:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
@@ -336,14 +336,13 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; FreeNAS already comes with a tool (made by IX Systems) called &lt;code&gt;warden&lt;/code&gt; which provides the &amp;#39;Plugins&amp;#39; and &amp;#39;Jails&amp;#39; tabs in the FreeNAS Web GUI. Finch comes with &lt;code&gt;qjail&lt;/code&gt; - a FOSS tool for jails management. There are different advantages / disadvantages to each one.&lt;/p&gt;
 
-&lt;h3 id="toc_17"&gt;How does Finch compare to &amp;#39;thebrig&amp;#39; ?&lt;/h3&gt;
-
-&lt;p&gt;In short, Finch can do a lot more than &lt;code&gt;theBrig&lt;/code&gt;. Finch is also more flexible and future-proof.&lt;/p&gt;
+&lt;h3 id="toc_17"&gt;How does Finch compare to &amp;#39;theBrig&amp;#39; ?&lt;/h3&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Finch is not strictly limited to NAS4Free and jails.&lt;/li&gt;
-&lt;li&gt;Finch supports other platforms such as FreeNAS and official FreeBSD.&lt;/li&gt;
-&lt;li&gt;Finch does not expect that you want manage your FreeBSD jails manually.&lt;/li&gt;
+&lt;li&gt;Finch is not just for hosting jails. You may recompile your FreeBSD kernel, run VirtualBox or other hypervisors.&lt;/li&gt;
+&lt;li&gt;Finch supports other platforms e.g. FreeNAS and the official FreeBSD.&lt;/li&gt;
+&lt;li&gt;Finch does not expect that you want to manage your FreeBSD jails manually.&lt;/li&gt;
+&lt;li&gt;Finch provides everything you need, already pre-configured for you.&lt;/li&gt;
 &lt;li&gt;Finch has no breakable PHP interface. There is no WebGUI like theBrig. Finch is a command line tool.&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1850,6 +1849,11 @@ disk0/my_dataset                          144K   616G   144K  /mnt/disk0/my_data
 &lt;pre&gt;&lt;code&gt;finch_realpath=&amp;quot;/mnt/disk0/finch&amp;quot; # &amp;lt;---- our finch chroot
 zfspool=&amp;quot;disk0&amp;quot;                   # &amp;lt;---- our zfs pool
 dataset=&amp;quot;disk0/my_dataset&amp;quot;        # &amp;lt;---- our zfs dataset
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Firstly, make sure you are &lt;em&gt;outside&lt;/em&gt; of the finch chroot. Then get your &lt;code&gt;/path/to/finch&lt;/code&gt; with this command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;finch_realpath=&amp;quot;$(finch realpath)&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;We can move our dataset&amp;#39;s mountpoint to be inside of our Finch chroot:&lt;/p&gt;

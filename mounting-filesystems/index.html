@@ -430,6 +430,11 @@ zfspool=&quot;disk0&quot;                   # &lt;---- our zfs pool
 dataset=&quot;disk0/my_dataset&quot;        # &lt;---- our zfs dataset
 </code></pre>
 
+<p>Firstly, make sure you are <em>outside</em> of the finch chroot. Then get your <code>/path/to/finch</code> with this command:</p>
+
+<pre><code>finch_realpath=&quot;$(finch realpath)&quot;
+</code></pre>
+
 <p>We can move our dataset&#39;s mountpoint to be inside of our Finch chroot:</p>
 
 <pre><code>zfs set mountpoint=&quot;${finch_realpath}/mnt/disk0/my_dataset&quot; &quot;$dataset&quot;

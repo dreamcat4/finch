@@ -382,7 +382,7 @@
 <a href="#toc_16">Why do I need Finch ?</a>
 </li>
 <li>
-<a href="#toc_17">How does Finch compare to &#39;thebrig&#39; ?</a>
+<a href="#toc_17">How does Finch compare to &#39;theBrig&#39; ?</a>
 </li>
 <li>
 <a href="#toc_18">Is finch + qjail compatible with FreeNAS jails / plugins ?</a>
@@ -557,7 +557,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 
 <h3 id="toc_15">Will Finch interfere with my FreeNAS / NAS4Free configuration ?</h3>
 
-<p>Finch installs everything it needs into it&#39;s own subfolder on one of your data drives. Which are entirely seperate and isolated from the host system. Finch can be disabled entirely by removing the <code>POSTINIT</code> boot script from your FreeNAS or NAS4Free configuration.</p>
+<p>Finch installs everything it needs into it&#39;s own subfolder on one of your data drives. Which are entirely seperate and isolated from the host system. Finch can be disabled entirely by removing it&#39;s <code>POSTINIT</code> boot script from your FreeNAS or NAS4Free configuration.</p>
 
 <p><strong><em>Finch will:</em></strong></p>
 
@@ -597,14 +597,13 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 
 <p><sup>1</sup> FreeNAS already comes with a tool (made by IX Systems) called <code>warden</code> which provides the &#39;Plugins&#39; and &#39;Jails&#39; tabs in the FreeNAS Web GUI. Finch comes with <code>qjail</code> - a FOSS tool for jails management. There are different advantages / disadvantages to each one.</p>
 
-<h3 id="toc_17">How does Finch compare to &#39;thebrig&#39; ?</h3>
-
-<p>In short, Finch can do a lot more than <code>theBrig</code>. Finch is also more flexible and future-proof.</p>
+<h3 id="toc_17">How does Finch compare to &#39;theBrig&#39; ?</h3>
 
 <ul>
-<li>Finch is not strictly limited to NAS4Free and jails.</li>
-<li>Finch supports other platforms such as FreeNAS and official FreeBSD.</li>
-<li>Finch does not expect that you want manage your FreeBSD jails manually.</li>
+<li>Finch is not just for hosting jails. You may recompile your FreeBSD kernel, run VirtualBox or other hypervisors.</li>
+<li>Finch supports other platforms e.g. FreeNAS and the official FreeBSD.</li>
+<li>Finch does not expect that you want to manage your FreeBSD jails manually.</li>
+<li>Finch provides everything you need, already pre-configured for you.</li>
 <li>Finch has no breakable PHP interface. There is no WebGUI like theBrig. Finch is a command line tool.</li>
 </ul>
 

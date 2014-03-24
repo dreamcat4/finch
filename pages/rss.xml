@@ -407,7 +407,7 @@ echo &amp;quot;ezjail_enable=\&amp;quot;YES\&amp;quot;&amp;quot; &amp;gt;&amp;gt
 exit
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now we can add the command to our exports. The Finch exports feature is explained on the &lt;strong&gt;&lt;a href="usage#toc_4"&gt;usage page&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Now we can add the command to our exports. The Finch exports feature is explained on the &lt;strong&gt;&lt;a href="usage/#toc_4"&gt;usage page&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# Add the command to our finch exports list
 finch export &amp;quot;ezjail-admin&amp;quot;
@@ -828,7 +828,7 @@ finch-bootstrap --help
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Where typing &lt;a href="install#toc_1"&gt;&lt;code&gt;finch-bootstrap --help&lt;/code&gt;&lt;/a&gt; will show you the available installer options.&lt;/li&gt;
+&lt;li&gt;Typing &lt;a href="install/#toc_1"&gt;&lt;code&gt;finch-bootstrap --help&lt;/code&gt;&lt;/a&gt; will show you the available installer options.&lt;/li&gt;
 &lt;li&gt;Under normal conditions the default settings should be fine.&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -837,7 +837,7 @@ finch-bootstrap --help
 &lt;pre&gt;&lt;code&gt;finch-bootstrap install --dir &amp;quot;/path/to/finch&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="install#toc_2"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
+&lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="install/#toc_2"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The Finch &amp;quot;bootstrap&amp;quot; installer will run it&amp;#39;s preflight checks and ask for confirmation before continuing.&lt;/li&gt;
@@ -927,7 +927,7 @@ finch-bootstrap --help
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Where typing &lt;a href="#toc_1"&gt;&lt;code&gt;finch-bootstrap --help&lt;/code&gt;&lt;/a&gt; will show you the available installer options.&lt;/li&gt;
+&lt;li&gt;Typing &lt;a href="#toc_1"&gt;&lt;code&gt;finch-bootstrap --help&lt;/code&gt;&lt;/a&gt; will show you the available installer options.&lt;/li&gt;
 &lt;li&gt;Under normal conditions the default settings should be fine.&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -2589,7 +2589,7 @@ rm -rf /var/distfiles/finch
 &lt;li&gt;Issue a &lt;a href="#toc_6"&gt;&lt;code&gt;finch refresh&lt;/code&gt;&lt;/a&gt; after changing users or groups.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; Only members of the &lt;code&gt;wheel&lt;/code&gt; administrative group can use Finch. For more information please see the finch &lt;a href="manpage#USAGE"&gt;manpage&lt;/a&gt;. &lt;sup&gt;2&lt;/sup&gt; Always use a POSIX.2 or Bourne-type compatible shell. Finch installs Bash by default. For more information please see the &lt;a href="faq#toc_8"&gt;bash FAQ entry&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; Only members of the &lt;code&gt;wheel&lt;/code&gt; administrative group can use Finch. For more information please see the finch &lt;a href="manpage#USAGE"&gt;manpage&lt;/a&gt;. &lt;sup&gt;2&lt;/sup&gt; Always use a POSIX.2 or Bourne-type compatible shell. Finch installs Bash by default. For more information please see the &lt;a href="faq/#toc_8"&gt;bash FAQ entry&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id="toc_2"&gt;How to &amp;#39;su&amp;#39; and preserve Finch&amp;#39;s login profile&lt;/h2&gt;
 

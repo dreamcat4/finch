@@ -251,7 +251,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;h3 id="toc_8"&gt;Can finch be installed onto pfSense ?&lt;/h3&gt;
 
-&lt;p&gt;Not yet. However pfsense is now slated to move onto a FreeBSD-10 base at some point in the near future. When that happens, then Finch can be modified to support pfsense also. If you wish to provide contributions &amp;amp; patches for pfSense they are very welcome.&lt;/p&gt;
+&lt;p&gt;Not yet. However pfsense is slated to move onto a FreeBSD-10 base at some point in the near future. When that happens, then Finch can be modified to support pfsense also. If you wish to provide contributions &amp;amp; patches for pfSense they are very welcome.&lt;/p&gt;
 
 &lt;h3 id="toc_9"&gt;Why does Finch install ... ?&lt;/h3&gt;
 

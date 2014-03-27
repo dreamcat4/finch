@@ -321,9 +321,10 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;p&gt;&lt;strong&gt;NAS4Free:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;To install arbitrary software, hassle-free.&lt;/li&gt;
 &lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
+&lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool (also known as &lt;code&gt;pkg-ng&lt;/code&gt;).&lt;/li&gt;
 &lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
+&lt;li&gt;To have all the basics preconfigured for you, and a consistent shell environment.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;FreeNAS:&lt;/strong&gt;&lt;/p&gt;
@@ -332,7 +333,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
 &lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool (also known as &lt;code&gt;pkg-ng&lt;/code&gt;).&lt;/li&gt;
 &lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
-&lt;li&gt;To install other arbitrary software, such as VirtualBox or ez-jail.&lt;/li&gt;
+&lt;li&gt;To have all the basics preconfigured for you, and a consistent shell environment.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id="toc_17"&gt;How does Finch compare to &amp;#39;theBrig&amp;#39; ?&lt;/h3&gt;
@@ -807,9 +808,10 @@ $finch_realpath/var/distfiles/finch/
 &lt;p&gt;&lt;strong&gt;NAS4Free:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;To install arbitrary software, hassle-free.&lt;/li&gt;
 &lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
+&lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool (also known as &lt;code&gt;pkg-ng&lt;/code&gt;).&lt;/li&gt;
 &lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
+&lt;li&gt;To have all the basics preconfigured for you, and a consistent shell environment.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;FreeNAS:&lt;/strong&gt;&lt;/p&gt;
@@ -818,7 +820,7 @@ $finch_realpath/var/distfiles/finch/
 &lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
 &lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool (also known as &lt;code&gt;pkg-ng&lt;/code&gt;).&lt;/li&gt;
 &lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
-&lt;li&gt;To install other arbitrary software, such as VirtualBox or ez-jail.&lt;/li&gt;
+&lt;li&gt;To have all the basics preconfigured for you, and a consistent shell environment.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id="toc_3"&gt;Requirements&lt;/h2&gt;

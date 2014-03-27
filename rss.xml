@@ -82,7 +82,7 @@
 
 &lt;ul&gt;
 &lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
-&lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool (also known as &lt;code&gt;pkg-ng&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool otherwise known as &lt;code&gt;pkg-ng&lt;/code&gt;.&lt;/li&gt;
 &lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
 &lt;li&gt;To have all the basics preconfigured for you, and a consistent shell environment.&lt;/li&gt;
 &lt;/ul&gt;
@@ -91,7 +91,7 @@
 
 &lt;ul&gt;
 &lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
-&lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool (also known as &lt;code&gt;pkg-ng&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool otherwise known as &lt;code&gt;pkg-ng&lt;/code&gt;.&lt;/li&gt;
 &lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
 &lt;li&gt;To have all the basics preconfigured for you, and a consistent shell environment.&lt;/li&gt;
 &lt;/ul&gt;

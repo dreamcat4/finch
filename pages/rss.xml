@@ -251,9 +251,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;h3 id="toc_8"&gt;Can finch be installed onto pfSense ?&lt;/h3&gt;
 
-&lt;p&gt;It isn&amp;#39;t likely to work - you are on your own. We don&amp;#39;t officially support pfsense because it is based on a much older version of FreeBSD. Being on stable means it lags behind the other platforms we support, thus making pfSense the odd-one-out. This is an important consideration in terms of Finch because we want to uniformly support a broad range of modern features.&lt;/p&gt;
-
-&lt;p&gt;FreeBSD-GERNEIC has just got to 10.0-RELEASE whilst the &lt;em&gt;newest&lt;/em&gt; psSense in HEAD remains on the same 8.3-RELEASE &lt;em&gt;which it has been on for the last&lt;/em&gt; &lt;strong&gt;&lt;em&gt;2 years&lt;/em&gt;&lt;/strong&gt;. Wheras &lt;em&gt;both&lt;/em&gt; FreeNAS and NAS4Free are now officially on 9.2-RELEASE. If you wish to provide contributions &amp;amp; patches for pfSense they are welcome... so long as they don&amp;#39;t interfere too much with the existing Finch codebase or make a whole big mess everywhere.&lt;/p&gt;
+&lt;p&gt;Not yet. However pfsense is now slated to move onto a FreeBSD-10 base at some point in the near future. When that happens, then Finch can be modified to support pfsense also. If you wish to provide contributions &amp;amp; patches for pfSense they are very welcome.&lt;/p&gt;
 
 &lt;h3 id="toc_9"&gt;Why does Finch install ... ?&lt;/h3&gt;
 

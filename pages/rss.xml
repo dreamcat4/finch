@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-03-24</pubDate>
+    <pubDate>2014-03-27</pubDate>
     <item>
       <title>Bugs</title>
       <link>/finch/bugs</link>
@@ -318,23 +318,22 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;h3 id="toc_16"&gt;Why do I need Finch ?&lt;/h3&gt;
 
-&lt;p&gt;Because you may install any arbitrary software inside Finch&amp;#39;s chroot.&lt;/p&gt;
-
 &lt;p&gt;&lt;strong&gt;NAS4Free:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;To install arbitrary software, hassle-free.&lt;/li&gt;
 &lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
+&lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;FreeNAS:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;To install arbitrary software, hassle-free.&lt;/li&gt;
-&lt;li&gt;If you need to use tools other than warden &lt;sup&gt;1.&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
+&lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool (also known as &lt;code&gt;pkg-ng&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
+&lt;li&gt;To install other arbitrary software, such as VirtualBox or ez-jail.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; FreeNAS already comes with a tool (made by IX Systems) called &lt;code&gt;warden&lt;/code&gt; which provides the &amp;#39;Plugins&amp;#39; and &amp;#39;Jails&amp;#39; tabs in the FreeNAS Web GUI. Finch comes with &lt;code&gt;qjail&lt;/code&gt; - a FOSS tool for jails management. There are different advantages / disadvantages to each one.&lt;/p&gt;
 
 &lt;h3 id="toc_17"&gt;How does Finch compare to &amp;#39;theBrig&amp;#39; ?&lt;/h3&gt;
 
@@ -775,18 +774,26 @@ $finch_realpath/var/distfiles/finch/
 &lt;a href="#toc_0"&gt;FreeBSD in a chroot&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_1"&gt;Requirements&lt;/a&gt;
+&lt;a href="#toc_1"&gt;About&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_2"&gt;Install&lt;/a&gt;
+&lt;a href="#toc_2"&gt;Why do I need Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_3"&gt;What next ?&lt;/a&gt;
+&lt;a href="#toc_3"&gt;Requirements&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_4"&gt;Install&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;What next ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;About&lt;/h2&gt;
 
 &lt;p&gt;&lt;em&gt;Finch&lt;/em&gt; is FreeBSD &lt;em&gt;running inside a &lt;a href="http://www.freebsd.org/cgi/man.cgi?query=chroot"&gt;&lt;code&gt;chroot&lt;/code&gt;&lt;/a&gt;&lt;/em&gt;. Finch is best used as a way to extend the functionality of restricted USB-based FreeBSD distributions, usually &lt;a href="http://www.freenas.org/"&gt;FreeNAS&lt;/a&gt; and &lt;a href="http://www.nas4free.org/"&gt;NAS4Free&lt;/a&gt;. For added convenience, Finch also includes the &lt;a href="http://www.freshports.org/sysutils/qjail"&gt;&lt;code&gt;qjail&lt;/code&gt;&lt;/a&gt; jails management tool. Since FreeBSD jails are such a popular request.&lt;/p&gt;
 
@@ -795,7 +802,26 @@ $finch_realpath/var/distfiles/finch/
 &lt;pre&gt;&lt;code&gt;# Restricted FreeBSD host &amp;lt;--&amp;gt; FreeBSD-in-a-chroot (a.k.a &amp;quot;Finch&amp;quot;) &amp;lt;--&amp;gt; Qjail &amp;lt;--&amp;gt; jails
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id="toc_1"&gt;Requirements&lt;/h2&gt;
+&lt;h2 id="toc_2"&gt;Why do I need Finch ?&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;NAS4Free:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To install arbitrary software, hassle-free.&lt;/li&gt;
+&lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
+&lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;FreeNAS:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
+&lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool (also known as &lt;code&gt;pkg-ng&lt;/code&gt;).&lt;/li&gt;
+&lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
+&lt;li&gt;To install other arbitrary software, such as VirtualBox or ez-jail.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_3"&gt;Requirements&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;Supported Platforms:&lt;/strong&gt;&lt;/p&gt;
 
@@ -815,7 +841,7 @@ $finch_realpath/var/distfiles/finch/
 
 &lt;p&gt;Requirements for &lt;em&gt;other FreeBSD platforms not listed above&lt;/em&gt;: &lt;sup&gt;1&lt;/sup&gt; The host system must have writable, persistent &lt;code&gt;/etc&lt;/code&gt; and &lt;code&gt;/usr/local&lt;/code&gt; folders. &lt;sup&gt;2&lt;/sup&gt; The host system either needs a working &lt;code&gt;pkg-ng&lt;/code&gt; system, or the packages &lt;code&gt;sudo&lt;/code&gt; and &lt;code&gt;bash&lt;/code&gt; pre-installed.&lt;/p&gt;
 
-&lt;h2 id="toc_2"&gt;Install&lt;/h2&gt;
+&lt;h2 id="toc_4"&gt;Install&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Check that your system matches the &lt;a href="#toc_1"&gt;Platform Requirements&lt;/a&gt;.&lt;/li&gt;
@@ -846,7 +872,7 @@ finch-bootstrap --help
 &lt;li&gt;&lt;p&gt;On FreeNAS / NAS4Free it is worth configuring SMTP email in the Web GUI. Be sure to also set a &amp;quot;to:&amp;quot; destination address in your SMARTD email settings. Then you will be emailed progress updates during installation.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id="toc_3"&gt;What next ?&lt;/h2&gt;
+&lt;h2 id="toc_5"&gt;What next ?&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Why not bury oneself in the Finch &lt;strong&gt;&lt;a href="manpage"&gt;manpage&lt;/a&gt;&lt;/strong&gt;. For that authentic UNIX experience.&lt;/li&gt;

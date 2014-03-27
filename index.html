@@ -332,18 +332,26 @@
 <a href="#toc_0">FreeBSD in a chroot</a>
 <ul>
 <li>
-<a href="#toc_1">Requirements</a>
+<a href="#toc_1">About</a>
 </li>
 <li>
-<a href="#toc_2">Install</a>
+<a href="#toc_2">Why do I need Finch ?</a>
 </li>
 <li>
-<a href="#toc_3">What next ?</a>
+<a href="#toc_3">Requirements</a>
+</li>
+<li>
+<a href="#toc_4">Install</a>
+</li>
+<li>
+<a href="#toc_5">What next ?</a>
 </li>
 </ul>
 </li>
 </ul>
 </p>
+
+<h2 id="toc_1">About</h2>
 
 <p><em>Finch</em> is FreeBSD <em>running inside a <a href="http://www.freebsd.org/cgi/man.cgi?query=chroot"><code>chroot</code></a></em>. Finch is best used as a way to extend the functionality of restricted USB-based FreeBSD distributions, usually <a href="http://www.freenas.org/">FreeNAS</a> and <a href="http://www.nas4free.org/">NAS4Free</a>. For added convenience, Finch also includes the <a href="http://www.freshports.org/sysutils/qjail"><code>qjail</code></a> jails management tool. Since FreeBSD jails are such a popular request.</p>
 
@@ -352,7 +360,26 @@
 <pre><code># Restricted FreeBSD host &lt;--&gt; FreeBSD-in-a-chroot (a.k.a &quot;Finch&quot;) &lt;--&gt; Qjail &lt;--&gt; jails
 </code></pre>
 
-<h2 id="toc_1">Requirements</h2>
+<h2 id="toc_2">Why do I need Finch ?</h2>
+
+<p><strong>NAS4Free:</strong></p>
+
+<ul>
+<li>To install arbitrary software, hassle-free.</li>
+<li>To manage jails with <code>qjail</code>, hassle-free.</li>
+<li>To have a full, official FreeBSD system image, including ports tree and kernel sources.</li>
+</ul>
+
+<p><strong>FreeNAS:</strong></p>
+
+<ul>
+<li>To manage jails with <code>qjail</code>, hassle-free.</li>
+<li>To use <code>pkg install ...</code>, the official FreeBSD tool (also known as <code>pkg-ng</code>).</li>
+<li>To have a full, official FreeBSD system image, including ports tree and kernel sources.</li>
+<li>To install other arbitrary software, such as VirtualBox or ez-jail.</li>
+</ul>
+
+<h2 id="toc_3">Requirements</h2>
 
 <p><strong>Supported Platforms:</strong></p>
 
@@ -372,7 +399,7 @@
 
 <p>Requirements for <em>other FreeBSD platforms not listed above</em>: <sup>1</sup> The host system must have writable, persistent <code>/etc</code> and <code>/usr/local</code> folders. <sup>2</sup> The host system either needs a working <code>pkg-ng</code> system, or the packages <code>sudo</code> and <code>bash</code> pre-installed.</p>
 
-<h2 id="toc_2">Install</h2>
+<h2 id="toc_4">Install</h2>
 
 <ul>
 <li>Check that your system matches the <a href="#toc_1">Platform Requirements</a>.</li>
@@ -403,7 +430,7 @@ finch-bootstrap --help
 <li><p>On FreeNAS / NAS4Free it is worth configuring SMTP email in the Web GUI. Be sure to also set a &quot;to:&quot; destination address in your SMARTD email settings. Then you will be emailed progress updates during installation.</p></li>
 </ul>
 
-<h2 id="toc_3">What next ?</h2>
+<h2 id="toc_5">What next ?</h2>
 
 <ul>
 <li>Why not bury oneself in the Finch <strong><a href="manpage">manpage</a></strong>. For that authentic UNIX experience.</li>

@@ -409,10 +409,10 @@ sudo qjail console &quot;$jailname&quot;
 sudo finch chroot
 
 # Read the page &quot;jail-ip-addresses&quot; before choosing a jail IP address
-export jail_ip=&quot;192.168.1.202&quot;
+jail_ip=&quot;192.168.1.202&quot;
 
 # Give an appropriate server name to your jail
-export jailname=&quot;ssh&quot;
+jailname=&quot;ssh&quot;
 
 # Create a jail with the &quot;finch-ssh&quot; flavor
 qjail create -f finch-ssh -4 &quot;$jail_ip&quot; &quot;$jailname&quot;
@@ -429,7 +429,7 @@ qjail start &quot;$jailname&quot;
 qjail console &quot;$jailname&quot;
 
 # 2. Create an account
-export username=&quot;admin&quot; # put here your own username
+username=&quot;admin&quot; # put here your own username
 pw user add &quot;$username&quot; -c &quot;$username&#39;s account&quot; -m -G wheel
 
 # 3. Set a password. Otherwise we are not permitted to login over ssh
@@ -437,7 +437,7 @@ passwd &quot;$username&quot;
 exit
 
 # Test the connection - ssh into the jail
-export username=&quot;admin&quot; # put again your chosen username
+username=&quot;admin&quot; # put again your chosen username
 ssh &quot;${username}@${jail_ip}&quot;
 </code></pre>
 
@@ -449,10 +449,10 @@ ssh &quot;${username}@${jail_ip}&quot;
 sudo finch chroot
 
 # Read the page &quot;jail-ip-addresses&quot; before choosing a jail IP address
-export jail_ip=&quot;192.168.1.203&quot;
+jail_ip=&quot;192.168.1.203&quot;
 
 # Give an appropriate server name to your jail
-export jailname=&quot;root-ssh&quot;
+jailname=&quot;root-ssh&quot;
 
 # Create a jail with the &quot;finch-ssh-root&quot; flavor
 qjail create -f finch-ssh-root -4 &quot;$jail_ip&quot; &quot;$jailname&quot;
@@ -466,7 +466,7 @@ passwd &quot;root&quot;
 exit
 
 # Test the connection - ssh into the jail
-export username=&quot;root&quot; # put again your chosen username
+username=&quot;root&quot; # put again your chosen username
 ssh &quot;${username}@${jail_ip}&quot;
 </code></pre>
 
@@ -475,7 +475,7 @@ ssh &quot;${username}@${jail_ip}&quot;
 <p>For an existing jail, we can manually copy over the same ssh configuration files, as would have been used in creating a new jail.</p>
 
 <pre><code># Set to the name of your existing jail
-export jailname=&quot;nginx&quot;
+jailname=&quot;nginx&quot;
 
 # 1. Either forbid the root account to have ssh access
 cp -Rf &quot;/usr/jails/flavors/finch-ssh/etc/ssh&quot; &quot;/usr/jails/${jailname}/etc/&quot;
@@ -493,7 +493,7 @@ printf &quot;\n\nsshd_enable=\&quot;YES\&quot;\n\n&quot; &gt;&gt;  &quot;/usr/ja
 qjail restart &quot;$jailname&quot;
 
 # Test the connection - ssh into the jail
-export username=&quot;root&quot; # put again your chosen username
+username=&quot;root&quot; # put again your chosen username
 ssh &quot;${username}@${jail_ip}&quot;
 </code></pre>
 

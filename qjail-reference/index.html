@@ -424,13 +424,13 @@ qjail config -d &quot;$jailname&quot;
 
 <h3 id="toc_6">Change a jail&#39;s network interface</h3>
 
-<pre><code>export new_network_interface=&quot;re0&quot;
+<pre><code>new_network_interface=&quot;re0&quot;
 qjail config -c &quot;$new_network_interface&quot; &quot;$jailname&quot;
 </code></pre>
 
 <h3 id="toc_7">Change a jail&#39;s ip address</h3>
 
-<pre><code>export new_ip_address=&quot;192.168.1.202&quot;
+<pre><code>new_ip_address=&quot;192.168.1.202&quot;
 qjail config -4 &quot;$new_ip_address&quot; &quot;$jailname&quot;
 </code></pre>
 
@@ -474,7 +474,7 @@ change net default: gateway 192.168.1.1 fib 0: Network is unreachable
 <p>However if your host machine does happen to be on a <code>10.0.0.0</code> subnet, then you may have much better luck. In which case, Vnet jails may be configured in the following way:</p>
 
 <pre><code># Give an appropriate server name to your jail
-export jailname=&quot;vnet-jail&quot;
+jailname=&quot;vnet-jail&quot;
 
 # Create the jail without any ip address
 qjail create &quot;$jailname&quot;
@@ -515,7 +515,7 @@ echo &quot;ping -c 1 google.com&quot; | qjail console &quot;$jailname&quot;
 <pre><code># If the cpu set parameter is written: &quot;0&quot;, &quot;0-3&quot; &quot;2,3&quot; etc.
 
 # Then assign this jail to the first core
-export jail_cpu_set=&quot;0&quot;
+jail_cpu_set=&quot;0&quot;
 qjail config -p &quot;$jail_cpu_set&quot; &quot;$jailname&quot;
 </code></pre>
 

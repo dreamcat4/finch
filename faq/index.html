@@ -771,7 +771,7 @@ qjail config -K &quot;$jailname&quot;
 
 <pre><code># For a quad-core CPU: &quot;cpuset -g | grep -o -e mask.*&quot; shouly say &quot;mask: 0, 1, 2, 3&quot;
 # Then valid cpu sets might be: &quot;0&quot;, &quot;0-3&quot; &quot;2,3&quot; etc, where &quot;0&quot; is the first core.
-export jail_cpu_set=&quot;0&quot;
+jail_cpu_set=&quot;0&quot;
 qjail config -p &quot;$jail_cpu_set&quot; &quot;$jailname&quot;
 
 qjail start myjail

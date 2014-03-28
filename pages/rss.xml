@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-03-27</pubDate>
+    <pubDate>2014-03-28</pubDate>
     <item>
       <title>Bugs</title>
       <link>/finch/bugs</link>
@@ -510,7 +510,7 @@ qjail config -K &amp;quot;$jailname&amp;quot;
 
 &lt;pre&gt;&lt;code&gt;# For a quad-core CPU: &amp;quot;cpuset -g | grep -o -e mask.*&amp;quot; shouly say &amp;quot;mask: 0, 1, 2, 3&amp;quot;
 # Then valid cpu sets might be: &amp;quot;0&amp;quot;, &amp;quot;0-3&amp;quot; &amp;quot;2,3&amp;quot; etc, where &amp;quot;0&amp;quot; is the first core.
-export jail_cpu_set=&amp;quot;0&amp;quot;
+jail_cpu_set=&amp;quot;0&amp;quot;
 qjail config -p &amp;quot;$jail_cpu_set&amp;quot; &amp;quot;$jailname&amp;quot;
 
 qjail start myjail
@@ -1246,10 +1246,10 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 sudo finch chroot
 
 # Read the page &amp;quot;jail-ip-addresses&amp;quot; before choosing a jail IP address
-export jail_ip=&amp;quot;192.168.1.201&amp;quot;
+jail_ip=&amp;quot;192.168.1.201&amp;quot;
 
 # Give an appropriate server name to your jail
-export jailname=&amp;quot;nginx&amp;quot;
+jailname=&amp;quot;nginx&amp;quot;
 
 # Create a basic jail, with local console access
 qjail create -4 &amp;quot;$jail_ip&amp;quot; &amp;quot;$jailname&amp;quot;
@@ -1441,10 +1441,10 @@ sudo qjail console &amp;quot;$jailname&amp;quot;
 sudo finch chroot
 
 # Read the page &amp;quot;jail-ip-addresses&amp;quot; before choosing a jail IP address
-export jail_ip=&amp;quot;192.168.1.202&amp;quot;
+jail_ip=&amp;quot;192.168.1.202&amp;quot;
 
 # Give an appropriate server name to your jail
-export jailname=&amp;quot;ssh&amp;quot;
+jailname=&amp;quot;ssh&amp;quot;
 
 # Create a jail with the &amp;quot;finch-ssh&amp;quot; flavor
 qjail create -f finch-ssh -4 &amp;quot;$jail_ip&amp;quot; &amp;quot;$jailname&amp;quot;
@@ -1461,7 +1461,7 @@ qjail start &amp;quot;$jailname&amp;quot;
 qjail console &amp;quot;$jailname&amp;quot;
 
 # 2. Create an account
-export username=&amp;quot;admin&amp;quot; # put here your own username
+username=&amp;quot;admin&amp;quot; # put here your own username
 pw user add &amp;quot;$username&amp;quot; -c &amp;quot;$username&amp;#39;s account&amp;quot; -m -G wheel
 
 # 3. Set a password. Otherwise we are not permitted to login over ssh
@@ -1469,7 +1469,7 @@ passwd &amp;quot;$username&amp;quot;
 exit
 
 # Test the connection - ssh into the jail
-export username=&amp;quot;admin&amp;quot; # put again your chosen username
+username=&amp;quot;admin&amp;quot; # put again your chosen username
 ssh &amp;quot;${username}@${jail_ip}&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -1481,10 +1481,10 @@ ssh &amp;quot;${username}@${jail_ip}&amp;quot;
 sudo finch chroot
 
 # Read the page &amp;quot;jail-ip-addresses&amp;quot; before choosing a jail IP address
-export jail_ip=&amp;quot;192.168.1.203&amp;quot;
+jail_ip=&amp;quot;192.168.1.203&amp;quot;
 
 # Give an appropriate server name to your jail
-export jailname=&amp;quot;root-ssh&amp;quot;
+jailname=&amp;quot;root-ssh&amp;quot;
 
 # Create a jail with the &amp;quot;finch-ssh-root&amp;quot; flavor
 qjail create -f finch-ssh-root -4 &amp;quot;$jail_ip&amp;quot; &amp;quot;$jailname&amp;quot;
@@ -1498,7 +1498,7 @@ passwd &amp;quot;root&amp;quot;
 exit
 
 # Test the connection - ssh into the jail
-export username=&amp;quot;root&amp;quot; # put again your chosen username
+username=&amp;quot;root&amp;quot; # put again your chosen username
 ssh &amp;quot;${username}@${jail_ip}&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -1507,7 +1507,7 @@ ssh &amp;quot;${username}@${jail_ip}&amp;quot;
 &lt;p&gt;For an existing jail, we can manually copy over the same ssh configuration files, as would have been used in creating a new jail.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# Set to the name of your existing jail
-export jailname=&amp;quot;nginx&amp;quot;
+jailname=&amp;quot;nginx&amp;quot;
 
 # 1. Either forbid the root account to have ssh access
 cp -Rf &amp;quot;/usr/jails/flavors/finch-ssh/etc/ssh&amp;quot; &amp;quot;/usr/jails/${jailname}/etc/&amp;quot;
@@ -1525,7 +1525,7 @@ printf &amp;quot;\n\nsshd_enable=\&amp;quot;YES\&amp;quot;\n\n&amp;quot; &amp;gt
 qjail restart &amp;quot;$jailname&amp;quot;
 
 # Test the connection - ssh into the jail
-export username=&amp;quot;root&amp;quot; # put again your chosen username
+username=&amp;quot;root&amp;quot; # put again your chosen username
 ssh &amp;quot;${username}@${jail_ip}&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 </description>
@@ -2236,13 +2236,13 @@ qjail config -d &amp;quot;$jailname&amp;quot;
 
 &lt;h3 id="toc_6"&gt;Change a jail&amp;#39;s network interface&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;export new_network_interface=&amp;quot;re0&amp;quot;
+&lt;pre&gt;&lt;code&gt;new_network_interface=&amp;quot;re0&amp;quot;
 qjail config -c &amp;quot;$new_network_interface&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id="toc_7"&gt;Change a jail&amp;#39;s ip address&lt;/h3&gt;
 
-&lt;pre&gt;&lt;code&gt;export new_ip_address=&amp;quot;192.168.1.202&amp;quot;
+&lt;pre&gt;&lt;code&gt;new_ip_address=&amp;quot;192.168.1.202&amp;quot;
 qjail config -4 &amp;quot;$new_ip_address&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -2286,7 +2286,7 @@ change net default: gateway 192.168.1.1 fib 0: Network is unreachable
 &lt;p&gt;However if your host machine does happen to be on a &lt;code&gt;10.0.0.0&lt;/code&gt; subnet, then you may have much better luck. In which case, Vnet jails may be configured in the following way:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# Give an appropriate server name to your jail
-export jailname=&amp;quot;vnet-jail&amp;quot;
+jailname=&amp;quot;vnet-jail&amp;quot;
 
 # Create the jail without any ip address
 qjail create &amp;quot;$jailname&amp;quot;
@@ -2327,7 +2327,7 @@ echo &amp;quot;ping -c 1 google.com&amp;quot; | qjail console &amp;quot;$jailnam
 &lt;pre&gt;&lt;code&gt;# If the cpu set parameter is written: &amp;quot;0&amp;quot;, &amp;quot;0-3&amp;quot; &amp;quot;2,3&amp;quot; etc.
 
 # Then assign this jail to the first core
-export jail_cpu_set=&amp;quot;0&amp;quot;
+jail_cpu_set=&amp;quot;0&amp;quot;
 qjail config -p &amp;quot;$jail_cpu_set&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -2457,7 +2457,7 @@ cat &amp;quot;/var/db/finch/installed&amp;quot;
 FreeBSD-amd64-9.2-RELEASE
 
 # Put here the newer target version of FreeBSD you want to upgrade to
-export new_release=&amp;quot;10.0-RELEASE&amp;quot;
+new_release=&amp;quot;10.0-RELEASE&amp;quot;
 
 # We must spoof the &amp;quot;uname&amp;quot; command to match the contents of &amp;quot;/var/db/finch/installed&amp;quot;
 # to avoid the error &amp;quot;freebsd-update: Cannot upgrade from X.Y-RELEASE to itself&amp;quot;.
@@ -2518,7 +2518,7 @@ cat &amp;quot;/var/db/finch/installed&amp;quot;
 FreeBSD-amd64-9.1-RELEASE
 
 # Put here the newer target version of FreeBSD you want to upgrade to
-export new_release=&amp;quot;10.0-RELEASE&amp;quot;
+new_release=&amp;quot;10.0-RELEASE&amp;quot;
 
 # Fetch the upgrade. You will be prompted to confirm the action.
 # Please note that this step usually takes a while. Maybe an hour.

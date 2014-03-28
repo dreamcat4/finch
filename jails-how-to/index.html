@@ -362,10 +362,10 @@
 sudo finch chroot
 
 # Read the page &quot;jail-ip-addresses&quot; before choosing a jail IP address
-export jail_ip=&quot;192.168.1.201&quot;
+jail_ip=&quot;192.168.1.201&quot;
 
 # Give an appropriate server name to your jail
-export jailname=&quot;nginx&quot;
+jailname=&quot;nginx&quot;
 
 # Create a basic jail, with local console access
 qjail create -4 &quot;$jail_ip&quot; &quot;$jailname&quot;

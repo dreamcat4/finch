@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-03-28</pubDate>
+    <pubDate>2014-03-30</pubDate>
     <item>
       <title>Bugs</title>
       <link>/finch/bugs</link>
@@ -900,7 +900,7 @@ finch-bootstrap --help
 &lt;a href="#toc_3"&gt;NAS4Free&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_4"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
+&lt;a href="#toc_4"&gt;Configure administrator accounts&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_5"&gt;Add bootup / shutdown scripts&lt;/a&gt;
@@ -1042,7 +1042,9 @@ Created by:
 
 &lt;p&gt;These steps should be followed after installation.&lt;/p&gt;
 
-&lt;h3 id="toc_4"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
+&lt;h3 id="toc_4"&gt;Configure administrator accounts&lt;/h3&gt;
+
+&lt;p&gt;Finch will automatically configure the root account for you. These steps should be followed for any other normal users who you want to be administrators, and use Finch too.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;In the NAS4Free Web GUI Go to &lt;code&gt;Access|Users&lt;/code&gt;&lt;/li&gt;
@@ -2704,6 +2706,99 @@ man qjail
 &lt;/ul&gt;
 
 &lt;p&gt;Just issue a &lt;code&gt;finch refresh&lt;/code&gt;, &lt;code&gt;finch restart&lt;/code&gt;, or reboot your host system.&lt;/p&gt;
+</description>
+    </item>
+    <item>
+      <title>Virtualbox</title>
+      <link>/finch/virtualbox</link>
+      <description>&lt;h1 id="toc_0"&gt;VirtualBox&lt;/h1&gt;
+
+&lt;p&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_0"&gt;VirtualBox&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_1"&gt;Install&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_2"&gt;Usage&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_3"&gt;VirtualBox in it&amp;#39;s own Jail&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+
+&lt;h2 id="toc_1"&gt;Install&lt;/h2&gt;
+
+&lt;p&gt;Finch does not come bundles with VirtualBox preinstalled for you. As not everybody wants / needs it. But for those who do, there are two different ways to get it.&lt;/p&gt;
+
+&lt;p&gt;VirtualBox can be installed with pkg-ng by typing:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;ASSUME_ALWAYS_YES=&amp;quot;yes&amp;quot; pkg install virtualbox-ose
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;However the precompiled pkg also requires QT4 and X11 dependancies. If you are running as server the alternative is to build VirtualBox from the ports tree with custom options that exclude those dependancies&lt;sup&gt;1.&lt;/sup&gt; For example, this command:&lt;/p&gt;
+
+&lt;p&gt;date
+df -m
+cd /usr/ports/emulators/virtualbox-ose &amp;amp;&amp;amp; make &amp;quot;BATCH=yes&amp;quot; &amp;quot;WITH=GUESTADDITIONS VDE VPX VIMAGE&amp;quot; &amp;quot;WITHOUT=NLS QT4 X11&amp;quot; install clean
+df -m
+date&lt;/p&gt;
+
+&lt;p&gt;Will build VirtualBox with the following options:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500; virtualbox-ose-4.3.8 &#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
+&#x2502; &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510; &#x2502;  
+&#x2502; &#x2502;+[x] DBUS            D-Bus IPC system support                             &#x2502; &#x2502;  
+&#x2502; &#x2502;+[ ] DEBUG           Debug symbols, additional logs and assertions        &#x2502; &#x2502;  
+&#x2502; &#x2502;+[x] GUESTADDITIONS  Build with Guest Additions                           &#x2502; &#x2502;  
+&#x2502; &#x2502;+[x] NLS             Native Language Support                              &#x2502; &#x2502;  
+&#x2502; &#x2502;+[ ] PULSEAUDIO      PulseAudio sound server support                      &#x2502; &#x2502;  
+&#x2502; &#x2502;+[x] PYTHON          Python bindings or support                           &#x2502; &#x2502;  
+&#x2502; &#x2502;+[ ] QT4             Build with QT4 Frontend                              &#x2502; &#x2502;  
+&#x2502; &#x2502;+[x] UDPTUNNEL       Build with UDP tunnel support                        &#x2502; &#x2502;  
+&#x2502; &#x2502;+[x] VDE             Build with VDE support                               &#x2502; &#x2502;  
+&#x2502; &#x2502;+[x] VNC             Build with VNC support                               &#x2502; &#x2502;  
+&#x2502; &#x2502;+[x] VPX             Use vpx for video capturing                          &#x2502; &#x2502;  
+&#x2502; &#x2502;+[x] WEBSERVICE      Build Webservice                                     &#x2502; &#x2502;  
+&#x2502; &#x2502;+[ ] X11             X11 (graphics) support                               &#x2502; &#x2502;  
+&#x2502; &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518; &#x2502;  
+&#x251C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2524;  
+&#x2502;                       &amp;lt;  OK  &amp;gt;            &amp;lt;Cancel&amp;gt;                           &#x2502;  
+&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;  
+
+&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500; virtualbox-ose-kmod-4.3.8_1 &#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
+&#x2502; &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510; &#x2502;  
+&#x2502; &#x2502;+[ ] DEBUG   Debug symbols, additional logs and assertions                &#x2502; &#x2502;  
+&#x2502; &#x2502;+[x] VIMAGE  VIMAGE virtual networking support                            &#x2502; &#x2502;  
+&#x2502; &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518; &#x2502;  
+&#x251C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2524;  
+&#x2502;                       &amp;lt;  OK  &amp;gt;            &amp;lt;Cancel&amp;gt;                           &#x2502;  
+&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Alternatively, port options may be selected interactively with &lt;code&gt;make config&lt;/code&gt;. See the ports manpage (&lt;code&gt;man ports&lt;/code&gt;) for other useful commands, for example:&lt;/p&gt;
+
+&lt;p&gt;cd /usr/ports/emulators/virtualbox-ose &amp;amp;&amp;amp; make &amp;quot;BATCH=yes&amp;quot; &amp;quot;WITH=GUESTADDITIONS VDE VPX VIMAGE&amp;quot; &amp;quot;WITHOUT=NLS QT4 X11&amp;quot; showconfig[-recursive]&lt;/p&gt;
+
+&lt;p&gt;Is especially useful to double-check your intended selections before build time.&lt;/p&gt;
+
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; Without &lt;code&gt;QT4&lt;/code&gt; will also mean no Native Language Support (NLS), possibly worse for non-English speakers. Bearing in mind that it only matters if NLS language option is affected to the cli also. Usually such associated command-line utilities come in English regardless.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; During tests we found that method a took w time and x megabytes of disk space. Wheras method b took y time and z megabytes of disk space.&lt;/p&gt;
+
+&lt;h2 id="toc_2"&gt;Usage&lt;/h2&gt;
+
+&lt;h2 id="toc_3"&gt;VirtualBox in it&amp;#39;s own Jail&lt;/h2&gt;
+
+&lt;p&gt;If you don&amp;#39;t intend to use FreeBSD jails (only VirtualBox), then putting VirtualBox inside it&amp;#39;s own jail may not be what you prefer. Mainly because there are a few extra steps required to setup disk shares for your data and VMs. And the extra command needed (&lt;code&gt;sudo qjail console virtualbox&lt;/code&gt;) to get console access. Another drawback of putting VirtualBox in a jail is the access to host networking features required for shared interface, NAT, and bridging.&lt;/p&gt;
+
+&lt;p&gt;On the flip side, a jail allows VirtualBox to be protected in it&amp;#39;s own sandbox. Protecting the host system in the event that one of your VMs is compromised. A jail also means that when VirtualBox has VNC and it&amp;#39;s Webservice running, there is no risk of any conflict with existing services that may be running on the host system.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s really only a matter of personal preference.&lt;/p&gt;
 </description>
     </item>
   </channel>

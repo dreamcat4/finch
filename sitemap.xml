@@ -2,43 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>/finch/archive</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch/categories</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch/pages</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch/tags</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch/bugs</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
@@ -50,19 +50,19 @@
   </url>
   <url>
     <loc>/finch/finch-8</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch/install</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-30</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
@@ -74,7 +74,7 @@
   </url>
   <url>
     <loc>/finch/jails-ip-addresses</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
@@ -86,19 +86,19 @@
   </url>
   <url>
     <loc>/finch/manpage</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch/mounting-filesystems</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
     <loc>/finch/portsnap_override-8</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>
@@ -116,7 +116,13 @@
   </url>
   <url>
     <loc>/finch/usage</loc>
-    <lastmod>2014-03-27</lastmod>
+    <lastmod>2014-03-28</lastmod>
+    <priority>0.5</priority>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>/finch/virtualbox</loc>
+    <lastmod>2014-03-29</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>
   </url>

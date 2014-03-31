@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-03-30</pubDate>
+    <pubDate>2014-03-31</pubDate>
     <item>
       <title>Bugs</title>
       <link>/finch/bugs</link>
@@ -524,7 +524,7 @@ because of errors in jail.conf file.
     <item>
       <title>Finch 8</title>
       <link>/finch/finch-8</link>
-      <description>&lt;!-- 19c0b136c4ef2473c1f27251fddbdd6c --&gt;
+      <description>&lt;!-- 113e6abb43bd7852cfec37706f42b6e8 --&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -634,11 +634,11 @@ finch --help
 
 &lt;h2 id="COMMANDS"&gt;COMMANDS&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;start     - Mount Finch and start it's rc.d services.
+&lt;pre&gt;&lt;code&gt;chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
+start     - Mount Finch and start it's rc.d services.
 stop      - Stop Finch's rc.d services and unmount "finch/dev".
 restart   - Same as `finch stop` followed by `finch start`.
 status    - Report on Finch service status (enabled/disabled).
-chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
 export    - Map a new command into Finch exports (`finch export &amp;lt;cmd&gt;`).
 -export   - Remove a command from Finch exports (`finch -export &amp;lt;cmd&gt;`).
 &amp;lt;export&gt;  - Run a command listed in Finch exports (`finch &amp;lt;export&gt;`).
@@ -1535,7 +1535,7 @@ ssh &amp;quot;${username}@${jail_ip}&amp;quot;
     <item>
       <title>Manpage</title>
       <link>/finch/manpage</link>
-      <description>&lt;!-- 19c0b136c4ef2473c1f27251fddbdd6c --&gt;
+      <description>&lt;!-- 113e6abb43bd7852cfec37706f42b6e8 --&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -1645,11 +1645,11 @@ finch --help
 
 &lt;h2 id="COMMANDS"&gt;COMMANDS&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;start     - Mount Finch and start it's rc.d services.
+&lt;pre&gt;&lt;code&gt;chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
+start     - Mount Finch and start it's rc.d services.
 stop      - Stop Finch's rc.d services and unmount "finch/dev".
 restart   - Same as `finch stop` followed by `finch start`.
 status    - Report on Finch service status (enabled/disabled).
-chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
 export    - Map a new command into Finch exports (`finch export &amp;lt;cmd&gt;`).
 -export   - Remove a command from Finch exports (`finch -export &amp;lt;cmd&gt;`).
 &amp;lt;export&gt;  - Run a command listed in Finch exports (`finch &amp;lt;export&gt;`).
@@ -2594,16 +2594,19 @@ rm -rf /var/distfiles/finch
 &lt;a href="#toc_2"&gt;How to &amp;#39;su&amp;#39; and preserve Finch&amp;#39;s login profile&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_3"&gt;The &amp;#39;finch&amp;#39; command&lt;/a&gt;
+&lt;a href="#toc_3"&gt;Enter / exit the finch chroot&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_4"&gt;Read the manpages&lt;/a&gt;
+&lt;a href="#toc_4"&gt;Other &amp;#39;finch&amp;#39; sub-commands&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_5"&gt;Finch exports&lt;/a&gt;
+&lt;a href="#toc_5"&gt;Read the manpages&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_6"&gt;Refreshing &amp;#39;/etc&amp;#39; files&lt;/a&gt;
+&lt;a href="#toc_6"&gt;Finch exports&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_7"&gt;Refreshing &amp;#39;/etc&amp;#39; files&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -2630,7 +2633,23 @@ sudo su
 . /etc/profile
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id="toc_3"&gt;The &amp;#39;finch&amp;#39; command&lt;/h2&gt;
+&lt;h2 id="toc_3"&gt;Enter / exit the finch chroot&lt;/h2&gt;
+
+&lt;p&gt;Most times, we just need to switch in and out of the finch chroot. This is very simple, just type:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;finch chroot
+exit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To do the same thing, but also become the root user:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo finch chroot
+exit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And that&amp;#39;s all there is to it.&lt;/p&gt;
+
+&lt;h2 id="toc_4"&gt;Other &amp;#39;finch&amp;#39; sub-commands&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;finch:
      Access the Finch FreeBSD chroot environment. `man finch` for more info.
@@ -2640,11 +2659,11 @@ Usage:
 
 Commands:
 
+     chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
      start     - Mount Finch and start it&amp;#39;s rc.d services.
      stop      - Stop Finch&amp;#39;s rc.d services and unmount &amp;quot;finch/dev&amp;quot;.
      restart   - Same as `finch stop` followed by `finch start`.
      status    - Report on Finch service status (enabled/disabled).
-     chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
      export    - Map a new command into Finch exports (`finch export &amp;lt;cmd&amp;gt;`).
      -export   - Remove a command from Finch exports (`finch -export &amp;lt;cmd&amp;gt;`).
      &amp;lt;export&amp;gt;  - Run a command listed in Finch exports (`finch &amp;lt;export&amp;gt;`).
@@ -2671,7 +2690,7 @@ Created by:
      Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id="toc_4"&gt;Read the manpages&lt;/h2&gt;
+&lt;h2 id="toc_5"&gt;Read the manpages&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;# Learn about finch
 man finch
@@ -2680,7 +2699,7 @@ man finch
 man qjail
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id="toc_5"&gt;Finch exports&lt;/h2&gt;
+&lt;h2 id="toc_6"&gt;Finch exports&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Finch exports are a way to auto-chroot for certain frequently-used commands (for example &lt;code&gt;qjail&lt;/code&gt;).&lt;/li&gt;
@@ -2694,7 +2713,7 @@ man qjail
 &lt;li&gt;As with all Finch, we rely upon FreeBSD&amp;#39;s &lt;code&gt;chroot&lt;/code&gt; C program. Only the root user, or members of group &amp;quot;wheel&amp;quot; can run Finch commands... so that also includes Finch&amp;#39;s &amp;quot;exports&amp;quot;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id="toc_6"&gt;Refreshing &amp;#39;/etc&amp;#39; files&lt;/h2&gt;
+&lt;h2 id="toc_7"&gt;Refreshing &amp;#39;/etc&amp;#39; files&lt;/h2&gt;
 
 &lt;p&gt;It is necessary to refresh certain &lt;code&gt;/etc&lt;/code&gt; files in the Finch system if they have changed in the host system such as:&lt;/p&gt;
 
@@ -2706,99 +2725,6 @@ man qjail
 &lt;/ul&gt;
 
 &lt;p&gt;Just issue a &lt;code&gt;finch refresh&lt;/code&gt;, &lt;code&gt;finch restart&lt;/code&gt;, or reboot your host system.&lt;/p&gt;
-</description>
-    </item>
-    <item>
-      <title>Virtualbox</title>
-      <link>/finch/virtualbox</link>
-      <description>&lt;h1 id="toc_0"&gt;VirtualBox&lt;/h1&gt;
-
-&lt;p&gt;&lt;ul&gt;
-&lt;li&gt;
-&lt;a href="#toc_0"&gt;VirtualBox&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;a href="#toc_1"&gt;Install&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_2"&gt;Usage&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_3"&gt;VirtualBox in it&amp;#39;s own Jail&lt;/a&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/p&gt;
-
-&lt;h2 id="toc_1"&gt;Install&lt;/h2&gt;
-
-&lt;p&gt;Finch does not come bundles with VirtualBox preinstalled for you. As not everybody wants / needs it. But for those who do, there are two different ways to get it.&lt;/p&gt;
-
-&lt;p&gt;VirtualBox can be installed with pkg-ng by typing:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ASSUME_ALWAYS_YES=&amp;quot;yes&amp;quot; pkg install virtualbox-ose
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;However the precompiled pkg also requires QT4 and X11 dependancies. If you are running as server the alternative is to build VirtualBox from the ports tree with custom options that exclude those dependancies&lt;sup&gt;1.&lt;/sup&gt; For example, this command:&lt;/p&gt;
-
-&lt;p&gt;date
-df -m
-cd /usr/ports/emulators/virtualbox-ose &amp;amp;&amp;amp; make &amp;quot;BATCH=yes&amp;quot; &amp;quot;WITH=GUESTADDITIONS VDE VPX VIMAGE&amp;quot; &amp;quot;WITHOUT=NLS QT4 X11&amp;quot; install clean
-df -m
-date&lt;/p&gt;
-
-&lt;p&gt;Will build VirtualBox with the following options:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500; virtualbox-ose-4.3.8 &#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
-&#x2502; &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510; &#x2502;  
-&#x2502; &#x2502;+[x] DBUS            D-Bus IPC system support                             &#x2502; &#x2502;  
-&#x2502; &#x2502;+[ ] DEBUG           Debug symbols, additional logs and assertions        &#x2502; &#x2502;  
-&#x2502; &#x2502;+[x] GUESTADDITIONS  Build with Guest Additions                           &#x2502; &#x2502;  
-&#x2502; &#x2502;+[x] NLS             Native Language Support                              &#x2502; &#x2502;  
-&#x2502; &#x2502;+[ ] PULSEAUDIO      PulseAudio sound server support                      &#x2502; &#x2502;  
-&#x2502; &#x2502;+[x] PYTHON          Python bindings or support                           &#x2502; &#x2502;  
-&#x2502; &#x2502;+[ ] QT4             Build with QT4 Frontend                              &#x2502; &#x2502;  
-&#x2502; &#x2502;+[x] UDPTUNNEL       Build with UDP tunnel support                        &#x2502; &#x2502;  
-&#x2502; &#x2502;+[x] VDE             Build with VDE support                               &#x2502; &#x2502;  
-&#x2502; &#x2502;+[x] VNC             Build with VNC support                               &#x2502; &#x2502;  
-&#x2502; &#x2502;+[x] VPX             Use vpx for video capturing                          &#x2502; &#x2502;  
-&#x2502; &#x2502;+[x] WEBSERVICE      Build Webservice                                     &#x2502; &#x2502;  
-&#x2502; &#x2502;+[ ] X11             X11 (graphics) support                               &#x2502; &#x2502;  
-&#x2502; &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518; &#x2502;  
-&#x251C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2524;  
-&#x2502;                       &amp;lt;  OK  &amp;gt;            &amp;lt;Cancel&amp;gt;                           &#x2502;  
-&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;  
-
-&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500; virtualbox-ose-kmod-4.3.8_1 &#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
-&#x2502; &#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510; &#x2502;  
-&#x2502; &#x2502;+[ ] DEBUG   Debug symbols, additional logs and assertions                &#x2502; &#x2502;  
-&#x2502; &#x2502;+[x] VIMAGE  VIMAGE virtual networking support                            &#x2502; &#x2502;  
-&#x2502; &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518; &#x2502;  
-&#x251C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2524;  
-&#x2502;                       &amp;lt;  OK  &amp;gt;            &amp;lt;Cancel&amp;gt;                           &#x2502;  
-&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;  
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Alternatively, port options may be selected interactively with &lt;code&gt;make config&lt;/code&gt;. See the ports manpage (&lt;code&gt;man ports&lt;/code&gt;) for other useful commands, for example:&lt;/p&gt;
-
-&lt;p&gt;cd /usr/ports/emulators/virtualbox-ose &amp;amp;&amp;amp; make &amp;quot;BATCH=yes&amp;quot; &amp;quot;WITH=GUESTADDITIONS VDE VPX VIMAGE&amp;quot; &amp;quot;WITHOUT=NLS QT4 X11&amp;quot; showconfig[-recursive]&lt;/p&gt;
-
-&lt;p&gt;Is especially useful to double-check your intended selections before build time.&lt;/p&gt;
-
-&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; Without &lt;code&gt;QT4&lt;/code&gt; will also mean no Native Language Support (NLS), possibly worse for non-English speakers. Bearing in mind that it only matters if NLS language option is affected to the cli also. Usually such associated command-line utilities come in English regardless.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; During tests we found that method a took w time and x megabytes of disk space. Wheras method b took y time and z megabytes of disk space.&lt;/p&gt;
-
-&lt;h2 id="toc_2"&gt;Usage&lt;/h2&gt;
-
-&lt;h2 id="toc_3"&gt;VirtualBox in it&amp;#39;s own Jail&lt;/h2&gt;
-
-&lt;p&gt;If you don&amp;#39;t intend to use FreeBSD jails (only VirtualBox), then putting VirtualBox inside it&amp;#39;s own jail may not be what you prefer. Mainly because there are a few extra steps required to setup disk shares for your data and VMs. And the extra command needed (&lt;code&gt;sudo qjail console virtualbox&lt;/code&gt;) to get console access. Another drawback of putting VirtualBox in a jail is the access to host networking features required for shared interface, NAT, and bridging.&lt;/p&gt;
-
-&lt;p&gt;On the flip side, a jail allows VirtualBox to be protected in it&amp;#39;s own sandbox. Protecting the host system in the event that one of your VMs is compromised. A jail also means that when VirtualBox has VNC and it&amp;#39;s Webservice running, there is no risk of any conflict with existing services that may be running on the host system.&lt;/p&gt;
-
-&lt;p&gt;It&amp;#39;s really only a matter of personal preference.&lt;/p&gt;
 </description>
     </item>
   </channel>

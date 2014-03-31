@@ -97,8 +97,6 @@
               <!-- <li class="sidebar-nav-item"><a href="/finch/upgrading">Upgrading</a></li> -->
               <!-- <li><a href="/finch/usage">Usage</a></li> -->
               <!-- <li class="sidebar-nav-item"><a href="/finch/usage">Usage</a></li> -->
-              <!-- <li><a href="/finch/virtualbox">Virtualbox</a></li> -->
-              <!-- <li class="sidebar-nav-item"><a href="/finch/virtualbox">Virtualbox</a></li> -->
     
               <!-- <a href="https://github.com/dreamcat4/finch/issues">Bugtracker</a> -->
     
@@ -163,10 +161,6 @@
                   
                     
                       <li><a href="/finch/usage">Usage</a></li>
-                    
-                  
-                    
-                      <li><a href="/finch/virtualbox">Virtualbox</a></li>
                     
                    -->
     
@@ -311,10 +305,6 @@
                 
                   <li><a href="/finch/usage">Usage</a></li>
                 
-              
-                
-                  <li><a href="/finch/virtualbox">Virtualbox</a></li>
-                
                -->
             </ul>
     
@@ -331,7 +321,7 @@
     <div class="container-narrow">
 
       <div class="content">
-        <!-- 19c0b136c4ef2473c1f27251fddbdd6c -->
+        <!-- 113e6abb43bd7852cfec37706f42b6e8 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -441,11 +431,11 @@ finch --help
 
 <h2 id="COMMANDS">COMMANDS</h2>
 
-<pre><code>start     - Mount Finch and start it's rc.d services.
+<pre><code>chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
+start     - Mount Finch and start it's rc.d services.
 stop      - Stop Finch's rc.d services and unmount "finch/dev".
 restart   - Same as `finch stop` followed by `finch start`.
 status    - Report on Finch service status (enabled/disabled).
-chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
 export    - Map a new command into Finch exports (`finch export &lt;cmd>`).
 -export   - Remove a command from Finch exports (`finch -export &lt;cmd>`).
 &lt;export>  - Run a command listed in Finch exports (`finch &lt;export>`).

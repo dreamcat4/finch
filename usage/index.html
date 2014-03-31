@@ -97,8 +97,6 @@
               <!-- <li>
                 <a href="/finch/usage" class="sidebar-nav-item-active">Usage</a>
               </li> -->
-              <!-- <li><a href="/finch/virtualbox">Virtualbox</a></li> -->
-              <!-- <li class="sidebar-nav-item"><a href="/finch/virtualbox">Virtualbox</a></li> -->
     
               <!-- <a href="https://github.com/dreamcat4/finch/issues">Bugtracker</a> -->
     
@@ -163,10 +161,6 @@
                   
                       <li class="active"><a href="/finch/usage" class="active">Usage</a></li>
                     
-                    
-                  
-                    
-                      <li><a href="/finch/virtualbox">Virtualbox</a></li>
                     
                    -->
     
@@ -311,10 +305,6 @@
                   <li class="active"><a href="/finch/usage" class="active">Usage</a></li>
                 
                 
-              
-                
-                  <li><a href="/finch/virtualbox">Virtualbox</a></li>
-                
                -->
             </ul>
     
@@ -344,16 +334,19 @@
 <a href="#toc_2">How to &#39;su&#39; and preserve Finch&#39;s login profile</a>
 </li>
 <li>
-<a href="#toc_3">The &#39;finch&#39; command</a>
+<a href="#toc_3">Enter / exit the finch chroot</a>
 </li>
 <li>
-<a href="#toc_4">Read the manpages</a>
+<a href="#toc_4">Other &#39;finch&#39; sub-commands</a>
 </li>
 <li>
-<a href="#toc_5">Finch exports</a>
+<a href="#toc_5">Read the manpages</a>
 </li>
 <li>
-<a href="#toc_6">Refreshing &#39;/etc&#39; files</a>
+<a href="#toc_6">Finch exports</a>
+</li>
+<li>
+<a href="#toc_7">Refreshing &#39;/etc&#39; files</a>
 </li>
 </ul>
 </li>
@@ -380,7 +373,23 @@ sudo su
 . /etc/profile
 </code></pre>
 
-<h2 id="toc_3">The &#39;finch&#39; command</h2>
+<h2 id="toc_3">Enter / exit the finch chroot</h2>
+
+<p>Most times, we just need to switch in and out of the finch chroot. This is very simple, just type:</p>
+
+<pre><code>finch chroot
+exit
+</code></pre>
+
+<p>To do the same thing, but also become the root user:</p>
+
+<pre><code>sudo finch chroot
+exit
+</code></pre>
+
+<p>And that&#39;s all there is to it.</p>
+
+<h2 id="toc_4">Other &#39;finch&#39; sub-commands</h2>
 
 <pre><code>finch:
      Access the Finch FreeBSD chroot environment. `man finch` for more info.
@@ -390,11 +399,11 @@ Usage:
 
 Commands:
 
+     chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
      start     - Mount Finch and start it&#39;s rc.d services.
      stop      - Stop Finch&#39;s rc.d services and unmount &quot;finch/dev&quot;.
      restart   - Same as `finch stop` followed by `finch start`.
      status    - Report on Finch service status (enabled/disabled).
-     chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
      export    - Map a new command into Finch exports (`finch export &lt;cmd&gt;`).
      -export   - Remove a command from Finch exports (`finch -export &lt;cmd&gt;`).
      &lt;export&gt;  - Run a command listed in Finch exports (`finch &lt;export&gt;`).
@@ -421,7 +430,7 @@ Created by:
      Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
 </code></pre>
 
-<h2 id="toc_4">Read the manpages</h2>
+<h2 id="toc_5">Read the manpages</h2>
 
 <pre><code># Learn about finch
 man finch
@@ -430,7 +439,7 @@ man finch
 man qjail
 </code></pre>
 
-<h2 id="toc_5">Finch exports</h2>
+<h2 id="toc_6">Finch exports</h2>
 
 <ul>
 <li>Finch exports are a way to auto-chroot for certain frequently-used commands (for example <code>qjail</code>).</li>
@@ -444,7 +453,7 @@ man qjail
 <li>As with all Finch, we rely upon FreeBSD&#39;s <code>chroot</code> C program. Only the root user, or members of group &quot;wheel&quot; can run Finch commands... so that also includes Finch&#39;s &quot;exports&quot;.</li>
 </ul>
 
-<h2 id="toc_6">Refreshing &#39;/etc&#39; files</h2>
+<h2 id="toc_7">Refreshing &#39;/etc&#39; files</h2>
 
 <p>It is necessary to refresh certain <code>/etc</code> files in the Finch system if they have changed in the host system such as:</p>
 

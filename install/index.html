@@ -329,44 +329,55 @@
 <a href="#toc_1">Installer options</a>
 </li>
 <li>
-<a href="#toc_2">Post-Install Steps</a>
+<a href="#toc_2">Pre-Install steps</a>
 <ul>
 <li>
-<a href="#toc_3">NAS4Free</a>
-<ul>
-<li>
-<a href="#toc_4">Configure administrator accounts</a>
-</li>
-<li>
-<a href="#toc_5">Add bootup / shutdown scripts</a>
-</li>
-<li>
-<a href="#toc_6">Start the Finch FreeBSD installation process</a>
+<a href="#toc_3">pfSense</a>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_7">FreeNAS</a>
+<a href="#toc_4">Post-Install Steps</a>
 <ul>
 <li>
-<a href="#toc_8">FreeNAS services not working after reboot ?</a>
+<a href="#toc_5">NAS4Free</a>
+<ul>
+<li>
+<a href="#toc_6">Configure administrator accounts</a>
 </li>
 <li>
-<a href="#toc_9">Configure root &amp; administrator accounts</a>
+<a href="#toc_7">Add bootup / shutdown scripts</a>
 </li>
 <li>
-<a href="#toc_10">Add bootup / shutdown scripts</a>
-</li>
-<li>
-<a href="#toc_11">Start the Finch FreeBSD installation process</a>
+<a href="#toc_8">Start the Finch FreeBSD installation process</a>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_12">FreeBSD-GENERIC</a>
+<a href="#toc_9">FreeNAS</a>
 <ul>
 <li>
-<a href="#toc_13">Configure root &amp; administrator accounts</a>
+<a href="#toc_10">FreeNAS services not working after reboot ?</a>
+</li>
+<li>
+<a href="#toc_11">Configure root &amp; administrator accounts</a>
+</li>
+<li>
+<a href="#toc_12">Add bootup / shutdown scripts</a>
+</li>
+<li>
+<a href="#toc_13">Start the Finch FreeBSD installation process</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_14">pfSense</a>
+</li>
+<li>
+<a href="#toc_15">FreeBSD-GENERIC</a>
+<ul>
+<li>
+<a href="#toc_16">Configure root &amp; administrator accounts</a>
 </li>
 </ul>
 </li>
@@ -383,7 +394,7 @@
 </ul>
 
 <pre><code>/bin/sh
-alias finch-bootstrap=&quot;fetch -q -o - http://git.io/HxXrsw | sh -s --&quot;
+alias finch-bootstrap=&quot;SSL_NO_VERIFY_PEER=YES fetch -q -o - http://git.io/HxXrsw | sh -s --&quot;
 finch-bootstrap --help
 </code></pre>
 
@@ -463,21 +474,94 @@ Created by:
     Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
 </code></pre>
 
-<h1 id="toc_2">Post-Install Steps</h1>
+<h1 id="toc_2">Pre-Install steps</h1>
+
+<h2 id="toc_3">pfSense</h2>
+
+<p>Further instructions will be added when pfSense 2.2 is released.</p>
+
+<!--
+
+Finch requires at least 5GB of hard disk space on a UFS partition. Finch should only be installed on a regular hard disk and not on a USB Flash drive.
+
+If you have already installed pfSense onto hard disk, then the drive where you have installed pfSense may already be suitable and meet those requirements.
+
+\### Prepping a new hard disk
+
+If you are running pfSense from an embedded image (which is the best way and recommended), then you will have to manually format, mount and prep the hard disk. These steps assume a blank or unformatted hard disk is already installed into the target machine
+
+    # Ensure you are in a POSIX.2 (ISO-compliant) shell. To avoid any confusion.
+    /bin/sh
+
+    # 1.a. Locate and identify which device name your hard disk is represented by
+    dmesg | grep -E 'ad[0-9]|da[0-9]'
+
+    # 1.b. Don't get this wrong. Double-check.
+    camcontrol devlist
+
+    # 1.c. Check for any existing partitions on attached disks
+    ls -l /dev/
+
+    # Put here the device name of your hard drive. Ours was "/dev/adz1"
+    disk="adz1"
+
+    # Destroy previous partition table. This will ruin any data on the disk
+    dd if="/dev/zero" of="/dev/$disk" bs="64k" count="100"
+
+    # Format the disk as UFS. Creates one big partition
+    newfs "/dev/$disk"
+
+    # Remount the root "/" filesystem as read-write
+    [ "$(mount | grep -e "on / " | grep read-only)" ] && mount -o noatime -u -w "/"
+
+    # Put here the mountpoint for your new drive
+    mountpoint="/mnt/disk0"
+
+    # Create the folder for our mountpoint
+    mkdir -p "$mountpoint"
+
+    # Add new fstab entry
+    echo "/dev/$disk $mountpoint ufs rw 1 1" >> "/etc/fstab"
+
+    # Check that it worked
+    mount -a && df -h
+
+
+\### Getting pfSense to mount your disk(s) at boot
+
+We have done everything correctly, but pfSense still needs some slight modification to respectfully mount your `fstab` file, as it should. Yet pfSense / nanoBSD will not automatically do a `mount -a` during boot time like regular FreeBSD-GENERIC. Sensible? No. Easily fixed? Yes.
+
+Run this script to correct the issue. It will instll a small boot script to `mount -a` and perform `fsck` check if necessary^1. Just copy-paste these lines into your terminal (as root):
+
+    /bin/sh
+    alias pfmount_install="SSL_NO_VERIFY_PEER=YES fetch -q -o - http://git.io/NBLjxw | sh -s --"
+    pfmount_install
+
+    # Check that your fstab disk mounts are persistent across reboots
+    reboot
+    df -h
+    cat /etc/fstab
+
+^1 Note: If you upgrade or re-install pfSense in the future, your fstab file and also this boot script may disappear. You data and Finch installation should be safe however. Just re-create the fstab file, re-run `pfmount_install` and you should be fine.
+
+-->
+
+<h1 id="toc_4">Post-Install Steps</h1>
 
 <p>Choose your platform from the list below.</p>
 
 <ul>
 <li><a href="#toc_3">NAS4Free</a></li>
 <li><a href="#toc_7">FreeNAS</a></li>
-<li><a href="#toc_12">FreeBSD-GENERIC</a></li>
+<li><a href="#toc_12">pfSense</a></li>
+<li><a href="#toc_13">FreeBSD-GENERIC</a></li>
 </ul>
 
-<h2 id="toc_3">NAS4Free</h2>
+<h2 id="toc_5">NAS4Free</h2>
 
 <p>These steps should be followed after installation.</p>
 
-<h3 id="toc_4">Configure administrator accounts</h3>
+<h3 id="toc_6">Configure administrator accounts</h3>
 
 <p>Finch will automatically configure the root account for you. These steps should be followed for any other normal users who you want to be administrators, and use Finch too.</p>
 
@@ -489,7 +573,7 @@ Created by:
 <li>Click --&gt; <code>Save</code> --&gt; <code>Apply changes</code>.</li>
 </ul>
 
-<h3 id="toc_5">Add bootup / shutdown scripts</h3>
+<h3 id="toc_7">Add bootup / shutdown scripts</h3>
 
 <ul>
 <li>In the NAS4Free Web GUI</li>
@@ -511,7 +595,7 @@ Created by:
 <pre><code>$ &quot;/data/finch/etc/finch/shutdown&quot;
 </code></pre>
 
-<h3 id="toc_6">Start the Finch FreeBSD installation process</h3>
+<h3 id="toc_8">Start the Finch FreeBSD installation process</h3>
 
 <ul>
 <li>Reboot your NAS4Free system. Installation will begin on next boot.</li>
@@ -525,11 +609,11 @@ Created by:
 <li>Installation will take anywhere from 20 minutes up to 1 hour.</li>
 </ul>
 
-<h2 id="toc_7">FreeNAS</h2>
+<h2 id="toc_9">FreeNAS</h2>
 
 <p>These steps should be followed after installation.</p>
 
-<h3 id="toc_8">FreeNAS services not working after reboot ?</h3>
+<h3 id="toc_10">FreeNAS services not working after reboot ?</h3>
 
 <ul>
 <li>You will find that FreeNAS services do not start correctly after Finch installation.</li>
@@ -560,7 +644,7 @@ This has been found to work for the ssh service.</li>
 The daemon is will start normally once Finch POSTINIT has completed.</li>
 </ul>
 
-<h3 id="toc_9">Configure root &amp; administrator accounts</h3>
+<h3 id="toc_11">Configure root &amp; administrator accounts</h3>
 
 <ul>
 <li>In the FreeNAS Web GUI Expand <code>+ Account</code> --&gt; <code>+ Users</code> --&gt; <code>View Users</code></li>
@@ -571,7 +655,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <li>Click <code>OK</code> to close the window and save changes.</li>
 </ul>
 
-<h3 id="toc_10">Add bootup / shutdown scripts</h3>
+<h3 id="toc_12">Add bootup / shutdown scripts</h3>
 
 <ul>
 <li>In the FreeNAS Web GUI:</li>
@@ -593,7 +677,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <pre><code>$ &quot;/path/to/finch/etc/finch/shutdown&quot;
 </code></pre>
 
-<h3 id="toc_11">Start the Finch FreeBSD installation process</h3>
+<h3 id="toc_13">Start the Finch FreeBSD installation process</h3>
 
 <ul>
 <li>Reboot your FreeNAS system. Installation will begin on next boot.</li>
@@ -607,11 +691,40 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <li>Installation will take anywhere from 20 minutes up to 1 hour.</li>
 </ul>
 
-<h2 id="toc_12">FreeBSD-GENERIC</h2>
+<h2 id="toc_14">pfSense</h2>
+
+<p>Further instructions will be added when pfSense 2.2 is released.</p>
+
+<!--
+
+These steps should be followed after installation.
+
+\### Configure root & administrator accounts
+
+* Be a member of group wheel
+
+```
+$ "pw user mod $USER -G wheel"
+```
+* Set \`bash\` or \`sh\` as your default login shell
+
+```
+$ "pw user mod $USER -s /usr/local/bin/bash"
+```
+* Close any open terminals or shells and log back in again
+
+```
+$ ". /etc/profile" will re-source profile for this shell
+```
+* Reboot or issue "finch refresh" on the command line.
+
+-->
+
+<h2 id="toc_15">FreeBSD-GENERIC</h2>
 
 <p>These steps should be followed after installation.</p>
 
-<h3 id="toc_13">Configure root &amp; administrator accounts</h3>
+<h3 id="toc_16">Configure root &amp; administrator accounts</h3>
 
 <ul>
 <li>Be a member of group wheel</li>

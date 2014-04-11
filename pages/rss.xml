@@ -1360,7 +1360,7 @@ $ ". /etc/profile" will re-source profile for this shell
 &lt;h2 id="toc_1"&gt;Pre-requisites&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;FreeNAS or NAS4Free users must first &lt;strong&gt;&lt;a href="/#toc_2"&gt;Install Finch&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;FreeNAS or NAS4Free users must first &lt;strong&gt;&lt;a href="install"&gt;Install Finch&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
 &lt;li&gt;Otherwise (if on FreeBSD-GENERIC) - &lt;code&gt;pkg install qjail&lt;/code&gt; should suffice.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&lt;a href="jails-ip-addresses"&gt;Reserve an IP address&lt;/a&gt;&lt;/strong&gt; for your new jail.&lt;/li&gt;
 &lt;li&gt;Decide whether you need &lt;strong&gt;&lt;a href="jails-ssh"&gt;ssh access&lt;/a&gt;&lt;/strong&gt; for this jail.&lt;/li&gt;

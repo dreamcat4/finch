@@ -41,7 +41,7 @@
 
 &lt;!-- _This is an underlined sentence_.  and a ~~strikethrough definition~~  --&gt;
 
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;NEW PROJECT&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;- Version 1.00b Released.&lt;/em&gt;&lt;/p&gt;
+&lt;!-- ***NEW PROJECT*** *- Version 1.00b Released.* --&gt;
 
 &lt;p&gt;&lt;ul&gt;
 &lt;li&gt;
@@ -119,7 +119,7 @@
 &lt;h2 id="toc_4"&gt;Install&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Check that your system matches the &lt;a href="#toc_1"&gt;Platform Requirements&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Check that your system matches the &lt;a href="#toc_3"&gt;Platform Requirements&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Login as the &lt;code&gt;root&lt;/code&gt; user. Then copy-paste these 3 commands into your terminal window:&lt;/li&gt;
 &lt;/ul&gt;
 

@@ -256,6 +256,8 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;p&gt;There is a beta of pfSense 2.2 which is based on FreeBSD-10 and is therefore new enough to be compatible. Finch already has the majority of changes commited to work on pfSense. However Jails with qjail (or ez-jail) will emphatically not work unless / until the pfSense Project decides to include and build their kernels with &amp;quot;options NULLFS&amp;quot;, or provide a separate &amp;quot;nullfs.ko&amp;quot; file.&lt;/p&gt;
 
+&lt;p&gt;Ticket raised on pfSense team (ELF llc) - &lt;a href="https://redmine.pfsense.org/issues/3599"&gt;https://redmine.pfsense.org/issues/3599&lt;/a&gt;&lt;/p&gt;
+
 &lt;h3 id="toc_9"&gt;Why does Finch install ... ?&lt;/h3&gt;
 
 &lt;h4 id="toc_10"&gt;qjail&lt;/h4&gt;
@@ -775,7 +777,7 @@ $finch_realpath/var/distfiles/finch/
 
 &lt;!-- _This is an underlined sentence_.  and a ~~strikethrough definition~~  --&gt;
 
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;NEW PROJECT&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;- Version 1.00b Released.&lt;/em&gt;&lt;/p&gt;
+&lt;!-- ***NEW PROJECT*** *- Version 1.00b Released.* --&gt;
 
 &lt;p&gt;&lt;ul&gt;
 &lt;li&gt;
@@ -853,7 +855,7 @@ $finch_realpath/var/distfiles/finch/
 &lt;h2 id="toc_4"&gt;Install&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Check that your system matches the &lt;a href="#toc_1"&gt;Platform Requirements&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Check that your system matches the &lt;a href="#toc_3"&gt;Platform Requirements&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Login as the &lt;code&gt;root&lt;/code&gt; user. Then copy-paste these 3 commands into your terminal window:&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -963,7 +965,7 @@ finch-bootstrap --help
 &lt;h1 id="toc_0"&gt;Install&lt;/h1&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Check that your system matches the &lt;a href="/#toc_1"&gt;Platform Requirements&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Check that your system matches the &lt;a href="/finch/#toc_3"&gt;Platform Requirements&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Login as the &lt;code&gt;root&lt;/code&gt; user. Then copy-paste these 3 commands into your terminal window:&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1125,10 +1127,10 @@ Run this script to correct the issue. It will instll a small boot script to `mou
 &lt;p&gt;Choose your platform from the list below.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="#toc_3"&gt;NAS4Free&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#toc_7"&gt;FreeNAS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#toc_12"&gt;pfSense&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#toc_13"&gt;FreeBSD-GENERIC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_5"&gt;NAS4Free&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_9"&gt;FreeNAS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_14"&gt;pfSense&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_15"&gt;FreeBSD-GENERIC&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id="toc_5"&gt;NAS4Free&lt;/h2&gt;

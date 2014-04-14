@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-04-11</pubDate>
+    <pubDate>2014-04-14</pubDate>
     <item>
       <title>Bugs</title>
       <link>/finch/bugs</link>
@@ -777,7 +777,9 @@ $finch_realpath/var/distfiles/finch/
 
 &lt;!-- _This is an underlined sentence_.  and a ~~strikethrough definition~~  --&gt;
 
-&lt;!-- ***NEW PROJECT*** *- Version 1.00b Released.* --&gt;
+&lt;!-- *Putting the FreeBSD back into* ***[FreeNAS][fn]*** *and* ***[NAS4Free][n4f]***. --&gt;
+
+&lt;p&gt;&lt;em&gt;For&lt;/em&gt; &lt;strong&gt;&lt;em&gt;&lt;a href="http://www.freenas.org/"&gt;FreeNAS&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;and&lt;/em&gt; &lt;strong&gt;&lt;em&gt;&lt;a href="http://www.nas4free.org/"&gt;NAS4Free&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;ul&gt;
 &lt;li&gt;

@@ -484,7 +484,7 @@ cp -Rf &quot;/usr/jails/flavors/finch-ssh/etc/ssh&quot; &quot;/usr/jails/${jailn
 cp -Rf &quot;/usr/jails/flavors/finch-ssh-root/etc/ssh&quot; &quot;/usr/jails/${jailname}/etc/&quot;
 
 # Edit the jail&#39;s rc.conf file to enable the ssh daemon
-printf &quot;\n\nsshd_enable=\&quot;YES\&quot;\n\n&quot; &gt;&gt;  &quot;/usr/jails/${jailname}/etc/rc.conf&quot;
+sysrc -f &quot;/usr/jails/${jailname}/etc/rc.conf&quot; &quot;sshd_enable=YES&quot;
 
 # Make sure you have created your chosen ssh login accounts.
 # You must also set a password as per the previous the example(s) above ^^

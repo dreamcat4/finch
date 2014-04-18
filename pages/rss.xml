@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-04-14</pubDate>
+    <pubDate>2014-04-18</pubDate>
     <item>
       <title>Bugs</title>
       <link>/finch/bugs</link>
@@ -404,7 +404,7 @@ ASSUME_ALWAYS_YES=&amp;quot;yes&amp;quot; pkg install &amp;quot;ezjail&amp;quot;
 cd &amp;quot;/usr/ports/sysutils/ezjail&amp;quot; &amp;amp;&amp;amp; make &amp;quot;config-recursive&amp;quot; &amp;quot;install&amp;quot; &amp;quot;clean&amp;quot;
 
 # If it has an rc.d service, enable that in Finch&amp;#39;s rc.conf file
-echo &amp;quot;ezjail_enable=\&amp;quot;YES\&amp;quot;&amp;quot; &amp;gt;&amp;gt; &amp;quot;/etc/rc.conf&amp;quot;
+sysrc &amp;quot;ezjail_enable=YES&amp;quot;
 
 # Leave the chroot
 exit
@@ -1407,7 +1407,7 @@ ASSUME_ALWAYS_YES=&amp;quot;yes&amp;quot; pkg install &amp;quot;nginx&amp;quot;
 cd &amp;quot;/usr/ports/www/nginx&amp;quot; &amp;amp;&amp;amp; make &amp;quot;config-recursive&amp;quot; &amp;quot;install&amp;quot; &amp;quot;clean&amp;quot;
 
 # Enable nginx rc.d service inside the jail
-printf &amp;quot;\n\nnginx_enable=\&amp;quot;YES\&amp;quot;\n\n&amp;quot; &amp;gt;&amp;gt; &amp;quot;/etc/rc.conf&amp;quot;
+sysrc &amp;quot;nginx_enable=YES&amp;quot;
 
 # Exit from the jail
 exit
@@ -1644,7 +1644,7 @@ cp -Rf &amp;quot;/usr/jails/flavors/finch-ssh/etc/ssh&amp;quot; &amp;quot;/usr/j
 cp -Rf &amp;quot;/usr/jails/flavors/finch-ssh-root/etc/ssh&amp;quot; &amp;quot;/usr/jails/${jailname}/etc/&amp;quot;
 
 # Edit the jail&amp;#39;s rc.conf file to enable the ssh daemon
-printf &amp;quot;\n\nsshd_enable=\&amp;quot;YES\&amp;quot;\n\n&amp;quot; &amp;gt;&amp;gt;  &amp;quot;/usr/jails/${jailname}/etc/rc.conf&amp;quot;
+sysrc -f &amp;quot;/usr/jails/${jailname}/etc/rc.conf&amp;quot; &amp;quot;sshd_enable=YES&amp;quot;
 
 # Make sure you have created your chosen ssh login accounts.
 # You must also set a password as per the previous the example(s) above ^^

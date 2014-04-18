@@ -395,7 +395,7 @@ ASSUME_ALWAYS_YES=&quot;yes&quot; pkg install &quot;nginx&quot;
 cd &quot;/usr/ports/www/nginx&quot; &amp;&amp; make &quot;config-recursive&quot; &quot;install&quot; &quot;clean&quot;
 
 # Enable nginx rc.d service inside the jail
-printf &quot;\n\nnginx_enable=\&quot;YES\&quot;\n\n&quot; &gt;&gt; &quot;/etc/rc.conf&quot;
+sysrc &quot;nginx_enable=YES&quot;
 
 # Exit from the jail
 exit

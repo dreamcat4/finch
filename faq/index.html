@@ -665,7 +665,7 @@ ASSUME_ALWAYS_YES=&quot;yes&quot; pkg install &quot;ezjail&quot;
 cd &quot;/usr/ports/sysutils/ezjail&quot; &amp;&amp; make &quot;config-recursive&quot; &quot;install&quot; &quot;clean&quot;
 
 # If it has an rc.d service, enable that in Finch&#39;s rc.conf file
-echo &quot;ezjail_enable=\&quot;YES\&quot;&quot; &gt;&gt; &quot;/etc/rc.conf&quot;
+sysrc &quot;ezjail_enable=YES&quot;
 
 # Leave the chroot
 exit

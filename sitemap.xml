@@ -37,12 +37,6 @@
     <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>/finch/bugs</loc>
-    <lastmod>2014-04-18</lastmod>
-    <priority>0.5</priority>
-    <changefreq>daily</changefreq>
-  </url>
-  <url>
     <loc>/finch/faq</loc>
     <lastmod>2014-04-18</lastmod>
     <priority>0.5</priority>
@@ -104,6 +98,12 @@
   </url>
   <url>
     <loc>/finch/qjail-reference</loc>
+    <lastmod>2014-04-18</lastmod>
+    <priority>0.5</priority>
+    <changefreq>daily</changefreq>
+  </url>
+  <url>
+    <loc>/finch/support</loc>
     <lastmod>2014-04-18</lastmod>
     <priority>0.5</priority>
     <changefreq>daily</changefreq>

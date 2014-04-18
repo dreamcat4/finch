@@ -327,7 +327,7 @@
 
 <!-- *Putting the FreeBSD back into* ***[FreeNAS][fn]*** *and* ***[NAS4Free][n4f]***. -->
 
-<p><em>For</em> <strong><em><a href="http://www.freenas.org/">FreeNAS</a></em></strong> <em>and</em> <strong><em><a href="http://www.nas4free.org/">NAS4Free</a></em></strong></p>
+<p><em>For</em> <strong><em><a href="http://www.freenas.org/">FreeNAS</a></em></strong>, <strong><em><a href="http://www.nas4free.org/">NAS4Free</a></em></strong> <em>and</em> <strong><em><a href="https://www.pfsense.org/">pfSense</a></em></strong>.</p>
 
 <p><ul>
 <li>
@@ -364,16 +364,7 @@
 
 <h2 id="toc_2">Why do I need Finch ?</h2>
 
-<p><strong>NAS4Free:</strong></p>
-
-<ul>
-<li>To manage jails with <code>qjail</code>, hassle-free.</li>
-<li>To use <code>pkg install ...</code>, the official FreeBSD tool otherwise known as <code>pkg-ng</code>.</li>
-<li>To have a full, official FreeBSD system image, including ports tree and kernel sources.</li>
-<li>To have all the basics preconfigured for you, and a consistent shell environment.</li>
-</ul>
-
-<p><strong>FreeNAS:</strong></p>
+<p><strong>FreeNAS, NAS4Free, pfSense:</strong></p>
 
 <ul>
 <li>To manage jails with <code>qjail</code>, hassle-free.</li>
@@ -389,7 +380,8 @@
 <ul>
 <li>FreeNAS 9.2 or higher</li>
 <li>NAS4Free 9.2 or higher</li>
-<li>FreeBSD 10.0-RELEASE <sup>1,2</sup></li>
+<li>pfSense 2.2 or higher <sup>1,2</sup></li>
+<li>FreeBSD 10.0-RELEASE <sup>3,4</sup></li>
 </ul>
 
 <p><strong>Disk space requirements:</strong></p>
@@ -400,12 +392,15 @@
 <li>Finch doesn&#39;t require any special boot partition.</li>
 </ul>
 
-<p>Requirements for <em>other FreeBSD platforms not listed above</em>: <sup>1</sup> The host system must have writable, persistent <code>/etc</code> and <code>/usr/local</code> folders. <sup>2</sup> The host system either needs a working <code>pkg-ng</code> system, or the packages <code>sudo</code> and <code>bash</code> pre-installed.</p>
+<p>Requirements for pfSense: <sup>1</sup> 1GB disk image or larger (not &quot;512mb&quot;). <sup>2</sup> pfSense 2.2 might not be finished, and still in beta testing. You need a 2.2-beta snapshot dated 16th-April-2014 or newer. Available at <a href="http://snapshots.pfsense.org/">http://snapshots.pfsense.org/</a>.</p>
+
+<p>Requirements for <em>other FreeBSD platforms not listed above</em>: <sup>3</sup> The host system must have writable, persistent <code>/etc</code> and <code>/usr/local</code> folders. <sup>4</sup> The host system either needs a working <code>pkg-ng</code> system, or the packages <code>sudo</code> and <code>bash</code> pre-installed.</p>
 
 <h2 id="toc_4">Install</h2>
 
 <ul>
 <li>Check that your system matches the <a href="#toc_3">Platform Requirements</a>.</li>
+<li><em>pfSense only</em> - follow the <a href="install/#toc_2">Pre-Install Steps</a>.</li>
 <li>Login as the <code>root</code> user. Then copy-paste these 3 commands into your terminal window:</li>
 </ul>
 
@@ -424,7 +419,7 @@ finch-bootstrap --help
 <pre><code>finch-bootstrap install --dir &quot;/path/to/finch&quot;
 </code></pre>
 
-<p>Then follow the platform-specific <strong><em><a href="install/#toc_2">post install steps</a></em></strong>, which you must do after running the installer.</p>
+<p>Then follow the platform-specific <strong><em><a href="install/#toc_6">post install steps</a></em></strong>, which you must do after running the installer.</p>
 
 <ul>
 <li>The Finch &quot;bootstrap&quot; installer will run it&#39;s preflight checks and ask for confirmation before continuing.</li>

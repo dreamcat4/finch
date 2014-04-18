@@ -43,7 +43,7 @@
 
 &lt;!-- *Putting the FreeBSD back into* ***[FreeNAS][fn]*** *and* ***[NAS4Free][n4f]***. --&gt;
 
-&lt;p&gt;&lt;em&gt;For&lt;/em&gt; &lt;strong&gt;&lt;em&gt;&lt;a href="http://www.freenas.org/"&gt;FreeNAS&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;and&lt;/em&gt; &lt;strong&gt;&lt;em&gt;&lt;a href="http://www.nas4free.org/"&gt;NAS4Free&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;For&lt;/em&gt; &lt;strong&gt;&lt;em&gt;&lt;a href="http://www.freenas.org/"&gt;FreeNAS&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, &lt;strong&gt;&lt;em&gt;&lt;a href="http://www.nas4free.org/"&gt;NAS4Free&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt; &lt;em&gt;and&lt;/em&gt; &lt;strong&gt;&lt;em&gt;&lt;a href="https://www.pfsense.org/"&gt;pfSense&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;ul&gt;
 &lt;li&gt;
@@ -80,16 +80,7 @@
 
 &lt;h2 id="toc_2"&gt;Why do I need Finch ?&lt;/h2&gt;
 
-&lt;p&gt;&lt;strong&gt;NAS4Free:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
-&lt;li&gt;To use &lt;code&gt;pkg install ...&lt;/code&gt;, the official FreeBSD tool otherwise known as &lt;code&gt;pkg-ng&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;To have a full, official FreeBSD system image, including ports tree and kernel sources.&lt;/li&gt;
-&lt;li&gt;To have all the basics preconfigured for you, and a consistent shell environment.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;FreeNAS:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;FreeNAS, NAS4Free, pfSense:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;To manage jails with &lt;code&gt;qjail&lt;/code&gt;, hassle-free.&lt;/li&gt;
@@ -105,7 +96,8 @@
 &lt;ul&gt;
 &lt;li&gt;FreeNAS 9.2 or higher&lt;/li&gt;
 &lt;li&gt;NAS4Free 9.2 or higher&lt;/li&gt;
-&lt;li&gt;FreeBSD 10.0-RELEASE &lt;sup&gt;1,2&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;pfSense 2.2 or higher &lt;sup&gt;1,2&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;FreeBSD 10.0-RELEASE &lt;sup&gt;3,4&lt;/sup&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Disk space requirements:&lt;/strong&gt;&lt;/p&gt;
@@ -116,12 +108,15 @@
 &lt;li&gt;Finch doesn&amp;#39;t require any special boot partition.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Requirements for &lt;em&gt;other FreeBSD platforms not listed above&lt;/em&gt;: &lt;sup&gt;1&lt;/sup&gt; The host system must have writable, persistent &lt;code&gt;/etc&lt;/code&gt; and &lt;code&gt;/usr/local&lt;/code&gt; folders. &lt;sup&gt;2&lt;/sup&gt; The host system either needs a working &lt;code&gt;pkg-ng&lt;/code&gt; system, or the packages &lt;code&gt;sudo&lt;/code&gt; and &lt;code&gt;bash&lt;/code&gt; pre-installed.&lt;/p&gt;
+&lt;p&gt;Requirements for pfSense: &lt;sup&gt;1&lt;/sup&gt; 1GB disk image or larger (not &amp;quot;512mb&amp;quot;). &lt;sup&gt;2&lt;/sup&gt; pfSense 2.2 might not be finished, and still in beta testing. You need a 2.2-beta snapshot dated 16th-April-2014 or newer. Available at &lt;a href="http://snapshots.pfsense.org/"&gt;http://snapshots.pfsense.org/&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Requirements for &lt;em&gt;other FreeBSD platforms not listed above&lt;/em&gt;: &lt;sup&gt;3&lt;/sup&gt; The host system must have writable, persistent &lt;code&gt;/etc&lt;/code&gt; and &lt;code&gt;/usr/local&lt;/code&gt; folders. &lt;sup&gt;4&lt;/sup&gt; The host system either needs a working &lt;code&gt;pkg-ng&lt;/code&gt; system, or the packages &lt;code&gt;sudo&lt;/code&gt; and &lt;code&gt;bash&lt;/code&gt; pre-installed.&lt;/p&gt;
 
 &lt;h2 id="toc_4"&gt;Install&lt;/h2&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Check that your system matches the &lt;a href="#toc_3"&gt;Platform Requirements&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;pfSense only&lt;/em&gt; - follow the &lt;a href="install/#toc_2"&gt;Pre-Install Steps&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;Login as the &lt;code&gt;root&lt;/code&gt; user. Then copy-paste these 3 commands into your terminal window:&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -140,7 +135,7 @@ finch-bootstrap --help
 &lt;pre&gt;&lt;code&gt;finch-bootstrap install --dir &amp;quot;/path/to/finch&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="install/#toc_2"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
+&lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="install/#toc_6"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The Finch &amp;quot;bootstrap&amp;quot; installer will run it&amp;#39;s preflight checks and ask for confirmation before continuing.&lt;/li&gt;

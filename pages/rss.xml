@@ -1313,9 +1313,9 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;h2 id="toc_1"&gt;Pre-requisites&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;FreeNAS, NAS4Free and pfSense users must first &lt;strong&gt;&lt;a href="/install"&gt;Install Finch&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;a href="jails-ip-addresses"&gt;Reserve an IP address&lt;/a&gt;&lt;/strong&gt; for your new jail.&lt;/li&gt;
-&lt;li&gt;Decide whether you need &lt;strong&gt;&lt;a href="jails-ssh"&gt;ssh access&lt;/a&gt;&lt;/strong&gt; for this jail.&lt;/li&gt;
+&lt;li&gt;FreeNAS, NAS4Free and pfSense users must first &lt;strong&gt;&lt;a href="/finch/install"&gt;Install Finch&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;a href="/finch/jails-ip-addresses"&gt;Reserve an IP address&lt;/a&gt;&lt;/strong&gt; for your new jail.&lt;/li&gt;
+&lt;li&gt;Decide whether you need &lt;strong&gt;&lt;a href="/finch/jails-ssh"&gt;ssh access&lt;/a&gt;&lt;/strong&gt; for this jail.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id="toc_2"&gt;Create a new jail&lt;/h2&gt;
@@ -1372,9 +1372,9 @@ fetch -o - &amp;quot;http://$jail_ip&amp;quot; # or open &amp;quot;http://$jail_
 &lt;h2 id="toc_5"&gt;What next ?&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Learn how to mount user data into your jails with &lt;strong&gt;&lt;a href="mounting-filesystems"&gt;Mounting filesystems&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;Read the &lt;strong&gt;&lt;a href="jails-ssh"&gt;Jails ssh How To&lt;/a&gt;&lt;/strong&gt; to create a jail with ssh access.&lt;/li&gt;
-&lt;li&gt;Consult the &lt;strong&gt;&lt;a href="qjail-reference"&gt;Qjail reference&lt;/a&gt;&lt;/strong&gt; page for more jails.&lt;/li&gt;
+&lt;li&gt;Learn how to mount user data into your jails with &lt;strong&gt;&lt;a href="/finch/mounting-filesystems"&gt;Mounting filesystems&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Read the &lt;strong&gt;&lt;a href="/finch/jails-ssh"&gt;Jails ssh How To&lt;/a&gt;&lt;/strong&gt; to create a jail with ssh access.&lt;/li&gt;
+&lt;li&gt;Consult the &lt;strong&gt;&lt;a href="/finch/qjail-reference"&gt;Qjail reference&lt;/a&gt;&lt;/strong&gt; page for more jails.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>

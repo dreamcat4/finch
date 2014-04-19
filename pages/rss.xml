@@ -1300,7 +1300,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;a href="#toc_3"&gt;Login for the first time&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_4"&gt;Install a webserver&lt;/a&gt;
+&lt;a href="#toc_4"&gt;Example: Install a webserver&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_5"&gt;What next ?&lt;/a&gt;
@@ -1348,7 +1348,7 @@ qjail console &amp;quot;$jailname&amp;quot;
 passwd
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id="toc_4"&gt;Install a webserver&lt;/h2&gt;
+&lt;h2 id="toc_4"&gt;Example: Install a webserver&lt;/h2&gt;
 
 &lt;pre&gt;&lt;code&gt;# Either a) install with pkg-ng
 ASSUME_ALWAYS_YES=&amp;quot;yes&amp;quot; pkg install &amp;quot;nginx&amp;quot;    

@@ -317,7 +317,7 @@ fi
 
 &lt;h3 id="toc_20"&gt;Can I Compile FreeNAS or NAS4Free in Finch ?&lt;/h3&gt;
 
-&lt;p&gt;We simply don&amp;#39;t know yet. Where are those FreeNAS and NAS4Free developers when you need them eh? Like the several other desirable but untested uses for Finch, will be glad update this section with better information just as soon as someone has &lt;strong&gt;&lt;a href="support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; about it.&lt;/p&gt;
+&lt;p&gt;We simply don&amp;#39;t know yet. Where are those FreeNAS and NAS4Free developers when you need them eh? Like the several other desirable but untested uses for Finch, will be glad update this section with better information just as soon as someone has &lt;strong&gt;&lt;a href="/finch/support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; about it.&lt;/p&gt;
 
 &lt;h2 id="toc_21"&gt;General&lt;/h2&gt;
 
@@ -349,7 +349,7 @@ sysrc &amp;quot;ezjail_enable=YES&amp;quot;
 exit
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Now we can add the command to our exports. The Finch exports feature is explained on the &lt;strong&gt;&lt;a href="usage/#toc_4"&gt;usage page&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Now we can add the command to our exports. The Finch exports feature is explained on the &lt;strong&gt;&lt;a href="/finch/usage/#toc_4"&gt;usage page&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# Add the command to our finch exports list
 finch export &amp;quot;ezjail-admin&amp;quot;
@@ -369,11 +369,11 @@ man ezjail
 
 &lt;h3 id="toc_26"&gt;Can I run &amp;quot;bhyve&amp;quot; VMs in Finch ?&lt;/h3&gt;
 
-&lt;p&gt;In truth we simply aren&amp;#39;t sure yet. Why not be the first to report back your findings? &lt;strong&gt;&lt;a href="support"&gt;Let us know&lt;/a&gt;&lt;/strong&gt; what happens. Same goes for &lt;code&gt;xen&lt;/code&gt; hypervisor.&lt;/p&gt;
+&lt;p&gt;In truth we simply aren&amp;#39;t sure yet. Why not be the first to report back your findings? &lt;strong&gt;&lt;a href="/finch/support"&gt;Let us know&lt;/a&gt;&lt;/strong&gt; what happens. Same goes for &lt;code&gt;xen&lt;/code&gt; hypervisor.&lt;/p&gt;
 
 &lt;h3 id="toc_27"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/h3&gt;
 
-&lt;p&gt;Again we don&amp;#39;t know / haven&amp;#39;t tried. &lt;strong&gt;&lt;a href="support"&gt;Let us know&lt;/a&gt;&lt;/strong&gt; what happens if you have tried this.&lt;/p&gt;
+&lt;p&gt;Again we don&amp;#39;t know / haven&amp;#39;t tried. &lt;strong&gt;&lt;a href="/finch/support"&gt;Let us know&lt;/a&gt;&lt;/strong&gt; what happens if you have tried this.&lt;/p&gt;
 
 &lt;h3 id="toc_28"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/h3&gt;
 
@@ -2308,7 +2308,7 @@ qjail config -d &amp;quot;$jailname&amp;quot;
 &lt;li&gt;However when the jail is stopped, the zfs dataset will be automatically unmounted, becoming unavailable in the host environment until the jail is restarted.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;To avoid the above restrictions, use our &lt;strong&gt;&lt;a href="mounting-filesystems"&gt;Finch-prescribed method&lt;/a&gt;&lt;/strong&gt; for mounting your datasets.&lt;/p&gt;
+&lt;p&gt;To avoid the above restrictions, use our &lt;strong&gt;&lt;a href="/finch/mounting-filesystems"&gt;Finch-prescribed method&lt;/a&gt;&lt;/strong&gt; for mounting your datasets.&lt;/p&gt;
 
 &lt;h2 id="toc_5"&gt;Network&lt;/h2&gt;
 
@@ -2387,7 +2387,7 @@ echo &amp;quot;ifconfig&amp;quot; | qjail console &amp;quot;$jailname&amp;quot;
 echo &amp;quot;ping -c 1 google.com&amp;quot; | qjail console &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Please &lt;strong&gt;&lt;a href="support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you think anything here is incorrect, or can provide alternative configuration steps to get these Vnet jails working on hosts which are setup to be outside of the &lt;code&gt;10.0.0.0&lt;/code&gt; subnet. For example on &lt;code&gt;192.168.1.XXX&lt;/code&gt; machines, etc.&lt;/p&gt;
+&lt;p&gt;Please &lt;strong&gt;&lt;a href="/finch/support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you think anything here is incorrect, or can provide alternative configuration steps to get these Vnet jails working on hosts which are setup to be outside of the &lt;code&gt;10.0.0.0&lt;/code&gt; subnet. For example on &lt;code&gt;192.168.1.XXX&lt;/code&gt; machines, etc.&lt;/p&gt;
 
 &lt;h3 id="toc_11"&gt;(useless) Quotas&lt;/h3&gt;
 
@@ -2414,7 +2414,7 @@ qjail config -p &amp;quot;$jail_cpu_set&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;pre&gt;&lt;code&gt;jail: $jailname: unknown parameter: cpuset.id`
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;I&amp;#39;m not entirely certain if the syntax shown above is correct. Please &lt;strong&gt;&lt;a href="support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you have found otherwise.&lt;/p&gt;
+&lt;p&gt;I&amp;#39;m not entirely certain if the syntax shown above is correct. Please &lt;strong&gt;&lt;a href="/finch/support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you have found otherwise.&lt;/p&gt;
 </description>
     </item>
     <item>
@@ -2432,7 +2432,7 @@ qjail config -p &amp;quot;$jail_cpu_set&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;ul&gt;
 &lt;li&gt;Check through &lt;strong&gt;&lt;a href="https://github.com/dreamcat4/finch/issues"&gt;Finch issues&lt;/a&gt;&lt;/strong&gt; for existing problem reports.&lt;/li&gt;
 &lt;li&gt;Try updating with &lt;strong&gt;&lt;code&gt;finch update&lt;/code&gt;&lt;/strong&gt;. In case the problem was already fixed.&lt;/li&gt;
-&lt;li&gt;There may be relevant information in the &lt;strong&gt;&lt;a href="faq"&gt;Finch FAQ&lt;/a&gt;&lt;/strong&gt; or at &lt;strong&gt;&lt;a href="https://github.com/dreamcat4/finch/issues"&gt;Finch issues&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;There may be relevant information in the &lt;strong&gt;&lt;a href="/finch/faq"&gt;Finch FAQ&lt;/a&gt;&lt;/strong&gt; or at &lt;strong&gt;&lt;a href="https://github.com/dreamcat4/finch/issues"&gt;Finch issues&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;em&gt;No luck?&lt;/em&gt;&lt;/p&gt;
@@ -2754,7 +2754,7 @@ rm -rf /var/distfiles/finch
 &lt;li&gt;Issue a &lt;a href="#toc_6"&gt;&lt;code&gt;finch refresh&lt;/code&gt;&lt;/a&gt; after changing users or groups.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; Only members of the &lt;code&gt;wheel&lt;/code&gt; administrative group can use Finch. For more information please see the finch &lt;a href="manpage#USAGE"&gt;manpage&lt;/a&gt;. &lt;sup&gt;2&lt;/sup&gt; Always use a POSIX.2 or Bourne-type compatible shell. Finch installs Bash by default. For more information please see the &lt;a href="faq/#toc_8"&gt;bash FAQ entry&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; Only members of the &lt;code&gt;wheel&lt;/code&gt; administrative group can use Finch. For more information please see the finch &lt;a href="/finch/manpage#USAGE"&gt;manpage&lt;/a&gt;. &lt;sup&gt;2&lt;/sup&gt; Always use a POSIX.2 or Bourne-type compatible shell. Finch installs Bash by default. For more information please see the &lt;a href="/finch/faq/#toc_8"&gt;bash FAQ entry&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id="toc_2"&gt;How to &amp;#39;su&amp;#39; and preserve Finch&amp;#39;s login profile&lt;/h2&gt;
 

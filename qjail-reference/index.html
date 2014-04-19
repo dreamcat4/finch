@@ -418,7 +418,7 @@ qjail config -d &quot;$jailname&quot;
 <li>However when the jail is stopped, the zfs dataset will be automatically unmounted, becoming unavailable in the host environment until the jail is restarted.</li>
 </ul>
 
-<p>To avoid the above restrictions, use our <strong><a href="mounting-filesystems">Finch-prescribed method</a></strong> for mounting your datasets.</p>
+<p>To avoid the above restrictions, use our <strong><a href="/finch/mounting-filesystems">Finch-prescribed method</a></strong> for mounting your datasets.</p>
 
 <h2 id="toc_5">Network</h2>
 
@@ -497,7 +497,7 @@ echo &quot;ifconfig&quot; | qjail console &quot;$jailname&quot;
 echo &quot;ping -c 1 google.com&quot; | qjail console &quot;$jailname&quot;
 </code></pre>
 
-<p>Please <strong><a href="support">let us know</a></strong> if you think anything here is incorrect, or can provide alternative configuration steps to get these Vnet jails working on hosts which are setup to be outside of the <code>10.0.0.0</code> subnet. For example on <code>192.168.1.XXX</code> machines, etc.</p>
+<p>Please <strong><a href="/finch/support">let us know</a></strong> if you think anything here is incorrect, or can provide alternative configuration steps to get these Vnet jails working on hosts which are setup to be outside of the <code>10.0.0.0</code> subnet. For example on <code>192.168.1.XXX</code> machines, etc.</p>
 
 <h3 id="toc_11">(useless) Quotas</h3>
 
@@ -524,7 +524,7 @@ qjail config -p &quot;$jail_cpu_set&quot; &quot;$jailname&quot;
 <pre><code>jail: $jailname: unknown parameter: cpuset.id`
 </code></pre>
 
-<p>I&#39;m not entirely certain if the syntax shown above is correct. Please <strong><a href="support">let us know</a></strong> if you have found otherwise.</p>
+<p>I&#39;m not entirely certain if the syntax shown above is correct. Please <strong><a href="/finch/support">let us know</a></strong> if you have found otherwise.</p>
 
       </div>
 

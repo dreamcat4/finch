@@ -1313,7 +1313,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;h2 id="toc_1"&gt;Pre-requisites&lt;/h2&gt;
 
 &lt;ul&gt;
-&lt;li&gt;FreeNAS, NAS4Free and pfSense users must first &lt;strong&gt;&lt;a href="install"&gt;Install Finch&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;FreeNAS, NAS4Free and pfSense users must first &lt;strong&gt;&lt;a href="/install"&gt;Install Finch&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;&lt;a href="jails-ip-addresses"&gt;Reserve an IP address&lt;/a&gt;&lt;/strong&gt; for your new jail.&lt;/li&gt;
 &lt;li&gt;Decide whether you need &lt;strong&gt;&lt;a href="jails-ssh"&gt;ssh access&lt;/a&gt;&lt;/strong&gt; for this jail.&lt;/li&gt;
 &lt;/ul&gt;

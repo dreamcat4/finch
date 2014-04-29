@@ -474,19 +474,21 @@
 
 <p><strong><em>Finch IS meant to be:</em></strong></p>
 
-<p>A place to manage root-level customizations to your FreeBSD host system. Including loading kernel modules, configuring attached USB hardware devices, and starting jails if necessary.</p>
+<p>A place to manage root-level customizations to your FreeBSD host system. Including loading kernel modules<sup>1,</sup> configuring attached USB hardware devices, and starting jails if necessary.</p>
 
-<p>*** Finch isn&#39;t meant to be:***</p>
+<p><strong><em>Finch isn&#39;t meant to be:</em></strong></p>
 
 <p>The place to run public-facing server software components (Apache, MySQL etc) directly in the chroot. You should run each service (or group of closely associated sevices) inside it&#39;s own individual jail, which may be administered from within Finch.</p>
 
-<p>*** Summary:***</p>
+<p><strong><em>Summary:</em></strong></p>
 
-<p>By using Finch&#39;s chroot as a place to do your host-level customisations, you avoid having to hack or mess around with your host platform (FreNAS / NAS4Free / pfSense). That is a good strategy because such configurations / customizations may interfere in an adverse way with the host&#39;s built-in and pre-configured services. It also means that when you update your firmware on the host system, your host-level customizations will not be wiped out / overwritten by the new USB image, etc.</p>
+<p>By using Finch&#39;s chroot as a place to do your host-level customisations, you avoid having to hack or mess around with your host platform (FreeNAS / NAS4Free / pfSense). That is a good strategy because such customisations may interfere in an adverse way with the host&#39;s built-in and pre-configured services (those manages in the WebGUI). It also means that when you update the USB stick with a newer version of the host platorm, your own host-level customisations will not be wiped out<sup>1</sup> / overwritten by the new USB image, etc.</p>
+
+<p><sup>1</sup> For kernel modules we recommend you write an rc.d script to run the <code>kldload</code> and <code>kldunload</code> commands. Put it in /usr/local/etc/rc.d/ and add &quot;scriptname_enable=YES&quot; to Finch&#39;s /etc/rc.conf file. Then the rc.d script will be executed during Finch start / stop in the usual fashion.</p>
 
 <p><strong><em>Technical Note:</em></strong></p>
 
-<p>In theory, it may be possible to run jails inside of a jail (&quot;nested jails&quot;). Which can solve <em>some</em> of the above issues. However jails still can&#39;t (and shouldn&#39;t) load kernel modules, run devfsd (manipulate /dev and attached USB devices), etc, etc. Furthermore, such a setup (nested jails) would certainly be more complex (and less clean) to achieve in practise vs a simple chroot. Disagree? Please drop us an email and we&#39;ll try to kindly incorporate any further relevant points into the F.A.Q.</p>
+<p>As an isude, it may be possible <em>in theory</em> to run jails inside of a master jail (&quot;nested jails&quot;). Which can solve <em>some</em> of the above issues. However jails still can&#39;t (and shouldn&#39;t) load kernel modules, run devfsd (manipulate /dev and attached USB devices), etc, etc. And that is an important proactical consideration. Furthermore, such a setup (nested jails) would certainly be more complex and less clean to achieve in practice vs a simple chroot. Disagree? Something amiss? Please drop us an email and we&#39;ll try to kindly incorporate any further relevant points into the F.A.Q. Contact information can be found on the <strong><em><a href="/finch/support">support page</a></em></strong>.</p>
 
 <h3 id="toc_4">Why not install Finch onto USB / compact flash aswell ?</h3>
 

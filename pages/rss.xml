@@ -161,19 +161,21 @@
 
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Finch IS meant to be:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;A place to manage root-level customizations to your FreeBSD host system. Including loading kernel modules, configuring attached USB hardware devices, and starting jails if necessary.&lt;/p&gt;
+&lt;p&gt;A place to manage root-level customizations to your FreeBSD host system. Including loading kernel modules&lt;sup&gt;1,&lt;/sup&gt; configuring attached USB hardware devices, and starting jails if necessary.&lt;/p&gt;
 
-&lt;p&gt;*** Finch isn&amp;#39;t meant to be:***&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Finch isn&amp;#39;t meant to be:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;The place to run public-facing server software components (Apache, MySQL etc) directly in the chroot. You should run each service (or group of closely associated sevices) inside it&amp;#39;s own individual jail, which may be administered from within Finch.&lt;/p&gt;
 
-&lt;p&gt;*** Summary:***&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Summary:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;By using Finch&amp;#39;s chroot as a place to do your host-level customisations, you avoid having to hack or mess around with your host platform (FreNAS / NAS4Free / pfSense). That is a good strategy because such configurations / customizations may interfere in an adverse way with the host&amp;#39;s built-in and pre-configured services. It also means that when you update your firmware on the host system, your host-level customizations will not be wiped out / overwritten by the new USB image, etc.&lt;/p&gt;
+&lt;p&gt;By using Finch&amp;#39;s chroot as a place to do your host-level customisations, you avoid having to hack or mess around with your host platform (FreeNAS / NAS4Free / pfSense). That is a good strategy because such customisations may interfere in an adverse way with the host&amp;#39;s built-in and pre-configured services (those manages in the WebGUI). It also means that when you update the USB stick with a newer version of the host platorm, your own host-level customisations will not be wiped out&lt;sup&gt;1&lt;/sup&gt; / overwritten by the new USB image, etc.&lt;/p&gt;
+
+&lt;p&gt;&lt;sup&gt;1&lt;/sup&gt; For kernel modules we recommend you write an rc.d script to run the &lt;code&gt;kldload&lt;/code&gt; and &lt;code&gt;kldunload&lt;/code&gt; commands. Put it in /usr/local/etc/rc.d/ and add &amp;quot;scriptname_enable=YES&amp;quot; to Finch&amp;#39;s /etc/rc.conf file. Then the rc.d script will be executed during Finch start / stop in the usual fashion.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Technical Note:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;In theory, it may be possible to run jails inside of a jail (&amp;quot;nested jails&amp;quot;). Which can solve &lt;em&gt;some&lt;/em&gt; of the above issues. However jails still can&amp;#39;t (and shouldn&amp;#39;t) load kernel modules, run devfsd (manipulate /dev and attached USB devices), etc, etc. Furthermore, such a setup (nested jails) would certainly be more complex (and less clean) to achieve in practise vs a simple chroot. Disagree? Please drop us an email and we&amp;#39;ll try to kindly incorporate any further relevant points into the F.A.Q.&lt;/p&gt;
+&lt;p&gt;As an isude, it may be possible &lt;em&gt;in theory&lt;/em&gt; to run jails inside of a master jail (&amp;quot;nested jails&amp;quot;). Which can solve &lt;em&gt;some&lt;/em&gt; of the above issues. However jails still can&amp;#39;t (and shouldn&amp;#39;t) load kernel modules, run devfsd (manipulate /dev and attached USB devices), etc, etc. And that is an important proactical consideration. Furthermore, such a setup (nested jails) would certainly be more complex and less clean to achieve in practice vs a simple chroot. Disagree? Something amiss? Please drop us an email and we&amp;#39;ll try to kindly incorporate any further relevant points into the F.A.Q. Contact information can be found on the &lt;strong&gt;&lt;em&gt;&lt;a href="/finch/support"&gt;support page&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;h3 id="toc_4"&gt;Why not install Finch onto USB / compact flash aswell ?&lt;/h3&gt;
 

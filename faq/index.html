@@ -339,7 +339,7 @@
 <a href="#toc_3">Why not just install FreeBSD directly into a jail, rather than a chroot ?</a>
 </li>
 <li>
-<a href="#toc_4">Why not install Finch onto USB / compact flash aswell ?</a>
+<a href="#toc_4">Why not install Finch onto USB / compact flash ?</a>
 </li>
 <li>
 <a href="#toc_5">Why only UFS or ZFS partitions ?</a>
@@ -468,9 +468,7 @@
 
 <h3 id="toc_3">Why not just install FreeBSD directly into a jail, rather than a chroot ?</h3>
 
-<p>Because jails don&#39;t work for some very important things. Jails cannot load kernel modules from inside a jail. You cannot start devfsd, and / or change the <code>/dev</code> filesystem after starting a jail. This is an intentional security feature of FreeBSD jails, to stop a compromised jail from gaining privileged access to the host system.</p>
-
-<p>So a chroot is the better choice for Finch as it can behave more like a proper FreeBSD host.</p>
+<p>Because jails don&#39;t work for some very important things. Jails cannot load kernel modules from inside themselves. You cannot start devfsd, and / or change the <code>/dev</code> filesystem after starting a jail. This is an intentional security feature of FreeBSD jails, to stop a compromised service running in the jail from gaining privileged access to the host system.</p>
 
 <p><strong><em>Finch IS meant to be:</em></strong></p>
 
@@ -478,19 +476,21 @@
 
 <p><strong><em>Finch isn&#39;t meant to be:</em></strong></p>
 
-<p>The place to run public-facing server software components (Apache, MySQL etc) directly in the chroot. You should run each service (or group of closely associated sevices) inside it&#39;s own individual jail, which may be administered from within Finch.</p>
+<p>The place to run public-facing server software components (Apache, MySQL etc) directly in the chroot. You should run each service (or group of closely associated services) inside it&#39;s own individual jail, which may be administered from within Finch.</p>
 
 <p><strong><em>Summary:</em></strong></p>
 
-<p>By using Finch&#39;s chroot as a place to do your host-level customisations, you avoid having to hack or mess around with your host platform (FreeNAS / NAS4Free / pfSense). That is a good strategy because such customisations may interfere in an adverse way with the host&#39;s built-in and pre-configured services (those manages in the WebGUI). It also means that when you update the USB stick with a newer version of the host platorm, your own host-level customisations will not be wiped out<sup>1</sup> / overwritten by the new USB image, etc.</p>
+<p>By using Finch&#39;s chroot as a place to do your host-level customisations, you avoid having to hack or mess around with your host platform (FreeNAS / NAS4Free / pfSense). That is a good strategy because such customisations may interfere in an adverse way with the host&#39;s built-in and pre-configured services (those manages in the WebGUI). It also means that when you update the USB stick with a newer version of the host platform, your own host-level customisations will not be wiped out<sup>1</sup> / overwritten by the new USB image, etc.</p>
 
 <p><sup>1</sup> For kernel modules we recommend you write an rc.d script to run the <code>kldload</code> and <code>kldunload</code> commands. Put it in /usr/local/etc/rc.d/ and add &quot;scriptname_enable=YES&quot; to Finch&#39;s /etc/rc.conf file. Then the rc.d script will be executed during Finch start / stop in the usual fashion.</p>
 
 <p><strong><em>Technical Note:</em></strong></p>
 
-<p>As an isude, it may be possible <em>in theory</em> to run jails inside of a master jail (&quot;nested jails&quot;). Which can solve <em>some</em> of the above issues. However jails still can&#39;t (and shouldn&#39;t) load kernel modules, run devfsd (manipulate /dev and attached USB devices), etc, etc. And that is an important proactical consideration. Furthermore, such a setup (nested jails) would certainly be more complex and less clean to achieve in practice vs a simple chroot. Disagree? Something amiss? Please drop us an email and we&#39;ll try to kindly incorporate any further relevant points into the F.A.Q. Contact information can be found on the <strong><em><a href="/finch/support">support page</a></em></strong>.</p>
+<p>As an aside, it may be possible <em>in theory</em> to run jails inside of a master jail (&quot;nested jails&quot;). Which can solve <em>some</em> of the above issues. However jails still can&#39;t, and shouldn&#39;t, load kernel modules, run devfsd, manipulation of /dev for dealing with attached hardware devices, etc, etc. Furthermore, a nested jails setup would certainly be more complex and less clean to achieve in practice vs a simple chroot.</p>
 
-<h3 id="toc_4">Why not install Finch onto USB / compact flash aswell ?</h3>
+<p>Disagree? Something amiss? Please drop us an email and we&#39;ll try to kindly try to update the F.A.Q. with any further relevant points here. Contact information can be found on the <strong><em><a href="/finch/support">support page</a></em></strong>.</p>
+
+<h3 id="toc_4">Why not install Finch onto USB / compact flash ?</h3>
 
 <p>Because NAND Flash (of the type found on CompactFlash cards, SD cards, and USB thumbdrives) is a relatively slow and low-endurance storage medium. With a limited write lifecycle and potential of failed writes / bad blocks. They are not a suitable medium for the frequent small write profile demanded by a typical operating system.</p>
 

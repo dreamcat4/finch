@@ -155,7 +155,7 @@
 
 &lt;h3 id="toc_3"&gt;Why not just install FreeBSD directly into a jail, rather than a chroot ?&lt;/h3&gt;
 
-&lt;p&gt;Because jails don&amp;#39;t work for some very important things. Jails cannot load kernel modules from inside themselves. You cannot start devfsd, and / or change the &lt;code&gt;/dev&lt;/code&gt; filesystem after starting a jail. This is an intentional security feature of FreeBSD jails, to stop a compromised service running in the jail from gaining privileged access to the host system.&lt;/p&gt;
+&lt;p&gt;Because jails don&amp;#39;t work for some very important things. Jails cannot load kernel modules from inside themselves. You cannot start devfsd for manipulation of the /dev filesystem once a jail has started. Those are all intentional security features of FreeBSD jails, to stop a compromised service running inside the jail from gaining privileged access to the host system.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Finch IS meant to be:&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 

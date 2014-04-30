@@ -75,6 +75,19 @@ li.L9 { background: #eee }
 /* plain */
 .pln { color: #48484c; }
 
+
+/* Finch's PS1 prompt colors */
+
+/* black */
+.blk { color: #000; }
+/* purple */
+.pur { color: #3c27d3; }
+/* maroon */
+.mar { color: #8f3924; }
+/* green */
+.grn { color: #19a510; }
+
+
 .prettyprint {
   padding: 8px;
   background-color: #f7f7f9;

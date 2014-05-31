@@ -640,11 +640,13 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 
 <h3 id="toc_20">Can I recompile my kernel with Finch ?</h3>
 
-<p>Yes. There are 2 known caveats:</p>
+<p>It&#39;s possible. However be aware that the host platform will have it&#39;s own build process and some extra kernel patches applied to it. It is a bad idea to mix and match kernel modules with kernels that were build from different revisions.</p>
 
-<p>1) Be careful if changing the kernel IDENT string.</p>
+<p>Also be careful with the kernel IDENT string. This is set by a line near the top of your kernel config file.</p>
 
-<p>Don&#39;t remove any existing references to <code>nas4free</code> or <code>freenas</code> (whichever applicable). Finch uses <code>uname</code> to determine what platform it is on. Removing such substring from the kernel IDENT string <u>will</u> cause issues and prevent Finch from starting. However it is OK to change other substrings in the kernel IDENT string. Here is the shellcode Finch uses to determine which platform it is running on:</p>
+<p>You need some reference to <code>nas4free</code>, <code>freenas</code> or <code>pfsense</code> in there. Whichever is applicable. Finch uses <code>uname</code> to determine what platform it is on. Without such substring from the kernel IDENT string <u>will</u> cause issues and prevent Finch from starting properly. It is OK to change strings in the kernel IDENT string. Just make sure they also include the word <code>nas4free</code>, <code>freenas</code> or <code>pfsense</code> in there somewhere.</p>
+
+<p>Here is the shellcode Finch uses to determine which platform it is running on:</p>
 
 <pre><code>if [ &quot;`uname -iv | grep -i freenas`&quot; ] || [ &quot;`uname -iv | grep -i nas4free`&quot; ] || [ &quot;`uname -iv | grep -i pfsense`&quot; ]; then
   # Platform specific code here
@@ -653,7 +655,7 @@ else
 fi
 </code></pre>
 
-<p>2) The new kernel will normally be installed into <code>/path/to/finch/boot/kernel</code>. You will have to do something extra to boot the new kernel. What is required varies depending upon your specific platform.</p>
+<p>Once compiled, the new kernel will be installed in to <code>/path/to/finch/boot/kernel</code>. You will have to do something with these new files in the <code>/boot</code> directory in order to actually boot from them. What is required varies depending upon the host platform. But usually it involves copying some of these files into to the host system&#39;s /boot folder. (You are recommended to backup your old kernel files before doing this).</p>
 
 <h3 id="toc_21">Can I Compile FreeNAS or NAS4Free in Finch ?</h3>
 

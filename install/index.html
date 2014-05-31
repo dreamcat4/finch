@@ -451,7 +451,7 @@ Commands:
 Options:
 
     -d, --dir &quot;{realpath}&quot;
-         The fulle installation &quot;/path/to/finch&quot;. Defaults to &quot;\$PWD/finch&quot;.
+         The full installation &quot;/path/to/finch&quot;. Defaults to &quot;\$PWD/finch&quot;.
          ~ if not set a new subdirectory will be created here named &quot;finch&quot;.
          Internally referred to as &quot;$finch_realpath&quot; - the chroot directory.
 
@@ -591,17 +591,23 @@ cat /etc/fstab
 <p>Go to <code>System|Advanced|Command Scripts</code></p>
 
 <ul>
-<li>Click <code>+</code> and add the folowing <code>POSTINIT</code> script</li>
+<li>Click <code>+</code> and add the following <code>POSTINIT</code> script:</li>
 </ul>
 
-<pre><code>$ &quot;/data/finch/etc/finch/postinit&quot;
+<pre><code>/path/to/finch/etc/finch/postinit
 </code></pre>
 
 <ul>
-<li>Click <code>+</code> and add the folowing <code>SHUTDOWN</code> script</li>
+<li>Click <code>+</code> and add the following <code>SHUTDOWN</code> script:</li>
 </ul>
 
-<pre><code>$ &quot;/data/finch/etc/finch/shutdown&quot;
+<pre><code>/path/to/finch/etc/finch/shutdown
+</code></pre>
+
+<p><strong><em><span class="mar">Take note!</span></em></strong> The above text <code>/path/to/finch</code> is not a real path. Instead you must put the real directory where Finch is located on the filesystem. For example, if you are installing Finch into <code>/mnt/disk0/finch</code>, then the correct startup and shutdown commands would be:</p>
+
+<pre><code>/mnt/disk0/finch/etc/finch/postinit
+/mnt/disk0/finch/etc/finch/shutdown
 </code></pre>
 
 <h3 id="toc_10">Start the Finch FreeBSD installation process</h3>
@@ -611,7 +617,7 @@ cat /etc/fstab
 <li>To check progress login on the command line and type:</li>
 </ul>
 
-<pre><code>$ &quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&quot;
+<pre><code>tail -99999 -f /path/to/finch/var/log/finch/install.log
 </code></pre>
 
 <ul>
@@ -673,17 +679,23 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <p>Expand <code>+ System</code> --&gt; <code>+ Init/Shutdown Scripts</code> --&gt; <code>Add Init/Shutdown Script</code></p>
 
 <ul>
-<li>Select Type: <code>Script</code> and add the folowing <code>POSTINIT</code> script:</li>
+<li>Select Type: <code>Script</code> and add the following <code>POSTINIT</code> script:</li>
 </ul>
 
-<pre><code>$ &quot;/path/to/finch/etc/finch/postinit&quot;
+<pre><code>/path/to/finch/etc/finch/postinit
 </code></pre>
 
 <ul>
-<li>Select Type: <code>Script</code> and add the folowing <code>SHUTDOWN</code> script:</li>
+<li>Select Type: <code>Script</code> and add the following <code>SHUTDOWN</code> script:</li>
 </ul>
 
-<pre><code>$ &quot;/path/to/finch/etc/finch/shutdown&quot;
+<pre><code>/path/to/finch/etc/finch/shutdown
+</code></pre>
+
+<p><strong><em><span class="mar">Take note!</span></em></strong> The above text <code>/path/to/finch</code> is not a real path. Instead you must put the real directory where Finch is located on the filesystem. For example, if you are installing Finch into <code>/mnt/disk0/finch</code>, then the correct startup and shutdown commands would be:</p>
+
+<pre><code>/mnt/disk0/finch/etc/finch/postinit
+/mnt/disk0/finch/etc/finch/shutdown
 </code></pre>
 
 <h3 id="toc_15">Start the Finch FreeBSD installation process</h3>
@@ -693,7 +705,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <li>To check progress login on the command line and type:</li>
 </ul>
 
-<pre><code>$ &quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&quot;
+<pre><code>tail -99999 -f /path/to/finch/var/log/finch/install.log
 </code></pre>
 
 <ul>

@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-04-30</pubDate>
+    <pubDate>2014-05-31</pubDate>
     <item>
       <title>Archive</title>
       <link>/finch/archive</link>
@@ -134,6 +134,8 @@ finch-bootstrap --help
 
 &lt;pre&gt;&lt;code&gt;finch-bootstrap install --dir &amp;quot;/path/to/finch&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Replacing &lt;code&gt;/path/to/finch&lt;/code&gt; with the full path on your local drives, where you would like to install Finch.&lt;/p&gt;
 
 &lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="install/#toc_6"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
 

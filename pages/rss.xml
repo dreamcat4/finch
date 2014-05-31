@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-04-30</pubDate>
+    <pubDate>2014-05-31</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -327,11 +327,13 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;h3 id="toc_20"&gt;Can I recompile my kernel with Finch ?&lt;/h3&gt;
 
-&lt;p&gt;Yes. There are 2 known caveats:&lt;/p&gt;
+&lt;p&gt;It&amp;#39;s possible. However be aware that the host platform will have it&amp;#39;s own build process and some extra kernel patches applied to it. It is a bad idea to mix and match kernel modules with kernels that were build from different revisions.&lt;/p&gt;
 
-&lt;p&gt;1) Be careful if changing the kernel IDENT string.&lt;/p&gt;
+&lt;p&gt;Also be careful with the kernel IDENT string. This is set by a line near the top of your kernel config file.&lt;/p&gt;
 
-&lt;p&gt;Don&amp;#39;t remove any existing references to &lt;code&gt;nas4free&lt;/code&gt; or &lt;code&gt;freenas&lt;/code&gt; (whichever applicable). Finch uses &lt;code&gt;uname&lt;/code&gt; to determine what platform it is on. Removing such substring from the kernel IDENT string &lt;u&gt;will&lt;/u&gt; cause issues and prevent Finch from starting. However it is OK to change other substrings in the kernel IDENT string. Here is the shellcode Finch uses to determine which platform it is running on:&lt;/p&gt;
+&lt;p&gt;You need some reference to &lt;code&gt;nas4free&lt;/code&gt;, &lt;code&gt;freenas&lt;/code&gt; or &lt;code&gt;pfsense&lt;/code&gt; in there. Whichever is applicable. Finch uses &lt;code&gt;uname&lt;/code&gt; to determine what platform it is on. Without such substring from the kernel IDENT string &lt;u&gt;will&lt;/u&gt; cause issues and prevent Finch from starting properly. It is OK to change strings in the kernel IDENT string. Just make sure they also include the word &lt;code&gt;nas4free&lt;/code&gt;, &lt;code&gt;freenas&lt;/code&gt; or &lt;code&gt;pfsense&lt;/code&gt; in there somewhere.&lt;/p&gt;
+
+&lt;p&gt;Here is the shellcode Finch uses to determine which platform it is running on:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;if [ &amp;quot;`uname -iv | grep -i freenas`&amp;quot; ] || [ &amp;quot;`uname -iv | grep -i nas4free`&amp;quot; ] || [ &amp;quot;`uname -iv | grep -i pfsense`&amp;quot; ]; then
   # Platform specific code here
@@ -340,7 +342,7 @@ else
 fi
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;2) The new kernel will normally be installed into &lt;code&gt;/path/to/finch/boot/kernel&lt;/code&gt;. You will have to do something extra to boot the new kernel. What is required varies depending upon your specific platform.&lt;/p&gt;
+&lt;p&gt;Once compiled, the new kernel will be installed in to &lt;code&gt;/path/to/finch/boot/kernel&lt;/code&gt;. You will have to do something with these new files in the &lt;code&gt;/boot&lt;/code&gt; directory in order to actually boot from them. What is required varies depending upon the host platform. But usually it involves copying some of these files into to the host system&amp;#39;s /boot folder. (You are recommended to backup your old kernel files before doing this).&lt;/p&gt;
 
 &lt;h3 id="toc_21"&gt;Can I Compile FreeNAS or NAS4Free in Finch ?&lt;/h3&gt;
 
@@ -837,6 +839,8 @@ finch-bootstrap --help
 &lt;pre&gt;&lt;code&gt;finch-bootstrap install --dir &amp;quot;/path/to/finch&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;Replacing &lt;code&gt;/path/to/finch&lt;/code&gt; with the full path on your local drives, where you would like to install Finch.&lt;/p&gt;
+
 &lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="install/#toc_6"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
 
 &lt;ul&gt;
@@ -990,7 +994,7 @@ Commands:
 Options:
 
     -d, --dir &amp;quot;{realpath}&amp;quot;
-         The fulle installation &amp;quot;/path/to/finch&amp;quot;. Defaults to &amp;quot;\$PWD/finch&amp;quot;.
+         The full installation &amp;quot;/path/to/finch&amp;quot;. Defaults to &amp;quot;\$PWD/finch&amp;quot;.
          ~ if not set a new subdirectory will be created here named &amp;quot;finch&amp;quot;.
          Internally referred to as &amp;quot;$finch_realpath&amp;quot; - the chroot directory.
 
@@ -1130,17 +1134,23 @@ cat /etc/fstab
 &lt;p&gt;Go to &lt;code&gt;System|Advanced|Command Scripts&lt;/code&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Click &lt;code&gt;+&lt;/code&gt; and add the folowing &lt;code&gt;POSTINIT&lt;/code&gt; script&lt;/li&gt;
+&lt;li&gt;Click &lt;code&gt;+&lt;/code&gt; and add the following &lt;code&gt;POSTINIT&lt;/code&gt; script:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;/data/finch/etc/finch/postinit&amp;quot;
+&lt;pre&gt;&lt;code&gt;/path/to/finch/etc/finch/postinit
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Click &lt;code&gt;+&lt;/code&gt; and add the folowing &lt;code&gt;SHUTDOWN&lt;/code&gt; script&lt;/li&gt;
+&lt;li&gt;Click &lt;code&gt;+&lt;/code&gt; and add the following &lt;code&gt;SHUTDOWN&lt;/code&gt; script:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;/data/finch/etc/finch/shutdown&amp;quot;
+&lt;pre&gt;&lt;code&gt;/path/to/finch/etc/finch/shutdown
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;&lt;span class="mar"&gt;Take note!&lt;/span&gt;&lt;/em&gt;&lt;/strong&gt; The above text &lt;code&gt;/path/to/finch&lt;/code&gt; is not a real path. Instead you must put the real directory where Finch is located on the filesystem. For example, if you are installing Finch into &lt;code&gt;/mnt/disk0/finch&lt;/code&gt;, then the correct startup and shutdown commands would be:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/mnt/disk0/finch/etc/finch/postinit
+/mnt/disk0/finch/etc/finch/shutdown
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id="toc_10"&gt;Start the Finch FreeBSD installation process&lt;/h3&gt;
@@ -1150,7 +1160,7 @@ cat /etc/fstab
 &lt;li&gt;To check progress login on the command line and type:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&amp;quot;
+&lt;pre&gt;&lt;code&gt;tail -99999 -f /path/to/finch/var/log/finch/install.log
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;
@@ -1212,17 +1222,23 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;p&gt;Expand &lt;code&gt;+ System&lt;/code&gt; --&amp;gt; &lt;code&gt;+ Init/Shutdown Scripts&lt;/code&gt; --&amp;gt; &lt;code&gt;Add Init/Shutdown Script&lt;/code&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the folowing &lt;code&gt;POSTINIT&lt;/code&gt; script:&lt;/li&gt;
+&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the following &lt;code&gt;POSTINIT&lt;/code&gt; script:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;/path/to/finch/etc/finch/postinit&amp;quot;
+&lt;pre&gt;&lt;code&gt;/path/to/finch/etc/finch/postinit
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the folowing &lt;code&gt;SHUTDOWN&lt;/code&gt; script:&lt;/li&gt;
+&lt;li&gt;Select Type: &lt;code&gt;Script&lt;/code&gt; and add the following &lt;code&gt;SHUTDOWN&lt;/code&gt; script:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;/path/to/finch/etc/finch/shutdown&amp;quot;
+&lt;pre&gt;&lt;code&gt;/path/to/finch/etc/finch/shutdown
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;&lt;span class="mar"&gt;Take note!&lt;/span&gt;&lt;/em&gt;&lt;/strong&gt; The above text &lt;code&gt;/path/to/finch&lt;/code&gt; is not a real path. Instead you must put the real directory where Finch is located on the filesystem. For example, if you are installing Finch into &lt;code&gt;/mnt/disk0/finch&lt;/code&gt;, then the correct startup and shutdown commands would be:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/mnt/disk0/finch/etc/finch/postinit
+/mnt/disk0/finch/etc/finch/shutdown
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id="toc_15"&gt;Start the Finch FreeBSD installation process&lt;/h3&gt;
@@ -1232,7 +1248,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;li&gt;To check progress login on the command line and type:&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;tail -99999 -f /path/to/finch/var/log/finch/install.log&amp;quot;
+&lt;pre&gt;&lt;code&gt;tail -99999 -f /path/to/finch/var/log/finch/install.log
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;

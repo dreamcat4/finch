@@ -925,7 +925,7 @@ finch-bootstrap --help
 &lt;a href="#toc_16"&gt;pfSense&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_17"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
+&lt;a href="#toc_17"&gt;Configure admin accounts&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_18"&gt;Install the &amp;quot;ShellCmd&amp;quot; Package&lt;/a&gt;
@@ -1272,33 +1272,23 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 [ &amp;quot;$(mount | grep -e &amp;quot;on / &amp;quot; | grep read-only)&amp;quot; ] &amp;amp;&amp;amp; mount -o noatime -u -w &amp;quot;/&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_17"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
+&lt;h3 id="toc_17"&gt;Configure admin accounts&lt;/h3&gt;
 
-&lt;p&gt;. # ! needs improvement.&lt;/p&gt;
+&lt;p&gt;Create user account(s) which are a member of the &lt;code&gt;admins&lt;/code&gt; group.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Be a member of group wheel&lt;/li&gt;
+&lt;li&gt;In the pfSense Web GUI&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;pw user mod $USER -G wheel&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Go to &lt;code&gt;System|User Manager&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Create or edit a user by clicking &lt;code&gt;+&lt;/code&gt; or &lt;code&gt;e&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In the &lt;code&gt;Group Memberships&lt;/code&gt; section:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Set `bash` or `sh` as your default login shell&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;pw user mod $USER -s /usr/local/bin/bash&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Close any open terminals or shells and log back in again&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code&gt;$ &amp;quot;. /etc/profile&amp;quot; will re-source profile for this shell
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Reboot or issue &amp;quot;finch refresh&amp;quot; on the command line.&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Highlight &lt;code&gt;admins&lt;/code&gt;, and Click &lt;code&gt;&amp;gt;&lt;/code&gt; to make the user a member of the &lt;code&gt;admins&lt;/code&gt; group&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Click the &lt;code&gt;Save&lt;/code&gt; button to save changes.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h3 id="toc_18"&gt;Install the &amp;quot;ShellCmd&amp;quot; Package&lt;/h3&gt;

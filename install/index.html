@@ -382,7 +382,7 @@
 <a href="#toc_16">pfSense</a>
 <ul>
 <li>
-<a href="#toc_17">Configure root &amp; administrator accounts</a>
+<a href="#toc_17">Configure admin accounts</a>
 </li>
 <li>
 <a href="#toc_18">Install the &quot;ShellCmd&quot; Package</a>
@@ -729,33 +729,23 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 [ &quot;$(mount | grep -e &quot;on / &quot; | grep read-only)&quot; ] &amp;&amp; mount -o noatime -u -w &quot;/&quot;
 </code></pre>
 
-<h3 id="toc_17">Configure root &amp; administrator accounts</h3>
+<h3 id="toc_17">Configure admin accounts</h3>
 
-<p>. # ! needs improvement.</p>
+<p>Create user account(s) which are a member of the <code>admins</code> group.</p>
 
 <ul>
-<li>Be a member of group wheel</li>
+<li>In the pfSense Web GUI</li>
 </ul>
 
-<pre><code>$ &quot;pw user mod $USER -G wheel&quot;
-</code></pre>
+<p>Go to <code>System|User Manager</code></p>
+
+<p>Create or edit a user by clicking <code>+</code> or <code>e</code>.</p>
+
+<p>In the <code>Group Memberships</code> section:</p>
 
 <ul>
-<li>Set `bash` or `sh` as your default login shell</li>
-</ul>
-
-<pre><code>$ &quot;pw user mod $USER -s /usr/local/bin/bash&quot;
-</code></pre>
-
-<ul>
-<li>Close any open terminals or shells and log back in again</li>
-</ul>
-
-<pre><code>$ &quot;. /etc/profile&quot; will re-source profile for this shell
-</code></pre>
-
-<ul>
-<li>Reboot or issue &quot;finch refresh&quot; on the command line.</li>
+<li><p>Highlight <code>admins</code>, and Click <code>&gt;</code> to make the user a member of the <code>admins</code> group</p></li>
+<li><p>Click the <code>Save</code> button to save changes.</p></li>
 </ul>
 
 <h3 id="toc_18">Install the &quot;ShellCmd&quot; Package</h3>

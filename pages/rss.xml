@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-05-31</pubDate>
+    <pubDate>2014-06-01</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -927,13 +927,22 @@ finch-bootstrap --help
 &lt;li&gt;
 &lt;a href="#toc_17"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
 &lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_18"&gt;Install the &amp;quot;ShellCmd&amp;quot; Package&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_19"&gt;Add bootup script&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_20"&gt;Start the Finch FreeBSD installation process&lt;/a&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_18"&gt;FreeBSD-GENERIC&lt;/a&gt;
+&lt;a href="#toc_21"&gt;FreeBSD-GENERIC&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_19"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
+&lt;a href="#toc_22"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -1257,13 +1266,15 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;h2 id="toc_16"&gt;pfSense&lt;/h2&gt;
 
-&lt;p&gt;These steps should be followed after installation.&lt;/p&gt;
+&lt;p&gt;. # ! needs improvement. These steps should be followed after installation.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# Remount the root &amp;quot;/&amp;quot; filesystem as read-write
 [ &amp;quot;$(mount | grep -e &amp;quot;on / &amp;quot; | grep read-only)&amp;quot; ] &amp;amp;&amp;amp; mount -o noatime -u -w &amp;quot;/&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id="toc_17"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
+
+&lt;p&gt;. # ! needs improvement.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Be a member of group wheel&lt;/li&gt;
@@ -1290,11 +1301,60 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;li&gt;Reboot or issue &amp;quot;finch refresh&amp;quot; on the command line.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id="toc_18"&gt;FreeBSD-GENERIC&lt;/h2&gt;
+&lt;h3 id="toc_18"&gt;Install the &amp;quot;ShellCmd&amp;quot; Package&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the pfSense Web GUI&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Go to &lt;code&gt;System|Packages&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to &lt;code&gt;Available Packages|Services&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Click &lt;code&gt;+&lt;/code&gt; next to the &lt;code&gt;Shellcmd&lt;/code&gt; Package, and install it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_19"&gt;Add bootup script&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In the pfSense Web GUI&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Go to &lt;code&gt;Services|ShellCmd&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Click &lt;code&gt;+&lt;/code&gt; and add the following &lt;code&gt;shellcmd&lt;/code&gt; script:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;/path/to/finch/etc/finch/postinit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;&lt;span class="mar"&gt;Take note!&lt;/span&gt;&lt;/em&gt;&lt;/strong&gt; The above text &lt;code&gt;/path/to/finch&lt;/code&gt; is not a real path. Instead you must put the real directory where Finch is located on the filesystem. For example, if you are installing Finch into &lt;code&gt;/mnt/disk0/finch&lt;/code&gt;, then the correct startup command would be:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;/mnt/disk0/finch/etc/finch/postinit
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_20"&gt;Start the Finch FreeBSD installation process&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Reboot your pfSense system. Installation will begin on next boot.&lt;/li&gt;
+&lt;li&gt;To check progress login on the command line and type:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;tail -99999 -f /path/to/finch/var/log/finch/install.log
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Installation will take anywhere from 20 minutes up to 1 hour.&lt;/li&gt;
+&lt;li&gt;During this time certain pfSense services may be unavailable.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id="toc_21"&gt;FreeBSD-GENERIC&lt;/h2&gt;
 
 &lt;p&gt;These steps should be followed after installation.&lt;/p&gt;
 
-&lt;h3 id="toc_19"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
+&lt;h3 id="toc_22"&gt;Configure root &amp;amp; administrator accounts&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Be a member of group wheel&lt;/li&gt;

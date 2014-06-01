@@ -340,66 +340,86 @@
 <li>
 <a href="#toc_5">Getting pfSense to mount your hard disk(s) at boot time</a>
 </li>
+<li>
+<a href="#toc_6">Getting pfSense to remember your hard disk(s) after upgrades</a>
+<ul>
+<li>
+<a href="#toc_7">Install the &#39;Backup&#39; Package</a>
+</li>
+<li>
+<a href="#toc_8">Install the &#39;ShellCmd&#39; Package</a>
+</li>
+<li>
+<a href="#toc_9">Add bootup script</a>
+</li>
+<li>
+<a href="#toc_10">Backup &#39;/etc/fstab&#39;</a>
+</li>
+<li>
+<a href="#toc_11">Restore &#39;/etc/fstab&#39;</a>
+</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>
-<a href="#toc_6">Post-Install Steps</a>
-<ul>
-<li>
-<a href="#toc_7">NAS4Free</a>
-<ul>
-<li>
-<a href="#toc_8">Configure administrator accounts</a>
+</ul>
 </li>
 <li>
-<a href="#toc_9">Add bootup / shutdown scripts</a>
+<a href="#toc_12">Post-Install Steps</a>
+<ul>
+<li>
+<a href="#toc_13">NAS4Free</a>
+<ul>
+<li>
+<a href="#toc_14">Configure administrator accounts</a>
 </li>
 <li>
-<a href="#toc_10">Start the Finch FreeBSD installation process</a>
+<a href="#toc_15">Add bootup / shutdown scripts</a>
+</li>
+<li>
+<a href="#toc_16">Start the Finch FreeBSD installation process</a>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_11">FreeNAS</a>
+<a href="#toc_17">FreeNAS</a>
 <ul>
 <li>
-<a href="#toc_12">FreeNAS services not working after reboot ?</a>
+<a href="#toc_18">FreeNAS services not working after reboot ?</a>
 </li>
 <li>
-<a href="#toc_13">Configure root &amp; administrator accounts</a>
+<a href="#toc_19">Configure root &amp; administrator accounts</a>
 </li>
 <li>
-<a href="#toc_14">Add bootup / shutdown scripts</a>
+<a href="#toc_20">Add bootup / shutdown scripts</a>
 </li>
 <li>
-<a href="#toc_15">Start the Finch FreeBSD installation process</a>
+<a href="#toc_21">Start the Finch FreeBSD installation process</a>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_16">pfSense</a>
+<a href="#toc_22">pfSense</a>
 <ul>
 <li>
-<a href="#toc_17">Configure admin accounts</a>
+<a href="#toc_23">Configure admin accounts</a>
 </li>
 <li>
-<a href="#toc_18">Install the &#39;ShellCmd&#39; Package</a>
+<a href="#toc_24">Install the &#39;ShellCmd&#39; Package</a>
 </li>
 <li>
-<a href="#toc_19">Add bootup script</a>
+<a href="#toc_25">Add bootup script</a>
 </li>
 <li>
-<a href="#toc_20">Start the Finch FreeBSD installation process</a>
+<a href="#toc_26">Start the Finch FreeBSD installation process</a>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_21">FreeBSD-GENERIC</a>
+<a href="#toc_27">FreeBSD-GENERIC</a>
 <ul>
 <li>
-<a href="#toc_22">Configure root &amp; administrator accounts</a>
+<a href="#toc_28">Configure root &amp; administrator accounts</a>
 </li>
 </ul>
 </li>
@@ -431,7 +451,7 @@ finch-bootstrap --help
 <pre><code>finch-bootstrap install --dir &quot;/path/to/finch&quot;
 </code></pre>
 
-<p>Then follow the platform-specific <strong><em><a href="#toc_6">post install steps</a></em></strong>, which you must do after running the installer.</p>
+<p>Then follow the platform-specific <strong><em><a href="#toc_12">post install steps</a></em></strong>, which you must do after running the installer.</p>
 
 <ul>
 <li>The Finch &quot;bootstrap&quot; installer will run it&#39;s preflight checks and ask for confirmation before continuing.</li>
@@ -562,24 +582,110 @@ df -h
 cat /etc/fstab
 </code></pre>
 
-<p><sup>1</sup> Note: If you upgrade or re-install pfSense in the future, your fstab file and also this boot script may disappear. You data and Finch installation should be safe however. Just re-create the fstab file, re-run <code>pfmount_install</code> and you should be fine.</p>
+<h3 id="toc_6">Getting pfSense to remember your hard disk(s) after upgrades</h3>
 
-<h1 id="toc_6">Post-Install Steps</h1>
+<p>Whenever you upgrade or re-install pfSense, your fstab file and also the fstab boot script will disappear. To get around this issue requires the help of two Packages: <code>Backup</code> and <code>ShellCmd</code>. We will use Backup to save / restore our fstab file. And ShellCmd will ensure that the fstab boot script is reinstalled after upgrades.</p>
+
+<h4 id="toc_7">Install the &#39;Backup&#39; Package</h4>
+
+<ul>
+<li>In the pfSense Web GUI</li>
+</ul>
+
+<p>Go to <code>System|Packages</code></p>
+
+<p>Go to <code>Available Packages|System</code></p>
+
+<ul>
+<li>Click <code>+</code> next to the <code>Backup</code> Package, and install it.</li>
+</ul>
+
+<h4 id="toc_8">Install the &#39;ShellCmd&#39; Package</h4>
+
+<ul>
+<li>In the pfSense Web GUI</li>
+</ul>
+
+<p>Go to <code>System|Packages</code></p>
+
+<p>Go to <code>Available Packages|Services</code></p>
+
+<ul>
+<li>Click <code>+</code> next to the <code>Shellcmd</code> Package, and install it.</li>
+</ul>
+
+<h4 id="toc_9">Add bootup script</h4>
+
+<p>This script ensures that the fstab boot script is present. If absent the necessary boot scripts will be downloaded again from Github, and re-installed. This may happen for example after upgrading pfSense. (You will still need to restore your fstab file manually however).</p>
+
+<ul>
+<li>In the pfSense Web GUI</li>
+</ul>
+
+<p>Go to <code>Services|ShellCmd</code></p>
+
+<ul>
+<li>Click <code>+</code> and add the following <code>shellcmd</code> script:</li>
+</ul>
+
+<pre><code>[ -x &quot;/etc/rc.mount_-a&quot; ] || SSL_NO_VERIFY_PEER=YES fetch -q -o - http://git.io/NBLjxw | sh -s --
+</code></pre>
+
+<h4 id="toc_10">Backup &#39;/etc/fstab&#39;</h4>
+
+<ul>
+<li>In the pfSense Web GUI</li>
+</ul>
+
+<p>Go to <code>Diagnostics|Backup Files/Dir</code></p>
+
+<ul>
+<li>Click <code>+</code> icon to add a new file to our backup list.</li>
+</ul>
+
+<p>Input the following text fields</p>
+
+<ul>
+<li>Name: fstab</li>
+<li><p>Path: /etc/fstab</p></li>
+<li><p>Click the &quot;Save&quot; button to save changes.</p></li>
+<li><p>Click the &quot;Backup&quot; button to download the backup .tgz file in your web browser.</p></li>
+</ul>
+
+<p><strong><em><span class="mar">Take note!</span></em></strong> If you remove, swap, or attach new disks, then you may need to change the contents of your fstab file. Remember to backup your new fstab file if you ever have to change it.</p>
+
+<h4 id="toc_11">Restore &#39;/etc/fstab&#39;</h4>
+
+<p>After upgrading pfSense, it is necessary to restore this file from your downloaded <code>pfsense.bak.tgz</code> archive.</p>
+
+<ul>
+<li>In the pfSense Web GUI</li>
+</ul>
+
+<p>Go to <code>Diagnostics|Backup Files/Dir</code></p>
+
+<ul>
+<li><p>Click the &quot;Choose File&quot; button and select your local <code>pfsense.bak.tgz</code> archive in your file chooser. This should be the last backup of fstab you originally downloaded and saved to your local workstation / desktop / laptop computer.</p></li>
+<li><p>Click &quot;Upload&quot;. Click &quot;Restore&quot;.</p></li>
+<li><p>Reboot your machine.</p></li>
+</ul>
+
+<h1 id="toc_12">Post-Install Steps</h1>
 
 <p>Choose your platform from the list below.</p>
 
 <ul>
-<li><a href="#toc_7">NAS4Free</a></li>
-<li><a href="#toc_11">FreeNAS</a></li>
-<li><a href="#toc_16">pfSense</a></li>
-<li><a href="#toc_21">FreeBSD-GENERIC</a></li>
+<li><a href="#toc_13">NAS4Free</a></li>
+<li><a href="#toc_17">FreeNAS</a></li>
+<li><a href="#toc_22">pfSense</a></li>
+<li><a href="#toc_27">FreeBSD-GENERIC</a></li>
 </ul>
 
-<h2 id="toc_7">NAS4Free</h2>
+<h2 id="toc_13">NAS4Free</h2>
 
 <p>These steps should be followed after installation.</p>
 
-<h3 id="toc_8">Configure administrator accounts</h3>
+<h3 id="toc_14">Configure administrator accounts</h3>
 
 <p>Finch will automatically configure the root account for you. These steps should be followed for any other normal users who you want to be administrators, and use Finch too.</p>
 
@@ -591,7 +697,7 @@ cat /etc/fstab
 <li>Click --&gt; <code>Save</code> --&gt; <code>Apply changes</code>.</li>
 </ul>
 
-<h3 id="toc_9">Add bootup / shutdown scripts</h3>
+<h3 id="toc_15">Add bootup / shutdown scripts</h3>
 
 <ul>
 <li>In the NAS4Free Web GUI</li>
@@ -619,7 +725,7 @@ cat /etc/fstab
 /mnt/disk0/finch/etc/finch/shutdown
 </code></pre>
 
-<h3 id="toc_10">Start the Finch FreeBSD installation process</h3>
+<h3 id="toc_16">Start the Finch FreeBSD installation process</h3>
 
 <ul>
 <li>Reboot your NAS4Free system. Installation will begin on next boot.</li>
@@ -633,11 +739,11 @@ cat /etc/fstab
 <li>Installation will take anywhere from 20 minutes up to 1 hour.</li>
 </ul>
 
-<h2 id="toc_11">FreeNAS</h2>
+<h2 id="toc_17">FreeNAS</h2>
 
 <p>These steps should be followed after installation.</p>
 
-<h3 id="toc_12">FreeNAS services not working after reboot ?</h3>
+<h3 id="toc_18">FreeNAS services not working after reboot ?</h3>
 
 <ul>
 <li>You will find that FreeNAS services do not start correctly after Finch installation.</li>
@@ -668,7 +774,7 @@ This has been found to work for the ssh service.</li>
 The daemon is will start normally once Finch POSTINIT has completed.</li>
 </ul>
 
-<h3 id="toc_13">Configure root &amp; administrator accounts</h3>
+<h3 id="toc_19">Configure root &amp; administrator accounts</h3>
 
 <ul>
 <li>In the FreeNAS Web GUI Expand <code>+ Account</code> --&gt; <code>+ Users</code> --&gt; <code>View Users</code></li>
@@ -679,7 +785,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <li>Click <code>OK</code> to close the window and save changes.</li>
 </ul>
 
-<h3 id="toc_14">Add bootup / shutdown scripts</h3>
+<h3 id="toc_20">Add bootup / shutdown scripts</h3>
 
 <ul>
 <li>In the FreeNAS Web GUI:</li>
@@ -707,7 +813,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 /mnt/disk0/finch/etc/finch/shutdown
 </code></pre>
 
-<h3 id="toc_15">Start the Finch FreeBSD installation process</h3>
+<h3 id="toc_21">Start the Finch FreeBSD installation process</h3>
 
 <ul>
 <li>Reboot your FreeNAS system. Installation will begin on next boot.</li>
@@ -721,9 +827,9 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <li>Installation will take anywhere from 20 minutes up to 1 hour.</li>
 </ul>
 
-<h2 id="toc_16">pfSense</h2>
+<h2 id="toc_22">pfSense</h2>
 
-<h3 id="toc_17">Configure admin accounts</h3>
+<h3 id="toc_23">Configure admin accounts</h3>
 
 <p>Create user account(s) which are a member of the <code>admins</code> group.</p>
 
@@ -742,7 +848,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <li><p>Click the <code>Save</code> button to save changes.</p></li>
 </ul>
 
-<h3 id="toc_18">Install the &#39;ShellCmd&#39; Package</h3>
+<h3 id="toc_24">Install the &#39;ShellCmd&#39; Package</h3>
 
 <ul>
 <li>In the pfSense Web GUI</li>
@@ -756,7 +862,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <li>Click <code>+</code> next to the <code>Shellcmd</code> Package, and install it.</li>
 </ul>
 
-<h3 id="toc_19">Add bootup script</h3>
+<h3 id="toc_25">Add bootup script</h3>
 
 <ul>
 <li>In the pfSense Web GUI</li>
@@ -776,7 +882,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <pre><code>/mnt/disk0/finch/etc/finch/postinit
 </code></pre>
 
-<h3 id="toc_20">Start the Finch FreeBSD installation process</h3>
+<h3 id="toc_26">Start the Finch FreeBSD installation process</h3>
 
 <ul>
 <li>Reboot your pfSense system. Installation will begin on next boot.</li>
@@ -791,11 +897,11 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <li>During this time certain pfSense services may be unavailable.</li>
 </ul>
 
-<h2 id="toc_21">FreeBSD-GENERIC</h2>
+<h2 id="toc_27">FreeBSD-GENERIC</h2>
 
 <p>These steps should be followed after installation.</p>
 
-<h3 id="toc_22">Configure root &amp; administrator accounts</h3>
+<h3 id="toc_28">Configure root &amp; administrator accounts</h3>
 
 <ul>
 <li>Be a member of group wheel</li>

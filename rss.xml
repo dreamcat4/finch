@@ -137,7 +137,7 @@ finch-bootstrap --help
 
 &lt;p&gt;Replacing &lt;code&gt;/path/to/finch&lt;/code&gt; with the full path on your local drives, where you would like to install Finch.&lt;/p&gt;
 
-&lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="install/#toc_6"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
+&lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="install/#toc_12"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;The Finch &amp;quot;bootstrap&amp;quot; installer will run it&amp;#39;s preflight checks and ask for confirmation before continuing.&lt;/li&gt;

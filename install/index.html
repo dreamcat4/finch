@@ -385,7 +385,7 @@
 <a href="#toc_17">Configure admin accounts</a>
 </li>
 <li>
-<a href="#toc_18">Install the &quot;ShellCmd&quot; Package</a>
+<a href="#toc_18">Install the &#39;ShellCmd&#39; Package</a>
 </li>
 <li>
 <a href="#toc_19">Add bootup script</a>
@@ -569,10 +569,10 @@ cat /etc/fstab
 <p>Choose your platform from the list below.</p>
 
 <ul>
-<li><a href="#toc_5">NAS4Free</a></li>
-<li><a href="#toc_9">FreeNAS</a></li>
-<li><a href="#toc_14">pfSense</a></li>
-<li><a href="#toc_15">FreeBSD-GENERIC</a></li>
+<li><a href="#toc_7">NAS4Free</a></li>
+<li><a href="#toc_11">FreeNAS</a></li>
+<li><a href="#toc_16">pfSense</a></li>
+<li><a href="#toc_21">FreeBSD-GENERIC</a></li>
 </ul>
 
 <h2 id="toc_7">NAS4Free</h2>
@@ -723,12 +723,6 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 
 <h2 id="toc_16">pfSense</h2>
 
-<p>. # ! needs improvement. These steps should be followed after installation.</p>
-
-<pre><code># Remount the root &quot;/&quot; filesystem as read-write
-[ &quot;$(mount | grep -e &quot;on / &quot; | grep read-only)&quot; ] &amp;&amp; mount -o noatime -u -w &quot;/&quot;
-</code></pre>
-
 <h3 id="toc_17">Configure admin accounts</h3>
 
 <p>Create user account(s) which are a member of the <code>admins</code> group.</p>
@@ -748,7 +742,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 <li><p>Click the <code>Save</code> button to save changes.</p></li>
 </ul>
 
-<h3 id="toc_18">Install the &quot;ShellCmd&quot; Package</h3>
+<h3 id="toc_18">Install the &#39;ShellCmd&#39; Package</h3>
 
 <ul>
 <li>In the pfSense Web GUI</li>

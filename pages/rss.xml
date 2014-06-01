@@ -89,56 +89,67 @@
 &lt;a href="#toc_22"&gt;General&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_23"&gt;What about ez-jail ?&lt;/a&gt;
+&lt;a href="#toc_23"&gt;Other jails software&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_24"&gt;ez-jail&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_24"&gt;What about zjail ?&lt;/a&gt;
+&lt;a href="#toc_25"&gt;zjail&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_25"&gt;How to install my own programs in Finch ?&lt;/a&gt;
+&lt;a href="#toc_26"&gt;warden&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_26"&gt;Can I run VirtualBox VMs in Finch ?&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_27"&gt;Can I run &amp;quot;bhyve&amp;quot; VMs in Finch ?&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_28"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_29"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_30"&gt;I get a pkg error (pkg-ng)&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_31"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_32"&gt;Why are Finch scripts prefixed with &amp;#39;ibps_*&amp;#39; ?&lt;/a&gt;
+&lt;a href="#toc_27"&gt;cbsd&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_33"&gt;FreeBSD&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;a href="#toc_34"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/a&gt;
+&lt;a href="#toc_28"&gt;How do I install my own programs in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_35"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/a&gt;
+&lt;a href="#toc_29"&gt;Can I run VirtualBox VMs in Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_30"&gt;Can I run &amp;quot;bhyve&amp;quot; VMs in Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_31"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_32"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_33"&gt;I get a pkg error (pkg-ng)&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_34"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_35"&gt;Why are Finch scripts prefixed with &amp;#39;ibps_*&amp;#39; ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_36"&gt;Qjail&lt;/a&gt;
+&lt;a href="#toc_36"&gt;FreeBSD&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_37"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/a&gt;
+&lt;a href="#toc_37"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_38"&gt;qjail config -p &amp;lt;cpuset&amp;gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/a&gt;
+&lt;a href="#toc_38"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_39"&gt;Qjail&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_40"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_41"&gt;qjail config -p &amp;lt;cpuset&amp;gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -350,15 +361,44 @@ fi
 
 &lt;h2 id="toc_22"&gt;General&lt;/h2&gt;
 
-&lt;h3 id="toc_23"&gt;What about ez-jail ?&lt;/h3&gt;
+&lt;h3 id="toc_23"&gt;Other jails software&lt;/h3&gt;
 
-&lt;p&gt;It&amp;#39;s allright as far as we know. You&amp;#39;re welcome to install and use ez-jail instead of qjail if that&amp;#39;s what you are used to / prefer. Just don&amp;#39;t try using them &lt;em&gt;both&lt;/em&gt;... they operate on the same folders and so conflicts are likely to occur. Finch doesn&amp;#39;t provide official support for ez-jail however it should work just fine.&lt;/p&gt;
+&lt;p&gt;Finch comes with the &lt;code&gt;qjail&lt;/code&gt; program for managing your FreeBSD jails. But that is not the only option out there. What about...&lt;/p&gt;
 
-&lt;h3 id="toc_24"&gt;What about zjail ?&lt;/h3&gt;
+&lt;h4 id="toc_24"&gt;ez-jail&lt;/h4&gt;
 
-&lt;p&gt;Zfs jails. There may be some interest in this. However use at your own risk. It has not been tested in any way, and it&amp;#39;s zfs-related features may / may not work inside a chroot. Zjail is written entirely in Perl, and requires several Perl module dependancies. Their project website is here: &lt;a href="http://sourceforge.net/projects/zjails/"&gt;http://sourceforge.net/projects/zjails/&lt;/a&gt;. It may be possible to try out zjail without it interfering with qjail and similar jails management tools. Since zjail does not use the &lt;code&gt;/usr/jails&lt;/code&gt; folder.&lt;/p&gt;
+&lt;p&gt;It&amp;#39;s allright as far as we know. You&amp;#39;re welcome to install and use ez-jail instead of qjail if that&amp;#39;s what you prefer. Just don&amp;#39;t use them &lt;em&gt;both&lt;/em&gt;... they operate on the same folders and so conflicts are likely to happen. Finch doesn&amp;#39;t provide support for ez-jail however it should work just fine.&lt;/p&gt;
 
-&lt;h3 id="toc_25"&gt;How to install my own programs in Finch ?&lt;/h3&gt;
+&lt;h4 id="toc_25"&gt;zjail&lt;/h4&gt;
+
+&lt;p&gt;Zjail is written in Perl, and requires several Perl module dependancies. It doesn&amp;#39;t seem to be in the FreeBSD ports tree yet. Their project website is here: &lt;a href="http://sourceforge.net/projects/zjails/"&gt;http://sourceforge.net/projects/zjails/&lt;/a&gt;. It may be possible to try out zjail without it interfering with qjail and similar jails management tools. Since zjail does not use the &lt;code&gt;/usr/jails&lt;/code&gt; folder.&lt;/p&gt;
+
+&lt;h4 id="toc_26"&gt;warden&lt;/h4&gt;
+
+&lt;p&gt;Unfortunately (at time of writing) Warden isn&amp;#39;t available from the FreeBSD ports tree and FreeBSD pkgng repositories. We hope that situation may change in the future.&lt;/p&gt;
+
+&lt;p&gt;Warden source code:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/freenas/freenas/tree/master/nas_ports/freenas/pcbsd-warden"&gt;https://github.com/freenas/freenas/tree/master/nas_ports/freenas/pcbsd-warden&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/freenas/freenas/tree/master/src/pcbsd/warden"&gt;https://github.com/freenas/freenas/tree/master/src/pcbsd/warden&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pcbsd/pcbsd/tree/master/src-sh/warden"&gt;https://github.com/pcbsd/pcbsd/tree/master/src-sh/warden&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;^ Not sure which one of those is the upstream repository. You&amp;#39;d have to ask iXSystems.&lt;/p&gt;
+
+&lt;h4 id="toc_27"&gt;cbsd&lt;/h4&gt;
+
+&lt;p&gt;Yet another jails tool. Have not tried it. It&amp;#39;s available from &lt;code&gt;sysutils/cbsd&lt;/code&gt; in the FreeBSD ports tree. Or &lt;code&gt;pkg install cbsd&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Documentation at -&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Website: &lt;a href="http://www.bsdstore.ru"&gt;http://www.bsdstore.ru&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Github: &lt;a href="https://github.com/olevole/cbsd"&gt;https://github.com/olevole/cbsd&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_28"&gt;How do I install my own programs in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;Lets say you want to use &lt;code&gt;ezjail&lt;/code&gt;&lt;sup&gt;1&lt;/sup&gt; instead of &lt;code&gt;qjail&lt;/code&gt;. First we would install ezjail into our Finch system:&lt;/p&gt;
 
@@ -388,23 +428,23 @@ ezjail-admin --help
 man ezjail
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/strong&gt; &lt;sup&gt;1&lt;/sup&gt; It is not recommend to install the &lt;code&gt;ez-jail&lt;/code&gt; program if you are also intending to use the qjail program. Conflicts can arise since the &lt;code&gt;/usr/jails&lt;/code&gt; directory is the same for both programs.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/strong&gt; &lt;sup&gt;1&lt;/sup&gt; It is not recommend to install the &lt;code&gt;ez-jail&lt;/code&gt; program if you are also intending to use the qjail program. It is merely an example. Conflicts may arise in the &lt;code&gt;/usr/jails&lt;/code&gt; directory between qjail and ezjail.&lt;/p&gt;
 
-&lt;h3 id="toc_26"&gt;Can I run VirtualBox VMs in Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_29"&gt;Can I run VirtualBox VMs in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;There has been some preliminary investigations into VirtualBox. The main obstacle is that VirtualBox requires kernel modules. And those must be build to be exactly the same kernel version as the host platform. The correct build environment with which to produce the right version of these VirtualBox kernel modules can be difficult to obtain. It may be necessary to first download a specific revision of FreeBSD source files under SCM, and &amp;quot;make buildworld&amp;quot;, or something similar. The matter is not helped in that VirtualBox is such a big and complicated piece of software, which in itself has many dependancies which can also take a very long time to compile.&lt;/p&gt;
 
 &lt;p&gt;So, for a trouble-free life, the general recommendation is to try and avoid VirtualBox altogether and instead use FreeBSD jails wherever possible.&lt;/p&gt;
 
-&lt;h3 id="toc_27"&gt;Can I run &amp;quot;bhyve&amp;quot; VMs in Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_30"&gt;Can I run &amp;quot;bhyve&amp;quot; VMs in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;In truth we simply aren&amp;#39;t sure yet. Why not be the first to report back your findings? &lt;strong&gt;&lt;a href="/finch/support"&gt;Let us know&lt;/a&gt;&lt;/strong&gt; what happens. Same goes for &lt;code&gt;xen&lt;/code&gt; hypervisor.&lt;/p&gt;
 
-&lt;h3 id="toc_28"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_31"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;Again we don&amp;#39;t know / haven&amp;#39;t tried. &lt;strong&gt;&lt;a href="/finch/support"&gt;Let us know&lt;/a&gt;&lt;/strong&gt; what happens if you have tried this.&lt;/p&gt;
 
-&lt;h3 id="toc_29"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/h3&gt;
+&lt;h3 id="toc_32"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/h3&gt;
 
 &lt;p&gt;If you type &lt;code&gt;su &amp;lt;user&amp;gt;&lt;/code&gt; or &lt;code&gt;sh&lt;/code&gt;, your prompt may turn into &lt;code&gt;#&lt;/code&gt;, or start looking like this:&lt;/p&gt;
 
@@ -418,7 +458,7 @@ man ezjail
 &lt;li&gt;Use &lt;code&gt;sudo su -l&lt;/code&gt; instead of plain &lt;code&gt;su&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id="toc_30"&gt;I get a pkg error (pkg-ng)&lt;/h3&gt;
+&lt;h3 id="toc_33"&gt;I get a pkg error (pkg-ng)&lt;/h3&gt;
 
 &lt;p&gt;There are many pkg errors. Unfortunately Finch cannot give direct support and in most cases you are likely to arrive at a solution far quicker by searching with google, or scouring the FreeBSD Forums.&lt;/p&gt;
 
@@ -434,19 +474,19 @@ pkg: Unable to find catalogs
 
 &lt;p&gt;The cause of the problem was never discovered. But the solution was to exit from the current shell. And then instead run &lt;code&gt;pkg&lt;/code&gt; from within an &lt;u&gt;interactive&lt;/u&gt; login shell, for example &lt;code&gt;bash -l&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id="toc_31"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/h3&gt;
+&lt;h3 id="toc_34"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/h3&gt;
 
 &lt;p&gt;Most of the the Finch scripts are held within a folder named &lt;code&gt;subr&lt;/code&gt;. It simply means &lt;em&gt;subroutines&lt;/em&gt; and is (for multi-file sh scripts) an analogue of the &amp;#39;C&amp;#39; language&amp;#39;s &lt;code&gt;include/&lt;/code&gt;. The name subr is taken from FreeBSD&amp;#39;s naming of it&amp;#39;s &lt;code&gt;rc.conf&lt;/code&gt; subroutines file &lt;code&gt;/etc/rc.subr&lt;/code&gt; (see &lt;code&gt;man rc.subr&lt;/code&gt;).&lt;/p&gt;
 
-&lt;h3 id="toc_32"&gt;Why are Finch scripts prefixed with &amp;#39;ibps_*&amp;#39; ?&lt;/h3&gt;
+&lt;h3 id="toc_35"&gt;Why are Finch scripts prefixed with &amp;#39;ibps_*&amp;#39; ?&lt;/h3&gt;
 
 &lt;p&gt;For manageability, Finch is split into many individual subroutine files, each one with a specific purpose. Each subroutine source file is prefixed with an matrix identifier which can be any appropriate combination of these &lt;code&gt;ibps&lt;/code&gt; identifiers, where &lt;code&gt;i=install&lt;/code&gt;, &lt;code&gt;b=boot&lt;/code&gt;, &lt;code&gt;p=profile&lt;/code&gt;, and &lt;code&gt;s=shutdown&lt;/code&gt;. In the special case of &lt;code&gt;__p__&lt;/code&gt; we also load this same set for the functions needed by the Finch executable.&lt;/p&gt;
 
 &lt;p&gt;It is a crude dependancy loading mechanism, which is performed by the script in &lt;code&gt;subr/_____load&lt;/code&gt;. The purpose of the mechanism is to load only the necessary sub-set of subroutine files (as marked by the developer) and avoid loading functions that we don&amp;#39;t need for that given task. Rather than all of them all of the time. Thus keeping load times under control for the various Finch shell scripts.&lt;/p&gt;
 
-&lt;h2 id="toc_33"&gt;FreeBSD&lt;/h2&gt;
+&lt;h2 id="toc_36"&gt;FreeBSD&lt;/h2&gt;
 
-&lt;h3 id="toc_34"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_37"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/h3&gt;
 
 &lt;p&gt;Yes indeed. And we are aware of it. However on balance we decided that there was no significant harm to come from also using Finch as our project&amp;#39;s name. For us &amp;quot;Finch&amp;quot; is by far the most apt, compelling, concise, and fit-for-purpose name. Nothing else could be found to serve as a good enough substitute or alternative. The other project can be found as &lt;code&gt;net-im/finch&lt;/code&gt; in the FreeBSD ports tree. In most cases these 2 projects shouldn&amp;#39;t present any major conflicts with one another. Mainly because:&lt;/p&gt;
 
@@ -462,7 +502,7 @@ pkg: Unable to find catalogs
 
 &lt;p&gt;Will get you access back for the other one. Not too sure about the man pages though.&lt;/p&gt;
 
-&lt;h3 id="toc_35"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_38"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/h3&gt;
 
 &lt;p&gt;No plans for doing this. But will support and co-operate with any developer(s) wishing to improve or re-purpose the Finch tool.&lt;/p&gt;
 
@@ -470,9 +510,9 @@ pkg: Unable to find catalogs
 
 &lt;p&gt;Currently we use FreeBSD&amp;#39;s stock &lt;code&gt;chroot (8)&lt;/code&gt; command line program. But a specially compiled &amp;#39;C&amp;#39; program could be run setuid root, in theory calling FreeBSD&amp;#39;s chroot(3) &amp;#39;C&amp;#39; function with regular user permissions. Which would open the possibility for finch to also work for ordinary user accounts.&lt;/p&gt;
 
-&lt;h2 id="toc_36"&gt;Qjail&lt;/h2&gt;
+&lt;h2 id="toc_39"&gt;Qjail&lt;/h2&gt;
 
-&lt;h3 id="toc_37"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/h3&gt;
+&lt;h3 id="toc_40"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/h3&gt;
 
 &lt;p&gt;Because raw sockets (ICMP &amp;quot;ping&amp;quot;) is disabled by default. You can switch this feature on/off at any time.&lt;/p&gt;
 
@@ -483,7 +523,7 @@ qjail config -k &amp;quot;$jailname&amp;quot;
 qjail config -K &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_38"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/h3&gt;
+&lt;h3 id="toc_41"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/h3&gt;
 
 &lt;p&gt;This feature is documented both in the &lt;code&gt;qjail&lt;/code&gt; manpage and the &lt;code&gt;jail&lt;/code&gt; manpage. However it doesn&amp;#39;t seem to work. Tested as broken on FreeBSD 9.1, 9.2, 10.0, on single &amp;amp; dual core CPU.&lt;/p&gt;
 
@@ -928,7 +968,7 @@ finch-bootstrap --help
 &lt;a href="#toc_17"&gt;Configure admin accounts&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_18"&gt;Install the &amp;quot;ShellCmd&amp;quot; Package&lt;/a&gt;
+&lt;a href="#toc_18"&gt;Install the &amp;#39;ShellCmd&amp;#39; Package&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_19"&gt;Add bootup script&lt;/a&gt;
@@ -1112,10 +1152,10 @@ cat /etc/fstab
 &lt;p&gt;Choose your platform from the list below.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href="#toc_5"&gt;NAS4Free&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#toc_9"&gt;FreeNAS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#toc_14"&gt;pfSense&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="#toc_15"&gt;FreeBSD-GENERIC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_7"&gt;NAS4Free&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_11"&gt;FreeNAS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_16"&gt;pfSense&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="#toc_21"&gt;FreeBSD-GENERIC&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id="toc_7"&gt;NAS4Free&lt;/h2&gt;
@@ -1266,12 +1306,6 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;h2 id="toc_16"&gt;pfSense&lt;/h2&gt;
 
-&lt;p&gt;. # ! needs improvement. These steps should be followed after installation.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# Remount the root &amp;quot;/&amp;quot; filesystem as read-write
-[ &amp;quot;$(mount | grep -e &amp;quot;on / &amp;quot; | grep read-only)&amp;quot; ] &amp;amp;&amp;amp; mount -o noatime -u -w &amp;quot;/&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
 &lt;h3 id="toc_17"&gt;Configure admin accounts&lt;/h3&gt;
 
 &lt;p&gt;Create user account(s) which are a member of the &lt;code&gt;admins&lt;/code&gt; group.&lt;/p&gt;
@@ -1291,7 +1325,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Click the &lt;code&gt;Save&lt;/code&gt; button to save changes.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id="toc_18"&gt;Install the &amp;quot;ShellCmd&amp;quot; Package&lt;/h3&gt;
+&lt;h3 id="toc_18"&gt;Install the &amp;#39;ShellCmd&amp;#39; Package&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;In the pfSense Web GUI&lt;/li&gt;

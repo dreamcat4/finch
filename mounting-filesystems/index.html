@@ -460,7 +460,6 @@ zfs set mountpoint=&quot;${finch_realpath}/mnt/${dataset}&quot; &quot;$dataset&q
 <p>Now we can add the dataset to our jail&#39;s fstab file</p>
 
 <pre><code>jailname=&quot;my_jail&quot;   # &lt;---- The name of our jail
-finch qjail create &quot;$jailname&quot;
 
 # Create an emtpy folder where we will nullfs mount our data
 mkdir -p &quot;${finch_realpath}/usr/jails/${jailname}/mnt/${dataset}&quot;

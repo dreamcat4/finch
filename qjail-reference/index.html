@@ -431,7 +431,9 @@ qjail config -c &quot;$new_network_interface&quot; &quot;$jailname&quot;
 <h3 id="toc_7">Change a jail&#39;s ip address</h3>
 
 <pre><code>new_ip_address=&quot;192.168.1.202&quot;
-qjail config -4 &quot;$new_ip_address&quot; &quot;$jailname&quot;
+new_loopback_address=&quot;lo0|127.0.0.202&quot;
+
+qjail config -4 &quot;$new_ip_address,$new_loopback_address&quot; &quot;$jailname&quot;
 </code></pre>
 
 <h3 id="toc_8">Enable ping (ICMP raw sockets)</h3>
@@ -485,6 +487,9 @@ default_nic=&quot;$(route get default 2&gt; /dev/null | grep -o &quot;interface.
 # Enable vnet/vimage in bridge-epair mode
 qjail config -w &quot;$default_nic&quot; &quot;$jailname&quot;
 printf &quot;none\nbe\n&quot; | qjail config -v &quot;$jailname&quot;
+
+# Enable unix sockets
+qjail config -k &quot;$jailname&quot;
 
 # Start the jail
 qjail start &quot;$jailname&quot;

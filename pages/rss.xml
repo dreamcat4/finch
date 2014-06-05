@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-06-01</pubDate>
+    <pubDate>2014-06-05</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -1559,13 +1559,16 @@ sudo finch chroot
 # Read the page &amp;quot;jail-ip-addresses&amp;quot; before choosing a jail IP address
 jail_ip=&amp;quot;192.168.1.201&amp;quot;
 
+# Set a matching ip address for the jail&amp;#39;s &amp;#39;lo0&amp;#39; ifconfig device (for localhost)
+jail_loopback=&amp;quot;lo0|127.0.0.201&amp;quot;
+
 # Give an appropriate server name to your jail
 jailname=&amp;quot;nginx&amp;quot;
 
 # Create a basic jail, with local console access
-qjail create -4 &amp;quot;$jail_ip&amp;quot; &amp;quot;$jailname&amp;quot;
+qjail create -4 &amp;quot;$jail_ip,$jail_loopback&amp;quot; &amp;quot;$jailname&amp;quot;
 
-# (optional) enable raw sockets to allow &amp;quot;ping&amp;quot; command
+# Enable unix sockets
 qjail config -k &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -1753,12 +1756,16 @@ sudo finch chroot
 
 # Read the page &amp;quot;jail-ip-addresses&amp;quot; before choosing a jail IP address
 jail_ip=&amp;quot;192.168.1.202&amp;quot;
+jail_loopback=&amp;quot;lo0|127.0.0.202&amp;quot;
 
 # Give an appropriate server name to your jail
 jailname=&amp;quot;ssh&amp;quot;
 
 # Create a jail with the &amp;quot;finch-ssh&amp;quot; flavor
-qjail create -f finch-ssh -4 &amp;quot;$jail_ip&amp;quot; &amp;quot;$jailname&amp;quot;
+qjail create -f finch-ssh -4 &amp;quot;$jail_ip,$jail_loopback&amp;quot; &amp;quot;$jailname&amp;quot;
+
+# Enable unix sockets
+qjail config -k &amp;quot;$jailname&amp;quot;
 
 # Start the jail
 qjail start &amp;quot;$jailname&amp;quot;
@@ -1793,12 +1800,16 @@ sudo finch chroot
 
 # Read the page &amp;quot;jail-ip-addresses&amp;quot; before choosing a jail IP address
 jail_ip=&amp;quot;192.168.1.203&amp;quot;
+jail_loopback=&amp;quot;lo0|127.0.0.203&amp;quot;
 
 # Give an appropriate server name to your jail
 jailname=&amp;quot;root-ssh&amp;quot;
 
 # Create a jail with the &amp;quot;finch-ssh-root&amp;quot; flavor
-qjail create -f finch-ssh-root -4 &amp;quot;$jail_ip&amp;quot; &amp;quot;$jailname&amp;quot;
+qjail create -f finch-ssh-root -4 &amp;quot;$jail_ip,$jail_loopback&amp;quot; &amp;quot;$jailname&amp;quot;
+
+# Enable unix sockets
+qjail config -k &amp;quot;$jailname&amp;quot;
 
 # Start the jail
 qjail start &amp;quot;$jailname&amp;quot;
@@ -2219,7 +2230,6 @@ zfs set mountpoint=&amp;quot;${finch_realpath}/mnt/${dataset}&amp;quot; &amp;quo
 &lt;p&gt;Now we can add the dataset to our jail&amp;#39;s fstab file&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;jailname=&amp;quot;my_jail&amp;quot;   # &amp;lt;---- The name of our jail
-finch qjail create &amp;quot;$jailname&amp;quot;
 
 # Create an emtpy folder where we will nullfs mount our data
 mkdir -p &amp;quot;${finch_realpath}/usr/jails/${jailname}/mnt/${dataset}&amp;quot;
@@ -2554,7 +2564,9 @@ qjail config -c &amp;quot;$new_network_interface&amp;quot; &amp;quot;$jailname&a
 &lt;h3 id="toc_7"&gt;Change a jail&amp;#39;s ip address&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;new_ip_address=&amp;quot;192.168.1.202&amp;quot;
-qjail config -4 &amp;quot;$new_ip_address&amp;quot; &amp;quot;$jailname&amp;quot;
+new_loopback_address=&amp;quot;lo0|127.0.0.202&amp;quot;
+
+qjail config -4 &amp;quot;$new_ip_address,$new_loopback_address&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id="toc_8"&gt;Enable ping (ICMP raw sockets)&lt;/h3&gt;
@@ -2608,6 +2620,9 @@ default_nic=&amp;quot;$(route get default 2&amp;gt; /dev/null | grep -o &amp;quo
 # Enable vnet/vimage in bridge-epair mode
 qjail config -w &amp;quot;$default_nic&amp;quot; &amp;quot;$jailname&amp;quot;
 printf &amp;quot;none\nbe\n&amp;quot; | qjail config -v &amp;quot;$jailname&amp;quot;
+
+# Enable unix sockets
+qjail config -k &amp;quot;$jailname&amp;quot;
 
 # Start the jail
 qjail start &amp;quot;$jailname&amp;quot;

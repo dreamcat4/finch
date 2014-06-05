@@ -365,13 +365,16 @@ sudo finch chroot
 # Read the page &quot;jail-ip-addresses&quot; before choosing a jail IP address
 jail_ip=&quot;192.168.1.201&quot;
 
+# Set a matching ip address for the jail&#39;s &#39;lo0&#39; ifconfig device (for localhost)
+jail_loopback=&quot;lo0|127.0.0.201&quot;
+
 # Give an appropriate server name to your jail
 jailname=&quot;nginx&quot;
 
 # Create a basic jail, with local console access
-qjail create -4 &quot;$jail_ip&quot; &quot;$jailname&quot;
+qjail create -4 &quot;$jail_ip,$jail_loopback&quot; &quot;$jailname&quot;
 
-# (optional) enable raw sockets to allow &quot;ping&quot; command
+# Enable unix sockets
 qjail config -k &quot;$jailname&quot;
 </code></pre>
 

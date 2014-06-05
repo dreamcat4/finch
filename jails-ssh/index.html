@@ -410,12 +410,16 @@ sudo finch chroot
 
 # Read the page &quot;jail-ip-addresses&quot; before choosing a jail IP address
 jail_ip=&quot;192.168.1.202&quot;
+jail_loopback=&quot;lo0|127.0.0.202&quot;
 
 # Give an appropriate server name to your jail
 jailname=&quot;ssh&quot;
 
 # Create a jail with the &quot;finch-ssh&quot; flavor
-qjail create -f finch-ssh -4 &quot;$jail_ip&quot; &quot;$jailname&quot;
+qjail create -f finch-ssh -4 &quot;$jail_ip,$jail_loopback&quot; &quot;$jailname&quot;
+
+# Enable unix sockets
+qjail config -k &quot;$jailname&quot;
 
 # Start the jail
 qjail start &quot;$jailname&quot;
@@ -450,12 +454,16 @@ sudo finch chroot
 
 # Read the page &quot;jail-ip-addresses&quot; before choosing a jail IP address
 jail_ip=&quot;192.168.1.203&quot;
+jail_loopback=&quot;lo0|127.0.0.203&quot;
 
 # Give an appropriate server name to your jail
 jailname=&quot;root-ssh&quot;
 
 # Create a jail with the &quot;finch-ssh-root&quot; flavor
-qjail create -f finch-ssh-root -4 &quot;$jail_ip&quot; &quot;$jailname&quot;
+qjail create -f finch-ssh-root -4 &quot;$jail_ip,$jail_loopback&quot; &quot;$jailname&quot;
+
+# Enable unix sockets
+qjail config -k &quot;$jailname&quot;
 
 # Start the jail
 qjail start &quot;$jailname&quot;

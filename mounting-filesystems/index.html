@@ -461,6 +461,9 @@ zfs set mountpoint=&quot;${finch_realpath}/mnt/${dataset}&quot; &quot;$dataset&q
 
 <pre><code>jailname=&quot;my_jail&quot;   # &lt;---- The name of our jail
 
+# Stop the jail
+finch qjail stop &quot;$jailname&quot;
+
 # Create an emtpy folder where we will nullfs mount our data
 mkdir -p &quot;${finch_realpath}/usr/jails/${jailname}/mnt/${dataset}&quot;
 
@@ -473,7 +476,7 @@ nano &quot;${finch_realpath}/usr/local/etc/qjail.fstab/${jailname}&quot;
 &gt;&gt;&gt;
 
 # Restart the jail
-finch qjail restart &quot;$jailname&quot;
+finch qjail start &quot;$jailname&quot;
 
 # Check that it mounted
 df

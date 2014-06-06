@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-06-05</pubDate>
+    <pubDate>2014-06-06</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -2231,6 +2231,9 @@ zfs set mountpoint=&amp;quot;${finch_realpath}/mnt/${dataset}&amp;quot; &amp;quo
 
 &lt;pre&gt;&lt;code&gt;jailname=&amp;quot;my_jail&amp;quot;   # &amp;lt;---- The name of our jail
 
+# Stop the jail
+finch qjail stop &amp;quot;$jailname&amp;quot;
+
 # Create an emtpy folder where we will nullfs mount our data
 mkdir -p &amp;quot;${finch_realpath}/usr/jails/${jailname}/mnt/${dataset}&amp;quot;
 
@@ -2243,7 +2246,7 @@ nano &amp;quot;${finch_realpath}/usr/local/etc/qjail.fstab/${jailname}&amp;quot;
 &amp;gt;&amp;gt;&amp;gt;
 
 # Restart the jail
-finch qjail restart &amp;quot;$jailname&amp;quot;
+finch qjail start &amp;quot;$jailname&amp;quot;
 
 # Check that it mounted
 df

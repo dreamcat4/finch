@@ -2245,7 +2245,7 @@ nano &amp;quot;${finch_realpath}/usr/local/etc/qjail.fstab/${jailname}&amp;quot;
 /mnt/$dataset /usr/jails/my_jail/mnt/$dataset nullfs ro 0 0
 &amp;gt;&amp;gt;&amp;gt;
 
-# Restart the jail
+# Start the jail
 finch qjail start &amp;quot;$jailname&amp;quot;
 
 # Check that it mounted

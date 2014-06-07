@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-06-06</pubDate>
+    <pubDate>2014-06-07</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -1570,6 +1570,9 @@ qjail create -4 &amp;quot;$jail_ip,$jail_loopback&amp;quot; &amp;quot;$jailname&
 
 # Enable unix sockets
 qjail config -k &amp;quot;$jailname&amp;quot;
+
+# Update local pkgng database, to avoid &amp;#39;failed checksum&amp;#39; for &amp;#39;pkg install&amp;#39;
+pkg update -f
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id="toc_3"&gt;Login for the first time&lt;/h2&gt;
@@ -1810,6 +1813,9 @@ qjail create -f finch-ssh-root -4 &amp;quot;$jail_ip,$jail_loopback&amp;quot; &a
 
 # Enable unix sockets
 qjail config -k &amp;quot;$jailname&amp;quot;
+
+# Update local pkgng database, to avoid &amp;#39;failed checksum&amp;#39; for &amp;#39;pkg install&amp;#39;
+pkg update -f
 
 # Start the jail
 qjail start &amp;quot;$jailname&amp;quot;
@@ -2626,6 +2632,9 @@ printf &amp;quot;none\nbe\n&amp;quot; | qjail config -v &amp;quot;$jailname&amp;
 
 # Enable unix sockets
 qjail config -k &amp;quot;$jailname&amp;quot;
+
+# Update local pkgng database, to avoid &amp;#39;failed checksum&amp;#39; for &amp;#39;pkg install&amp;#39;
+pkg update -f
 
 # Start the jail
 qjail start &amp;quot;$jailname&amp;quot;

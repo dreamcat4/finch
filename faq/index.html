@@ -382,7 +382,7 @@
 <a href="#toc_16">Why do I need Finch ?</a>
 </li>
 <li>
-<a href="#toc_17">How does Finch compare to &#39;theBrig&#39; ?</a>
+<a href="#toc_17">How does Finch compare to 'theBrig' ?</a>
 </li>
 <li>
 <a href="#toc_18">Is finch + qjail compatible with FreeNAS jails / plugins ?</a>
@@ -402,7 +402,7 @@
 <a href="#toc_22">General</a>
 <ul>
 <li>
-<a href="#toc_23">What&#39;s the difference between FreeNAS / NAS4Free / pfSense ?</a>
+<a href="#toc_23">What's the difference between FreeNAS / NAS4Free / pfSense ?</a>
 </li>
 <li>
 <a href="#toc_24">Other jails software</a>
@@ -428,22 +428,22 @@
 <a href="#toc_30">Can I run VirtualBox VMs in Finch ?</a>
 </li>
 <li>
-<a href="#toc_31">Can I run &quot;bhyve&quot; VMs in Finch ?</a>
+<a href="#toc_31">Can I run "bhyve" VMs in Finch ?</a>
 </li>
 <li>
 <a href="#toc_32">Can I run an Xserver / X-Windows in Finch ?</a>
 </li>
 <li>
-<a href="#toc_33">Finch&#39;s colorful prompt dissapears after &#39;su&#39; or &#39;sh&#39; command</a>
+<a href="#toc_33">Finch's colorful prompt dissapears after 'su' or 'sh' command</a>
 </li>
 <li>
 <a href="#toc_34">I get a pkg error (pkg-ng)</a>
 </li>
 <li>
-<a href="#toc_35">What is the &#39;subr&#39; folder for?</a>
+<a href="#toc_35">What is the 'subr' folder for?</a>
 </li>
 <li>
-<a href="#toc_36">Why are Finch scripts prefixed with &#39;ibps_*&#39; ?</a>
+<a href="#toc_36">Why are Finch scripts prefixed with 'ibps_*' ?</a>
 </li>
 </ul>
 </li>
@@ -451,10 +451,10 @@
 <a href="#toc_37">FreeBSD</a>
 <ul>
 <li>
-<a href="#toc_38">Isn&#39;t there already a FreeBSD port called Finch ?</a>
+<a href="#toc_38">Isn't there already a FreeBSD port called Finch ?</a>
 </li>
 <li>
-<a href="#toc_39">Will you ever write a &#39;C&#39; implementation of Finch ?</a>
+<a href="#toc_39">Will you ever write a 'C' implementation of Finch ?</a>
 </li>
 </ul>
 </li>
@@ -462,10 +462,10 @@
 <a href="#toc_40">Qjail</a>
 <ul>
 <li>
-<a href="#toc_41">Why isn&#39;t &quot;ping&quot; working in my jails ?</a>
+<a href="#toc_41">Why isn't "ping" working in my jails ?</a>
 </li>
 <li>
-<a href="#toc_42">qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id</a>
+<a href="#toc_42">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</a>
 </li>
 </ul>
 </li>
@@ -658,7 +658,7 @@ The daemon is will start normally once Finch POSTINIT has completed.</li>
 
 <p>Also be careful with the kernel IDENT string. This is set by a line near the top of your kernel config file.</p>
 
-<p>You need some reference to <code>nas4free</code>, <code>freenas</code> or <code>pfsense</code> in there. Whichever is applicable. Finch uses <code>uname</code> to determine what platform it is on. Without such substring from the kernel IDENT string <u>will</u> cause issues and prevent Finch from starting properly. It is OK to change strings in the kernel IDENT string. Just make sure they also include the word <code>nas4free</code>, <code>freenas</code> or <code>pfsense</code> in there somewhere.</p>
+<p>You need some reference to <code>nas4free</code>, <code>freenas</code> or <code>pfsense</code> in there. Whichever is applicable. Finch uses <code>uname</code> to determine what platform it is on. Without such substring from the kernel IDENT string <em>will</em> cause issues and prevent Finch from starting properly. It is OK to change strings in the kernel IDENT string. Just make sure they also include the word <code>nas4free</code>, <code>freenas</code> or <code>pfsense</code> in there somewhere.</p>
 
 <p>Here is the shellcode Finch uses to determine which platform it is running on:</p>
 
@@ -954,7 +954,7 @@ pkg: ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/amd64/packages-current/Latest//dige
 pkg: Unable to find catalogs
 </code></pre>
 
-<p>The cause of the problem was never discovered. But the solution was to exit from the current shell. And then instead run <code>pkg</code> from within an <u>interactive</u> login shell, for example <code>bash -l</code>.</p>
+<p>The cause of the problem was never discovered. But the solution was to exit from the current shell. And then instead run <code>pkg</code> from within an <em>interactive</em> login shell, for example <code>bash -l</code>.</p>
 
 <h3 id="toc_35">What is the &#39;subr&#39; folder for?</h3>
 

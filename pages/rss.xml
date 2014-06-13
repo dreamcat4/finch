@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-06-12</pubDate>
+    <pubDate>2014-06-13</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -69,7 +69,7 @@
 &lt;a href="#toc_16"&gt;Why do I need Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_17"&gt;How does Finch compare to &amp;#39;theBrig&amp;#39; ?&lt;/a&gt;
+&lt;a href="#toc_17"&gt;How does Finch compare to 'theBrig' ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_18"&gt;Is finch + qjail compatible with FreeNAS jails / plugins ?&lt;/a&gt;
@@ -89,7 +89,7 @@
 &lt;a href="#toc_22"&gt;General&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_23"&gt;What&amp;#39;s the difference between FreeNAS / NAS4Free / pfSense ?&lt;/a&gt;
+&lt;a href="#toc_23"&gt;What's the difference between FreeNAS / NAS4Free / pfSense ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_24"&gt;Other jails software&lt;/a&gt;
@@ -115,22 +115,22 @@
 &lt;a href="#toc_30"&gt;Can I run VirtualBox VMs in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_31"&gt;Can I run &amp;quot;bhyve&amp;quot; VMs in Finch ?&lt;/a&gt;
+&lt;a href="#toc_31"&gt;Can I run "bhyve" VMs in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_32"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_33"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/a&gt;
+&lt;a href="#toc_33"&gt;Finch's colorful prompt dissapears after 'su' or 'sh' command&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_34"&gt;I get a pkg error (pkg-ng)&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_35"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/a&gt;
+&lt;a href="#toc_35"&gt;What is the 'subr' folder for?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_36"&gt;Why are Finch scripts prefixed with &amp;#39;ibps_*&amp;#39; ?&lt;/a&gt;
+&lt;a href="#toc_36"&gt;Why are Finch scripts prefixed with 'ibps_*' ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -138,10 +138,10 @@
 &lt;a href="#toc_37"&gt;FreeBSD&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_38"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/a&gt;
+&lt;a href="#toc_38"&gt;Isn't there already a FreeBSD port called Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_39"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/a&gt;
+&lt;a href="#toc_39"&gt;Will you ever write a 'C' implementation of Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -149,10 +149,10 @@
 &lt;a href="#toc_40"&gt;Qjail&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_41"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/a&gt;
+&lt;a href="#toc_41"&gt;Why isn't "ping" working in my jails ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_42"&gt;qjail config -p &amp;lt;cpuset&amp;gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/a&gt;
+&lt;a href="#toc_42"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -345,7 +345,7 @@ The daemon is will start normally once Finch POSTINIT has completed.&lt;/li&gt;
 
 &lt;p&gt;Also be careful with the kernel IDENT string. This is set by a line near the top of your kernel config file.&lt;/p&gt;
 
-&lt;p&gt;You need some reference to &lt;code&gt;nas4free&lt;/code&gt;, &lt;code&gt;freenas&lt;/code&gt; or &lt;code&gt;pfsense&lt;/code&gt; in there. Whichever is applicable. Finch uses &lt;code&gt;uname&lt;/code&gt; to determine what platform it is on. Without such substring from the kernel IDENT string &lt;u&gt;will&lt;/u&gt; cause issues and prevent Finch from starting properly. It is OK to change strings in the kernel IDENT string. Just make sure they also include the word &lt;code&gt;nas4free&lt;/code&gt;, &lt;code&gt;freenas&lt;/code&gt; or &lt;code&gt;pfsense&lt;/code&gt; in there somewhere.&lt;/p&gt;
+&lt;p&gt;You need some reference to &lt;code&gt;nas4free&lt;/code&gt;, &lt;code&gt;freenas&lt;/code&gt; or &lt;code&gt;pfsense&lt;/code&gt; in there. Whichever is applicable. Finch uses &lt;code&gt;uname&lt;/code&gt; to determine what platform it is on. Without such substring from the kernel IDENT string &lt;em&gt;will&lt;/em&gt; cause issues and prevent Finch from starting properly. It is OK to change strings in the kernel IDENT string. Just make sure they also include the word &lt;code&gt;nas4free&lt;/code&gt;, &lt;code&gt;freenas&lt;/code&gt; or &lt;code&gt;pfsense&lt;/code&gt; in there somewhere.&lt;/p&gt;
 
 &lt;p&gt;Here is the shellcode Finch uses to determine which platform it is running on:&lt;/p&gt;
 
@@ -641,7 +641,7 @@ pkg: ftp://ftp.FreeBSD.org/pub/FreeBSD/ports/amd64/packages-current/Latest//dige
 pkg: Unable to find catalogs
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The cause of the problem was never discovered. But the solution was to exit from the current shell. And then instead run &lt;code&gt;pkg&lt;/code&gt; from within an &lt;u&gt;interactive&lt;/u&gt; login shell, for example &lt;code&gt;bash -l&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The cause of the problem was never discovered. But the solution was to exit from the current shell. And then instead run &lt;code&gt;pkg&lt;/code&gt; from within an &lt;em&gt;interactive&lt;/em&gt; login shell, for example &lt;code&gt;bash -l&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3 id="toc_35"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/h3&gt;
 
@@ -1096,19 +1096,19 @@ finch-bootstrap --help
 &lt;a href="#toc_6"&gt;Getting pfSense to remember your hard disk(s) after upgrades&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_7"&gt;Install the &amp;#39;Backup&amp;#39; Package&lt;/a&gt;
+&lt;a href="#toc_7"&gt;Install the 'Backup' Package&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_8"&gt;Install the &amp;#39;ShellCmd&amp;#39; Package&lt;/a&gt;
+&lt;a href="#toc_8"&gt;Install the 'ShellCmd' Package&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_9"&gt;Add bootup script&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_10"&gt;Backup &amp;#39;/etc/fstab&amp;#39;&lt;/a&gt;
+&lt;a href="#toc_10"&gt;Backup '/etc/fstab'&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_11"&gt;Restore &amp;#39;/etc/fstab&amp;#39;&lt;/a&gt;
+&lt;a href="#toc_11"&gt;Restore '/etc/fstab'&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -1140,7 +1140,7 @@ finch-bootstrap --help
 &lt;a href="#toc_18"&gt;FreeNAS services not working after reboot ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_19"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
+&lt;a href="#toc_19"&gt;Configure root &amp; administrator accounts&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_20"&gt;Add bootup / shutdown scripts&lt;/a&gt;
@@ -1157,7 +1157,7 @@ finch-bootstrap --help
 &lt;a href="#toc_23"&gt;Configure admin accounts&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_24"&gt;Install the &amp;#39;ShellCmd&amp;#39; Package&lt;/a&gt;
+&lt;a href="#toc_24"&gt;Install the 'ShellCmd' Package&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_25"&gt;Add bootup script&lt;/a&gt;
@@ -1171,7 +1171,7 @@ finch-bootstrap --help
 &lt;a href="#toc_27"&gt;FreeBSD-GENERIC&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_28"&gt;Configure root &amp;amp; administrator accounts&lt;/a&gt;
+&lt;a href="#toc_28"&gt;Configure root &amp; administrator accounts&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -1858,7 +1858,7 @@ fetch -o - &amp;quot;http://$jail_ip&amp;quot; # or open &amp;quot;http://$jail_
 &lt;a href="#toc_4"&gt;Part A - Create the jail&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_5"&gt;Part B - Create an account for ssh&amp;#39;ing into your jail&lt;/a&gt;
+&lt;a href="#toc_5"&gt;Part B - Create an account for ssh'ing into your jail&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -2306,7 +2306,7 @@ $finch_realpath/var/distfiles/finch/
 &lt;a href="#toc_9"&gt;Non-zfs&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_10"&gt;Finch&amp;#39;s fstab&lt;/a&gt;
+&lt;a href="#toc_10"&gt;Finch's fstab&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -2656,10 +2656,10 @@ situation can be rectified by issuing $ portsnap_override "off" manually.&lt;/p&
 &lt;a href="#toc_5"&gt;Network&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_6"&gt;Change a jail&amp;#39;s network interface&lt;/a&gt;
+&lt;a href="#toc_6"&gt;Change a jail's network interface&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_7"&gt;Change a jail&amp;#39;s ip address&lt;/a&gt;
+&lt;a href="#toc_7"&gt;Change a jail's ip address&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_8"&gt;Enable ping (ICMP raw sockets)&lt;/a&gt;
@@ -2676,7 +2676,7 @@ situation can be rectified by issuing $ portsnap_override "off" manually.&lt;/p&
 &lt;a href="#toc_11"&gt;(useless) Quotas&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_12"&gt;(doesn&amp;#39;t work) cpuset.id&lt;/a&gt;
+&lt;a href="#toc_12"&gt;(doesn't work) cpuset.id&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -2701,6 +2701,12 @@ qjail list
 
 # Display a jail&amp;#39;s configuration settings
 qjail config -d &amp;quot;$jailname&amp;quot;
+
+# Update the FreeBSD ports tree (all jails)
+qjail update -p
+
+# Update FreeBSD binaries &amp;amp; libs (all jails)
+qjail update -b
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id="toc_2"&gt;Disk&lt;/h2&gt;
@@ -3153,16 +3159,16 @@ rm -rf /var/distfiles/finch
 &lt;a href="#toc_1"&gt;User Setup&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_2"&gt;Finch&amp;#39;s shell prompt&lt;/a&gt;
+&lt;a href="#toc_2"&gt;Finch's shell prompt&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_3"&gt;How to &amp;#39;su&amp;#39; and preserve Finch&amp;#39;s login profile&lt;/a&gt;
+&lt;a href="#toc_3"&gt;How to 'su' and preserve Finch's login profile&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_4"&gt;Enter / exit the finch chroot&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_5"&gt;Other &amp;#39;finch&amp;#39; sub-commands&lt;/a&gt;
+&lt;a href="#toc_5"&gt;Other 'finch' sub-commands&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;a href="#toc_6"&gt;Read the manpages&lt;/a&gt;
@@ -3171,7 +3177,7 @@ rm -rf /var/distfiles/finch
 &lt;a href="#toc_7"&gt;Finch exports&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_8"&gt;Refreshing &amp;#39;/etc&amp;#39; files&lt;/a&gt;
+&lt;a href="#toc_8"&gt;Refreshing '/etc' files&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;

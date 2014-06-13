@@ -345,10 +345,10 @@
 <a href="#toc_5">Network</a>
 <ul>
 <li>
-<a href="#toc_6">Change a jail&#39;s network interface</a>
+<a href="#toc_6">Change a jail's network interface</a>
 </li>
 <li>
-<a href="#toc_7">Change a jail&#39;s ip address</a>
+<a href="#toc_7">Change a jail's ip address</a>
 </li>
 <li>
 <a href="#toc_8">Enable ping (ICMP raw sockets)</a>
@@ -365,7 +365,7 @@
 <a href="#toc_11">(useless) Quotas</a>
 </li>
 <li>
-<a href="#toc_12">(doesn&#39;t work) cpuset.id</a>
+<a href="#toc_12">(doesn't work) cpuset.id</a>
 </li>
 </ul>
 </li>
@@ -390,6 +390,12 @@ qjail list
 
 # Display a jail&#39;s configuration settings
 qjail config -d &quot;$jailname&quot;
+
+# Update the FreeBSD ports tree (all jails)
+qjail update -p
+
+# Update FreeBSD binaries &amp; libs (all jails)
+qjail update -b
 </code></pre>
 
 <h2 id="toc_2">Disk</h2>

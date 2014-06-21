@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-06-13</pubDate>
+    <pubDate>2014-06-21</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -2642,41 +2642,52 @@ situation can be rectified by issuing $ portsnap_override "off" manually.&lt;/p&
 &lt;a href="#toc_1"&gt;Basic commands&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_2"&gt;Disk&lt;/a&gt;
+&lt;a href="#toc_2"&gt;Config&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_3"&gt;Permit nullfs mounts whilst inside a jail&lt;/a&gt;
+&lt;a href="#toc_3"&gt;Enable unix sockets&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_4"&gt;Permit zfs mounts whilst inside a jail&lt;/a&gt;
+&lt;a href="#toc_4"&gt;Enable custom devfs_ruleset&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_5"&gt;Enable sysvipc semaphores&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_5"&gt;Network&lt;/a&gt;
+&lt;a href="#toc_6"&gt;Disk&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_6"&gt;Change a jail's network interface&lt;/a&gt;
+&lt;a href="#toc_7"&gt;Permit nullfs mounts whilst inside a jail&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_7"&gt;Change a jail's ip address&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_8"&gt;Enable ping (ICMP raw sockets)&lt;/a&gt;
+&lt;a href="#toc_8"&gt;Permit zfs mounts whilst inside a jail&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_9"&gt;Avoid&lt;/a&gt;
+&lt;a href="#toc_9"&gt;Network&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_10"&gt;(has issues) Vnet / Vimage&lt;/a&gt;
+&lt;a href="#toc_10"&gt;Change a jail's network interface&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_11"&gt;(useless) Quotas&lt;/a&gt;
+&lt;a href="#toc_11"&gt;Change a jail's ip address&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_12"&gt;(doesn't work) cpuset.id&lt;/a&gt;
+&lt;a href="#toc_12"&gt;Avoid&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_13"&gt;(has issues) Vnet / Vimage&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_14"&gt;(useless) Quotas&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_15"&gt;(doesn't work) cpuset.id&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -2709,16 +2720,46 @@ qjail update -p
 qjail update -b
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id="toc_2"&gt;Disk&lt;/h2&gt;
+&lt;h2 id="toc_2"&gt;Config&lt;/h2&gt;
 
-&lt;h3 id="toc_3"&gt;Permit nullfs mounts whilst inside a jail&lt;/h3&gt;
+&lt;h3 id="toc_3"&gt;Enable unix sockets&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enable unix sockets
+qjail config -k &amp;quot;$jailname&amp;quot;
+
+# Disable unix sockets
+qjail config -K &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_4"&gt;Enable custom devfs_ruleset&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enable custom devfs_ruleset
+devfs_ruleset=&amp;quot;20&amp;quot;
+qjail config -B &amp;quot;$devfs_ruleset&amp;quot; &amp;quot;$jailname&amp;quot;
+
+# Disable custom devfs_ruleset
+qjail config -B &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_5"&gt;Enable sysvipc semaphores&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# Enable sysvipc semaphores
+qjail config -y &amp;quot;$jailname&amp;quot;
+
+# Disable sysvipc semaphores
+qjail config -Y &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="toc_6"&gt;Disk&lt;/h2&gt;
+
+&lt;h3 id="toc_7"&gt;Permit nullfs mounts whilst inside a jail&lt;/h3&gt;
 
 &lt;p&gt;This feature is disabled by default. It enables the &lt;code&gt;mount_nullfs&lt;/code&gt; command whilst inside the jail. This feature is not required for any nullfs entries in the jail&amp;#39;s fstab file.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;qjail config -l &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_4"&gt;Permit zfs mounts whilst inside a jail&lt;/h3&gt;
+&lt;h3 id="toc_8"&gt;Permit zfs mounts whilst inside a jail&lt;/h3&gt;
 
 &lt;p&gt;This feature is disabled by default.&lt;/p&gt;
 
@@ -2737,15 +2778,15 @@ qjail update -b
 
 &lt;p&gt;To avoid the above restrictions, use our &lt;strong&gt;&lt;a href="/finch/mounting-filesystems"&gt;Finch-prescribed method&lt;/a&gt;&lt;/strong&gt; for mounting your datasets.&lt;/p&gt;
 
-&lt;h2 id="toc_5"&gt;Network&lt;/h2&gt;
+&lt;h2 id="toc_9"&gt;Network&lt;/h2&gt;
 
-&lt;h3 id="toc_6"&gt;Change a jail&amp;#39;s network interface&lt;/h3&gt;
+&lt;h3 id="toc_10"&gt;Change a jail&amp;#39;s network interface&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;new_network_interface=&amp;quot;re0&amp;quot;
 qjail config -c &amp;quot;$new_network_interface&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_7"&gt;Change a jail&amp;#39;s ip address&lt;/h3&gt;
+&lt;h3 id="toc_11"&gt;Change a jail&amp;#39;s ip address&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;new_ip_address=&amp;quot;192.168.1.202&amp;quot;
 new_loopback_address=&amp;quot;lo0|127.0.0.202&amp;quot;
@@ -2753,18 +2794,9 @@ new_loopback_address=&amp;quot;lo0|127.0.0.202&amp;quot;
 qjail config -4 &amp;quot;$new_ip_address,$new_loopback_address&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_8"&gt;Enable ping (ICMP raw sockets)&lt;/h3&gt;
+&lt;h2 id="toc_12"&gt;Avoid&lt;/h2&gt;
 
-&lt;pre&gt;&lt;code&gt;# Enable raw sockets (allow &amp;quot;ping&amp;quot; command)
-qjail config -k &amp;quot;$jailname&amp;quot;
-
-# Disable raw sockets
-qjail config -K &amp;quot;$jailname&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id="toc_9"&gt;Avoid&lt;/h2&gt;
-
-&lt;h3 id="toc_10"&gt;(has issues) Vnet / Vimage&lt;/h3&gt;
+&lt;h3 id="toc_13"&gt;(has issues) Vnet / Vimage&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Advantages:&lt;/strong&gt;&lt;/p&gt;
 
@@ -2824,7 +2856,7 @@ echo &amp;quot;ping -c 1 google.com&amp;quot; | qjail console &amp;quot;$jailnam
 
 &lt;p&gt;Please &lt;strong&gt;&lt;a href="/finch/support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you think anything here is incorrect, or can provide alternative configuration steps to get these Vnet jails working on hosts which are setup to be outside of the &lt;code&gt;10.0.0.0&lt;/code&gt; subnet. For example on &lt;code&gt;192.168.1.XXX&lt;/code&gt; machines, etc.&lt;/p&gt;
 
-&lt;h3 id="toc_11"&gt;(useless) Quotas&lt;/h3&gt;
+&lt;h3 id="toc_14"&gt;(useless) Quotas&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;# allow.quotas NOT recommended as does not limit total filesystem usage on a per-jail basis.
 # allow.quotas allows you to allocate limits to individual user accounts inside your jails.
@@ -2833,7 +2865,7 @@ echo &amp;quot;ping -c 1 google.com&amp;quot; | qjail console &amp;quot;$jailnam
 
 &lt;p&gt;Solution: Create a zfs dataset instead, for the jails and assign quota limits per dataset. User mount_nullfs your zfs dataset onto /finch/usr/jails (move the jails folder onto the dataset).&lt;/p&gt;
 
-&lt;h3 id="toc_12"&gt;(doesn&amp;#39;t work) cpuset.id&lt;/h3&gt;
+&lt;h3 id="toc_15"&gt;(doesn&amp;#39;t work) cpuset.id&lt;/h3&gt;
 
 &lt;p&gt;Assigning a jail to specific CPU cores. For example: a quad-core CPU: &lt;code&gt;cpuset -g | grep -o -e mask.*&lt;/code&gt; should say &lt;code&gt;mask: 0, 1, 2, 3&lt;/code&gt;&lt;/p&gt;
 

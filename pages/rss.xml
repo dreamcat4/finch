@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-06-21</pubDate>
+    <pubDate>2014-07-02</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -1789,7 +1789,7 @@ fetch -o - &amp;quot;http://$jail_ip&amp;quot; # or open &amp;quot;http://$jail_
 &lt;ul&gt;
 &lt;li&gt;Learn how to mount user data into your jails with &lt;strong&gt;&lt;a href="/finch/mounting-filesystems"&gt;Mounting filesystems&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
 &lt;li&gt;Read the &lt;strong&gt;&lt;a href="/finch/jails-ssh"&gt;Jails ssh How To&lt;/a&gt;&lt;/strong&gt; to create a jail with ssh access.&lt;/li&gt;
-&lt;li&gt;Consult the &lt;strong&gt;&lt;a href="/finch/qjail-reference"&gt;Qjail reference&lt;/a&gt;&lt;/strong&gt; page for more jails.&lt;/li&gt;
+&lt;li&gt;Consult the &lt;strong&gt;&lt;a href="/finch/qjail-reference"&gt;Qjail reference&lt;/a&gt;&lt;/strong&gt; page for more jail configuration options.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
@@ -1917,9 +1917,9 @@ sudo qjail console &amp;quot;$jailname&amp;quot;
 &lt;p&gt;It&amp;#39;s best to decide upon ssh access &lt;strong&gt;before&lt;/strong&gt; creating your jails. There are 2-3 ssh templates (known as &lt;code&gt;flavors&lt;/code&gt;) to choose from.&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Firstly, the qjail flavor &lt;code&gt;ssh-default&lt;/code&gt; is provided by &lt;code&gt;qjail&lt;/code&gt;. And is documented in the qjail manpage (enabled with the &lt;code&gt;-c&lt;/code&gt; switch on &lt;code&gt;qjail create&lt;/code&gt;, or &lt;code&gt;-h&lt;/code&gt; switch on &lt;code&gt;qjail config&lt;/code&gt;). We do not encourage it&amp;#39;s use however because you are forced into using a specific username.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Using a &lt;code&gt;finch&lt;/code&gt; template - RECOMMENDED. Finch installs for you 2 templates (known as &lt;code&gt;flavors&lt;/code&gt;) which will provide ssh access in a more flexible way than qjail&amp;#39;s built-in method. They are are documented below further down on this page. Choose either the &amp;quot;finch-ssh&amp;quot; or &amp;quot;finch-ssh-root&amp;quot; flavor when creating your jail. The only difference is that &amp;quot;finch-ssh&amp;quot; will forbid root account ssh logins. Wheras &amp;quot;finsh-ssh-root&amp;quot; will permit ssh logins for all user accounts, including the &lt;code&gt;root&lt;/code&gt; user. It&amp;#39;s a personal security choice. You only need to follow ONE of the 2 documented procedures (not both of them).&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Finally the last method is to manually turn on ssh for an existing jail. Because you might have already created your jail without the necessary ssh flavor, or have deferred the decision to switch on ssh until later on.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;NOT RECOMMENDED&lt;/strong&gt; The template provided by qjail, labeled &lt;code&gt;ssh-default&lt;/code&gt;. That method is documented in the qjail manpage. It is enabled with the &lt;code&gt;-c&lt;/code&gt; switch on &lt;code&gt;qjail create&lt;/code&gt;, or &lt;code&gt;-h&lt;/code&gt; switch on &lt;code&gt;qjail config&lt;/code&gt;. We do not encourage it&amp;#39;s use however because you are forced into using a specific username for your ssh account.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RECOMMENDED&lt;/strong&gt; Using the &lt;code&gt;finch-ssh&lt;/code&gt; template. Finch installs for you 2 ssh possible templates (known as &lt;code&gt;flavors&lt;/code&gt;) which will provide ssh access in a more flexible way than qjail&amp;#39;s built-in method. They are are documented below further down on this page. Choose either the &amp;quot;finch-ssh&amp;quot; or &amp;quot;finch-ssh-root&amp;quot; flavor when creating your jail. The only difference is that &amp;quot;finch-ssh&amp;quot; will forbid root account ssh logins. Wheras &amp;quot;finsh-ssh-root&amp;quot; will permit ssh logins for all user accounts, including the &lt;code&gt;root&lt;/code&gt; user. It&amp;#39;s a personal security choice. You only need to follow ONE of the 2 documented procedures (not both of them).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RECOMMENDED&lt;/strong&gt; Finally the last method is to manually turn on ssh for an existing jail. Because you might have already created your jail without the necessary ssh flavor, or have deferred the decision to switch on ssh until later on.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;After enabling ssh access, you can login over ssh with a username and password. This will in turn allow you to setup passwordless ssh access. So as a final step (after choosing one of the 3 available solutions on &lt;em&gt;this&lt;/em&gt; page), then why not head on over to &lt;a href="http://www.commandlinefu.com/commands/view/188/copy-your-ssh-public-key-to-a-server-from-a-machine-that-doesnt-have-ssh-copy-id"&gt;commandlinefu.com&lt;/a&gt; where you can learn how to scp over your ssh keys (&lt;code&gt;~/.ssh/id_rsa.pub&lt;/code&gt;) and edit your &lt;code&gt;~/.ssh/authorized_keys&lt;/code&gt; file.&lt;/p&gt;
@@ -2652,49 +2652,52 @@ situation can be rectified by issuing $ portsnap_override "off" manually.&lt;/p&
 &lt;a href="#toc_2"&gt;Config&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_3"&gt;Enable unix sockets&lt;/a&gt;
+&lt;a href="#toc_3"&gt;Manual mode&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_4"&gt;Enable custom devfs_ruleset&lt;/a&gt;
+&lt;a href="#toc_4"&gt;Enable unix sockets&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_5"&gt;Enable sysvipc semaphores&lt;/a&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+&lt;a href="#toc_5"&gt;Enable custom devfs_ruleset&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_6"&gt;Disk&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;a href="#toc_7"&gt;Permit nullfs mounts whilst inside a jail&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;a href="#toc_8"&gt;Permit zfs mounts whilst inside a jail&lt;/a&gt;
+&lt;a href="#toc_6"&gt;Enable sysvipc semaphores&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_9"&gt;Network&lt;/a&gt;
+&lt;a href="#toc_7"&gt;Disk&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_10"&gt;Change a jail's network interface&lt;/a&gt;
+&lt;a href="#toc_8"&gt;Permit nullfs mounts whilst inside a jail&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_11"&gt;Change a jail's ip address&lt;/a&gt;
+&lt;a href="#toc_9"&gt;Permit zfs mounts whilst inside a jail&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_12"&gt;Avoid&lt;/a&gt;
+&lt;a href="#toc_10"&gt;Network&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_13"&gt;(has issues) Vnet / Vimage&lt;/a&gt;
+&lt;a href="#toc_11"&gt;Change a jail's network interface&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_14"&gt;(useless) Quotas&lt;/a&gt;
+&lt;a href="#toc_12"&gt;Change a jail's ip address&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_15"&gt;(doesn't work) cpuset.id&lt;/a&gt;
+&lt;a href="#toc_13"&gt;Avoid&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;a href="#toc_14"&gt;(has issues) Vnet / Vimage&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_15"&gt;(useless) Quotas&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_16"&gt;(doesn't work) cpuset.id&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -2720,16 +2723,31 @@ qjail list
 # Display a jail&amp;#39;s configuration settings
 qjail config -d &amp;quot;$jailname&amp;quot;
 
-# Update the FreeBSD ports tree (all jails)
+# (re-)clone the /usr/ports tree into /usr/jails/sharedfs
+qjail update -P
+
+# Update the /usr/jails/sharedfs ports tree
 qjail update -p
 
 # Update FreeBSD binaries &amp;amp; libs (all jails)
 qjail update -b
+
+# Rename a jail
+qjail config -n &amp;quot;$new_jailname&amp;quot; &amp;quot;$old_jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h2 id="toc_2"&gt;Config&lt;/h2&gt;
 
-&lt;h3 id="toc_3"&gt;Enable unix sockets&lt;/h3&gt;
+&lt;h3 id="toc_3"&gt;Manual mode&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# Disable auto-starting of the jail during system boot
+qjail config -m &amp;quot;$jailname&amp;quot;
+
+# Enable auto-starting of the jail during system boot
+qjail config -K &amp;quot;$jailname&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="toc_4"&gt;Enable unix sockets&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;# Enable unix sockets
 qjail config -k &amp;quot;$jailname&amp;quot;
@@ -2738,7 +2756,7 @@ qjail config -k &amp;quot;$jailname&amp;quot;
 qjail config -K &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_4"&gt;Enable custom devfs_ruleset&lt;/h3&gt;
+&lt;h3 id="toc_5"&gt;Enable custom devfs_ruleset&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;# Enable custom devfs_ruleset
 devfs_ruleset=&amp;quot;20&amp;quot;
@@ -2748,7 +2766,7 @@ qjail config -B &amp;quot;$devfs_ruleset&amp;quot; &amp;quot;$jailname&amp;quot;
 qjail config -B &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_5"&gt;Enable sysvipc semaphores&lt;/h3&gt;
+&lt;h3 id="toc_6"&gt;Enable sysvipc semaphores&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;# Enable sysvipc semaphores
 qjail config -y &amp;quot;$jailname&amp;quot;
@@ -2757,16 +2775,16 @@ qjail config -y &amp;quot;$jailname&amp;quot;
 qjail config -Y &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id="toc_6"&gt;Disk&lt;/h2&gt;
+&lt;h2 id="toc_7"&gt;Disk&lt;/h2&gt;
 
-&lt;h3 id="toc_7"&gt;Permit nullfs mounts whilst inside a jail&lt;/h3&gt;
+&lt;h3 id="toc_8"&gt;Permit nullfs mounts whilst inside a jail&lt;/h3&gt;
 
 &lt;p&gt;This feature is disabled by default. It enables the &lt;code&gt;mount_nullfs&lt;/code&gt; command whilst inside the jail. This feature is not required for any nullfs entries in the jail&amp;#39;s fstab file.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;qjail config -l &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_8"&gt;Permit zfs mounts whilst inside a jail&lt;/h3&gt;
+&lt;h3 id="toc_9"&gt;Permit zfs mounts whilst inside a jail&lt;/h3&gt;
 
 &lt;p&gt;This feature is disabled by default.&lt;/p&gt;
 
@@ -2785,15 +2803,15 @@ qjail config -Y &amp;quot;$jailname&amp;quot;
 
 &lt;p&gt;To avoid the above restrictions, use our &lt;strong&gt;&lt;a href="/finch/mounting-filesystems"&gt;Finch-prescribed method&lt;/a&gt;&lt;/strong&gt; for mounting your datasets.&lt;/p&gt;
 
-&lt;h2 id="toc_9"&gt;Network&lt;/h2&gt;
+&lt;h2 id="toc_10"&gt;Network&lt;/h2&gt;
 
-&lt;h3 id="toc_10"&gt;Change a jail&amp;#39;s network interface&lt;/h3&gt;
+&lt;h3 id="toc_11"&gt;Change a jail&amp;#39;s network interface&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;new_network_interface=&amp;quot;re0&amp;quot;
 qjail config -c &amp;quot;$new_network_interface&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_11"&gt;Change a jail&amp;#39;s ip address&lt;/h3&gt;
+&lt;h3 id="toc_12"&gt;Change a jail&amp;#39;s ip address&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;new_ip_address=&amp;quot;192.168.1.202&amp;quot;
 new_loopback_address=&amp;quot;lo0|127.0.0.202&amp;quot;
@@ -2801,9 +2819,9 @@ new_loopback_address=&amp;quot;lo0|127.0.0.202&amp;quot;
 qjail config -4 &amp;quot;$new_ip_address,$new_loopback_address&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h2 id="toc_12"&gt;Avoid&lt;/h2&gt;
+&lt;h2 id="toc_13"&gt;Avoid&lt;/h2&gt;
 
-&lt;h3 id="toc_13"&gt;(has issues) Vnet / Vimage&lt;/h3&gt;
+&lt;h3 id="toc_14"&gt;(has issues) Vnet / Vimage&lt;/h3&gt;
 
 &lt;p&gt;&lt;strong&gt;Advantages:&lt;/strong&gt;&lt;/p&gt;
 
@@ -2863,7 +2881,7 @@ echo &amp;quot;ping -c 1 google.com&amp;quot; | qjail console &amp;quot;$jailnam
 
 &lt;p&gt;Please &lt;strong&gt;&lt;a href="/finch/support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you think anything here is incorrect, or can provide alternative configuration steps to get these Vnet jails working on hosts which are setup to be outside of the &lt;code&gt;10.0.0.0&lt;/code&gt; subnet. For example on &lt;code&gt;192.168.1.XXX&lt;/code&gt; machines, etc.&lt;/p&gt;
 
-&lt;h3 id="toc_14"&gt;(useless) Quotas&lt;/h3&gt;
+&lt;h3 id="toc_15"&gt;(useless) Quotas&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;# allow.quotas NOT recommended as does not limit total filesystem usage on a per-jail basis.
 # allow.quotas allows you to allocate limits to individual user accounts inside your jails.
@@ -2872,7 +2890,7 @@ echo &amp;quot;ping -c 1 google.com&amp;quot; | qjail console &amp;quot;$jailnam
 
 &lt;p&gt;Solution: Create a zfs dataset instead, for the jails and assign quota limits per dataset. User mount_nullfs your zfs dataset onto /finch/usr/jails (move the jails folder onto the dataset).&lt;/p&gt;
 
-&lt;h3 id="toc_15"&gt;(doesn&amp;#39;t work) cpuset.id&lt;/h3&gt;
+&lt;h3 id="toc_16"&gt;(doesn&amp;#39;t work) cpuset.id&lt;/h3&gt;
 
 &lt;p&gt;Assigning a jail to specific CPU cores. For example: a quad-core CPU: &lt;code&gt;cpuset -g | grep -o -e mask.*&lt;/code&gt; should say &lt;code&gt;mask: 0, 1, 2, 3&lt;/code&gt;&lt;/p&gt;
 
@@ -2889,6 +2907,8 @@ qjail config -p &amp;quot;$jail_cpu_set&amp;quot; &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;I&amp;#39;m not entirely certain if the syntax shown above is correct. Please &lt;strong&gt;&lt;a href="/finch/support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you have found otherwise.&lt;/p&gt;
+
+&lt;p&gt;However even if you can successfully use this feature to limit the core count, the outcome isn&amp;#39;t a very efficient way to allocate resources. It may be better to use &lt;code&gt;rctl&lt;/code&gt; instead. Which requires &lt;code&gt;options racct&lt;/code&gt; and &lt;code&gt;options rctl&lt;/code&gt; to be compiled into the kernel.&lt;/p&gt;
 </description>
     </item>
     <item>

@@ -334,49 +334,52 @@
 <a href="#toc_2">Config</a>
 <ul>
 <li>
-<a href="#toc_3">Enable unix sockets</a>
+<a href="#toc_3">Manual mode</a>
 </li>
 <li>
-<a href="#toc_4">Enable custom devfs_ruleset</a>
+<a href="#toc_4">Enable unix sockets</a>
 </li>
 <li>
-<a href="#toc_5">Enable sysvipc semaphores</a>
-</li>
-</ul>
+<a href="#toc_5">Enable custom devfs_ruleset</a>
 </li>
 <li>
-<a href="#toc_6">Disk</a>
-<ul>
-<li>
-<a href="#toc_7">Permit nullfs mounts whilst inside a jail</a>
-</li>
-<li>
-<a href="#toc_8">Permit zfs mounts whilst inside a jail</a>
+<a href="#toc_6">Enable sysvipc semaphores</a>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_9">Network</a>
+<a href="#toc_7">Disk</a>
 <ul>
 <li>
-<a href="#toc_10">Change a jail's network interface</a>
+<a href="#toc_8">Permit nullfs mounts whilst inside a jail</a>
 </li>
 <li>
-<a href="#toc_11">Change a jail's ip address</a>
+<a href="#toc_9">Permit zfs mounts whilst inside a jail</a>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_12">Avoid</a>
+<a href="#toc_10">Network</a>
 <ul>
 <li>
-<a href="#toc_13">(has issues) Vnet / Vimage</a>
+<a href="#toc_11">Change a jail's network interface</a>
 </li>
 <li>
-<a href="#toc_14">(useless) Quotas</a>
+<a href="#toc_12">Change a jail's ip address</a>
+</li>
+</ul>
 </li>
 <li>
-<a href="#toc_15">(doesn't work) cpuset.id</a>
+<a href="#toc_13">Avoid</a>
+<ul>
+<li>
+<a href="#toc_14">(has issues) Vnet / Vimage</a>
+</li>
+<li>
+<a href="#toc_15">(useless) Quotas</a>
+</li>
+<li>
+<a href="#toc_16">(doesn't work) cpuset.id</a>
 </li>
 </ul>
 </li>
@@ -402,16 +405,31 @@ qjail list
 # Display a jail&#39;s configuration settings
 qjail config -d &quot;$jailname&quot;
 
-# Update the FreeBSD ports tree (all jails)
+# (re-)clone the /usr/ports tree into /usr/jails/sharedfs
+qjail update -P
+
+# Update the /usr/jails/sharedfs ports tree
 qjail update -p
 
 # Update FreeBSD binaries &amp; libs (all jails)
 qjail update -b
+
+# Rename a jail
+qjail config -n &quot;$new_jailname&quot; &quot;$old_jailname&quot;
 </code></pre>
 
 <h2 id="toc_2">Config</h2>
 
-<h3 id="toc_3">Enable unix sockets</h3>
+<h3 id="toc_3">Manual mode</h3>
+
+<pre><code># Disable auto-starting of the jail during system boot
+qjail config -m &quot;$jailname&quot;
+
+# Enable auto-starting of the jail during system boot
+qjail config -K &quot;$jailname&quot;
+</code></pre>
+
+<h3 id="toc_4">Enable unix sockets</h3>
 
 <pre><code># Enable unix sockets
 qjail config -k &quot;$jailname&quot;
@@ -420,7 +438,7 @@ qjail config -k &quot;$jailname&quot;
 qjail config -K &quot;$jailname&quot;
 </code></pre>
 
-<h3 id="toc_4">Enable custom devfs_ruleset</h3>
+<h3 id="toc_5">Enable custom devfs_ruleset</h3>
 
 <pre><code># Enable custom devfs_ruleset
 devfs_ruleset=&quot;20&quot;
@@ -430,7 +448,7 @@ qjail config -B &quot;$devfs_ruleset&quot; &quot;$jailname&quot;
 qjail config -B &quot;$jailname&quot;
 </code></pre>
 
-<h3 id="toc_5">Enable sysvipc semaphores</h3>
+<h3 id="toc_6">Enable sysvipc semaphores</h3>
 
 <pre><code># Enable sysvipc semaphores
 qjail config -y &quot;$jailname&quot;
@@ -439,16 +457,16 @@ qjail config -y &quot;$jailname&quot;
 qjail config -Y &quot;$jailname&quot;
 </code></pre>
 
-<h2 id="toc_6">Disk</h2>
+<h2 id="toc_7">Disk</h2>
 
-<h3 id="toc_7">Permit nullfs mounts whilst inside a jail</h3>
+<h3 id="toc_8">Permit nullfs mounts whilst inside a jail</h3>
 
 <p>This feature is disabled by default. It enables the <code>mount_nullfs</code> command whilst inside the jail. This feature is not required for any nullfs entries in the jail&#39;s fstab file.</p>
 
 <pre><code>qjail config -l &quot;$jailname&quot;
 </code></pre>
 
-<h3 id="toc_8">Permit zfs mounts whilst inside a jail</h3>
+<h3 id="toc_9">Permit zfs mounts whilst inside a jail</h3>
 
 <p>This feature is disabled by default.</p>
 
@@ -467,15 +485,15 @@ qjail config -Y &quot;$jailname&quot;
 
 <p>To avoid the above restrictions, use our <strong><a href="/finch/mounting-filesystems">Finch-prescribed method</a></strong> for mounting your datasets.</p>
 
-<h2 id="toc_9">Network</h2>
+<h2 id="toc_10">Network</h2>
 
-<h3 id="toc_10">Change a jail&#39;s network interface</h3>
+<h3 id="toc_11">Change a jail&#39;s network interface</h3>
 
 <pre><code>new_network_interface=&quot;re0&quot;
 qjail config -c &quot;$new_network_interface&quot; &quot;$jailname&quot;
 </code></pre>
 
-<h3 id="toc_11">Change a jail&#39;s ip address</h3>
+<h3 id="toc_12">Change a jail&#39;s ip address</h3>
 
 <pre><code>new_ip_address=&quot;192.168.1.202&quot;
 new_loopback_address=&quot;lo0|127.0.0.202&quot;
@@ -483,9 +501,9 @@ new_loopback_address=&quot;lo0|127.0.0.202&quot;
 qjail config -4 &quot;$new_ip_address,$new_loopback_address&quot; &quot;$jailname&quot;
 </code></pre>
 
-<h2 id="toc_12">Avoid</h2>
+<h2 id="toc_13">Avoid</h2>
 
-<h3 id="toc_13">(has issues) Vnet / Vimage</h3>
+<h3 id="toc_14">(has issues) Vnet / Vimage</h3>
 
 <p><strong>Advantages:</strong></p>
 
@@ -545,7 +563,7 @@ echo &quot;ping -c 1 google.com&quot; | qjail console &quot;$jailname&quot;
 
 <p>Please <strong><a href="/finch/support">let us know</a></strong> if you think anything here is incorrect, or can provide alternative configuration steps to get these Vnet jails working on hosts which are setup to be outside of the <code>10.0.0.0</code> subnet. For example on <code>192.168.1.XXX</code> machines, etc.</p>
 
-<h3 id="toc_14">(useless) Quotas</h3>
+<h3 id="toc_15">(useless) Quotas</h3>
 
 <pre><code># allow.quotas NOT recommended as does not limit total filesystem usage on a per-jail basis.
 # allow.quotas allows you to allocate limits to individual user accounts inside your jails.
@@ -554,7 +572,7 @@ echo &quot;ping -c 1 google.com&quot; | qjail console &quot;$jailname&quot;
 
 <p>Solution: Create a zfs dataset instead, for the jails and assign quota limits per dataset. User mount_nullfs your zfs dataset onto /finch/usr/jails (move the jails folder onto the dataset).</p>
 
-<h3 id="toc_15">(doesn&#39;t work) cpuset.id</h3>
+<h3 id="toc_16">(doesn&#39;t work) cpuset.id</h3>
 
 <p>Assigning a jail to specific CPU cores. For example: a quad-core CPU: <code>cpuset -g | grep -o -e mask.*</code> should say <code>mask: 0, 1, 2, 3</code></p>
 
@@ -571,6 +589,8 @@ qjail config -p &quot;$jail_cpu_set&quot; &quot;$jailname&quot;
 </code></pre>
 
 <p>I&#39;m not entirely certain if the syntax shown above is correct. Please <strong><a href="/finch/support">let us know</a></strong> if you have found otherwise.</p>
+
+<p>However even if you can successfully use this feature to limit the core count, the outcome isn&#39;t a very efficient way to allocate resources. It may be better to use <code>rctl</code> instead. Which requires <code>options racct</code> and <code>options rctl</code> to be compiled into the kernel.</p>
 
       </div>
 

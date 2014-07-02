@@ -326,12 +326,12 @@
 <p><ul>
 <li>
 <a href="#toc_0">Jails - Ssh</a>
-<ul>
-<li>
-<a href="#toc_1">Terminal access via FreeBSD host</a>
 </li>
 <li>
-<a href="#toc_2">3 ways to create a jail with ssh access</a>
+<a href="#toc_1">4 ways to enable ssh</a>
+<ul>
+<li>
+<a href="#toc_2">Terminal access via 'qjail console'</a>
 </li>
 <li>
 <a href="#toc_3">Create a jail with ssh enabled</a>
@@ -355,9 +355,36 @@
 </ul>
 </p>
 
-<h2 id="toc_1">Terminal access via FreeBSD host</h2>
+<p>This page explains how to enable ssh access for your jails. After enabling ssh access, a password login to your jails will be possible. The exception being the <a href="#toc_2"><code>qjail console</code></a> command which does not need any password.</p>
 
-<p>If you create a jail without specifying ssh, it will not be enabled on that jail. However if we can ssh into the FreeBSD host machine then we may use that same route to access any of our jails.</p>
+<p>To configure passwordless ssh access later on, please also check <strong><em><a href="http://www.commandlinefu.com/commands/view/188/copy-your-ssh-public-key-to-a-server-from-a-machine-that-doesnt-have-ssh-copy-id">these instructions</a></em></strong> on <a href="http://www.commandlinefu.com/commands/view/188/copy-your-ssh-public-key-to-a-server-from-a-machine-that-doesnt-have-ssh-copy-id">commandlinefu.com</a>. Where you can learn how to scp over ssh keys (<code>~/.ssh/id_rsa.pub</code>) and edit the <code>~/.ssh/authorized_keys</code> file.</p>
+
+<h1 id="toc_1">4 ways to enable ssh</h1>
+
+<p><strong><em><span class="mar">RECOMMENDED</span></em></strong></p>
+
+<ul>
+<li><p><a href="#toc_2">1. Terminal access via &#39;qjail console&#39;</a>.</p>
+
+<p>your computer ---&gt; ssh ---&gt; FreeNAS / NAS4Free ---&gt; qjail console</p></li>
+<li><p>Using either <a href="#toc_3">2. the <code>finch-ssh</code> jails template</a> or <a href="#toc_6">3. <code>finch-ssh-root</code> jail template</a>. (and <em>NOT</em> the one named &quot;ssh-default&quot;).</p></li>
+</ul>
+
+<p>The template &quot;finch-ssh&quot; will forbid root account ssh logins. Wheras &quot;finsh-ssh-root&quot; will permit ssh logins for all user accounts, inclusive of the <code>root</code> user.</p>
+
+<ul>
+<li><a href="#toc_7">4. Manually turn on ssh for an existing jail</a>. Because you might have already created your jail without the necessary ssh flavor, or have deferred the decision to switch on ssh until later on.</li>
+</ul>
+
+<p><strong><em><span class="mar">NOT RECOMMENDED</span></em></strong></p>
+
+<ul>
+<li>5. The template provided by qjail, labeled <code>ssh-default</code>. The method documented on the qjail manpage. That one is enabled by &quot;qjail create -c&quot;, or <code>qjail config -h</code>. <em>REASON:</em> we do not encourage it&#39;s use because you are forced into using a specific username for your ssh account. Finch installs for you better ssh templates (<a href="#toc_3">2.</a> and <a href="#toc_6">3.</a>), which improve control over which user accounts may be allowed to access your jails.</li>
+</ul>
+
+<h2 id="toc_2">Terminal access via &#39;qjail console&#39;</h2>
+
+<p>By default ssh will not be enabled on that jail. SSh often isn&#39;t required because we can just ssh into the FreeBSD host machine then access any of our jails from the commandline.</p>
 
 <p>The command <code>qjail console $jailname</code> will launch a root login shell and enter you into the chosen jail.</p>
 
@@ -365,44 +392,31 @@
 sudo qjail console &quot;$jailname&quot;
 </code></pre>
 
-<p>Or as one single command:</p>
+<p>Or you may prefer to perform both actions together as a single step:</p>
 
 <pre><code>ssh &quot;$freebsd_host&quot; sudo finch chroot qjail console &quot;$jailname&quot;
 </code></pre>
 
-<p>This can be made into a very simple shell function or a batch file on Windows. For example:</p>
+<p>Which can be made into a simple <code>~/.profile</code> shell function, script or Windows batch file. It takes the jail&#39;s name as a parameter. For example:</p>
 
 <pre><code>qjail-remote-console ()
 {
   if [ &quot;$#&quot; -gt &quot;0&quot; ]; then
-    local freebsd_host=&quot;192.168.1.XXX&quot;     # the freebsd host system
+    # The freebsd system where finch and qjail are installed (FreeNAS / NAS4free)
+    local freebsd_host=&quot;192.168.1.XXX&quot;
 
     ssh &quot;$freebsd_host&quot; sudo finch chroot qjail console &quot;$@&quot;
 
   else
-    echo &quot;usage: qjail-remote-console &lt;jailname&gt;&quot;
+    echo &quot;usage: qjail-remote-console $jailname&quot;
   fi
 }
 </code></pre>
 
-<p><strong>Note:</strong> The <code>qjail console</code> command only provides a login for tty / terminal access. It does not enable ssh inside the jail. Almost all other ssh-based services are designed to connect to a real ssh daemon and won&#39;t work with this method.</p>
+<p><strong>Note:</strong> The <code>qjail console</code> command only provides a login for tty / terminal access. It does not enable ssh inside the jail. Almost all other ssh-based services are designed to connect to a real ssh daemon and won&#39;t work with this method. However you may feed multiple commands into the shell seesion in the following way:</p>
 
-<h2 id="toc_2">3 ways to create a jail with ssh access</h2>
-
-<p><strong><em>NOT RECOMMENDED</em></strong></p>
-
-<ul>
-<li>The template provided by qjail, labeled <code>ssh-default</code>. That method is documented in the qjail manpage. It is enabled with the <code>-c</code> switch on <code>qjail create</code>, or <code>-h</code> switch on <code>qjail config</code>. We do not encourage it&#39;s use however because you are forced into using a specific username for your ssh account.</li>
-</ul>
-
-<p><strong><em>RECOMMENDED</em></strong></p>
-
-<ul>
-<li><p>Using the <code>finch-ssh</code> template. Finch installs for you 2 ssh possible templates (known as <code>flavors</code>) which will provide ssh access in a more flexible way than qjail&#39;s built-in method. They are are documented below further down on this page. Choose either the &quot;finch-ssh&quot; or &quot;finch-ssh-root&quot; flavor when creating your jail. The only difference is that &quot;finch-ssh&quot; will forbid root account ssh logins. Wheras &quot;finsh-ssh-root&quot; will permit ssh logins for all user accounts, including the <code>root</code> user. It&#39;s a personal security choice. You only need to follow ONE of the 2 documented procedures (not both of them).</p></li>
-<li><p>Finally the last method is to manually turn on ssh for an existing jail. Because you might have already created your jail without the necessary ssh flavor, or have deferred the decision to switch on ssh until later on.</p></li>
-</ul>
-
-<p>After enabling ssh access, you can login over ssh with a username and password. This will in turn allow you to setup passwordless ssh access. So as a final step (after choosing one of the 3 available solutions on <em>this</em> page), then why not head on over to <a href="http://www.commandlinefu.com/commands/view/188/copy-your-ssh-public-key-to-a-server-from-a-machine-that-doesnt-have-ssh-copy-id">commandlinefu.com</a> where you can learn how to scp over your ssh keys (<code>~/.ssh/id_rsa.pub</code>) and edit your <code>~/.ssh/authorized_keys</code> file.</p>
+<pre><code>echo &quot;$some_cmd1; $some_cmd2&quot; | qjail-remote-console $jailname
+</code></pre>
 
 <h2 id="toc_3">Create a jail with ssh enabled</h2>
 
@@ -425,6 +439,9 @@ qjail create -f finch-ssh -4 &quot;$jail_ip,$jail_loopback&quot; &quot;$jailname
 
 # Enable unix sockets
 qjail config -k &quot;$jailname&quot;
+
+# Update local pkgng database, to avoid &#39;failed checksum&#39; for &#39;pkg install&#39;
+pkg update -f
 
 # Start the jail
 qjail start &quot;$jailname&quot;

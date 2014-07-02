@@ -1914,12 +1914,17 @@ sudo qjail console &amp;quot;$jailname&amp;quot;
 
 &lt;h2 id="toc_2"&gt;3 ways to create a jail with ssh access&lt;/h2&gt;
 
-&lt;p&gt;It&amp;#39;s best to decide upon ssh access &lt;strong&gt;before&lt;/strong&gt; creating your jails. There are 2-3 ssh templates (known as &lt;code&gt;flavors&lt;/code&gt;) to choose from.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;NOT RECOMMENDED&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;NOT RECOMMENDED&lt;/strong&gt; The template provided by qjail, labeled &lt;code&gt;ssh-default&lt;/code&gt;. That method is documented in the qjail manpage. It is enabled with the &lt;code&gt;-c&lt;/code&gt; switch on &lt;code&gt;qjail create&lt;/code&gt;, or &lt;code&gt;-h&lt;/code&gt; switch on &lt;code&gt;qjail config&lt;/code&gt;. We do not encourage it&amp;#39;s use however because you are forced into using a specific username for your ssh account.&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;RECOMMENDED&lt;/strong&gt; Using the &lt;code&gt;finch-ssh&lt;/code&gt; template. Finch installs for you 2 ssh possible templates (known as &lt;code&gt;flavors&lt;/code&gt;) which will provide ssh access in a more flexible way than qjail&amp;#39;s built-in method. They are are documented below further down on this page. Choose either the &amp;quot;finch-ssh&amp;quot; or &amp;quot;finch-ssh-root&amp;quot; flavor when creating your jail. The only difference is that &amp;quot;finch-ssh&amp;quot; will forbid root account ssh logins. Wheras &amp;quot;finsh-ssh-root&amp;quot; will permit ssh logins for all user accounts, including the &lt;code&gt;root&lt;/code&gt; user. It&amp;#39;s a personal security choice. You only need to follow ONE of the 2 documented procedures (not both of them).&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;RECOMMENDED&lt;/strong&gt; Finally the last method is to manually turn on ssh for an existing jail. Because you might have already created your jail without the necessary ssh flavor, or have deferred the decision to switch on ssh until later on.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;The template provided by qjail, labeled &lt;code&gt;ssh-default&lt;/code&gt;. That method is documented in the qjail manpage. It is enabled with the &lt;code&gt;-c&lt;/code&gt; switch on &lt;code&gt;qjail create&lt;/code&gt;, or &lt;code&gt;-h&lt;/code&gt; switch on &lt;code&gt;qjail config&lt;/code&gt;. We do not encourage it&amp;#39;s use however because you are forced into using a specific username for your ssh account.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;RECOMMENDED&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Using the &lt;code&gt;finch-ssh&lt;/code&gt; template. Finch installs for you 2 ssh possible templates (known as &lt;code&gt;flavors&lt;/code&gt;) which will provide ssh access in a more flexible way than qjail&amp;#39;s built-in method. They are are documented below further down on this page. Choose either the &amp;quot;finch-ssh&amp;quot; or &amp;quot;finch-ssh-root&amp;quot; flavor when creating your jail. The only difference is that &amp;quot;finch-ssh&amp;quot; will forbid root account ssh logins. Wheras &amp;quot;finsh-ssh-root&amp;quot; will permit ssh logins for all user accounts, including the &lt;code&gt;root&lt;/code&gt; user. It&amp;#39;s a personal security choice. You only need to follow ONE of the 2 documented procedures (not both of them).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Finally the last method is to manually turn on ssh for an existing jail. Because you might have already created your jail without the necessary ssh flavor, or have deferred the decision to switch on ssh until later on.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;After enabling ssh access, you can login over ssh with a username and password. This will in turn allow you to setup passwordless ssh access. So as a final step (after choosing one of the 3 available solutions on &lt;em&gt;this&lt;/em&gt; page), then why not head on over to &lt;a href="http://www.commandlinefu.com/commands/view/188/copy-your-ssh-public-key-to-a-server-from-a-machine-that-doesnt-have-ssh-copy-id"&gt;commandlinefu.com&lt;/a&gt; where you can learn how to scp over your ssh keys (&lt;code&gt;~/.ssh/id_rsa.pub&lt;/code&gt;) and edit your &lt;code&gt;~/.ssh/authorized_keys&lt;/code&gt; file.&lt;/p&gt;

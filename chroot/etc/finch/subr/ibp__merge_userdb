@@ -1,0 +1,294 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+diff_c0_terse()
+{
+  # Output a terse diff of diff type 'context'
+  diff -c0 "$1" "$2" | grep -E "^(\+ |\- |\! )"
+}
+
+added()
+{
+  echo "$1" | grep "^\+ "
+}
+
+removed()
+{
+  echo "$1" | grep "^\- "
+}
+
+added_and_removed()
+{
+  echo "$1" | grep "^\+ \|^\- "
+}
+
+modified()
+{
+  echo "$1" | grep "^\! "
+}
+
+deduped_modifications()
+{
+  # input:
+  #   ! avahi:*:200:200:avahi user:/nonexistent:/usr/sbin/nologin
+  #   ! avahi:*:111:111:avfo user:/home/ahavi:/bin/bash
+  # output:
+  #   ! avahi:*:111:111:avfo user:/home/ahavi:/bin/bash
+  while read line
+  do
+    user="$(echo "${line#\! }" | cut -d ':' -f 1)"
+
+    if [ "$(echo "$users" | grep "$user")" ]; then
+      echo "$line"
+    else
+      users="$users $user"
+    fi
+  done <<- EOF
+	$(modified "$1")
+	EOF
+}
+
+pw_files_init()
+{
+  # declare sorted master.passwd files
+  shp="${ohp}.sorted"
+  shn="${ohn}.sorted"
+  sfp="${ofp}.sorted"
+  sfn="${ofn}.sorted"
+
+  # make sure finch's master.passwd file exists
+  if [ ! -e "$ofn" ]; then
+    cp "$ohn" "$ofn"
+  fi
+
+  # make sure previous entries exist
+  if [ ! -e "$ohp" ] || [ ! -e "$ofp" ]; then
+    cp "$ohn" "$ohp"
+    cp "$ofn" "$ofp"
+    new_install="true"
+  fi
+
+  # make sure sorted entries exist
+  for file in "$shp" "$shn" "$sfp" "$sfn"
+  do
+    if [ ! -e "$file" ]; then
+      touch "$file"
+      chmod 600 "$file"
+    fi
+  done
+
+  # sort passwd files
+  sort "$ohp" > "$shp"
+  sort "$ohn" > "$shn"
+  sort "$ofp" > "$sfp"
+  sort "$ofn" > "$sfn"
+}
+
+tr02()
+{
+  # trim the first 2 characters from each line
+  # echo "$1" | cut -c 3-
+  echo "$1" | sed -e 's/^. //'
+}
+
+remove_entry()
+{
+  # here, "user" means the first column in either the group or passwd file
+  # so "$user" could be a username, or a group name (if the group file)
+  user="$1"
+  grep -v "^${user}" "$ofn" > "${ofn}.new"
+  mv "${ofn}.new" "$ofn"
+}
+
+modify_entry()
+{
+  # here, "user" means the first column in either the group or passwd file
+  # so "$user" could be a username, or a group name (if the group file)
+  user="$1"; line="$2";
+
+  sed_seperators="% | # @ ~ ? = & ; ,"
+  for s in $sed_seperators
+  do
+    if [ ! "$(echo "$line" | grep "$s")" ];then
+      sed -i "" -e "s${s}^${user}.*${s}${line}${s}" "$ofn"
+      pw_patched="yes" && break
+    fi
+  done
+
+  if [ ! "$pw_patched" ]; then
+    echo "error: sed -i replacement failed. Could not modify passwd entry \"${user}\" in file \"$ofn\"."
+  fi
+}
+
+add_entry()
+{
+  # here, "user" means the first column in either the group or passwd file
+  # so "$user" could be a username, or a group name (if the group file)
+  user="$1"; line="$2";
+  echo "$line" >> "$ofn"
+}
+
+iterate_entries()
+{
+  cmd="$1"
+  list="$2"
+
+  while read line
+  do
+    # here, "user" means the first column in either the group or passwd file
+    # so "$user" could be a username, or a group name (if the group file)
+    user="$(echo "$line" | cut -d ':' -f 1)"
+
+    case "$cmd" in
+      remove) remove_entry "$user" ;;
+      modify) modify_entry "$user" "$line" ;;
+      add)    add_entry    "$user" "$line" ;;
+    esac
+
+  done <<- EOF
+	$list
+	EOF
+}
+
+pw_files_merge()
+{
+  # 1. look for changes in the host's file since last time
+  # 2. then look for changes between the host pw file and finch's pw file
+  # 3. update finch's file if missing any host-side changes
+
+  dhpn="$(diff_c0_terse "$shp" "$shn")"
+  if [ "$dhpn" ] || [ "$new_install" ]; then
+    # pw entries have changed in host, or it is the first time
+
+    # look in the current finch-host diff "$dfhn"
+    dfhn="$(diff_c0_terse "$sfn" "$shn")"
+    if [ "$dfhn" ]; then
+      # pw entries are different in finch than host
+
+      dhpn_removed="$(removed "$dhpn")"
+      if [ "$dhpn_removed" ]; then
+        # there are entries been deleted in the host
+        iterate_entries "remove" "$(tr02 "$dhpn_removed")"
+      fi
+
+      dfhn_modified="$(deduped_modifications "$dfhn")"
+      if [ "$dfhn_modified" ]; then
+        # there are entries been modified in the host
+        iterate_entries "modify" "$(tr02 "$dfhn_modified")"
+      fi
+
+      dfhn_added="$(added "$dfhn")"
+      if [ "$dfhn_added" ]; then
+        # there are new entries been added in the host
+        iterate_entries "add" "$(tr02 "$dfhn_added")"
+      fi
+    fi
+  fi
+}
+
+__finch_update_etc_group()
+{
+  unset pw_patched new_install;
+
+  # declare original /etc/group files
+  ohp="${finch_userdb_path}/group.host.prev"
+  ohn="${finch_userdb_path}/group.host"
+  ofp="${finch_userdb_path}/group.finch.prev"
+  ofn="${finch_userdb_path}/group.finch"
+
+  # Obtain files to merge
+  cp "/etc/group" "$ohn"
+  cp "${finch_realpath}/etc/group" "$ofn"
+
+  pw_files_init;
+  pw_files_merge;
+
+  if [ "$(diff "$ofp" "$ofn")" ]; then
+    # finch's /etc/group file has changed
+
+    # install the new group file
+    cp "$ofn" "${finch_realpath}/etc/group"
+
+    # the file was updated, so copy new --> prev
+    cp "$ohn" "$ohp"
+    cp "$ofn" "$ofp"
+  fi
+}
+
+__finch_update_etc_passwd_all()
+{
+  unset pw_patched new_install;
+
+  # declare original master.passwd files
+  ohp="${finch_userdb_path}/master.passwd.host.prev"
+  ohn="${finch_userdb_path}/master.passwd.host"
+  ofp="${finch_userdb_path}/master.passwd.finch.prev"
+  ofn="${finch_userdb_path}/master.passwd.finch"
+
+  # Obtain files to merge
+  cp "/etc/master.passwd" "$ohn"
+  cp "${finch_realpath}/etc/master.passwd" "$ofn"
+
+  pw_files_init;
+  pw_files_merge;
+
+  if [ "$(diff "$ofp" "$ofn")" ]; then
+    # if finch's master.passwd file has changed
+
+    # pwd_mkdb will move the file master.pw.finch, so make a copy of it first
+    cp "$ofn" "${finch_userdb_path}/master.passwd.finch.new"
+
+    # regenerate finch's other passwd files from master.pw.finch, and install them
+    pwd_mkdb -d "${finch_realpath}/etc" -p "${finch_userdb_path}/master.passwd.finch.new"
+
+    if [ "$?" = "0" ]; then
+      # the files were updated, so copy new --> prev
+      cp "$ohn" "$ohp"
+      cp "$ofn" "$ofp"
+    else
+      echo "pwd_mkdb: db generation failed. Possibly due to errors merging /etc/master.passwd"
+    fi
+  fi
+}
+
+__finch_merge_userdb()
+{
+  finch_userdb_path="${finch_realpath}/etc/finch.userdb.merge"
+
+  if [ ! -d "$finch_userdb_path" ]; then
+    mkdir -p "$finch_userdb_path"
+    chmod 700 "$finch_userdb_path"
+  fi
+
+  __finch_update_etc_group
+  __finch_update_etc_passwd_all
+}
+
+__testpw_init()
+{
+  rm -rf /tmp/pw_test/etc
+  mkdir -p /tmp/pw_test/etc
+  cp $(finch realpath)/etc/master.passwd /tmp/pw_test/etc/
+  cp $(finch realpath)/etc/group /tmp/pw_test/etc/
+}
+
+__testpw()
+{
+  finch_realpath=/tmp/pw_test
+  cd /tmp/pw_test/etc
+  echo passwd:
+  tail -4 ${finch_realpath}/etc/master.passwd
+  echo
+  echo group:
+  tail -4 ${finch_realpath}/etc/group
+  echo
+  set -x
+  __finch_update_pw_files
+  set +x
+  echo
+  echo passwd:
+  tail -4 ${finch_realpath}/etc/master.passwd
+  echo
+  echo group:
+  tail -4 ${finch_realpath}/etc/group
+}

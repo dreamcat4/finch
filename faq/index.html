@@ -440,53 +440,56 @@
 <a href="#toc_34">How do I install my own programs in Finch ?</a>
 </li>
 <li>
-<a href="#toc_35">How to install Zabbix in Finch ?</a>
+<a href="#toc_35">How to install zabbix in Finch ?</a>
 </li>
 <li>
-<a href="#toc_36">Can I run VirtualBox VMs in Finch ?</a>
+<a href="#toc_36">How to install webcamd in Finch ?</a>
 </li>
 <li>
-<a href="#toc_37">Can I run "bhyve" VMs in Finch ?</a>
+<a href="#toc_37">Can I run VirtualBox VMs in Finch ?</a>
 </li>
 <li>
-<a href="#toc_38">Can I run an Xserver / X-Windows in Finch ?</a>
+<a href="#toc_38">Can I run "bhyve" VMs in Finch ?</a>
 </li>
 <li>
-<a href="#toc_39">Finch's colorful prompt dissapears after 'su' or 'sh' command</a>
+<a href="#toc_39">Can I run an Xserver / X-Windows in Finch ?</a>
 </li>
 <li>
-<a href="#toc_40">I get a pkg error (pkg-ng)</a>
+<a href="#toc_40">Finch's colorful prompt dissapears after 'su' or 'sh' command</a>
 </li>
 <li>
-<a href="#toc_41">What is the 'subr' folder for?</a>
+<a href="#toc_41">I get a pkg error (pkg-ng)</a>
 </li>
 <li>
-<a href="#toc_42">Why are Finch scripts prefixed with 'ibps_*' ?</a>
-</li>
-</ul>
+<a href="#toc_42">What is the 'subr' folder for?</a>
 </li>
 <li>
-<a href="#toc_43">FreeBSD</a>
-<ul>
-<li>
-<a href="#toc_44">Isn't there already a FreeBSD port called Finch ?</a>
-</li>
-<li>
-<a href="#toc_45">Will you ever write a 'C' implementation of Finch ?</a>
-</li>
-<li>
-<a href="#toc_46">How do I trace program execution in FreeBSD ?</a>
+<a href="#toc_43">Why are Finch scripts prefixed with 'ibps_*' ?</a>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_47">Qjail</a>
+<a href="#toc_44">FreeBSD</a>
 <ul>
 <li>
-<a href="#toc_48">Why isn't "ping" working in my jails ?</a>
+<a href="#toc_45">Isn't there already a FreeBSD port called Finch ?</a>
 </li>
 <li>
-<a href="#toc_49">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</a>
+<a href="#toc_46">Will you ever write a 'C' implementation of Finch ?</a>
+</li>
+<li>
+<a href="#toc_47">How do I trace program execution in FreeBSD ?</a>
+</li>
+</ul>
+</li>
+<li>
+<a href="#toc_48">Qjail</a>
+<ul>
+<li>
+<a href="#toc_49">Why isn't "ping" working in my jails ?</a>
+</li>
+<li>
+<a href="#toc_50">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</a>
 </li>
 </ul>
 </li>
@@ -980,25 +983,29 @@ man ezjail
 
 <p><strong><em>Note:</em></strong> <sup>1</sup> It is not recommend to install the <code>ez-jail</code> program if you are also intending to use the qjail program. It is merely an example. Conflicts may arise in the <code>/usr/jails</code> directory between qjail and ezjail.</p>
 
-<h3 id="toc_35">How to install Zabbix in Finch ?</h3>
+<h3 id="toc_35">How to install zabbix in Finch ?</h3>
 
 <p>Link: <a href="https://gist.github.com/dreamcat4/9e938d53c29340c17958">Zabbix How-To</a>.</p>
 
-<h3 id="toc_36">Can I run VirtualBox VMs in Finch ?</h3>
+<h3 id="toc_36">How to install webcamd in Finch ?</h3>
+
+<p>Link: <a href="https://gist.github.com/dreamcat4/32fac8eb6f5db515b68d">webcamd How-To</a>.</p>
+
+<h3 id="toc_37">Can I run VirtualBox VMs in Finch ?</h3>
 
 <p>There has been some preliminary investigations into VirtualBox. The main obstacle is that VirtualBox requires kernel modules. And those must be build to be exactly the same kernel version as the host platform. The correct build environment with which to produce the right version of these VirtualBox kernel modules can be difficult to obtain. It may be necessary to first download a specific revision of FreeBSD source files under SCM, and &quot;make buildworld&quot;, or something similar. The matter is not helped in that VirtualBox is such a big and complicated piece of software, which in itself has many dependancies which can also take a very long time to compile.</p>
 
 <p>So, for a trouble-free life, the general recommendation is to try and avoid VirtualBox altogether and instead use FreeBSD jails wherever possible.</p>
 
-<h3 id="toc_37">Can I run &quot;bhyve&quot; VMs in Finch ?</h3>
+<h3 id="toc_38">Can I run &quot;bhyve&quot; VMs in Finch ?</h3>
 
 <p>In truth we simply aren&#39;t sure yet. Why not be the first to report back your findings? <strong><a href="/finch/support">Let us know</a></strong> what happens. Same goes for <code>xen</code> hypervisor.</p>
 
-<h3 id="toc_38">Can I run an Xserver / X-Windows in Finch ?</h3>
+<h3 id="toc_39">Can I run an Xserver / X-Windows in Finch ?</h3>
 
 <p>Again we don&#39;t know / haven&#39;t tried. <strong><a href="/finch/support">Let us know</a></strong> what happens if you have tried this.</p>
 
-<h3 id="toc_39">Finch&#39;s colorful prompt dissapears after &#39;su&#39; or &#39;sh&#39; command</h3>
+<h3 id="toc_40">Finch&#39;s colorful prompt dissapears after &#39;su&#39; or &#39;sh&#39; command</h3>
 
 <p>If you type <code>su &lt;user&gt;</code> or <code>sh</code>, your prompt may turn into <code>#</code>, or start looking like this:</p>
 
@@ -1012,7 +1019,7 @@ man ezjail
 <li>Use <code>sudo su -l</code> instead of plain <code>su</code>.</li>
 </ul>
 
-<h3 id="toc_40">I get a pkg error (pkg-ng)</h3>
+<h3 id="toc_41">I get a pkg error (pkg-ng)</h3>
 
 <p>There are many pkg errors. Unfortunately Finch cannot give direct support and in most cases you are likely to arrive at a solution far quicker by searching with google, or scouring the FreeBSD Forums.</p>
 
@@ -1028,19 +1035,19 @@ pkg: Unable to find catalogs
 
 <p>The cause of the problem was never discovered. But the solution was to exit from the current shell. And then instead run <code>pkg</code> from within an <em>interactive</em> login shell, for example <code>bash -l</code>.</p>
 
-<h3 id="toc_41">What is the &#39;subr&#39; folder for?</h3>
+<h3 id="toc_42">What is the &#39;subr&#39; folder for?</h3>
 
 <p>Most of the the Finch scripts are held within a folder named <code>subr</code>. It simply means <em>subroutines</em> and is (for multi-file sh scripts) an analogue of the &#39;C&#39; language&#39;s <code>include/</code>. The name subr is taken from FreeBSD&#39;s naming of it&#39;s <code>rc.conf</code> subroutines file <code>/etc/rc.subr</code> (see <code>man rc.subr</code>).</p>
 
-<h3 id="toc_42">Why are Finch scripts prefixed with &#39;ibps_*&#39; ?</h3>
+<h3 id="toc_43">Why are Finch scripts prefixed with &#39;ibps_*&#39; ?</h3>
 
 <p>For manageability, Finch is split into many individual subroutine files, each one with a specific purpose. Each subroutine source file is prefixed with an matrix identifier which can be any appropriate combination of these <code>ibps</code> identifiers, where <code>i=install</code>, <code>b=boot</code>, <code>p=profile</code>, and <code>s=shutdown</code>. In the special case of <code>__p__</code> we also load this same set for the functions needed by the Finch executable.</p>
 
 <p>It is a crude dependancy loading mechanism, which is performed by the script in <code>subr/_____load</code>. The purpose of the mechanism is to load only the necessary sub-set of subroutine files (as marked by the developer) and avoid loading functions that we don&#39;t need for that given task. Rather than all of them all of the time. Thus keeping load times under control for the various Finch shell scripts.</p>
 
-<h2 id="toc_43">FreeBSD</h2>
+<h2 id="toc_44">FreeBSD</h2>
 
-<h3 id="toc_44">Isn&#39;t there already a FreeBSD port called Finch ?</h3>
+<h3 id="toc_45">Isn&#39;t there already a FreeBSD port called Finch ?</h3>
 
 <p>Yes indeed. And we are aware of it. However on balance we decided that there was no significant harm to come from also using Finch as our project&#39;s name. For us &quot;Finch&quot; is by far the most apt, compelling, concise, and fit-for-purpose name. Nothing else could be found to serve as a good enough substitute or alternative. The other project can be found as <code>net-im/finch</code> in the FreeBSD ports tree. In most cases these 2 projects shouldn&#39;t present any major conflicts with one another. Mainly because:</p>
 
@@ -1056,7 +1063,7 @@ pkg: Unable to find catalogs
 
 <p>Will get you access back for the other one. Not too sure about the man pages though.</p>
 
-<h3 id="toc_45">Will you ever write a &#39;C&#39; implementation of Finch ?</h3>
+<h3 id="toc_46">Will you ever write a &#39;C&#39; implementation of Finch ?</h3>
 
 <p>No plans for doing this. But will support and co-operate with any developer(s) wishing to improve or re-purpose the Finch tool.</p>
 
@@ -1064,7 +1071,7 @@ pkg: Unable to find catalogs
 
 <p>Currently we use FreeBSD&#39;s stock <code>chroot (8)</code> command line program. But a specially compiled &#39;C&#39; program could be run setuid root, in theory calling FreeBSD&#39;s chroot(3) &#39;C&#39; function with regular user permissions. Which would open the possibility for finch to also work for ordinary user accounts.</p>
 
-<h3 id="toc_46">How do I trace program execution in FreeBSD ?</h3>
+<h3 id="toc_47">How do I trace program execution in FreeBSD ?</h3>
 
 <p>There are several tools available.</p>
 
@@ -1082,9 +1089,9 @@ ktrace
 
 <p>Of course, you may also be able to enable logging in the application itself.</p>
 
-<h2 id="toc_47">Qjail</h2>
+<h2 id="toc_48">Qjail</h2>
 
-<h3 id="toc_48">Why isn&#39;t &quot;ping&quot; working in my jails ?</h3>
+<h3 id="toc_49">Why isn&#39;t &quot;ping&quot; working in my jails ?</h3>
 
 <p>Because raw sockets (ICMP &quot;ping&quot;) is disabled by default. You can switch this feature on/off at any time.</p>
 
@@ -1095,7 +1102,7 @@ qjail config -k &quot;$jailname&quot;
 qjail config -K &quot;$jailname&quot;
 </code></pre>
 
-<h3 id="toc_49">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</h3>
+<h3 id="toc_50">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</h3>
 
 <p>This feature is documented both in the <code>qjail</code> manpage and the <code>jail</code> manpage. However it doesn&#39;t seem to work. Tested as broken on FreeBSD 9.1, 9.2, 10.0, on single &amp; dual core CPU.</p>
 

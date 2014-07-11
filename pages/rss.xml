@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-07-09</pubDate>
+    <pubDate>2014-07-11</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -101,82 +101,85 @@
 &lt;a href="#toc_26"&gt;zjail&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_27"&gt;warden&lt;/a&gt;
+&lt;a href="#toc_27"&gt;iocage&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_28"&gt;docker&lt;/a&gt;
+&lt;a href="#toc_28"&gt;warden&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_29"&gt;BSDploy&lt;/a&gt;
+&lt;a href="#toc_29"&gt;docker&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_30"&gt;Ansible&lt;/a&gt;
+&lt;a href="#toc_30"&gt;BSDploy&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_31"&gt;Chef Metal&lt;/a&gt;
+&lt;a href="#toc_31"&gt;Ansible&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_32"&gt;Jails for Continuus Integration&lt;/a&gt;
+&lt;a href="#toc_32"&gt;Chef Metal&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_33"&gt;cbsd&lt;/a&gt;
+&lt;a href="#toc_33"&gt;Jails for Continuus Integration&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_34"&gt;cbsd&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_34"&gt;How do I install my own programs in Finch ?&lt;/a&gt;
+&lt;a href="#toc_35"&gt;How do I install my own programs in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_35"&gt;How to install zabbix in Finch ?&lt;/a&gt;
+&lt;a href="#toc_36"&gt;How to install zabbix in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_36"&gt;How to install webcamd in Finch ?&lt;/a&gt;
+&lt;a href="#toc_37"&gt;How to install webcamd in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_37"&gt;Can I run VirtualBox VMs in Finch ?&lt;/a&gt;
+&lt;a href="#toc_38"&gt;Can I run VirtualBox VMs in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_38"&gt;Can I run "bhyve" VMs in Finch ?&lt;/a&gt;
+&lt;a href="#toc_39"&gt;Can I run "bhyve" VMs in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_39"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/a&gt;
+&lt;a href="#toc_40"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_40"&gt;Finch's colorful prompt dissapears after 'su' or 'sh' command&lt;/a&gt;
+&lt;a href="#toc_41"&gt;Finch's colorful prompt dissapears after 'su' or 'sh' command&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_41"&gt;I get a pkg error (pkg-ng)&lt;/a&gt;
+&lt;a href="#toc_42"&gt;I get a pkg error (pkg-ng)&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_42"&gt;What is the 'subr' folder for?&lt;/a&gt;
+&lt;a href="#toc_43"&gt;What is the 'subr' folder for?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_43"&gt;Why are Finch scripts prefixed with 'ibps_*' ?&lt;/a&gt;
+&lt;a href="#toc_44"&gt;Why are Finch scripts prefixed with 'ibps_*' ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_44"&gt;FreeBSD&lt;/a&gt;
+&lt;a href="#toc_45"&gt;FreeBSD&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_45"&gt;Isn't there already a FreeBSD port called Finch ?&lt;/a&gt;
+&lt;a href="#toc_46"&gt;Isn't there already a FreeBSD port called Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_46"&gt;Will you ever write a 'C' implementation of Finch ?&lt;/a&gt;
+&lt;a href="#toc_47"&gt;Will you ever write a 'C' implementation of Finch ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_47"&gt;How do I trace program execution in FreeBSD ?&lt;/a&gt;
+&lt;a href="#toc_48"&gt;How do I trace program execution in FreeBSD ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_48"&gt;Qjail&lt;/a&gt;
+&lt;a href="#toc_49"&gt;Qjail&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_49"&gt;Why isn't "ping" working in my jails ?&lt;/a&gt;
+&lt;a href="#toc_50"&gt;Why isn't "ping" working in my jails ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_50"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/a&gt;
+&lt;a href="#toc_51"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -566,7 +569,16 @@ fi
 
 &lt;p&gt;Zjail is written in Perl, and requires several Perl module dependancies. It doesn&amp;#39;t seem to be in the FreeBSD ports tree yet. Their project website is here: &lt;a href="http://sourceforge.net/projects/zjails/"&gt;http://sourceforge.net/projects/zjails/&lt;/a&gt;. It may be possible to try out zjail without it interfering with qjail and similar jails management tools. Since zjail does not use the &lt;code&gt;/usr/jails&lt;/code&gt; folder.&lt;/p&gt;
 
-&lt;h4 id="toc_27"&gt;warden&lt;/h4&gt;
+&lt;h4 id="toc_27"&gt;iocage&lt;/h4&gt;
+
+&lt;p&gt;A re-write of zjail in pure &lt;code&gt;sh&lt;/code&gt;, without the Perl dependancy. This project isn&amp;#39;t in the FreeBSD ports tree yet. Requires FreeBSD 10-RELEASE amd64.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="http://iocage.readthedocs.org/en/latest/index.html"&gt;http://iocage.readthedocs.org/en/latest/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/pannon/iocage"&gt;https://github.com/pannon/iocage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id="toc_28"&gt;warden&lt;/h4&gt;
 
 &lt;p&gt;Unfortunately (at time of writing) Warden isn&amp;#39;t available from the FreeBSD ports tree and FreeBSD pkgng repositories. We hope that situation may change in the future.&lt;/p&gt;
 
@@ -580,7 +592,7 @@ fi
 
 &lt;p&gt;^ Not sure which one of those is the upstream repository. You&amp;#39;d have to ask iXSystems.&lt;/p&gt;
 
-&lt;h4 id="toc_28"&gt;docker&lt;/h4&gt;
+&lt;h4 id="toc_29"&gt;docker&lt;/h4&gt;
 
 &lt;p&gt;Haven&amp;#39;t tried it. Python-based.&lt;/p&gt;
 
@@ -589,7 +601,7 @@ fi
 &lt;li&gt;&lt;a href="https://github.com/dotcloud/docker"&gt;https://github.com/dotcloud/docker&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id="toc_29"&gt;BSDploy&lt;/h4&gt;
+&lt;h4 id="toc_30"&gt;BSDploy&lt;/h4&gt;
 
 &lt;p&gt;Haven&amp;#39;t tried it. Python-based.&lt;/p&gt;
 
@@ -599,7 +611,7 @@ fi
 &lt;li&gt;&lt;a href="https://github.com/ployground/ploy_ezjail"&gt;https://github.com/ployground/ploy_ezjail&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id="toc_30"&gt;Ansible&lt;/h4&gt;
+&lt;h4 id="toc_31"&gt;Ansible&lt;/h4&gt;
 
 &lt;p&gt;Haven&amp;#39;t tried it. Python-based.&lt;/p&gt;
 
@@ -612,11 +624,11 @@ fi
 &lt;li&gt;&lt;a href="https://dan.langille.org/2013/12/23/accessing-freebsd-jails-over-openvpn/"&gt;https://dan.langille.org/2013/12/23/accessing-freebsd-jails-over-openvpn/&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id="toc_31"&gt;Chef Metal&lt;/h4&gt;
+&lt;h4 id="toc_32"&gt;Chef Metal&lt;/h4&gt;
 
 &lt;p&gt;Chef metal does not provide support for FreeBSD Jails at this time.&lt;/p&gt;
 
-&lt;h4 id="toc_32"&gt;Jails for Continuus Integration&lt;/h4&gt;
+&lt;h4 id="toc_33"&gt;Jails for Continuus Integration&lt;/h4&gt;
 
 &lt;p&gt;The Java-based continuus integration server &amp;#39;Jenkins&amp;#39; supports FreeBSD (but not jailsspecifically). There is also a Chef Cookbook for provisioning a Jenkins CI server which references the keyword &amp;#39;jails&amp;#39;.&lt;/p&gt;
 
@@ -627,7 +639,7 @@ fi
 &lt;li&gt;&lt;a href="https://github.com/opscode-cookbooks/jenkins"&gt;https://github.com/opscode-cookbooks/jenkins&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id="toc_33"&gt;cbsd&lt;/h4&gt;
+&lt;h4 id="toc_34"&gt;cbsd&lt;/h4&gt;
 
 &lt;p&gt;Yet another jails tool. Have not tried it. It&amp;#39;s available from &lt;code&gt;sysutils/cbsd&lt;/code&gt; in the FreeBSD ports tree. Or &lt;code&gt;pkg install cbsd&lt;/code&gt;.&lt;/p&gt;
 
@@ -638,7 +650,7 @@ fi
 &lt;li&gt;Github: &lt;a href="https://github.com/olevole/cbsd"&gt;https://github.com/olevole/cbsd&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id="toc_34"&gt;How do I install my own programs in Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_35"&gt;How do I install my own programs in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;Lets say you want to use &lt;code&gt;ezjail&lt;/code&gt;&lt;sup&gt;1&lt;/sup&gt; instead of &lt;code&gt;qjail&lt;/code&gt;. First we would install ezjail into our Finch system:&lt;/p&gt;
 
@@ -670,29 +682,29 @@ man ezjail
 
 &lt;p&gt;&lt;strong&gt;&lt;em&gt;Note:&lt;/em&gt;&lt;/strong&gt; &lt;sup&gt;1&lt;/sup&gt; It is not recommend to install the &lt;code&gt;ez-jail&lt;/code&gt; program if you are also intending to use the qjail program. It is merely an example. Conflicts may arise in the &lt;code&gt;/usr/jails&lt;/code&gt; directory between qjail and ezjail.&lt;/p&gt;
 
-&lt;h3 id="toc_35"&gt;How to install zabbix in Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_36"&gt;How to install zabbix in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;Link: &lt;a href="https://gist.github.com/dreamcat4/9e938d53c29340c17958"&gt;Zabbix How-To&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id="toc_36"&gt;How to install webcamd in Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_37"&gt;How to install webcamd in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;Link: &lt;a href="https://gist.github.com/dreamcat4/32fac8eb6f5db515b68d"&gt;webcamd How-To&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id="toc_37"&gt;Can I run VirtualBox VMs in Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_38"&gt;Can I run VirtualBox VMs in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;There has been some preliminary investigations into VirtualBox. The main obstacle is that VirtualBox requires kernel modules. And those must be build to be exactly the same kernel version as the host platform. The correct build environment with which to produce the right version of these VirtualBox kernel modules can be difficult to obtain. It may be necessary to first download a specific revision of FreeBSD source files under SCM, and &amp;quot;make buildworld&amp;quot;, or something similar. The matter is not helped in that VirtualBox is such a big and complicated piece of software, which in itself has many dependancies which can also take a very long time to compile.&lt;/p&gt;
 
 &lt;p&gt;So, for a trouble-free life, the general recommendation is to try and avoid VirtualBox altogether and instead use FreeBSD jails wherever possible.&lt;/p&gt;
 
-&lt;h3 id="toc_38"&gt;Can I run &amp;quot;bhyve&amp;quot; VMs in Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_39"&gt;Can I run &amp;quot;bhyve&amp;quot; VMs in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;In truth we simply aren&amp;#39;t sure yet. Why not be the first to report back your findings? &lt;strong&gt;&lt;a href="/finch/support"&gt;Let us know&lt;/a&gt;&lt;/strong&gt; what happens. Same goes for &lt;code&gt;xen&lt;/code&gt; hypervisor.&lt;/p&gt;
 
-&lt;h3 id="toc_39"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_40"&gt;Can I run an Xserver / X-Windows in Finch ?&lt;/h3&gt;
 
 &lt;p&gt;Again we don&amp;#39;t know / haven&amp;#39;t tried. &lt;strong&gt;&lt;a href="/finch/support"&gt;Let us know&lt;/a&gt;&lt;/strong&gt; what happens if you have tried this.&lt;/p&gt;
 
-&lt;h3 id="toc_40"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/h3&gt;
+&lt;h3 id="toc_41"&gt;Finch&amp;#39;s colorful prompt dissapears after &amp;#39;su&amp;#39; or &amp;#39;sh&amp;#39; command&lt;/h3&gt;
 
 &lt;p&gt;If you type &lt;code&gt;su &amp;lt;user&amp;gt;&lt;/code&gt; or &lt;code&gt;sh&lt;/code&gt;, your prompt may turn into &lt;code&gt;#&lt;/code&gt;, or start looking like this:&lt;/p&gt;
 
@@ -706,7 +718,7 @@ man ezjail
 &lt;li&gt;Use &lt;code&gt;sudo su -l&lt;/code&gt; instead of plain &lt;code&gt;su&lt;/code&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id="toc_41"&gt;I get a pkg error (pkg-ng)&lt;/h3&gt;
+&lt;h3 id="toc_42"&gt;I get a pkg error (pkg-ng)&lt;/h3&gt;
 
 &lt;p&gt;There are many pkg errors. Unfortunately Finch cannot give direct support and in most cases you are likely to arrive at a solution far quicker by searching with google, or scouring the FreeBSD Forums.&lt;/p&gt;
 
@@ -722,19 +734,19 @@ pkg: Unable to find catalogs
 
 &lt;p&gt;The cause of the problem was never discovered. But the solution was to exit from the current shell. And then instead run &lt;code&gt;pkg&lt;/code&gt; from within an &lt;em&gt;interactive&lt;/em&gt; login shell, for example &lt;code&gt;bash -l&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id="toc_42"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/h3&gt;
+&lt;h3 id="toc_43"&gt;What is the &amp;#39;subr&amp;#39; folder for?&lt;/h3&gt;
 
 &lt;p&gt;Most of the the Finch scripts are held within a folder named &lt;code&gt;subr&lt;/code&gt;. It simply means &lt;em&gt;subroutines&lt;/em&gt; and is (for multi-file sh scripts) an analogue of the &amp;#39;C&amp;#39; language&amp;#39;s &lt;code&gt;include/&lt;/code&gt;. The name subr is taken from FreeBSD&amp;#39;s naming of it&amp;#39;s &lt;code&gt;rc.conf&lt;/code&gt; subroutines file &lt;code&gt;/etc/rc.subr&lt;/code&gt; (see &lt;code&gt;man rc.subr&lt;/code&gt;).&lt;/p&gt;
 
-&lt;h3 id="toc_43"&gt;Why are Finch scripts prefixed with &amp;#39;ibps_*&amp;#39; ?&lt;/h3&gt;
+&lt;h3 id="toc_44"&gt;Why are Finch scripts prefixed with &amp;#39;ibps_*&amp;#39; ?&lt;/h3&gt;
 
 &lt;p&gt;For manageability, Finch is split into many individual subroutine files, each one with a specific purpose. Each subroutine source file is prefixed with an matrix identifier which can be any appropriate combination of these &lt;code&gt;ibps&lt;/code&gt; identifiers, where &lt;code&gt;i=install&lt;/code&gt;, &lt;code&gt;b=boot&lt;/code&gt;, &lt;code&gt;p=profile&lt;/code&gt;, and &lt;code&gt;s=shutdown&lt;/code&gt;. In the special case of &lt;code&gt;__p__&lt;/code&gt; we also load this same set for the functions needed by the Finch executable.&lt;/p&gt;
 
 &lt;p&gt;It is a crude dependancy loading mechanism, which is performed by the script in &lt;code&gt;subr/_____load&lt;/code&gt;. The purpose of the mechanism is to load only the necessary sub-set of subroutine files (as marked by the developer) and avoid loading functions that we don&amp;#39;t need for that given task. Rather than all of them all of the time. Thus keeping load times under control for the various Finch shell scripts.&lt;/p&gt;
 
-&lt;h2 id="toc_44"&gt;FreeBSD&lt;/h2&gt;
+&lt;h2 id="toc_45"&gt;FreeBSD&lt;/h2&gt;
 
-&lt;h3 id="toc_45"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_46"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/h3&gt;
 
 &lt;p&gt;Yes indeed. And we are aware of it. However on balance we decided that there was no significant harm to come from also using Finch as our project&amp;#39;s name. For us &amp;quot;Finch&amp;quot; is by far the most apt, compelling, concise, and fit-for-purpose name. Nothing else could be found to serve as a good enough substitute or alternative. The other project can be found as &lt;code&gt;net-im/finch&lt;/code&gt; in the FreeBSD ports tree. In most cases these 2 projects shouldn&amp;#39;t present any major conflicts with one another. Mainly because:&lt;/p&gt;
 
@@ -750,7 +762,7 @@ pkg: Unable to find catalogs
 
 &lt;p&gt;Will get you access back for the other one. Not too sure about the man pages though.&lt;/p&gt;
 
-&lt;h3 id="toc_46"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_47"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/h3&gt;
 
 &lt;p&gt;No plans for doing this. But will support and co-operate with any developer(s) wishing to improve or re-purpose the Finch tool.&lt;/p&gt;
 
@@ -758,7 +770,7 @@ pkg: Unable to find catalogs
 
 &lt;p&gt;Currently we use FreeBSD&amp;#39;s stock &lt;code&gt;chroot (8)&lt;/code&gt; command line program. But a specially compiled &amp;#39;C&amp;#39; program could be run setuid root, in theory calling FreeBSD&amp;#39;s chroot(3) &amp;#39;C&amp;#39; function with regular user permissions. Which would open the possibility for finch to also work for ordinary user accounts.&lt;/p&gt;
 
-&lt;h3 id="toc_47"&gt;How do I trace program execution in FreeBSD ?&lt;/h3&gt;
+&lt;h3 id="toc_48"&gt;How do I trace program execution in FreeBSD ?&lt;/h3&gt;
 
 &lt;p&gt;There are several tools available.&lt;/p&gt;
 
@@ -776,9 +788,9 @@ ktrace
 
 &lt;p&gt;Of course, you may also be able to enable logging in the application itself.&lt;/p&gt;
 
-&lt;h2 id="toc_48"&gt;Qjail&lt;/h2&gt;
+&lt;h2 id="toc_49"&gt;Qjail&lt;/h2&gt;
 
-&lt;h3 id="toc_49"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/h3&gt;
+&lt;h3 id="toc_50"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/h3&gt;
 
 &lt;p&gt;Because raw sockets (ICMP &amp;quot;ping&amp;quot;) is disabled by default. You can switch this feature on/off at any time.&lt;/p&gt;
 
@@ -789,7 +801,7 @@ qjail config -k &amp;quot;$jailname&amp;quot;
 qjail config -K &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_50"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/h3&gt;
+&lt;h3 id="toc_51"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/h3&gt;
 
 &lt;p&gt;This feature is documented both in the &lt;code&gt;qjail&lt;/code&gt; manpage and the &lt;code&gt;jail&lt;/code&gt; manpage. However it doesn&amp;#39;t seem to work. Tested as broken on FreeBSD 9.1, 9.2, 10.0, on single &amp;amp; dual core CPU.&lt;/p&gt;
 

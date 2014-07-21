@@ -547,9 +547,6 @@ printf &quot;none\nbe\n&quot; | qjail config -v &quot;$jailname&quot;
 # Enable unix sockets
 qjail config -k &quot;$jailname&quot;
 
-# Update local pkgng database, to avoid &#39;failed checksum&#39; for &#39;pkg install&#39;
-pkg update -f
-
 # Start the jail
 qjail start &quot;$jailname&quot;
 

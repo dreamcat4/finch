@@ -440,9 +440,6 @@ qjail create -f finch-ssh -4 &quot;$jail_ip,$jail_loopback&quot; &quot;$jailname
 # Enable unix sockets
 qjail config -k &quot;$jailname&quot;
 
-# Update local pkgng database, to avoid &#39;failed checksum&#39; for &#39;pkg install&#39;
-pkg update -f
-
 # Start the jail
 qjail start &quot;$jailname&quot;
 </code></pre>
@@ -486,9 +483,6 @@ qjail create -f finch-ssh-root -4 &quot;$jail_ip,$jail_loopback&quot; &quot;$jai
 
 # Enable unix sockets
 qjail config -k &quot;$jailname&quot;
-
-# Update local pkgng database, to avoid &#39;failed checksum&#39; for &#39;pkg install&#39;
-pkg update -f
 
 # Start the jail
 qjail start &quot;$jailname&quot;

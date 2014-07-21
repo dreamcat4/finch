@@ -376,9 +376,6 @@ qjail create -4 &quot;$jail_ip,$jail_loopback&quot; &quot;$jailname&quot;
 
 # Enable unix sockets
 qjail config -k &quot;$jailname&quot;
-
-# Update local pkgng database, to avoid &#39;failed checksum&#39; for &#39;pkg install&#39;
-pkg update -f
 </code></pre>
 
 <h2 id="toc_3">Login for the first time</h2>
@@ -395,7 +392,10 @@ passwd
 
 <h2 id="toc_4">Example: Install a webserver</h2>
 
-<pre><code># Either a) install with pkg-ng
+<pre><code># Update local pkgng database, to avoid &#39;failed checksum&#39; for &#39;pkg install&#39;
+pkg update -f
+
+# Either a) install with pkg-ng
 ASSUME_ALWAYS_YES=&quot;yes&quot; pkg install &quot;nginx&quot;    
 
 # Or b) compile from the ports tree

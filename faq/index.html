@@ -973,6 +973,9 @@ fi
 <pre><code># Enter the finch chroot environment, as root
 sudo finch chroot
 
+# Update local pkgng database, to avoid &#39;failed checksum&#39; for &#39;pkg install&#39;
+pkg update -f
+
 # Either a) install with pkg-ng
 ASSUME_ALWAYS_YES=&quot;yes&quot; pkg install &quot;ezjail&quot;
 

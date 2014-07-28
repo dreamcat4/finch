@@ -484,24 +484,30 @@
 <a href="#toc_48">FreeBSD</a>
 <ul>
 <li>
-<a href="#toc_49">Isn't there already a FreeBSD port called Finch ?</a>
+<a href="#toc_49">Why is there no FreeBSD port for this software?</a>
 </li>
 <li>
-<a href="#toc_50">Will you ever write a 'C' implementation of Finch ?</a>
+<a href="#toc_50">Why call this project 'finch' if there is already and existing FreeBSD port called 'finch' ?</a>
 </li>
 <li>
-<a href="#toc_51">How do I trace program execution in FreeBSD ?</a>
+<a href="#toc_51">How can I resolve a naming conflict with 'netim/finch' ?</a>
+</li>
+<li>
+<a href="#toc_52">Will you ever write a 'C' implementation of Finch ?</a>
+</li>
+<li>
+<a href="#toc_53">How do I trace program execution in FreeBSD ?</a>
 </li>
 </ul>
 </li>
 <li>
-<a href="#toc_52">Qjail</a>
+<a href="#toc_54">Qjail</a>
 <ul>
 <li>
-<a href="#toc_53">Why isn't "ping" working in my jails ?</a>
+<a href="#toc_55">Why isn't "ping" working in my jails ?</a>
 </li>
 <li>
-<a href="#toc_54">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</a>
+<a href="#toc_56">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</a>
 </li>
 </ul>
 </li>
@@ -1083,23 +1089,47 @@ pkg: Unable to find catalogs
 
 <h2 id="toc_48">FreeBSD</h2>
 
-<h3 id="toc_49">Isn&#39;t there already a FreeBSD port called Finch ?</h3>
+<h3 id="toc_49">Why is there no FreeBSD port for this software?</h3>
 
-<p>Yes indeed. And we are aware of it. However on balance we decided that there was no significant harm to come from also using Finch as our project&#39;s name. For us &quot;Finch&quot; is by far the most apt, compelling, concise, and fit-for-purpose name. Nothing else could be found to serve as a good enough substitute or alternative. The other project can be found as <code>net-im/finch</code> in the FreeBSD ports tree. In most cases these 2 projects shouldn&#39;t present any major conflicts with one another. Mainly because:</p>
+<p>Because the &quot;finch&quot; name is already being used by another FreeBSD port &quot;netim/finch&quot;. So having a FreeBSD of this software too would require some reasonable solution in order to address the naming conflict.</p>
+
+<p>Reasons why it does not matter:</p>
 
 <ul>
-<li>The types of systems which need <em>this finch</em> are restricted FreeBSD distributions. For example FreeNAS and NAS4Free. That usually means they are unable to install FreeBSD ports or pkgs including the <em>finch IM client</em>.</li>
-<li>And moreso, server-oriented FreeBSD distributions don&#39;t usually include the huge number of X-Windows dependencies that are required by the <em>finch IM client</em>. Which makes the <em>finch im client</em> very difficult and / or unlikely to be installed on the same systems where <em>this finch</em> is also installed.</li>
+<li><p>Because at time of release { FreeNAS, NAS4Free, pfSense } do not natively support installation of software via FreeBSD ports or pkgng. And this accounts for 99% of the Finch user base.</p></li>
+<li><p>The fetch based online installer works fine. And can also uninstall a copy of Finch, removing all traces of it.</p></li>
+<li><p>The same fetch based mechanism also provides rapid updates via <code>finch update</code>. This helps with rapid bug fixing. Which is not possible with FreeBSD ports / packages.</p></li>
+<li><p>For others who already have a working FreeBSD ports or pkgng, then the usefulness of Finch is largely mitigated. Indeed, a lot of the Finch source code exists to work around quirks in { FreeNAS, NAS4Free, pfSense }. And that is not needed if you have the official FreeBSD.</p></li>
 </ul>
 
-<p>It is also worth mentioning that as a system utility, we install <em>this finch</em> into <code>/usr/sbin/</code>. Wheras the <em>finch IM client</em> installs it&#39;s <em>finch command</em> into <code>/usr/local/bin/</code>. Which, by lucky co-incidence avoids any direct files conflict. The <em>finch im client</em> happens to be the one with a lower priority on FreeBSD&#39;s default search path. We recommend renaming the <em>im client</em> executable by symlinking it to <code>finch-im</code>. For example:</p>
+<p>Reasons why it should matter:</p>
+
+<ul>
+<li>It would improve collaboration with others involved in the FreeBSD project.</li>
+<li>Easier to install on the official version of FreeBSD.</li>
+<li>Easier for platform providers to include / bundle Finch into their own official builds.</li>
+</ul>
+
+<h3 id="toc_50">Why call this project &#39;finch&#39; if there is already and existing FreeBSD port called &#39;finch&#39; ?</h3>
+
+<p>On balance we decided that there was no significant harm to come from also using Finch as our project&#39;s name. Because &quot;Finch&quot; is the most apt, compelling, concise, and fit-for-purpose name.</p>
+
+<p>As a frequently-used command, we needed something that is both easily remembered, and easy to type on the keyboard. So <code>finch</code> fitted the bill perfectly.</p>
+
+<p>The other project can be found as <code>net-im/finch</code> in the FreeBSD ports tree. It shouldn&#39;t present any major conflict as in most cases it&#39;s not likely that both are installed.</p>
+
+<h3 id="toc_51">How can I resolve a naming conflict with &#39;netim/finch&#39; ?</h3>
+
+<p>As a system utility, we install <em>this finch</em> into <code>/usr/sbin/</code>. Wheras the <em>finch IM client</em> installs it&#39;s <em>finch command</em> into <code>/usr/local/bin/</code>. That already avoids any direct files conflict.</p>
+
+<p>The <em>finch im client</em> happens to be the one with a lower priority on FreeBSD&#39;s default search path. So we recommend renaming the other project&#39;s executable by symlinking it as <code>finch-im</code>. For example:</p>
 
 <pre><code>$ ln -sf &quot;/usr/local/bin/finch&quot; &quot;/usr/local/bin/finch-im&quot;
 </code></pre>
 
-<p>Will get you access back for the other one. Not too sure about the man pages though.</p>
+<p>For man pages <code>man 1 finch</code> will display the man page for the net-im client. Wheras <code>man 8 finch</code> will display <a href="manpage">the manpage for this project</a>.</p>
 
-<h3 id="toc_50">Will you ever write a &#39;C&#39; implementation of Finch ?</h3>
+<h3 id="toc_52">Will you ever write a &#39;C&#39; implementation of Finch ?</h3>
 
 <p>No plans for doing this. But will support and co-operate with any developer(s) wishing to improve or re-purpose the Finch tool.</p>
 
@@ -1107,7 +1137,7 @@ pkg: Unable to find catalogs
 
 <p>Currently we use FreeBSD&#39;s stock <code>chroot (8)</code> command line program. But a specially compiled &#39;C&#39; program could be run setuid root, in theory calling FreeBSD&#39;s chroot(3) &#39;C&#39; function with regular user permissions. Which would open the possibility for finch to also work for ordinary user accounts.</p>
 
-<h3 id="toc_51">How do I trace program execution in FreeBSD ?</h3>
+<h3 id="toc_53">How do I trace program execution in FreeBSD ?</h3>
 
 <p>There are several tools available.</p>
 
@@ -1125,9 +1155,9 @@ ktrace
 
 <p>Of course, you may also be able to enable logging in the application itself.</p>
 
-<h2 id="toc_52">Qjail</h2>
+<h2 id="toc_54">Qjail</h2>
 
-<h3 id="toc_53">Why isn&#39;t &quot;ping&quot; working in my jails ?</h3>
+<h3 id="toc_55">Why isn&#39;t &quot;ping&quot; working in my jails ?</h3>
 
 <p>Because raw sockets (ICMP &quot;ping&quot;) is disabled by default. You can switch this feature on/off at any time.</p>
 
@@ -1138,7 +1168,7 @@ qjail config -k &quot;$jailname&quot;
 qjail config -K &quot;$jailname&quot;
 </code></pre>
 
-<h3 id="toc_54">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</h3>
+<h3 id="toc_56">qjail config -p <cpuset> gives the following error - jail: test: unknown parameter: cpuset.id</h3>
 
 <p>This feature is documented both in the <code>qjail</code> manpage and the <code>jail</code> manpage. However it doesn&#39;t seem to work. Tested as broken on FreeBSD 9.1, 9.2, 10.0, on single &amp; dual core CPU.</p>
 

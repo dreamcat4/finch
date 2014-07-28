@@ -171,24 +171,30 @@
 &lt;a href="#toc_48"&gt;FreeBSD&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_49"&gt;Isn't there already a FreeBSD port called Finch ?&lt;/a&gt;
+&lt;a href="#toc_49"&gt;Why is there no FreeBSD port for this software?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_50"&gt;Will you ever write a 'C' implementation of Finch ?&lt;/a&gt;
+&lt;a href="#toc_50"&gt;Why call this project 'finch' if there is already and existing FreeBSD port called 'finch' ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_51"&gt;How do I trace program execution in FreeBSD ?&lt;/a&gt;
+&lt;a href="#toc_51"&gt;How can I resolve a naming conflict with 'netim/finch' ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_52"&gt;Will you ever write a 'C' implementation of Finch ?&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;a href="#toc_53"&gt;How do I trace program execution in FreeBSD ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_52"&gt;Qjail&lt;/a&gt;
+&lt;a href="#toc_54"&gt;Qjail&lt;/a&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;a href="#toc_53"&gt;Why isn't "ping" working in my jails ?&lt;/a&gt;
+&lt;a href="#toc_55"&gt;Why isn't "ping" working in my jails ?&lt;/a&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;a href="#toc_54"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/a&gt;
+&lt;a href="#toc_56"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/a&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -770,23 +776,47 @@ pkg: Unable to find catalogs
 
 &lt;h2 id="toc_48"&gt;FreeBSD&lt;/h2&gt;
 
-&lt;h3 id="toc_49"&gt;Isn&amp;#39;t there already a FreeBSD port called Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_49"&gt;Why is there no FreeBSD port for this software?&lt;/h3&gt;
 
-&lt;p&gt;Yes indeed. And we are aware of it. However on balance we decided that there was no significant harm to come from also using Finch as our project&amp;#39;s name. For us &amp;quot;Finch&amp;quot; is by far the most apt, compelling, concise, and fit-for-purpose name. Nothing else could be found to serve as a good enough substitute or alternative. The other project can be found as &lt;code&gt;net-im/finch&lt;/code&gt; in the FreeBSD ports tree. In most cases these 2 projects shouldn&amp;#39;t present any major conflicts with one another. Mainly because:&lt;/p&gt;
+&lt;p&gt;Because the &amp;quot;finch&amp;quot; name is already being used by another FreeBSD port &amp;quot;netim/finch&amp;quot;. So having a FreeBSD of this software too would require some reasonable solution in order to address the naming conflict.&lt;/p&gt;
+
+&lt;p&gt;Reasons why it does not matter:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;The types of systems which need &lt;em&gt;this finch&lt;/em&gt; are restricted FreeBSD distributions. For example FreeNAS and NAS4Free. That usually means they are unable to install FreeBSD ports or pkgs including the &lt;em&gt;finch IM client&lt;/em&gt;.&lt;/li&gt;
-&lt;li&gt;And moreso, server-oriented FreeBSD distributions don&amp;#39;t usually include the huge number of X-Windows dependencies that are required by the &lt;em&gt;finch IM client&lt;/em&gt;. Which makes the &lt;em&gt;finch im client&lt;/em&gt; very difficult and / or unlikely to be installed on the same systems where &lt;em&gt;this finch&lt;/em&gt; is also installed.&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Because at time of release { FreeNAS, NAS4Free, pfSense } do not natively support installation of software via FreeBSD ports or pkgng. And this accounts for 99% of the Finch user base.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The fetch based online installer works fine. And can also uninstall a copy of Finch, removing all traces of it.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The same fetch based mechanism also provides rapid updates via &lt;code&gt;finch update&lt;/code&gt;. This helps with rapid bug fixing. Which is not possible with FreeBSD ports / packages.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;For others who already have a working FreeBSD ports or pkgng, then the usefulness of Finch is largely mitigated. Indeed, a lot of the Finch source code exists to work around quirks in { FreeNAS, NAS4Free, pfSense }. And that is not needed if you have the official FreeBSD.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;It is also worth mentioning that as a system utility, we install &lt;em&gt;this finch&lt;/em&gt; into &lt;code&gt;/usr/sbin/&lt;/code&gt;. Wheras the &lt;em&gt;finch IM client&lt;/em&gt; installs it&amp;#39;s &lt;em&gt;finch command&lt;/em&gt; into &lt;code&gt;/usr/local/bin/&lt;/code&gt;. Which, by lucky co-incidence avoids any direct files conflict. The &lt;em&gt;finch im client&lt;/em&gt; happens to be the one with a lower priority on FreeBSD&amp;#39;s default search path. We recommend renaming the &lt;em&gt;im client&lt;/em&gt; executable by symlinking it to &lt;code&gt;finch-im&lt;/code&gt;. For example:&lt;/p&gt;
+&lt;p&gt;Reasons why it should matter:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;It would improve collaboration with others involved in the FreeBSD project.&lt;/li&gt;
+&lt;li&gt;Easier to install on the official version of FreeBSD.&lt;/li&gt;
+&lt;li&gt;Easier for platform providers to include / bundle Finch into their own official builds.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id="toc_50"&gt;Why call this project &amp;#39;finch&amp;#39; if there is already and existing FreeBSD port called &amp;#39;finch&amp;#39; ?&lt;/h3&gt;
+
+&lt;p&gt;On balance we decided that there was no significant harm to come from also using Finch as our project&amp;#39;s name. Because &amp;quot;Finch&amp;quot; is the most apt, compelling, concise, and fit-for-purpose name.&lt;/p&gt;
+
+&lt;p&gt;As a frequently-used command, we needed something that is both easily remembered, and easy to type on the keyboard. So &lt;code&gt;finch&lt;/code&gt; fitted the bill perfectly.&lt;/p&gt;
+
+&lt;p&gt;The other project can be found as &lt;code&gt;net-im/finch&lt;/code&gt; in the FreeBSD ports tree. It shouldn&amp;#39;t present any major conflict as in most cases it&amp;#39;s not likely that both are installed.&lt;/p&gt;
+
+&lt;h3 id="toc_51"&gt;How can I resolve a naming conflict with &amp;#39;netim/finch&amp;#39; ?&lt;/h3&gt;
+
+&lt;p&gt;As a system utility, we install &lt;em&gt;this finch&lt;/em&gt; into &lt;code&gt;/usr/sbin/&lt;/code&gt;. Wheras the &lt;em&gt;finch IM client&lt;/em&gt; installs it&amp;#39;s &lt;em&gt;finch command&lt;/em&gt; into &lt;code&gt;/usr/local/bin/&lt;/code&gt;. That already avoids any direct files conflict.&lt;/p&gt;
+
+&lt;p&gt;The &lt;em&gt;finch im client&lt;/em&gt; happens to be the one with a lower priority on FreeBSD&amp;#39;s default search path. So we recommend renaming the other project&amp;#39;s executable by symlinking it as &lt;code&gt;finch-im&lt;/code&gt;. For example:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$ ln -sf &amp;quot;/usr/local/bin/finch&amp;quot; &amp;quot;/usr/local/bin/finch-im&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Will get you access back for the other one. Not too sure about the man pages though.&lt;/p&gt;
+&lt;p&gt;For man pages &lt;code&gt;man 1 finch&lt;/code&gt; will display the man page for the net-im client. Wheras &lt;code&gt;man 8 finch&lt;/code&gt; will display &lt;a href="manpage"&gt;the manpage for this project&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h3 id="toc_50"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/h3&gt;
+&lt;h3 id="toc_52"&gt;Will you ever write a &amp;#39;C&amp;#39; implementation of Finch ?&lt;/h3&gt;
 
 &lt;p&gt;No plans for doing this. But will support and co-operate with any developer(s) wishing to improve or re-purpose the Finch tool.&lt;/p&gt;
 
@@ -794,7 +824,7 @@ pkg: Unable to find catalogs
 
 &lt;p&gt;Currently we use FreeBSD&amp;#39;s stock &lt;code&gt;chroot (8)&lt;/code&gt; command line program. But a specially compiled &amp;#39;C&amp;#39; program could be run setuid root, in theory calling FreeBSD&amp;#39;s chroot(3) &amp;#39;C&amp;#39; function with regular user permissions. Which would open the possibility for finch to also work for ordinary user accounts.&lt;/p&gt;
 
-&lt;h3 id="toc_51"&gt;How do I trace program execution in FreeBSD ?&lt;/h3&gt;
+&lt;h3 id="toc_53"&gt;How do I trace program execution in FreeBSD ?&lt;/h3&gt;
 
 &lt;p&gt;There are several tools available.&lt;/p&gt;
 
@@ -812,9 +842,9 @@ ktrace
 
 &lt;p&gt;Of course, you may also be able to enable logging in the application itself.&lt;/p&gt;
 
-&lt;h2 id="toc_52"&gt;Qjail&lt;/h2&gt;
+&lt;h2 id="toc_54"&gt;Qjail&lt;/h2&gt;
 
-&lt;h3 id="toc_53"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/h3&gt;
+&lt;h3 id="toc_55"&gt;Why isn&amp;#39;t &amp;quot;ping&amp;quot; working in my jails ?&lt;/h3&gt;
 
 &lt;p&gt;Because raw sockets (ICMP &amp;quot;ping&amp;quot;) is disabled by default. You can switch this feature on/off at any time.&lt;/p&gt;
 
@@ -825,7 +855,7 @@ qjail config -k &amp;quot;$jailname&amp;quot;
 qjail config -K &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;h3 id="toc_54"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/h3&gt;
+&lt;h3 id="toc_56"&gt;qjail config -p &lt;cpuset&gt; gives the following error - jail: test: unknown parameter: cpuset.id&lt;/h3&gt;
 
 &lt;p&gt;This feature is documented both in the &lt;code&gt;qjail&lt;/code&gt; manpage and the &lt;code&gt;jail&lt;/code&gt; manpage. However it doesn&amp;#39;t seem to work. Tested as broken on FreeBSD 9.1, 9.2, 10.0, on single &amp;amp; dual core CPU.&lt;/p&gt;
 
@@ -1181,7 +1211,7 @@ finch-bootstrap --help
 &lt;pre&gt;&lt;code&gt;finch-bootstrap install --dir &amp;quot;/path/to/finch&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Replacing &lt;code&gt;/path/to/finch&lt;/code&gt; with the full path on your local drives, where you would like to install Finch.&lt;/p&gt;
+&lt;p&gt;Replacing &lt;code&gt;/path/to/finch&lt;/code&gt; with the full path where Finch is to be installed.&lt;/p&gt;
 
 &lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="install/#toc_12"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
 
@@ -1190,6 +1220,7 @@ finch-bootstrap --help
 &lt;li&gt;&lt;p&gt;You will be guided through the remainder of the installation process.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Follow carefully any instructions being printed by the &lt;code&gt;finch-bootstrap&lt;/code&gt; installer. Those messages provide valuable information about your Finch setup and help to avoid any unnecessary issues.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;On FreeNAS / NAS4Free it is worth configuring SMTP email in the Web GUI. Be sure to also set a &amp;quot;to:&amp;quot; destination address in your SMARTD email settings. Then you will be emailed progress updates during installation.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Why no FreeBSD port / pkg? Reason: Finch is downloaded directly over the internet to your host system. For more details please search the &lt;a href="faq"&gt;FAQ&lt;/a&gt;. And look for a section entitled: &lt;em&gt;Why is there no FreeBSD port for this software?&lt;/em&gt;.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id="toc_5"&gt;What next ?&lt;/h2&gt;
@@ -1336,6 +1367,8 @@ finch-bootstrap --help
 &lt;pre&gt;&lt;code&gt;finch-bootstrap install --dir &amp;quot;/path/to/finch&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;Replacing &lt;code&gt;/path/to/finch&lt;/code&gt; with the full path where Finch is to be installed.&lt;/p&gt;
+
 &lt;p&gt;Then follow the platform-specific &lt;strong&gt;&lt;em&gt;&lt;a href="#toc_12"&gt;post install steps&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;, which you must do after running the installer.&lt;/p&gt;
 
 &lt;ul&gt;
@@ -1343,6 +1376,7 @@ finch-bootstrap --help
 &lt;li&gt;&lt;p&gt;You will be guided through the remainder of the installation process.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Follow carefully any instructions being printed by the &lt;code&gt;finch-bootstrap&lt;/code&gt; installer. Those messages provide valuable information about your Finch setup and help to avoid any unnecessary issues.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;On FreeNAS / NAS4Free it is worth configuring SMTP email in the Web GUI. Be sure to also set a &amp;quot;to:&amp;quot; destination address in your SMARTD email settings. Then you will be emailed progress updates during installation.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Why no FreeBSD port / pkg? Reason: Finch is downloaded directly over the internet to your host system. For more details please search the &lt;a href="faq"&gt;FAQ&lt;/a&gt;. And look for a section entitled: &lt;em&gt;Why is there no FreeBSD port for this software?&lt;/em&gt;.&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h1 id="toc_1"&gt;Installer options&lt;/h1&gt;

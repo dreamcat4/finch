@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-07-28</pubDate>
+    <pubDate>2014-07-29</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -1167,13 +1167,15 @@ $finch_realpath/var/distfiles/finch/
 
 &lt;h2 id="toc_3"&gt;Requirements&lt;/h2&gt;
 
+&lt;p&gt;Host hardware (or VMs) must be running one of the following operating systems.&lt;/p&gt;
+
 &lt;p&gt;&lt;strong&gt;Supported Platforms:&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;FreeNAS 9.2 or higher&lt;/li&gt;
 &lt;li&gt;NAS4Free 9.2 or higher&lt;/li&gt;
 &lt;li&gt;pfSense 2.2 or higher &lt;sup&gt;1,2&lt;/sup&gt;&lt;/li&gt;
-&lt;li&gt;FreeBSD 10.0-RELEASE &lt;sup&gt;3,4&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;FreeBSD&lt;sup&gt;3,4&lt;/sup&gt; 10.0-RELEASE or higher.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;strong&gt;Disk space requirements:&lt;/strong&gt;&lt;/p&gt;
@@ -1186,7 +1188,7 @@ $finch_realpath/var/distfiles/finch/
 
 &lt;p&gt;Requirements for pfSense: &lt;sup&gt;1&lt;/sup&gt; 1GB disk image or larger (not &amp;quot;512mb&amp;quot;). &lt;sup&gt;2&lt;/sup&gt; pfSense 2.2 might not be finished, and still in beta testing. You need a 2.2-beta snapshot dated 16th-April-2014 or newer. Available at &lt;a href="http://snapshots.pfsense.org/"&gt;http://snapshots.pfsense.org/&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Requirements for &lt;em&gt;other FreeBSD platforms not listed above&lt;/em&gt;: &lt;sup&gt;3&lt;/sup&gt; The host system must have writable, persistent &lt;code&gt;/etc&lt;/code&gt; and &lt;code&gt;/usr/local&lt;/code&gt; folders. &lt;sup&gt;4&lt;/sup&gt; The host system either needs a working &lt;code&gt;pkg-ng&lt;/code&gt; system, or the packages &lt;code&gt;sudo&lt;/code&gt; and &lt;code&gt;bash&lt;/code&gt; pre-installed.&lt;/p&gt;
+&lt;p&gt;Requirements for &lt;em&gt;FreeBSD&lt;/em&gt;: &lt;sup&gt;3&lt;/sup&gt; The host system must have writable, persistent &lt;code&gt;/etc&lt;/code&gt; and &lt;code&gt;/usr/local&lt;/code&gt; folders. &lt;sup&gt;4&lt;/sup&gt; The host system either needs a working &lt;code&gt;pkg-ng&lt;/code&gt; system, or the packages &lt;code&gt;sudo&lt;/code&gt; and &lt;code&gt;bash&lt;/code&gt; pre-installed.&lt;/p&gt;
 
 &lt;h2 id="toc_4"&gt;Install&lt;/h2&gt;
 

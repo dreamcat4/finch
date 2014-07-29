@@ -573,19 +573,12 @@ echo &quot;ping -c 1 google.com&quot; | qjail console &quot;$jailname&quot;
 
 <p>Assigning a jail to specific CPU cores. For example: a quad-core CPU: <code>cpuset -g | grep -o -e mask.*</code> should say <code>mask: 0, 1, 2, 3</code></p>
 
-<pre><code># If the cpu set parameter is written: &quot;0&quot;, &quot;0-3&quot; &quot;2,3&quot; etc.
-
-# Then assign this jail to the first core
-jail_cpu_set=&quot;0&quot;
-qjail config -p &quot;$jail_cpu_set&quot; &quot;$jailname&quot;
-</code></pre>
-
-<p>This feature is documented in <code>man jail</code>. However it didn&#39;t work during testing. The error was:</p>
+<p>This feature is documented in <code>man jail</code>. However it does not work. The error is:</p>
 
 <pre><code>jail: $jailname: unknown parameter: cpuset.id`
 </code></pre>
 
-<p>I&#39;m not entirely certain if the syntax shown above is correct. Please <strong><a href="/finch/support">let us know</a></strong> if you have found otherwise.</p>
+<p>This feature is currently known to be broken in jail(8) and has recently been removed from qjail. It may or may not be fixed again in some undetermined future FreeBSD update (10.1 / 11).</p>
 
 <p>However even if you can successfully use this feature to limit the core count, the outcome isn&#39;t a very efficient way to allocate resources. It may be better to use <code>rctl</code> instead. Which requires <code>options racct</code> and <code>options rctl</code> to be compiled into the kernel.</p>
 

@@ -3069,19 +3069,12 @@ echo &amp;quot;ping -c 1 google.com&amp;quot; | qjail console &amp;quot;$jailnam
 
 &lt;p&gt;Assigning a jail to specific CPU cores. For example: a quad-core CPU: &lt;code&gt;cpuset -g | grep -o -e mask.*&lt;/code&gt; should say &lt;code&gt;mask: 0, 1, 2, 3&lt;/code&gt;&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# If the cpu set parameter is written: &amp;quot;0&amp;quot;, &amp;quot;0-3&amp;quot; &amp;quot;2,3&amp;quot; etc.
-
-# Then assign this jail to the first core
-jail_cpu_set=&amp;quot;0&amp;quot;
-qjail config -p &amp;quot;$jail_cpu_set&amp;quot; &amp;quot;$jailname&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This feature is documented in &lt;code&gt;man jail&lt;/code&gt;. However it didn&amp;#39;t work during testing. The error was:&lt;/p&gt;
+&lt;p&gt;This feature is documented in &lt;code&gt;man jail&lt;/code&gt;. However it does not work. The error is:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;jail: $jailname: unknown parameter: cpuset.id`
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;I&amp;#39;m not entirely certain if the syntax shown above is correct. Please &lt;strong&gt;&lt;a href="/finch/support"&gt;let us know&lt;/a&gt;&lt;/strong&gt; if you have found otherwise.&lt;/p&gt;
+&lt;p&gt;This feature is currently known to be broken in jail(8) and has recently been removed from qjail. It may or may not be fixed again in some undetermined future FreeBSD update (10.1 / 11).&lt;/p&gt;
 
 &lt;p&gt;However even if you can successfully use this feature to limit the core count, the outcome isn&amp;#39;t a very efficient way to allocate resources. It may be better to use &lt;code&gt;rctl&lt;/code&gt; instead. Which requires &lt;code&gt;options racct&lt;/code&gt; and &lt;code&gt;options rctl&lt;/code&gt; to be compiled into the kernel.&lt;/p&gt;
 </description>

@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-07-30</pubDate>
+    <pubDate>2014-12-11</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -2623,14 +2623,11 @@ df
 
 &lt;h3 id="toc_8"&gt;Jail - sharedfs mount&lt;/h3&gt;
 
-&lt;p&gt;The above example showed you how to mount ONE dataset to ONE jail only. But what if you have a data partition which you want to share amongst ALL of your jails?&lt;/p&gt;
+&lt;p&gt;Qjail mounts one special folder, sharedfs as read-only inside all of your jails. So if you wish you may create additional folder(s) inside the directory /usr/jails/sharedfs and that user data can be seen (read-only) inside all of your jails.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;dataset=&amp;quot;disk0/new_dataset&amp;quot;
-zfs create &amp;quot;$dataset&amp;quot;
-zfs set mountpoint=&amp;quot;${finch_realpath}/usr/jails/sharedfs/${dataset}&amp;quot; &amp;quot;$dataset&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So what if you have a data partition which you want to share amongst ALL of your jails?&lt;/p&gt;
 
-&lt;p&gt;Will mount the dataset &lt;em&gt;inside&lt;/em&gt; qjail&amp;#39;s &lt;code&gt;sharedfs&lt;/code&gt; folder. That is a special folder which qjail mounts in all of your jails. So no need to add any extra jail fstab entry. There is already the necessary line for sharedfs in every jail&amp;#39;s fstab file.&lt;/p&gt;
+&lt;p&gt;Unfortunately it is the case that mount_nullfs does not traverse filesystem boundaries and therefore you cannot place mounts inside the sharedfs folder and see them from inside the jail&amp;#39;s perspective. The folders do not remap. So you will need to create individual fstab entries for each folder, in each jail&amp;#39;s fstab file where you wish to mount them. (as per the previous section).&lt;/p&gt;
 
 &lt;h2 id="toc_9"&gt;Non-zfs&lt;/h2&gt;
 

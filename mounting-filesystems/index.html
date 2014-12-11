@@ -484,14 +484,11 @@ df
 
 <h3 id="toc_8">Jail - sharedfs mount</h3>
 
-<p>The above example showed you how to mount ONE dataset to ONE jail only. But what if you have a data partition which you want to share amongst ALL of your jails?</p>
+<p>Qjail mounts one special folder, sharedfs as read-only inside all of your jails. So if you wish you may create additional folder(s) inside the directory /usr/jails/sharedfs and that user data can be seen (read-only) inside all of your jails.</p>
 
-<pre><code>dataset=&quot;disk0/new_dataset&quot;
-zfs create &quot;$dataset&quot;
-zfs set mountpoint=&quot;${finch_realpath}/usr/jails/sharedfs/${dataset}&quot; &quot;$dataset&quot;
-</code></pre>
+<p>So what if you have a data partition which you want to share amongst ALL of your jails?</p>
 
-<p>Will mount the dataset <em>inside</em> qjail&#39;s <code>sharedfs</code> folder. That is a special folder which qjail mounts in all of your jails. So no need to add any extra jail fstab entry. There is already the necessary line for sharedfs in every jail&#39;s fstab file.</p>
+<p>Unfortunately it is the case that mount_nullfs does not traverse filesystem boundaries and therefore you cannot place mounts inside the sharedfs folder and see them from inside the jail&#39;s perspective. The folders do not remap. So you will need to create individual fstab entries for each folder, in each jail&#39;s fstab file where you wish to mount them. (as per the previous section).</p>
 
 <h2 id="toc_9">Non-zfs</h2>
 

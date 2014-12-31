@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-12-11</pubDate>
+    <pubDate>2014-12-31</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -3260,7 +3260,7 @@ cat &amp;quot;/var/db/finch/installed&amp;quot;
 FreeBSD-amd64-9.2-RELEASE
 
 # Put here the newer target version of FreeBSD you want to upgrade to
-new_release=&amp;quot;10.0-RELEASE&amp;quot;
+new_release=&amp;quot;9.3-RELEASE&amp;quot;
 
 # We must spoof the &amp;quot;uname&amp;quot; command to match the contents of &amp;quot;/var/db/finch/installed&amp;quot;
 # to avoid the error &amp;quot;freebsd-update: Cannot upgrade from X.Y-RELEASE to itself&amp;quot;.

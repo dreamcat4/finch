@@ -1,0 +1,39 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+cat_etc_profile_frag ()
+{
+  # Prepend full path if we source outside chroot
+  if [ "$1" = "n4f" ]; then
+    local fp="$finch_realpath"
+
+  # Just source "/etc/finch/profile" when inside the chroot
+  elif [ "$1" = "finch" ]; then
+    local fp=""
+  fi
+
+	cat <<- EOF
+	
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	finch_loadpath="$fp/etc/finch"
+	. "$fp/etc/finch/profile"
+	
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	EOF
+}
+
+# Source the etc/finch/profile shell functions
+append_etc_profile ()
+{
+  if [ ! "$(cat "/etc/profile" | grep -e "\. .${finch_realpath}/etc/finch/profile.")" ]; then
+    cat_etc_profile_frag "n4f"   >> "/etc/profile"
+  fi
+
+  if [ ! "$(cat "$finch_realpath/etc/profile" | grep -e "\. ./etc/finch/profile.")" ]; then
+    cat_etc_profile_frag "finch" >> "$finch_realpath/etc/profile"
+  fi
+
+}
+

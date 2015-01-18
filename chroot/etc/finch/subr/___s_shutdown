@@ -1,0 +1,54 @@
+
+continue_shutdown_in_chroot ()
+{
+  system_rcd_services "stop";
+}
+
+kill_zombies_in_chroot ()
+{
+  echo "finch/shutdown: Normal rc.d shutdown has not quit all daemons / processes."
+  echo "These processes are still blocking, with open files in $finch_realpath/dev:"
+  lsof -D i +c 0 -R -w -- /dev/* | grep -v lsof
+
+  echo "Sending \"HUP\" \"TERM\" \"INT\" \"QUIT\" \"KILL\" to all zombies. 2 second intervals"
+  for signal in "HUP" "TERM" "INT" "QUIT" "KILL"
+  do
+    echo "Sending $signal..."
+    kill -s $signal  `lsof -D i -w -t $1/*` 2> /dev/null
+    [ "$?" = "0" ] || break;
+    sleep 2;
+  done
+  echo "All processes dead. Didn't need to $signal."
+}
+
+shutdown_system ()
+{
+  # Make best-efforts to stop all running rc.d services
+  chroot "$finch_realpath" "/etc/finch/shutdown" "chroot_continue_shutdown" 2>&1 | tee -a "$finch_logpath/shutdown.log" | logger -t "$0 shutdown" 2>&1;
+
+  echo "Unmounting finch/dev."
+  umount -f "$finch_realpath/dev" || devfs_busy="1"
+
+  if [ "$devfs_busy" ]; then
+    chroot "$finch_realpath" "/etc/finch/shutdown" "chroot_kill_zombies" 2>&1 | tee -a "$finch_logpath/shutdown.log" | logger -t "$0 shutdown" 2>&1;
+    umount -f "$finch_realpath/dev"
+  fi
+
+  if [ -e "$finch_realpath/etc/fstab" ]; then
+    unset finch_fstab
+    while read line; do
+      if [ "$line" ]; then
+        line=`echo "$line" | awk '{gsub(/[[:blank:]]+/," "); print}'`
+        finch_fstab="$finch_fstab      $line\n"
+      fi
+		done <<- EOF
+		`awk '!/^[[:blank:]#]*$/ {sub(/^[[:blank:]]*/,""); sub(/[[:blank:]]*(#.*)?$/,""); print}' "$finch_realpath/etc/fstab" | awk NF`
+		EOF
+
+    if [ "$finch_fstab" ]; then
+      umount -a -F "$finch_realpath/etc/fstab"
+    fi
+  fi
+
+  echo "\"$finch_realpath\" shutdown complete."
+}

@@ -1,0 +1,106 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+# ! WARNING - DO NOT MODIFY THIS FILE !
+#   CHANGES YOU MAKE HERE WILL BE OVERWRITTEN BY FINCH ON NEXT UPDATE
+# 
+#   SOLUTION - CREATE a FILE NAMED "etc/finch/profile.custom" INSIDE THIS FOLDER.
+#   OR CREATE A SYMLINK NAMED "profile.custom" TO YOUR FILE ALLONGSIDE THIS FILE.
+#   If found / exists, "profile.custom" file will also be sourced at the end of
+#   this file and take priority over the Finch default settings.
+# 
+# etc/finch/profile:
+#    Login script helper functions, exports, and a better default LSCOLORS.
+# 
+# These helper functions only work for root user or members of group "wheel"
+# These are bourne shell functions and do not work on csh/tcsh style shells.
+# 
+# Be sure to invoke an INTERACTIVE shell for access to these functions.
+# This can be done with "bash -l" for the Bash shell.
+# 
+# Shell scripts should start with the esape "#!/bin/sh" and source the site
+# wide login profile on a subsequent line with ". /etc/profile".
+# 
+# Other shells please refer to their manpages for how to source /etc/profile.
+# 
+# The relevant configuration is performed automatically during finch postinit
+# we append a few necessary lines in the host system's global "/etc/profile".
+# 
+
+# Give ls a nicer colors
+export CLICOLOR="YES"
+export LSCOLORS="ExFxAgHbCxGfEdHbGbHeHa"
+alias ls="ls -F -G -a"
+
+if [ "$0" = "su" ] || [ "${0%[^a-zA-Z]su}" != "${0}" ]; then
+  _shell="$SHELL"
+else
+  _shell="$0"
+fi
+
+# The Finch PS1 prompt for Bash and FreeBSD's /bin/sh
+if [ "$_shell" = "sh" ] || [ "${_shell%[^a-zA-Z]sh}" != "${_shell}" ]; then
+  # /bin/sh
+  _b1=""
+  _ansi_esc=""
+  _b2=""
+  _user="$(id -un)"
+
+  if [ "$(uname -iv | grep -i nas4free)" ] && [ "$(id -un)" != "root" ]; then
+    _no_W_dir="1" # there is a bug in NAS4Free-9.2 where /bin/sh barfs on \W for non-root users
+  fi
+
+else
+  # bash
+  _b1="\["
+  _ansi_esc="\e"
+  _b2="\]"
+  _user="\u"
+fi
+
+case "$TERM" in
+  xterm*)
+    br="${_b1}${_ansi_esc}[1;38m${_b2}"
+    bu="${_b1}${_ansi_esc}[1;34m${_b2}"
+    bl="${_b1}${_ansi_esc}[1;30m${_b2}"
+    gr="${_b1}${_ansi_esc}[1;32m${_b2}"
+    cl="${_b1}${_ansi_esc}[0m${_b2}"
+    ;;
+esac
+
+if [ "$_no_W_dir" ]; then
+  if [ -e "/etc/finch/postinit" ]; then
+    # finch
+    PS1="${br}\h${cl} ${bl}${_user}${cl}${br}^>${cl} "
+  else
+    # host
+    PS1="${br}\h${cl} ${bl}${_user}~\$${cl} "
+  fi
+else
+  if [ -e "/etc/finch/postinit" ]; then
+    # finch
+    PS1="${br}\h${cl} ${bu}\W${cl}${br}/${cl} ${bl}${_user}${cl}${br}^>${cl} "
+  else
+    # host
+    PS1="${br}\h${cl} ${bu}\W${cl}${bl}/${cl} ${bl}${_user}~\$${cl} "
+  fi
+fi
+
+# Set the default EDITOR and PAGER
+export EDITOR="nano"
+export PAGER="less"
+
+# Load finch. We only do this for "root" or "wheel" users
+if [ "$finch_loadpath" ]; then
+  if [ `id -u` = 0 ] || [ "`id -G -n | grep wheel`" ]; then
+    _____finch_subr_category="profile"
+    . "$finch_loadpath/subr/_____load"
+
+  else
+    echo "error (1): finch only works for \"root\" or \"wheel\" users."
+  fi
+
+  if [ -e "$finch_loadpath/profile.custom" ]; then
+    . "$finch_loadpath/profile.custom"
+  fi
+fi
+

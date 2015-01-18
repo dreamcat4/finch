@@ -1,0 +1,59 @@
+portsnap_override(8) --  Run portsnap from a shell script (no tty).
+==================================================
+
+## SYNOPSIS
+
+Temporarily circumvent the tty check within `portsnap fetch` subcommand.
+
+    portsnap override on
+    portsnap override off
+
+## DESCRIPTION
+
+Prevent `portsnap fetch` from failing when run from a shell script (no tty). Future
+versions of _portsnap_ may break this script and render it useless.
+
+To use, just add the following "guard" lines before & after portsnap:
+
+    portsnap_override "on";
+    portsnap "fetch";
+    portsnap_override "off";
+
+`portsnap_override on` will perform the following actions:
+
+    # Rewrite portsnap's "fetch" argument "cron".
+    mv "portsnap" --> "portsnap-interactive"
+    ln -s "portsnap-non-interactive" --> "portsnap"
+    # Override the "jot" command to return a random delay of 0 seconds.
+    mv "jot" --> "jot-disabled"
+    ln -s "jot_0" --> "jot"
+
+`portsnap_override off` just returns the _portsnap_ and _jot_ programs back to
+normal.
+
+WARNING !!! You must remove this override straight afterwards!
+
+Do not cancel, kill or abort parent script or process (_kill_ / CTRL\^C)
+whilst portsnap is running. That will leave two important FreeBSD programs
+temporarily disabled: _/usr/bin/jot_, and _/usr/sbin/portsnap_. The
+situation can be rectified by issuing $ portsnap_override "off" manually.
+
+Tested with: $FreeBSD: release/9.1.0/usr.sbin/portsnap/portsnap/portsnap.sh 235310 2012-05-12 00:49:14Z eadler $
+
+## FILES
+
+    /usr/sbin/portsnap_override
+    /usr/sbin/portsnap_non_interactive
+    /usr/bin/jot_0
+
+## BUGS
+
+Can be reported at <http://dreamcat4.github.io/finch/support>.
+
+## SEE ALSO
+    portsnap(8), jot(1)
+
+## Created by
+
+Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
+

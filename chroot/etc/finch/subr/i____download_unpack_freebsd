@@ -1,0 +1,131 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+# # How to manually download distfiles when RELEASE isn't out yet (e.g. "FreeBSD-10-RC5")
+# sh
+# mkdir "freebsd-distfiles-10-RC5" && cd "freebsd-distfiles-10-RC5"
+# for distfile in "base.txz" "doc.txz" "games.txz" "kernel.txz" "lib32.txz" "src.txz"
+# do
+#   fetch "ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/10.0-RC5/$distfile"
+# done
+
+fetch_distfiles ()
+{
+  local protocol="$1"
+
+  cd "$finch_realpath/var/distfiles/finch"
+
+  # fetch "ftp://ftp.freebsd.org/pub/FreeBSD/releases/$(uname -m)/$(uname -m)/$(uname -r | cut -d- -f1-2)/MANIFEST" || exit 1
+  # fetch "ftp://ftp.freebsd.org/pub/FreeBSD/releases/${_arch}/${_arch}/${_maj_min_rel}/MANIFEST" || install_failed "couldn't fetch files from ftp.freebsd.org"
+  fetch -T 30 "${protocol}://ftp.freebsd.org/${_ftp_dir}/MANIFEST" || return 1
+
+  for distfile in $distfiles
+  do
+    # fetch "ftp://ftp.freebsd.org/pub/FreeBSD/releases/$(uname -m)/$(uname -m)/$(uname -r | cut -d- -f1-2)/$distfile"
+    # fetch "ftp://ftp.freebsd.org/pub/FreeBSD/releases/${_arch}/${_arch}/${_maj_min_rel}/$distfile"
+    fetch -T 30 -v "${protocol}://ftp.freebsd.org/${_ftp_dir}/$distfile" || return 1
+  done
+}
+
+check_distfiles ()
+{
+  if [ -e "$finch_realpath/var/distfiles/finch/MANIFEST" ]; then
+    if [ "$(command -v sha256)" ]; then
+      cd "$finch_realpath/var/distfiles/finch"
+
+      for distfile in $distfiles
+      do
+        if [ -e "$finch_realpath/var/distfiles/finch/$distfile" ]; then
+          sha256_in_manifest="$(grep "$distfile" "$finch_realpath/var/distfiles/finch/MANIFEST" | cut -f 2)"
+          sha256_downloaded="$(sha256 -q "$finch_realpath/var/distfiles/finch/$distfile")"
+
+          if [ "$sha256_downloaded" != "$sha256_in_manifest" ]; then
+            return 1
+          fi
+        fi
+      done
+    else
+      echo "Can't check checksums. There is no command 'sha256' found on \$PATH=$PATH."
+    fi
+  else
+    echo "No MANIFEST file, we have no sha256 checksums to check against."
+  fi
+}
+
+retry_active_ftp ()
+{
+  echo "cleaning failed distfiles."
+  rm -Rf   "$finch_realpath/var/distfiles/finch"
+  mkdir -p "$finch_realpath/var/distfiles/finch"
+
+  echo "http fetch failure. Trying ftp in active mode."
+  export FTP_PASSIVE_MODE=NO
+  fetch_distfiles "ftp" || ( unset FTP_PASSIVE_MODE; return 1 )
+  unset FTP_PASSIVE_MODE
+  check_distfiles  || return 1
+}
+
+retry_passive_ftp ()
+{
+  echo "cleaning failed distfiles."
+  rm -Rf   "$finch_realpath/var/distfiles/finch"
+  mkdir -p "$finch_realpath/var/distfiles/finch"
+
+  echo "active ftp fetch failure. Trying ftp in passive mode."
+  fetch_distfiles "ftp" || install_failed "couldn't fetch files from ftp.freebsd.org"
+  check_distfiles || install_failed "bad checksum for distfile $distfile"
+}
+
+unpack_distfiles ()
+{
+  cd "$finch_realpath/var/distfiles/finch"
+
+  for distfile in $distfiles
+  do
+    tar xf "$finch_realpath/var/distfiles/finch/$distfile" -C "$finch_realpath" || return 1
+  done
+}
+
+download_unpack_freebsd ()
+{
+  # # Download the FreeBSD base image and distribution files.
+  distfiles="base.txz doc.txz games.txz kernel.txz src.txz"
+
+  if [ "$(uname -m)" = "amd64" ]; then
+    distfiles="$distfiles lib32.txz"
+  fi
+
+  if [ "$(ls "$finch_realpath/var/distfiles/finch/"*.txz 2> /dev/null)" ]; then
+    check_distfiles;
+
+    for txz_distfile in "$finch_realpath/var/distfiles/finch/"*.txz
+    do
+      # tar xf "$finch_realpath/var/distfiles/finch/$txz_distfile"   -C "$finch_realpath"
+      tar xf "$txz_distfile" -C "$finch_realpath"
+    done
+    
+  else
+    mkdir -p "$finch_realpath/var/distfiles/finch/"
+    cd "$finch_realpath/var/distfiles/finch"
+
+    _arch="$(uname -m)"
+    _maj_min_rel="$(uname -r | cut -d- -f1-2)"
+    _rel="$(uname -r | cut -d- -f2)"
+
+    # Write breadcrumb FreeBSD version
+    # touch "$finch_realpath/var/distfiles/finch/FreeBSD-$(uname -m)-$(uname -r | cut -d- -f1-2)"
+    touch "$finch_realpath/var/distfiles/finch/FreeBSD-${_arch}-${_maj_min_rel}"
+
+    if [ "$_rel" = "RELEASE" ]; then
+      _ftp_dir="pub/FreeBSD/releases/${_arch}/${_arch}/${_maj_min_rel}"
+    fi
+
+    if [ "$_rel" = "STABLE" ] || [ "$_rel" = "CURRENT" ]; then
+      _ftp_dir="pub/FreeBSD/snapshots/${_arch}/${_arch}/${_maj_min_rel}"
+    fi
+
+    fetch_distfiles "http" && check_distfiles || retry_active_ftp || retry_passive_ftp;
+    unpack_distfiles || install_failed "couldn't unpack distfiles from ftp.freebsd.org"
+  fi
+}
+

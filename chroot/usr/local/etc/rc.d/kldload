@@ -1,0 +1,67 @@
+#!/bin/sh
+#
+# $FreeBSD$
+# Created by: Dreamcat4 <dreamcat4@gmail.com>
+#
+# PROVIDE: kldload
+# BEFORE:  DAEMON
+# KEYWORD: shutdown
+#
+# To enable kldload, just type: sysrc kldload_enable=YES
+# 
+# Settings:
+# kldload_modules=<list of kernel modules to load>
+# kldload_extra_search_paths=<list of non-default paths to kernel modules>
+# 
+# kldload_default_search_paths="/boot/kernel /boot/modules /usr/local/modules"
+#
+
+. /etc/rc.subr
+
+name=kldload
+rcvar=kldload_enable
+load_rc_config ${name}
+
+: ${kldload_enable:=NO}
+: ${kldload_default_search_paths=/var/boot/host/kernel /var/boot/host/modules /boot/kernel /boot/modules /usr/local/modules}
+
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+
+kldload_start()
+{
+  echo "Starting ${name}."
+
+  for module in $kldload_modules
+  do
+    module="$(basename -s .ko ${module}).ko"
+
+    if [ "$(echo "$module" | grep "^/")" ]; then
+      if [ -e "$module" ]; then
+        found_module="$module"
+      fi
+    else
+      for path in $kldload_default_search_paths $kldload_extra_search_paths
+      do
+        if [ -e "${path}/${module}" ]; then
+          found_module="${path}/${module}"
+          break
+        fi
+      done
+    fi
+
+    if [ "$found_module" ]; then
+      kldload -n "$found_module"
+    else
+      echo "kldload: kernel module: $module not found."
+    fi
+  done
+}
+
+kldload_stop()
+{
+  # Do nothing
+  echo "Stopping ${name}."
+}
+
+run_rc_command "$1"

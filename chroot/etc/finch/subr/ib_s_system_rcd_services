@@ -1,0 +1,35 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+etc_rc_sanitize_output ()
+{
+  if [ "$(grep "date" "/etc/rc")" ]; then
+    sed -i "" -e "s/date//" "$finch_realpath/etc/rc"
+    sed -i "" -e "s/echo ''//" "$finch_realpath/etc/rc"
+    sed -i "" -e "s/echo '.'//" "$finch_realpath/etc/rc.shutdown"
+  fi
+}
+
+system_rcd_services ()
+{
+  rc_cmd="$1"
+
+  export __p__finch_caller="1"
+
+  if [ "$rc_cmd" = "start" ]; then
+    # For webcamd rc.d script (devd does not work in a jail)
+    sysrc devd_enable=NO
+
+    # For service devfs start
+    sysrc devfs_load_rulesets=YES
+
+    # Start rc.d scripts
+    sh "/etc/rc" > /dev/tty
+
+  elif [ "$rc_cmd" = "stop" ]; then
+    sh "/etc/rc.shutdown" > /dev/tty
+  fi
+
+  unset __p__finch_caller
+
+}

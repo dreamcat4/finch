@@ -1,0 +1,43 @@
+
+
+# v1
+# "elegance-theme" :
+#   "use" : "theme"
+# "danmidwood-ruhoh-theme" :
+#   "use" : "theme"
+# v?
+# "ruhoh-pure-blog" :
+#   "use" : "theme"
+
+
+"theme-bootstrap-2" :
+  "use" : "theme"
+
+# "theme-bootstrap-3" :
+#   "use" : "theme"
+
+# "theme-zurb" :
+#   "use" : "theme"
+
+# "theme-twitter" :
+#   "use" : "theme"
+
+# "theme-twitter-v2" :
+#   "use" : "theme"
+
+# compiled_path : "compiled"
+
+# compiled_path : "output"
+
+
+asset_pipeline:
+  enable: true
+
+# Make pages the root folder
+# nested hierachy
+"pages" :
+  "permalink" : "/:relative_path/:filename"
+# flat hierachy
+# "pages" :
+#   "permalink" : "/:filename"
+

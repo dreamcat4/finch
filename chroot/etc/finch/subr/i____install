@@ -1,0 +1,249 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+_s2hms()
+{
+  # _s2hms:
+  #   Seconds to Hours, Minutes, Seconds
+  local S=${1}
+
+  local h=`expr $S / 3600`
+  local m=`expr $S % 3600 / 60`
+  local s=`expr $S % 60`
+
+  if [ "$h" -gt "0" ]; then
+    printf "%d hours, %d minutes, %d seconds" $h $m $s
+
+  elif [ "$m" -gt "0" ]; then
+    printf "%d minutes, %d seconds" $m $s
+
+  else
+    printf "%d seconds" $s
+  fi
+}
+
+cat_rc_conf_frag ()
+{
+	cat <<- EOF
+
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+
+	${realpath_namified_rcvar}_enable="YES"
+
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+
+	EOF
+}
+
+cat_pfsense_root_profile_frag ()
+{
+	cat <<- EOF
+
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+
+	if [ \`env | grep SSH_TTY | wc -l\` -gt 0 ] || [ \`env | grep cons25 | wc -l\` -gt 0 ]; then
+	  /etc/rc.initial
+	  exit
+	fi
+
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+
+	EOF
+}
+
+hr ()
+{
+  echo "******************************************************************************"
+}
+
+install_failed ()
+{
+  touch "$finch_realpath/var/db/finch/install_failed"
+  start_time_secs="$(cat "$finch_realpath/var/db/finch/installing...")"
+
+  if [ "$1" ]; then
+    fail_reason="$1"
+  else
+    fail_reason="unspecified"
+  fi
+
+  echo "finch: installation has failed."
+  echo " fail reason: $fail_reason"
+  _fail_date="$(date)"
+  echo "finch: installation failed on: $_fail_date"
+
+
+  # Figure out how long it took
+  end_time_secs=`date -j -f "%a %b %d %T %Z %Y" "$(date)" "+%s"`
+  elapsed_time_secs=`expr $end_time_secs - $start_time_secs`
+  elapsed_h_m_s=`_s2hms "$elapsed_time_secs"`
+
+
+  hr;
+  cat_body_install_failed "$fail_reason";
+  hr;
+
+  try_send_email "install_failed" "$fail_reason";
+  rm "$finch_realpath/var/db/finch/installing..."
+  exit 1
+}
+
+install_system ()
+{
+  set +x
+  echo ""
+  hr;
+  echo "Installation started on `date`"
+  hr;
+  echo ""
+  set -x
+  start_time_secs=`date -j -f "%a %b %d %T %Z %Y" "$(date)" "+%s"`
+  echo "start_time_secs" > "$finch_realpath/var/db/finch/installing..."
+
+  if [ -e "/etc/prd.revision" ]; then
+    echo "Nas4Free Revision: $(cat "/etc/prd.revision")"
+  fi
+
+  if [ "`uname -iv | grep -i nas4free`" ] || [ "`uname -iv | grep -i pfsense`" ]; then
+    [ "$(mount | grep -e "on / " | grep read-only)" ] && mount -o noatime -u -w "/"
+    link_libc;
+    link_libintl;
+  fi
+
+  try_send_email "install_started";
+
+  download_unpack_freebsd;
+  cat "$finch_realpath/COPYRIGHT"
+  create_system_folders;
+  disable_enable_rcd_services;
+  etc_rc_sanitize_output;
+
+  # Remount the root "/" filesystem as read-write
+  [ "$(mount | grep -e "on / " | grep read-only)" ] && mount -o noatime -u -w "/"
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    ln -sf "/bin/sh" "/usr/local/bin/bash"
+  fi
+
+  pw user add -D -C "/etc/pw.conf" -s "/usr/local/bin/bash" -w no -k "/var/empty"
+
+  __finch_refresh_basic;
+  mount_system;
+  copy_kernel_modules;
+
+  chroot "$finch_realpath" "/etc/finch/postinit" "chroot_continue_install" 2>&1 | tee -a "$finch_logpath/install.log" | logger -t "$0 install" 2>&1;
+  [ "$?" = "1" ] && exit 1
+
+  # Remount the root "/" filesystem as read-write
+  [ "$(mount | grep -e "on / " | grep read-only)" ] && mount -o noatime -u -w "/"
+
+  if [ "`uname -iv | grep -i nas4free`" ] || [ "`uname -iv | grep -i pfsense`" ]; then
+    link_sudo;
+  fi
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    append_pfsense_shutdown;
+    link_bash;
+    link_nano;
+  fi
+
+  if [ ! "`uname -iv | grep -i freenas`" ] && [ ! "`uname -iv | grep -i nas4free`" ] && [ ! "`uname -iv | grep -i pfsense`" ]; then
+    if [ ! -x "/usr/local/bin/sudo" ]; then
+      ASSUME_ALWAYS_YES="yes" pkg install "sudo"
+    fi
+
+    if [ ! -x "/usr/local/bin/bash" ]; then
+      ASSUME_ALWAYS_YES="yes" pkg install "bash"
+    fi
+
+    ln -sf "/usr/local/bin/bash" "/bin/"
+
+    if [ ! -x "/usr/local/bin/nano" ]; then
+      ASSUME_ALWAYS_YES="yes" pkg install "nano"
+    fi
+  fi
+
+  if [ -e "/root/.profile" ]; then
+    # because ~/.profile is sourced *after* /etc/profile, it override Finch's PS1, PAGER, etc.
+    if [ "`cat "/root/.profile" | grep "PAGER=more"`" ] || [ "`cat "/root/.profile" | grep "PS1="`" ]; then
+      mv "/root/.profile" "/root/.profile__disabled_by_finch"
+    fi
+  fi
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    if [ -e "/root/.profile" ]; then
+      if [ ! "`cat "/root/.profile" | grep "/etc/rc.initial"`" ]; then
+        cat_pfsense_root_profile_frag >> "/root/.profile"
+      fi
+    else
+      cat_pfsense_root_profile_frag >> "/root/.profile"
+    fi
+  fi
+
+  # Disable root's .profile in finch
+  mv "$finch_realpath/root/.profile" "$finch_realpath/root/.profile__disabled_by_finch"
+
+  if [ ! "`uname -iv | grep -i freenas`" ] && [ ! "`uname -iv | grep -i nas4free`" ] && [ ! "`uname -iv | grep -i pfsense`" ]; then
+    link_rcd_script;
+    realpath_namified_rcvar="$(echo "$finch_realpath" | sed -e "s|^\/|finch_|" -e "s|\/|_|g")"
+    cat_rc_conf_frag >> "/etc/rc.conf"
+  fi
+
+  # Record that the installation proceedure has finished.
+  echo "FreeBSD-`uname -m`-`uname -r | cut -d- -f1-2`" > "$finch_realpath/var/db/finch/installed"
+
+  # once jq is installed, we can now update again and properly parse github api json
+  "$finch_realpath/usr/sbin/finch" "update" "-y"
+
+  # reboot finch system
+  "$finch_realpath/usr/sbin/finch" "restart"
+
+  set +x
+
+  # Figure out how long it took
+  end_time_secs=`date -j -f "%a %b %d %T %Z %Y" "$(date)" "+%s"`
+  elapsed_time_secs=`expr $end_time_secs - $start_time_secs`
+  elapsed_h_m_s=`_s2hms "$elapsed_time_secs"`
+
+
+  hr;
+  cat_body_install_finished;
+  hr;
+  try_send_email "install_finished";
+
+  echo "finch installed on: $(date)" >> "$finch_realpath/var/log/finch/install.log"
+  "$finch_realpath/usr/sbin/finch" "--version" >> "$finch_realpath/var/log/finch/install.log"
+  echo "freebsd: $(cat "$finch_realpath/var/db/finch/installed")" >> "$finch_realpath/var/log/finch/install.log"
+}
+
+continue_install_in_chroot ()
+{
+  # install pkg with pkg-ng's bootstrap method
+  ASSUME_ALWAYS_YES="yes" pkg -v
+
+  # To supress pkg-ng warning message
+  # pkg: PACKAGESITE in pkg.conf is deprecated. Please create a repository configuration file
+  # pkg: Warning: use of http:// URL scheme with SRV records is deprecated: switch to pkg+http://
+  if [ -e "/usr/local/etc/pkg.conf" ]; then
+    sed -i "" -e "s/packagesite: http/packagesite: pkg+http/" "/usr/local/etc/pkg.conf"
+    mv "/usr/local/etc/pkg.conf" "/usr/local/etc/pkg.conf__disabled_by_finch"
+  fi
+
+  ASSUME_ALWAYS_YES="yes" pkg install "portmaster"
+  echo "WITH_PKGNG=yes" >> "/etc/make.conf"
+
+  ASSUME_ALWAYS_YES="yes" pkg install "bash" || install_failed "couldn't install pkg bash with PKGNG"
+
+  ASSUME_ALWAYS_YES="yes" pkg install "ca_root_nss"
+  link_cert_pem;
+
+  ASSUME_ALWAYS_YES="yes" pkg install "nano"
+  ASSUME_ALWAYS_YES="yes" pkg install "sudo" || install_failed "couldn't install pkg sudo with PKGNG"
+  ASSUME_ALWAYS_YES="yes" pkg install "lsof" || install_failed "couldn't install pkg lsof with PKGNG"
+  ASSUME_ALWAYS_YES="yes" pkg install "jq"
+
+  install_ports_tree;
+  install_basic_ports;
+
+  install_qjail;
+}

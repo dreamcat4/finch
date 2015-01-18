@@ -1,0 +1,301 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+cat_body_install_started ()
+{
+  if [ "`uname -iv | grep -i freenas`" ]; then
+    host="FreeNAS"
+
+  elif [ "`uname -iv | grep -i nas4free`" ]; then
+    host="NAS4Free"
+
+  elif [ "`uname -iv | grep -i pfsense`" ]; then
+    host="pfSense"
+
+  else
+    host="host"
+  fi
+
+	cat <<- EOF
+
+	Your Finch FreeBSD Installation has started.
+
+	  * Please do not switch off, shutdown or reboot your $host system during this process.
+
+	  * Installation will take anywhere from 20 minutes up to 1 hour.
+
+	  * A follow-up confirmation email will be sent when installation has finished.
+
+
+	EOF
+
+  if [ "`uname -iv | grep -i freenas`" ]; then
+		cat <<- EOF
+		******************************************************************************
+		FREENAS USERS - SPECIAL NOTICE
+
+		  >>> http://dreamcat4.github.io/finch/install/#toc_18 <<<
+
+
+		EOF
+  fi
+
+	cat <<- EOF
+	******************************************************************************
+	We hope that you will enjoy using Finch FreeBSD.
+
+	* Visit the project homepage at http://dreamcat4.github.io/finch
+
+	EOF
+}
+
+cat_body_install_finished ()
+{
+	cat <<- EOF
+
+	Your Finch FreeBSD Installation has finished.
+
+	  * Installation took $elapsed_h_m_s.
+
+	  * Attachment: "finch-install.log.gz".
+
+
+	******************************************************************************
+	You must now follow the "Post Install Steps" as shown on the Finch website.
+
+	  >>> http://dreamcat4.github.io/finch/install/#toc_12 <<<
+
+
+	EOF
+
+  if [ ! "`uname -iv | grep -i freenas`" ] && [ ! "`uname -iv | grep -i nas4free`" ]; then
+    echo "INSTALLATION COMPLETE"
+  fi
+}
+
+cat_body_install_failed ()
+{
+  if [ "$2" = "email" ]; then
+    _attached="attached"
+  fi
+
+	cat <<- EOF
+
+	Sorry, your Finch FreeBSD Installation has failed and is incomplete.
+
+	  * Fail reason: "$1"
+
+	  * Installation halted at first point of failure. Did not go all the way.
+
+	  * Failure took place $elapsed_h_m_s into the installation.
+
+	  * Failure detected on: $_fail_date
+
+	  * Attachment: "finch-install.log.gz".
+
+
+	******************************************************************************
+	What can I do?
+
+	* To investigate the cause of error, look in the $_attached file "install.log"
+
+	  Full system path of this logfile:
+
+	      "${finch_realpath}/var/log/finch/install.log"
+
+	EOF
+
+  if [ ! "$2" = "email" ]; then
+		cat <<- EOF
+		* To keep a safe record of the failure, backup the Finch logfiles:
+
+		    "cp -Ri ${finch_realpath}/var/log/finch" "${finch_realpath}-logs-failed-1"
+
+		EOF
+  fi
+
+	cat <<- EOF
+	* To completely delete this failed installation from your hard disk:
+
+	   "finch-bootstrap uninstall -d $finch_realpath"
+
+	We apologise for any inconvenience caused.
+
+	  >>> http://dreamcat4.github.io/finch/support <<<
+
+
+	EOF
+
+  if [ ! "`uname -iv | grep -i freenas`" ] && [ ! "`uname -iv | grep -i nas4free`" ]; then
+    echo "INSTALLATION FAILED"
+  fi
+}
+
+pfsense_email_to ()
+{
+	php -q <<- "EOF"
+	<?php
+	require_once('config.inc');
+
+	function pfsense_email_to()
+	{
+	  global $config;
+	  $config = parse_config(true);
+
+	  if(isset($config['notifications']['smtp']['disable']))
+	        return;
+
+	  if(!$config['notifications']['smtp']['notifyemailaddress'])
+	        return;
+
+	  echo "true";
+	}
+
+	pfsense_email_to();
+	echo "\n";
+	exit
+	?>
+
+	EOF
+}
+
+cat_body_please_upgrade ()
+{
+	cat <<- EOF
+
+	******************************************************************************
+	Time to UPGRADE finch
+	******************************************************************************
+
+	FreeBSD Version Mismatch detected!
+	
+	* The FreeBSD kernel on the host system:  FreeBSD-`uname -m`-`uname -r | cut -d- -f1-2`
+	* Version of FreeBSD installed on finch: `cat "$finch_realpath/var/db/finch/installed"`
+
+	A FreeBSD upgrade is not handled by finch but instead this generic tool:
+	
+	  \`freebsd-update\`
+
+	For a full guide / tutorial on upgrading please follow this link: 
+
+	  * Visit the project homepage at http://dreamcat4.github.io/finch/upgrading
+
+	We hope that your upgrade will transpire smoothly.
+
+	EOF
+}
+
+
+cat_msmtp_msg ()
+{
+	cat <<- EOF
+	From:$_email_from
+	To:$_email_to
+	Subject:$_subject
+
+	$_body
+
+	$_attachment1
+
+	$_attachment2
+
+	$_attachment3
+
+	EOF
+}
+
+cat_sendmail_msg ()
+{
+	cat <<- EOF
+	$_body
+
+	$_attachment1
+
+	$_attachment2
+
+	$_attachment3
+
+	EOF
+}
+
+try_send_email ()
+{
+  if [ "`uname -iv | grep -i freenas`" ]; then
+    _freenas_root_email=`cat "/etc/aliases" | grep -e "^[^\#]*root:" | cut -d " " -f 2`
+    _freenas_smartd_to_email=`cat "/usr/local/etc/smartd.conf" | grep -o -e "-m.*" | cut -d " " -f 2`
+    
+    if [ "$_freenas_root_email" ]; then
+      _email_to="$_freenas_root_email"
+
+    elif [ "$_freenas_smartd_to_email" ]; then
+      _email_to="$_freenas_smartd_to_email"
+    fi
+  fi
+
+  if [ "`uname -iv | grep -i nas4free`" ]; then
+    _n4f_config="/conf/config.xml"
+    if [ `command -v xml` ] && [ -e "$_n4f_config" ]; then
+      _msmtp_config="/var/etc/msmtp.conf"
+
+      # Is smartd email report enabled?
+      _smartd_email_to=$(/usr/local/bin/xml sel -t -v "//smartd/email/to" $_n4f_config)
+      _email_from=$(/usr/local/bin/xml sel -t -v "//email/from" $_n4f_config)
+
+      # This feature only works if a "to address" is setup in smartd monitoring.
+      if [ "$_email_from" ] && [ "$_smartd_email_to" ]; then
+        _email_to="$_smartd_email_to" # <--- until theres a general "to address" email setting in nas4free
+      fi
+    fi
+  fi
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    _email_to="$(pfsense_email_to)"
+  fi
+
+  if [ "$_email_to" ]; then
+    case "$1" in
+      install_started)
+      _subject="finch: Your FreeBSD Installation has started."
+      _body=`cat_body_install_started`
+      ;;
+
+      install_finished)
+      _subject="finch: Your FreeBSD Installation has finished."
+      _body=`cat_body_install_finished`
+      _uuencode="$finch_realpath/usr/bin/uuencode"
+      # _attachment1=`"$_uuencode" file filename` # OR # _attachment1=`cat file | "$_uuencode" filename`
+      _attachment1=`gzip -c "$finch_realpath/var/log/finch/install.log" | "$_uuencode" "finch-install.log.gz"`
+      ;;
+
+      install_failed)
+      fail_reason="$2"
+      _subject="finch: Your FreeBSD Installation has FAILED."
+      _body=`cat_body_install_failed "$fail_reason" "email"`
+      _uuencode="$finch_realpath/usr/bin/uuencode"
+      _attachment1=`gzip -c "$finch_realpath/var/log/finch/install.log" | "$_uuencode" "finch-install.log.gz"`
+      ;;
+
+      please_upgrade)
+      _subject="finch: Your Finch FreeBSD Installation needs to be upgraded."
+      _body=`cat_body_please_upgrade`
+      ;;
+
+      *)
+      return 1
+      ;;
+    esac
+
+    # Try to send the email.
+    if [ "`uname -iv | grep -i freenas`" ]; then
+      cat_sendmail_msg | "/usr/bin/mail" -s "$_subject" "$_email_to"
+    fi
+
+    if [ "`uname -iv | grep -i nas4free`" ]; then
+      cat_msmtp_msg | "/usr/local/bin/msmtp" --file="$_msmtp_config" -t
+    fi
+
+    if [ "`uname -iv | grep -i pfsense`" ]; then
+      cat_sendmail_msg | "/usr/local/bin/mail.php" "-s$_subject"
+    fi
+  fi
+}

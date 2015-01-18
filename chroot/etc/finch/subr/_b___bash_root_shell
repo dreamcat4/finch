@@ -1,0 +1,80 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+cat_nas4free_root_profile_frag ()
+{
+	cat <<- EOF
+
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+
+	# Display console menu (only on ttyv0/ttyd0).
+	tty="\$(tty)"
+	if [ "/dev/ttyv0" == "\$tty" ] || [ "/dev/ttyu0" == "\$tty" ]; then
+	  /etc/rc.banner
+	  /etc/rc.initial
+	fi
+
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+
+	EOF
+}
+
+cat_pfsense_root_profile_frag ()
+{
+	cat <<- EOF
+
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+
+	if [ \`env | grep SSH_TTY | wc -l\` -gt 0 ] || [ \`env | grep cons25 | wc -l\` -gt 0 ]; then
+	  /etc/rc.initial
+	  exit
+	fi
+
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+
+	EOF
+}
+
+bash_root_shell ()
+{
+  if [ "`uname -iv | grep -i nas4free`" ]; then
+    if [ "$(cat "/etc/rc.d/userdb" | grep "/root:/bin/tcsh")" ]; then
+      sed -i ".bak" -e 's|/root:/bin/tcsh|/root:/usr/local/bin/bash|g' "/etc/rc.d/userdb"
+      rm -f "/etc/rc.d/userdb.bak"
+    fi
+  fi
+
+  # Override the default root shell (tcsh) to be bash. Since tcsh isn't a POSIX.2 compliant shell.
+  pw user mod "root" -s "/usr/local/bin/bash"
+
+  if [ -e "/root/.profile" ]; then
+    # because ~/.profile is sourced *after* /etc/profile, it override Finch's PS1, PAGER, etc.
+    if [ "`cat "/root/.profile" | grep "PAGER=more"`" ] || [ "`cat "/root/.profile" | grep "PS1="`" ]; then
+      mv "/root/.profile" "/root/.profile__disabled_by_finch"
+    fi
+  fi
+
+  if [ "`uname -iv | grep -i nas4free`" ]; then
+    if [ -e "/root/.profile" ]; then
+      if [ ! "`cat "/root/.profile" | grep "/etc/rc.initial"`" ]; then
+        cat_nas4free_root_profile_frag > "/root/.profile"
+      fi
+    else
+      cat_nas4free_root_profile_frag > "/root/.profile"
+    fi
+  fi
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    if [ -e "/root/.profile" ]; then
+      if [ ! "`cat "/root/.profile" | grep "/etc/rc.initial"`" ]; then
+        cat_pfsense_root_profile_frag >> "/root/.profile"
+      fi
+    else
+      cat_pfsense_root_profile_frag >> "/root/.profile"
+    fi
+
+    if [ "$(cat "/etc/rc.initial" | grep "        /bin/tcsh")" ]; then
+      sed -i ".bak" -e 's|        /bin/tcsh|        /usr/local/bin/bash --rcfile /etc/profile|g' "/etc/rc.initial"
+    fi
+  fi
+}

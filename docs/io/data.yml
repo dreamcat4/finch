@@ -1,0 +1,48 @@
+
+title : Finch
+tagline: FreeBSD in a chroot!
+
+project : "Finch"
+
+description: FreeBSD... in a chroot!
+
+github :
+  url: https://github.com
+  repo: dreamcat4/finch
+
+author :
+  name : Dreamcat4
+  email : dreamcat4@gmail.com
+  github : dreamcat4
+
+navbar_home :
+  - index
+
+navbar_left :
+  - manpage
+  - install
+  - FAQ
+
+navbar_right :
+  - jails-how-to
+  - upgrading
+  - support
+
+sidebar :
+  - install
+  - usage
+  - manpage
+  - FAQ
+  - jails-how-to
+  - jails-ip-addresses
+  - jails-ssh
+  - mounting-filesystems
+  - qjail-reference
+  - upgrading
+  - support
+
+home :
+  - index
+
+
+

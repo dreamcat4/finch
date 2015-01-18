@@ -1,0 +1,18 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+install_ports_tree ()
+{
+  for bindir in "/usr/local/sbin" "/usr/local/bin"
+  do
+    if [ ! "`echo "$PATH" | grep "$bindir"`" ]; then
+      export PATH="$PATH:$bindir"
+    fi
+  done
+  
+  # Download FreeBSD ports tree
+  portsnap_override on
+  portsnap "fetch" "extract" "update" || install_failed "couldn't download freebsd ports tree"
+  portsnap_override off
+}
+

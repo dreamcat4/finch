@@ -1,0 +1,72 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+boot_system ()
+{
+  if [ -e "/etc/prd.revision" ]; then
+    echo "Nas4Free Revision: $(cat "/etc/prd.revision")"
+  fi
+
+  mount_system;
+  copy_kernel_modules;
+
+  if [ "`uname -iv | grep -i nas4free`" ] || [ "`uname -iv | grep -i pfsense`" ]; then
+    if [ ! -e "/etc/pw.conf" ] || [ ! "$(cat "/etc/pw.conf" | grep "/usr/local/bin/bash")" ]; then
+      pw user add -D -C "/etc/pw.conf" -s "/usr/local/bin/bash" -w no -k "/var/empty"
+    fi
+    bash_root_shell;
+    if [ "`uname -iv | grep -i pfsense`" ]; then
+      bash_users;
+    fi
+  fi
+
+  __finch_refresh_basic;
+
+  configure_sudo;
+
+  if [ "`uname -iv | grep -i nas4free`" ] || [ "`uname -iv | grep -i pfsense`" ]; then
+    link_sudo;
+    link_libc;
+    link_libintl;
+  fi
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    append_pfsense_shutdown;
+    link_bash;
+    link_nano;
+  fi
+
+  append_etc_shells;
+  __finch_merge_userdb;
+
+  if [ ! "`uname -iv | grep -i freenas`" ] && [ ! "`uname -iv | grep -i nas4free`" ] && [ ! "`uname -iv | grep -i pfsense`" ]; then
+    link_rcd_script;
+  fi
+
+  append_etc_profile;
+
+  if [ -e "$finch_realpath/etc/fstab" ]; then
+    mount -a -F "$finch_realpath/etc/fstab"
+  fi
+
+  disable_enable_rcd_services;
+  chroot "$finch_realpath" "/etc/finch/postinit" "chroot_continue_boot" 2>&1 | tee -a "$finch_logpath/boot.log" | logger -t "$0 boot" 2>&1;
+
+  link_finch;
+  enable_exports;
+
+  echo "Bootup Complete. Done."
+}
+
+
+continue_boot_in_chroot ()
+{
+  if [ "`uname -iv | grep -i nas4free`" ]; then
+    linksafe "/usr/local/bin/bash" "/bin/bash"
+    append_etc_shells;
+  fi
+
+  update_qjail;
+  patch_qjail;
+  system_rcd_services "start";
+}

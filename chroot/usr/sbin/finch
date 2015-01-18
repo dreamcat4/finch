@@ -1,0 +1,297 @@
+#!/bin/sh
+# 
+#     _______     __                __    
+#    |   _   |   |__.-----.   .----|  |--.
+#    |.  |___|   |  |     |   |  __|     |
+#    |.  __)     |__|__|__|   |____|__|__|
+#    |:  |                                
+#    |::.|     FreeBSD in a chroot        
+#    `---`     -------------------        
+# 
+# etc/rc.d/finch
+#     1. finch start --> run etc/finch/postinit
+#     2. finch stop  --> run etc/finch/shutdown
+# 
+# Created by:
+#     Dreamcat4 - dreamcat4@gmail.com (C 2014). FreeBSD License.
+#     Please fork this repo / upload improvements to github.com.
+# 
+finch_version="1.28"
+
+__this_file="`realpath -q "$0"`"
+
+if [ ! "`basename "$__this_file"`" = "finch" ]; then
+  echo "error (1): The file \"$0\" isn't recognised. We were expecting \"$finch_realpath/usr/sbin/finch\""
+  exit 1
+fi
+
+__this_dir=`dirname "$__this_file"`
+finch_loadpath=`realpath "$__this_dir/../../etc/finch"`
+
+if [ ! "$finch_loadpath" ]; then
+  echo "error (1): Couldn't resolve the finch loadpath. We tried: $ realpath \"$__this_dir/../../etc/finch\" but got nothing."
+  exit 1
+fi
+
+if [ `id -u` = 0 ] || [ "`id -G -n | grep wheel`" ]; then
+  _____finch_subr_category="profile"
+  . "$finch_loadpath/subr/_____load"
+
+else
+  echo "error (1): finch only works for \"root\" or \"wheel\" users."
+  exit 1
+fi
+
+__finch_post_update_hook ()
+{
+  _____finch_subr_category="install"
+  . "$finch_loadpath/subr/_____load"
+  post_update_hook
+}
+
+__finch_version ()
+{
+  printf "$finch_version"
+
+  shafile="$finch_realpath/var/db/finch/sha"
+  if [ -e "$shafile" ]; then
+    printf ", $(cat "$shafile" | cut -c1-10)"
+  fi
+  
+  datefile="$finch_realpath/var/db/finch/last_update"
+  if [ -e "$datefile" ]; then
+    last_update="$(cat "$datefile")"
+    printf ", $(date -jr "$last_update")"
+  fi
+  printf ".\n"
+}
+
+__finch_cat_help ()
+{
+	cat <<- "EOF"
+	
+	 finch:
+	      Access the Finch FreeBSD chroot environment. `man finch` for more info.
+	
+	 Usage:
+	      $ finch <command> [args]
+	
+	 Commands:
+
+	      chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
+	      start     - Mount Finch and start it's rc.d services.
+	      stop      - Stop Finch's rc.d services and unmount "finch/dev".
+	      restart   - Same as `finch stop` followed by `finch start`.
+	      status    - Report on Finch service status (enabled/disabled).
+	      export    - Map a new command into Finch exports (`finch export <cmd>`).
+	      -export   - Remove a command from Finch exports (`finch -export <cmd>`).
+	      <export>  - Run a command listed in Finch exports (`finch <export>`).
+	      update    - Update the Finch scripts (this program) to the latest version.
+	      refresh   - Refresh /finch/etc/ files (resolv.conf, localtime & passwd).
+	      bootstrap - Run the curl-based online installation script `finch-bootstrap`.
+	      realpath  - The real path to Finch ("$finch_realpath", "/path/to/finch").
+	      --version - Print the current version of Finch and exit.
+	      -h,--help - Display this message and exit.
+	
+	EOF
+
+  echo " Realpath:"
+  if __in_finch_chroot; then
+    echo "      warn (1): already in finch chroot."
+    echo "      /"
+  else
+    echo "      $finch_realpath"
+  fi
+  echo ""
+
+  finch_exports="`ls -m "${finch_realpath}/etc/finch/exports/"`"
+
+  if [ "$finch_exports" ]; then
+    fmt="${finch_realpath}/usr/bin/fmt"
+    if [ -x "$fmt" ]; then
+      finch_exports="$(echo "$finch_exports" | "$fmt" -70)"
+    fi
+    echo " Exports:"
+    while read line
+    do
+      echo "      $line"
+    done <<- EOF
+		$finch_exports
+		EOF
+		echo ""
+  fi
+
+  if [ -e "$finch_realpath/etc/fstab" ]; then
+    unset finch_fstab
+    while read line; do
+      if [ "$line" ]; then
+        line=`echo "$line" | awk '{gsub(/[[:blank:]]+/," "); print}'`
+        finch_fstab="$finch_fstab      $line\n"
+      fi
+		done <<- EOF
+		`awk '!/^[[:blank:]#]*$/ {sub(/^[[:blank:]]*/,""); sub(/[[:blank:]]*(#.*)?$/,""); print}' "$finch_realpath/etc/fstab" | awk NF`
+		EOF
+
+    if [ "$finch_fstab" ]; then
+      echo " Fstab:"
+      printf "$finch_fstab"
+      echo ""
+    fi
+  fi
+
+  echo " Version:"
+  printf "      "
+  __finch_version;
+  echo ""
+
+	cat <<- EOF
+	 Bugs:
+	      Can be reported at http://dreamcat4.github.io/finch/support
+
+	 Created by:
+	      Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
+
+	EOF
+}
+
+__finch ()
+{
+  if ! __in_finch_chroot; then
+    if [ ! "$1" = "bootstrap" ] && [ ! -d "$finch_realpath" ]; then
+      echo "error (1): We don't seem to be able to find \"$finch_realpath\"."
+      echo "error (1): Nothing done. Exiting.";
+      return 1
+    fi
+  fi
+
+  # Does the FreeBSD version of our host system still match the Finch FreeBSD version.
+  if [ -e "$finch_realpath/var/db/finch/installed" ] && [ "`cat "$finch_realpath/var/db/finch/installed"`" != "FreeBSD-`uname -m`-`uname -r | cut -d- -f1-2`" ]; then
+    cat_body_please_upgrade;
+  fi
+
+  if [ "$#" -gt "0" ]; then
+    for arg in "$@"; do
+      case "$arg" in
+        start|stop|restart|status)
+          export __p__finch_caller="1"
+          . "$finch_realpath/etc/rc.d/finch"
+          unset __p__finch_caller
+          "finch_${arg}"
+          return "$?"
+        ;;
+
+        chroot)
+          shift
+          if __in_finch_chroot "warn"; then
+            "$@"
+          else
+            __finch_chroot "$@"
+          fi
+          return "$?"
+        ;;
+
+        update)
+          shift
+          __in_finch_chroot "error" && return 1
+          __finch_bootstrap update "--dir" "$finch_realpath" "$@"
+          return "$?"
+        ;;
+
+        refresh)
+          __in_finch_chroot "error" && return 1
+          __finch_refresh
+          return "$?"
+        ;;
+
+        bootstrap)
+          shift
+          __in_finch_chroot "error" && return 1
+          __finch_bootstrap "$@"
+          return "$?"
+        ;;
+
+        -v|--version)
+          printf "finch: "
+          __finch_version
+        ;;
+
+        -sv|--shortver)
+          echo "$finch_version"
+        ;;
+
+        -h|--help)
+          __finch_cat_help
+          return 1
+        ;;
+
+        __post_update_hook)
+          __finch_post_update_hook
+          return "$?"
+        ;;
+
+        realpath)
+          if __in_finch_chroot; then
+            echo "/"
+            echo "warn (1): already in finch chroot."
+            return 1
+          else
+            echo "$finch_realpath"
+            return 0
+          fi
+        ;;
+
+        export)
+          if [ "$2" ]; then
+            if [ ! `id -u` = 0 ]; then
+              echo "error (1): You must have root privileges to run this command."
+              return 1
+            fi
+
+            __in_finch_chroot "warn"
+            create_export "$2"
+            return "$?"
+          else
+            echo "error (1): No cmd specified. Usage: \"finch export <cmd>\"."
+          fi
+        ;;
+
+        -export)
+          if [ "$2" ]; then
+            if [ ! `id -u` = 0 ]; then
+              echo "error (1): You must have root privileges to run this command."
+              return 1
+            fi
+
+            __in_finch_chroot "warn"
+            remove_export "$2"
+            return "$?"
+          else
+            echo "error (1): No cmd specified. Usage: \"finch -export <cmd>\"."
+          fi
+        ;;
+
+        *)
+          if [ "`ls -m "${finch_realpath}/etc/finch/exports/${arg}" 2> /dev/null`" ]; then
+            if __in_finch_chroot "warn"; then
+              "$@"
+            else
+              __finch_chroot "$@"
+            fi
+            return "$?"
+
+          else
+            echo "error (1): unrecognised command line parameter - \"$arg\". \`finch --help\` for more info."
+            return 1
+          fi
+        ;;
+      esac
+    done
+  else
+    __finch_cat_help;
+    return 1;
+  fi
+}
+
+# Pass the command through our wrapper function
+__finch "$@"
+exit "$?"

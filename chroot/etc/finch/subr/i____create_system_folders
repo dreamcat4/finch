@@ -1,0 +1,51 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+cat_finch_rc_conf_frag ()
+{
+	cat <<- EOF
+	# # Finch - FreeBSD in a chroot!
+	# Created by "$0"
+	#
+	# rc.conf
+	#
+
+	EOF
+}
+
+cat_finch_fstab_frag ()
+{
+	cat <<- EOF
+	# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+	#
+	# fstab:
+	#
+	#   Entries in this file will be mounted before \`finch start\` and unmounted after
+	#   \`finch stop\`.  Mounts can be from and disks or folders available on the host 
+	#   system (toplevel global scope).
+	#
+
+	EOF
+}
+
+create_system_folders ()
+{
+  # At the moment, we just create an duplicate (empty) home directory for the root account
+  # Its just to stop barfing root's "." dot files into the chroot's "/" root folder.
+  mkdir -p "$finch_realpath/root"
+
+  # Need this folder too. During bootup we $ mount -t devfs devfs "$finch_realpath/dev"
+  mkdir -p "$finch_realpath/dev"
+
+  # Remove unwanted files from the root folder
+  rm "$finch_realpath/.cshrc"
+  rm "$finch_realpath/.profile"
+  rm "$finch_realpath/COPYRIGHT"
+
+  # Create an rc.conf file
+  cat_finch_rc_conf_frag >> "$finch_realpath/etc/rc.conf"
+
+  # Create an fstab file
+  cat_finch_fstab_frag >> "$finch_realpath/etc/fstab"
+}
+

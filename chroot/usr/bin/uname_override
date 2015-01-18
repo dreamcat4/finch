@@ -1,0 +1,63 @@
+#!/bin/sh
+# 
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+# uname_override:
+#     Have "uname" return the finch FreeBSD version from"/var/db/finch/installed"
+#     rather than the FreeBSD version of the host kernel.
+#
+#     To work around the following error message when doing "freebsd-update upgrade"
+#       "freebsd-update: Cannot upgrade from X.Y-RELEASE to itself"
+#
+#     WARNING !!! You must remove this override straight afterwards!
+# 
+# Usage:
+# 
+#     uname_override "on"
+#     freebsd-update "upgrade"
+#     freebsd-update "install"
+#     uname_override "off"
+# 
+# "uname_override on" will perform the following actions:
+#     * mv "uname" --> "uname_kernel"
+#     * override the "jot" command to return 0
+#     * ln -s "uname_finch" --> "uname"
+# 
+#  "uname_override off"
+#     * Will return the "uname" program back to normal.
+# 
+# Tested with:
+#     $FreeBSD: release/9.1.0/ 235310 2012-05-12 00:49:14Z eadler $
+#     Future versions of "uname" may break this script or render it useless.
+# 
+
+if [ ! -x "/usr/bin/uname" ]; then
+  echo "error (1): \"/usr/bin/uname\" not found, or not executable."
+  exit 1
+fi
+
+if [ ! -x "/usr/bin/uname_finch" ]; then
+  echo "error (1): \"/usr/bin/uname_finch\" not found, or not executable."
+  exit 1
+fi
+
+if [ "$1" = "on" ]; then
+  if [ ! -x "/usr/bin/uname_kernel" ]; then
+    cp "/usr/bin/uname" "/usr/bin/uname_kernel"
+  fi
+
+  if [ -x "/usr/bin/uname_finch" ]; then
+    ln -sf "/usr/bin/uname_finch" "/usr/bin/uname"
+  fi
+
+elif [ "$1" = "off" ]; then
+  if [ -x "/usr/bin/uname_kernel" ]; then
+    cp -f "/usr/bin/uname_kernel" "/usr/bin/uname"
+  fi
+
+else
+  # Display help and exit
+  head -30 "$0" | tail -29
+  exit 1
+fi
+

@@ -1,0 +1,97 @@
+<div class="sidebar">
+  <div class="container sidebar-sticky">
+
+    <div class="sidebar-about">
+
+      {{# data.home?to_pages }}
+        {{# is_active_page }}
+          <h1 style="margin-bottom: -10px;">
+            <a href="{{ url }}" class="sidebar-nav-item-active">Finch</a>
+          </h1>
+        {{/ is_active_page }}
+        {{^ is_active_page }}
+          <h1 style="margin-bottom: -10px;">
+            <a class="sidebar-nav-item" href="{{ url }}">Finch</a>
+          </h1>
+        {{/ is_active_page }}
+      {{/ data.home?to_pages }}
+
+      <!-- <p class="lead">{{ data.description }}</p> -->
+
+      <p class="lead">Freebsd... <strong><i>in a chroot!</i></strong></p>
+      <!-- <p class="lead">Freebsd <strong><i>in a chroot!</i></strong></p> -->
+
+      <!-- <div class="lead">Freebsd... <strong></div>
+        <div class="lead"><i>&nbsp&nbsp&nbsp&nbsp&nbspin a chroot!</i></strong></div> -->
+
+    </div>
+
+    <ul class="sidebar-nav">
+
+          {{# data.sidebar?to_pages }}
+            {{# is_active_page }}
+            <li>
+              <a href="{{ url }}" class="sidebar-nav-item-active">{{ title }}</a>
+            </li>
+            {{/ is_active_page }}
+            {{^ is_active_page }}
+            <li class="sidebar-nav-item"><a href="{{ url }}">{{ title }}</a></li>
+            {{/ is_active_page }}
+          {{/ data.sidebar?to_pages }}
+
+          {{# pages.all }}
+          {{# is_active_page }}
+          <!-- <li class="active"><a href="{{ url }}" class="active">{{ title }}</a></li> -->
+          <!-- <li class="sidebar-nav-item-active"> -->
+          <!-- <li>
+            <a href="{{ url }}" class="sidebar-nav-item-active">{{ title }}</a>
+          </li> -->
+          {{/ is_active_page }}
+          {{^ is_active_page }}
+          <!-- <li><a href="{{ url }}">{{ title }}</a></li> -->
+          <!-- <li class="sidebar-nav-item"><a href="{{ url }}">{{ title }}</a></li> -->
+          {{/ is_active_page }}
+          {{/ pages.all }}
+
+          <!-- <a href="{{ data.github.url }}/{{ data.github.repo }}/issues">Bugtracker</a> -->
+
+            <!-- <li class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}"> -->
+
+
+
+              <!-- <a href="{{ node.url }}">{{ node.title }}</a> -->
+
+              <!-- {{# pages.all }}
+                {{> pages_list }}
+              {{/ pages.all }} -->
+
+
+            </li>
+          <!-- {% endif %}
+        {% endif %}
+      {% endfor %} -->
+
+      <!-- <li class="sidebar-nav-item"><a href="{{ data.github.repo }}/archive/v{{ data.version }}.zip">Download</a></li> -->
+      <!-- <li class="sidebar-nav-item"><a href="{{ data.github.url }}/{{ data.github.repo }}">GitHub Project</a></li> -->
+      <!-- <li class="sidebar-nav-item">Currently v{{ data.version }}</li> -->
+
+      <!-- <li class="sidebar-nav-item"><a href="{{ data.github.url }}/{{ data.github.repo }}">GitHub Project</a></li> -->
+      
+      <p></p>
+      <!-- <p></p> -->
+    </ul>
+    <!-- <p> -->
+    <p>
+      <!-- <class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="{{ data.github.url }}/{{ data.github.repo }}">GitHub Project</a> -->
+      <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="{{ data.github.url }}/{{ data.github.repo }}">GitHub Project</a> -->
+
+      <!-- <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="#toc_0">Back to Top</a> -->
+
+      <a class="sidebar-nav" class="crumbline" style="color: #515151; font-size: 16px; font-style: italic; font-weight: 400;" href="{{ page.url }}">Back to Top</a>
+
+      <!-- © 2014. All rights reserved. -->
+    </p>
+
+    <!-- <p>&copy; {--{ site.time | date: '%Y' }--}. All rights reserved.</p> -->
+  </div>
+</div>

@@ -1,0 +1,23 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+append_etc_shells ()
+{
+  if [ -e "/usr/local/bin/bash" ]; then
+    if [ ! "$(cat "/etc/shells" | grep "/usr/local/bin/bash")" ]; then
+      echo "/usr/local/bin/bash" >> "/etc/shells"
+    fi
+  fi
+
+  if [ -e "/usr/local/bin/rbash" ]; then
+    if [ ! "$(cat "/etc/shells" | grep "/usr/local/bin/rbash")" ]; then
+      echo "/usr/local/bin/rbash" >> "/etc/shells"
+    fi
+  fi
+
+  if [ -e "/bin/bash" ]; then
+    if [ ! "$(cat "/etc/shells" | grep "^/bin/bash")" ]; then
+      echo "/bin/bash" >> "/etc/shells"
+    fi
+  fi
+}

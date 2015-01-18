@@ -1,0 +1,9 @@
+#!/bin/sh
+# 
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+# jot_0:
+#    Print "0" always. Overrides the default behaviour.
+#    $ "man jot" for more information.
+# 
+echo "0"

@@ -1,0 +1,117 @@
+finch(8) -- FreeBSD in a chroot
+==================================================
+
+## SYNOPSIS
+
+    finch <cmd> [args]
+    finch --help
+
+## COMMANDS
+
+    chroot    - Chroot into Finch FreeBSD (`chroot /path/to/finch`).
+    start     - Mount Finch and start it's rc.d services.
+    stop      - Stop Finch's rc.d services and unmount "finch/dev".
+    restart   - Same as `finch stop` followed by `finch start`.
+    status    - Report on Finch service status (enabled/disabled).
+    export    - Map a new command into Finch exports (`finch export <cmd>`).
+    -export   - Remove a command from Finch exports (`finch -export <cmd>`).
+    <export>  - Run a command listed in Finch exports (`finch <export>`).
+    update    - Update the Finch scripts (this program) to the latest version.
+    refresh   - Refresh /finch/etc/ files (resolv.conf, localtime & passwd).
+    bootstrap - Run the curl-based online installation script `finch-bootstrap`.
+    realpath  - The real path to Finch ("$finch_realpath", "/path/to/finch").
+    --version - Print the current version of Finch and exit.
+    -h,--help - Display this message and exit.
+
+## DESCRIPTION
+
+*Finch* is FreeBSD *running inside a `chroot`*. Finch is best used as a way to extend the functionality of restricted USB-based FreeBSD distributions, usually FREENAS and NAS4FREE. For added convenience, Finch also includes the `qjail` jails management tool. Since FreeBSD jails are such a popular request.
+
+Recommended system configuration:
+
+`Restricted FreeBSD host <--> Finch <--> qjail <--> your jails`
+
+## USAGE
+
+Chroot into the Finch environment by typing `finch chroot`. All other operations may be performed by
+issuing relevant subcommand. `finch --help` for more information. Or visit the website at
+<http://dreamcat4.github.io/finch/usage>.
+
+## STARTING / STOPPING
+
+You may manually start or stop Finch at any time simply by issuing the relevant finch subcommand `finch start` or `finch stop`. See `finch --help` for more information. However the boot-time mechanisms for running Finch are platform-specific.
+
+On FreeNAS and NAS4Free hosts, the Finch _POSTINIT_ and _SHUTDOWN_ scripts must be entered into the relevant web-based configuration pages. Which will tell FreeNAS / NAS4Free to automatically start and stop Finch at bootup and shutdown.
+
+For other platforms such as FreeBSD-GENERIC where the traditional rc.d mechanism is properly
+supported, the Finch service can be started / stopped in the normal manner with it's _rc.d_ script.
+The necessary rc.conf statements are automatically added to the system's _/etc/rc.conf_ file for you
+during installation. To prevent conflicts between multiple installed instances, the Finch rc.d script is given a unique name: _/etc/rc.d/finch-path.to.finch_.
+
+## USER CONFIGURATION
+
+To execute the `finch` command, your user account must be a member of group `wheel`. This is
+because on FreeBSD the `chroot` command requires root user level access privileges. Therefore, to
+run Finch commands also requires at least administrator level permissions.
+
+Finch will auto-configure sudo for all `wheel` users without a password, by ensuring the sudo entry
+_%wheel ALL=(ALL) NOPASSWD: ALL_) is included in your host's sudoers file. This auto-configuration
+is considered necessary as to use Finch effectively requires a frequent invocation of the `chroot`
+command. The necessary configuration is handled automatically.
+
+It is also highly recommended to configure the default user login shell to the `bash`. Finch
+automatically adds it's login profile to `/etc/profile`, which is automatically sourced by the
+_bash_ shell.
+
+The Finch login profile adds further convenience whilst invoking commands through _sudo_ or from the
+Finch _exports_ list. This Finch login profile is not exclusively only for _bash_. It may be sourced
+by any POSIX.2 compatible shell, (bourne-style shell), for example FreeBSD's `/bin/sh`. In which
+case, please consult the shell's documentation for loading _/etc/profile_.
+
+## EXPORTS
+
+The Finch _exports_ feature provides a way to auto-chroot for certain
+frequently-used commands. If not present on the host environment, the command is searched for and
+executed within the Finch chroot environment instead. Of course whilst inside the chroot, the root
+tree and filesystem are not accessible. This is worth remembering.
+
+## UPGRADING
+
+Updating Finch administrative scripts is trivial, and can be done at any time with `finch update`. Upgrading the version of FreeBSD located inside Finch's chroot is a more delicate and involved
+process. Full instructions are up on the website at <http://dreamcat4.github.io/finch/upgrading>.
+
+## EXECUTABLE
+
+    $finch_realpath/usr/sbin/finch --> /usr/sbin/finch
+    For additional instances, manually symlink finch2,3 into /usr/sbin/
+
+## STARTUP / SHUTDOWN
+
+    $finch_realpath/etc/finch/postinit
+    $finch_realpath/etc/finch/shutdown
+    - OR -
+    $finch_realpath/etc/rc.d/finch --> /etc/rc.d/finch-path.to.finch
+
+## DIRECTORIES
+
+    $finch_realpath/etc/finch/
+    $finch_realpath/var/db/finch/
+    $finch_realpath/var/log/finch/
+    $finch_realpath/var/distfiles/finch/
+
+## WEBSITE
+
+For the most up-to-date documentation please visit the project homepage at <http://dreamcat4.github.io/finch>.
+
+## BUGS
+
+Can be reported at <http://dreamcat4.github.io/finch/support>.
+
+## SEE ALSO
+
+chroot(8), qjail(8)
+
+## Created by
+
+Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
+

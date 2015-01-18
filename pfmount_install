@@ -1,0 +1,144 @@
+#!/bin/sh
+# 
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+# pfmount_install:
+#    Install a boot script for pfSense to
+#       * "mount -a" all entries in fstab (pfSenese / nanoBSD does not do this).
+#       * Auto-run fsck on any unclean filesystems that didn't mount.
+#       * Then try to remount them.
+# 
+
+err ()
+{
+  printf '\033[1;37;41m  ERROR  \033[0m\033[1;37m*********************************************************************\033[0m\n'
+}
+
+check_root ()
+{
+  echo "Checking access privileges..."
+
+  if [ `id -u` = 0 ]; then
+    echo "Ok."
+    echo ""
+  else
+    echo ""
+    err;
+    echo "User \"`id -n -u`\" - your UID isnt \"0\" (insufficient permissions)."
+    echo "You must be the root user (su or sudo) to run this installer script."
+    echo ""
+    exit 1;
+  fi
+}
+
+cat_etc_rc_custom_boot_early_header ()
+{
+	cat <<- EOF
+	#!/bin/sh
+	# 
+	# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+	# 
+	# /etc/rc.custom_boot_early:
+	#    * Put your custom boot scripts here.
+	
+	
+	EOF
+}
+
+
+cat_etc_rc_custom_boot_early_mount_a ()
+{
+	cat <<- EOF
+	# **** Added by https://github.com/dreamcat4/finch/blob/master/pfmount_install ****
+	
+	# Faithfully "mount -a" all entries in fstab just like the regular FreeBSD
+	/etc/rc.mount_-a
+	
+	# **** Added by https://github.com/dreamcat4/finch/blob/master/pfmount_install ****
+	
+	EOF
+}
+
+
+cat_etc_rc_mount_-a ()
+{
+	cat <<- "EOA"
+	#!/bin/sh
+	# 
+	# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+	# 
+	# /etc/rc.mount_-a
+	#    * "mount -a" all entries in fstab (pfSenese / nanoBSD does not do this).
+	#    * Auto-run fsck on any unclean filesystems that didn't mount.
+	#    * Then try to remount them.
+	#    * Does not mount entries marked "late", "noauto" as per the manpages.
+	
+	# Try to mount everything in fstab that should be mounted (as per regular FreeBSD).
+  printf "\n"
+	printf "Mounting filesystems..."
+	mount_output="$(mount -a 2>&1)" # ! redirect stderr --> stdout. Print \n strings.
+	
+	# Check for this error string:
+	#  mount: /dev/ada1: R/W mount of /mnt/disk0 denied. Filesystem is not clean - run fsck.: Operation not permitted
+	if [ "$(echo "$mount_output" | grep -i "run fsck")" ]; then
+	  printf "\n"
+	  echo "$mount_output"
+	  while read line; do
+	    if [ "$(echo "$line" | grep "run fsck")" ]; then
+	      unclean_device="$(echo "$line" | cut -d ' ' -f 2 | sed 's/:$//')"
+	      fsck -y "$unclean_device" # run fsck -y once & hope everythings OK
+	    fi
+	  done <<- EOB
+		$mount_output
+		EOB
+	  mount -a # Remount any remaining devices. Already-mounted devices are left alone.
+	fi
+	
+	
+	EOA
+}
+
+
+pfmount_install ()
+{
+  # Remount the root "/" filesystem as read-write
+  [ "$(mount | grep -e "on / " | grep read-only)" ] && mount -o noatime -u -w "/"
+
+  if [ ! -e "/etc/rc.custom_boot_early" ]; then
+    cat_etc_rc_custom_boot_early_header > "/etc/rc.custom_boot_early"
+    echo "Script installed: /etc/rc.custom_boot_early"
+  fi
+
+  if [ ! -x "/etc/rc.custom_boot_early" ]; then
+    chmod +x "/etc/rc.custom_boot_early"
+  fi
+
+  if [ ! -e "/etc/rc.mount_-a" ]; then
+    cat_etc_rc_mount_-a > "/etc/rc.mount_-a"
+    echo "Script installed: /etc/rc.mount_-a"
+  fi
+
+  if [ ! -x "/etc/rc.mount_-a" ]; then
+    chmod +x "/etc/rc.mount_-a"
+  fi
+
+  if [ ! "$(cat "/etc/rc.custom_boot_early" | grep "/etc/rc.mount_-a")" ]; then
+    cat_etc_rc_custom_boot_early_mount_a >> "/etc/rc.custom_boot_early"
+    echo "Line added to: \"/etc/rc.custom_boot_early\". Runs --> \"/etc/rc.mount_-a\""
+  fi
+}
+
+# User needs sufficient permissions
+check_root;
+
+# Install the necessary scripts and exit
+pfmount_install;
+
+if [ -e "/etc/fstab" ]; then
+  /etc/rc.mount_-a
+fi
+
+echo "All Done."
+
+
+

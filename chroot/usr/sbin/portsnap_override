@@ -1,0 +1,68 @@
+#!/bin/sh
+# 
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+# portsnap_override:
+#     Prevent "portsnap fetch" from failing when run non-interactively.
+# 
+#     WARNING !!! Do not interrupt (CTRL^C) this script as it may leave
+#                 the following 2 system programs temporarily disabled:
+#                 "/usr/bin/jot" "/usr/sbin/portsnap"
+# 
+#     WARNING !!! You must remove this override straight afterwards!
+# 
+# Usage:
+#     Place the following lines in your script file.
+# 
+#     portsnap_override "on"
+#     portsnap "fetch" etc
+#     portsnap_override "off"
+# 
+# "portsnap_override on" will perform the following actions:
+#     * mv "portsnap" --> "portsnap_interactive"
+#     * override the "jot" command to return 0
+#     * ln -s "portsnap_non_interactive" --> "portsnap"
+# 
+#  "portsnap_override off"
+#     * Will return the "portsnap" and "jot" programs back to normal.
+# 
+# Tested with:
+#     $FreeBSD: release/9.1.0/usr.sbin/portsnap/portsnap/portsnap.sh 235310 2012-05-12 00:49:14Z eadler $
+#     Future versions of "portsnap" may break this script or render it useless.
+# 
+
+if [ ! -x "/usr/sbin/portsnap" ]; then
+  echo "error (1): \"/usr/sbin/portsnap\" not found, or not executable."
+  exit 1
+fi
+
+if [ ! -x "/usr/sbin/portsnap_non_interactive" ]; then
+  echo "error (1): \"/usr/sbin/portsnap_non_interactive\" not found, or not executable."
+  exit 1
+fi
+
+if [ ! -x "/usr/bin/jot" ]; then
+  echo "error (1): \"/usr/bin/jot\" not found, or not executable."
+  exit 1
+fi
+
+
+if [ "$1" = "on" ]; then
+  if [ ! -x "/usr/sbin/portsnap_interactive" ]; then
+    cp "/usr/sbin/portsnap" "/usr/sbin/portsnap_interactive"
+  fi
+
+  if [ -x "/usr/sbin/portsnap_non_interactive" ]; then
+    ln -sf "/usr/sbin/portsnap_non_interactive" "/usr/sbin/portsnap"
+  fi
+
+elif [ "$1" = "off" ]; then
+  if [ -x "/usr/sbin/portsnap_interactive" ]; then
+    cp -f "/usr/sbin/portsnap_interactive" "/usr/sbin/portsnap"
+  fi
+
+else
+  # Display help and exit
+  head -31 "$0" | tail -30
+  exit 1
+fi

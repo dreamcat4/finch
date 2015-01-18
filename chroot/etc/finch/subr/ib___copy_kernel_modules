@@ -1,0 +1,30 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+copy_kernel_modules()
+{
+  uname_a_md5=$(uname -a | md5)
+
+  if [ "`uname -iv | grep -i freenas`" ]; then
+    platform="freenas"
+
+  elif [ "`uname -iv | grep -i pfsense`" ]; then
+    platform="pfsense"
+
+  elif [ "`uname -iv | grep -i nas4free`" ]; then
+    platform="nas4free"
+  fi
+
+  if [ -e "$finch_realpath/var/boot/$platform/uname_a.md5" ]; then
+    if [ "$uname_a_md5" = "$(cat "$finch_realpath/var/boot/$platform/uname_a.md5")" ]; then
+      return 0
+    fi
+  fi
+
+  # We need to re-copy the /boot folder
+  mkdir -p "$finch_realpath/var/boot"
+  rm -rf   "$finch_realpath/var/boot/$platform"
+  cp -Rf "/boot" "$finch_realpath/var/boot/$platform"
+  echo "$uname_a_md5" > "$finch_realpath/var/boot/$platform/uname_a.md5"
+  ln -sf "/var/boot/$platform" "$finch_realpath/var/boot/host"
+}

@@ -1,0 +1,30 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+post_update_hook ()
+{
+  # echo "Executing post update hook."
+
+  # Update jail template's /etc/profile 
+  cat_qjail_profile_frag > "$finch_realpath/usr/jails/template/etc/profile"
+  
+  # For each jail in $finch_realpath/usr/jails
+  for jail_dir in $(ls $finch_realpath/usr/jails)
+  do
+    unset jail
+    case "$jail_dir" in
+      archive|flavors|sharedfs|template) ;;
+      *) jail="1" ;;
+    esac
+
+    if [ "$jail" ]; then
+      if [ -e "$finch_realpath/usr/jails/${jail_dir}/etc/profile" ]; then
+        # Update each jail's /etc/profile 
+        cat_qjail_profile_frag > "$finch_realpath/usr/jails/${jail_dir}/etc/profile"
+      fi
+    fi
+  done
+
+  etc_rc_sanitize_output;
+}
+

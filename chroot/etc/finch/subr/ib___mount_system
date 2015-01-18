@@ -1,0 +1,25 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+mount_system ()
+{
+  # Check if there is a symlink to realpath inside our realpath
+  # We do this to ensure an invariant path. Not just for our reference - mount_nullfs would fail otherwise.
+  if [ ! "`readlink "${finch_realpath}${finch_realpath}"`" = "/" ]; then
+    # If realpath is in a subdirectory, ensure that folder exists before symlinking into it.
+    if [ `echo "$finch_realpath" | grep -e "[^\/]/"` ]; then
+      mkdir -p "$(dirname "${finch_realpath}${finch_realpath}")"
+    fi
+
+    # Create a symlink to our realpath inside our chroot's root folder ("/").
+    # So we use the same finch system paths regardless of whether we are in the chroot environemnt.
+    rm -rf    "${finch_realpath}${finch_realpath}"
+    ln -s "/" "${finch_realpath}${finch_realpath}"
+  fi
+
+  # Remount the root "/" filesystem as read-write
+  [ "$(mount | grep -e "on / " | grep read-only)" ] && mount -o noatime -u -w "/"
+
+  # Mount /dev filesystem
+  mount -t devfs devfs "$finch_realpath/dev"
+}

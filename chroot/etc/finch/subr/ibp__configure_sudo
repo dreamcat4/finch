@@ -1,0 +1,104 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+cat_sudoers_frag ()
+{
+	cat <<- EOF
+	
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	%wheel ALL=(ALL) NOPASSWD: ALL
+	
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	EOF
+}
+
+cat_sudo_conf_frag ()
+{
+	cat <<- EOF
+	
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	Plugin sudoers_policy sudoers.so sudoers_file=/usr/local/etc/sudoers.finch
+	
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	EOF
+}
+
+cat_sudoers_finch_frag ()
+{
+	cat <<- EOF
+	
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	# FreeNAS sudoers directives are applied first
+	#include /usr/local/etc/sudoers
+	
+	# finch sudoers directives are applied afterwards and take precedent
+	%wheel ALL=(ALL) NOPASSWD: ALL
+	
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	EOF
+}
+
+set_platform ()
+{
+  _uname_iv=$(uname -iv)
+
+  if [ "$(echo $_uname_iv | grep -i nas4free)" ]; then
+    platform="nas4free"
+    return 0
+  fi
+
+  if [ "$(echo $_uname_iv | grep -i freenas)" ]; then
+    platform="freenas"
+    return 0
+  fi
+
+  if [ "$(echo $_uname_iv | grep -i pfsense)" ]; then
+    platform="pfsense"
+    return 0
+  fi
+
+  platform="freebsd"
+}
+
+configure_sudo ()
+{
+  set_platform;
+
+  sudo_nopasswd_wheel="%wheel ALL=(ALL) NOPASSWD: ALL"
+  if [ "$platform" = "freenas" ]; then
+    include_sudoers="#include /usr/local/etc/sudoers"
+    sudo_conf_line="Plugin sudoers_policy sudoers.so sudoers_file=/usr/local/etc/sudoers.finch"
+
+    if [ ! -e "/usr/local/etc/sudo.conf" ] || \
+       [ ! "`cat "/usr/local/etc/sudo.conf" | grep "^$sudo_conf_line"`" ]; then
+      cat_sudo_conf_frag >> "/usr/local/etc/sudo.conf"
+    fi
+
+    if [ ! -e "/usr/local/etc/sudoers.finch" ] || \
+       [ ! "`cat "/usr/local/etc/sudoers.finch" | grep "^$sudo_nopasswd_wheel"`" ] || \
+       [ ! "`cat "/usr/local/etc/sudoers.finch" | grep "^$include_sudoers"`" ]; then
+      cat_sudoers_finch_frag >> "/usr/local/etc/sudoers.finch"
+    fi
+
+  elif [ ! "$platform" = "nas4free" ] && [ ! "$platform" = "pfsense" ]; then
+    if [ ! -e "/usr/local/etc/sudoers" ] || \
+       [ ! "`cat "/usr/local/etc/sudoers" | grep "^$sudo_nopasswd_wheel"`" ]; then
+      cat_sudoers_frag >> "/usr/local/etc/sudoers"
+    fi
+  fi
+
+  if [ ! -e "$finch_realpath/usr/local/etc/sudoers" ] || \
+     [ ! "`cat "$finch_realpath/usr/local/etc/sudoers" | grep "^$sudo_nopasswd_wheel"`" ]; then
+    cat_sudoers_frag >> "$finch_realpath/usr/local/etc/sudoers"
+  fi
+
+  chmod 0440 "$finch_realpath/usr/local/etc/sudoers"
+  chown root:wheel "$finch_realpath/usr/local/etc/sudoers"
+}
+

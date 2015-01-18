@@ -1,0 +1,73 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+linksafe ()
+{
+  src="$1"; dst="$2"
+
+  if [ -e "$src" ] && [ ! -e "$dst" ]; then
+    ln -sf "$src" "$dst"
+  fi
+}
+
+link_sudo ()
+{
+  linksafe "$finch_realpath/usr/local/bin/sudo" "/usr/local/bin/sudo"
+  linksafe "$finch_realpath/usr/local/libexec/sudo" "/usr/local/libexec/sudo"
+  linksafe "$finch_realpath/usr/local/etc/sudoers" "/usr/local/etc/sudoers"
+  linksafe "$finch_realpath/usr/local/etc/sudoers.d" "/usr/local/etc/sudoers.d"
+}
+
+link_libc ()
+{
+  if [ ! -e "/usr/lib/libc.so" ]; then
+    ln -s "/lib/libc.so.7" "/usr/lib/libc.so"
+  fi
+}
+
+link_libintl ()
+{
+  if [ -e "/usr/local/lib/libintl.so.9" ]; then
+    linksafe "/usr/local/lib/libintl.so.9"  "/usr/local/lib/libintl.so"
+    linksafe "/usr/local/lib/libintl.so.9"  "/usr/local/lib/libintl.so.8"
+
+  elif [ -e "/usr/local/lib/libintl.so.8" ]; then
+    linksafe "/usr/local/lib/libintl.so.8"  "/usr/local/lib/libintl.so"
+    linksafe "/usr/local/lib/libintl.so.8"  "/usr/local/lib/libintl.so.9"
+  fi
+}
+
+link_finch ()
+{
+  linksafe "$finch_realpath/usr/sbin/finch" "/usr/sbin/finch"
+}
+
+link_bash ()
+{
+  if [ "$(readlink "/usr/local/bin/bash")" = "/bin/sh" ]; then
+    ln -sf "$finch_realpath/usr/local/bin/bash" "/usr/local/bin/bash"
+
+  else
+    linksafe "$finch_realpath/usr/local/bin/bash" "/usr/local/bin/bash"
+  fi
+
+  if [ "`uname -iv | grep -i nas4free`" ]; then
+    linksafe "$finch_realpath/usr/local/bin/bash" "$finch_realpath/bin/bash"
+  fi
+}
+
+link_nano ()
+{
+  linksafe "$finch_realpath/usr/local/bin/nano" "/usr/local/bin/nano"
+}
+
+link_rcd_script ()
+{
+  realpath_namified="$(echo "$finch_realpath" | sed -e "s|^\/|finch-|" -e "s|\/|.|g")"
+  linksafe "$finch_realpath/etc/rc.d/finch" "/etc/rc.d/${realpath_namified}"
+}
+
+link_cert_pem ()
+{
+  linksafe "/usr/local/share/certs/ca-root-nss.crt" "/etc/ssl/cert.pem"
+}

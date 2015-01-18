@@ -1,0 +1,61 @@
+<div class="navbar">
+  <div class="navbar-inner">
+    <!-- <div class="container-narrow"> -->
+      <!-- <a class="brand" href="{{urls.base_path}}">{{ data.title }}</a> -->
+
+      <!-- <p class="navbar-left"> -->
+      <div class="navbar-left">
+
+        <!-- Project hosted on Github <a href="https://github.com/dreamcat4/finch">dreamcat4/finch</a> -->
+
+        <ul class="nav">
+          {{# data.navbar_home?to_pages }}
+            {{# is_active_page }}
+              <li class="active"><a href="{{ url }}" class="active">Home</a></li>
+            {{/ is_active_page }}
+            {{^ is_active_page }}
+              <li><a href="{{ url }}">Home</a></li>
+            {{/ is_active_page }}
+          {{/ data.navbar_home?to_pages }}
+
+          {{# data.navbar_left?to_pages }}
+            {{> pages_list }}
+          {{/ data.navbar_left?to_pages }}
+
+        </ul>
+
+      <!-- </p> -->
+      </div>
+
+
+      <!-- <p class="footer-center">
+      </p> -->
+
+      <!-- <p class="navbar-right"> -->
+      <div class="navbar-right">
+
+        <!-- &copy; {{ data.author.name }} 2014,  -->
+        <!-- FreeBSD Licensing terms. -->
+
+
+        <ul class="nav">
+
+          {{# data.navbar_right?to_pages }}
+            {{> pages_list }}
+          {{/ data.navbar_right?to_pages }}
+
+          <!-- {{# data.navigation.pages?to__root }}
+            {{> pages_list }}
+          {{/ data.navigation.pages?to__root }} -->
+
+          <!-- {{# pages.all }}
+            {{> pages_list }}
+          {{/ pages.all }} -->
+        </ul>
+
+      <!-- </p> -->
+      </div>
+
+    <!-- </div> -->
+  </div>
+</div>

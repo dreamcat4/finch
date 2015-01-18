@@ -1,0 +1,131 @@
+#!/bin/sh
+# 
+#     _______     __                __    
+#    |   _   |   |__.-----.   .----|  |--.
+#    |.  |___|   |  |     |   |  __|     |
+#    |.  __)     |__|__|__|   |____|__|__|
+#    |:  |                                
+#    |::.|     FreeBSD in a chroot        
+#    `---`     -------------------        
+# 
+# etc/finch/postinit:
+#     1. Install FreeBSD into "/finch" (first boot).
+#     2. Initialize "/finch" (all subsequent boots).
+# 
+# Created by:
+#     Dreamcat4 - dreamcat4@gmail.com (C 2014). FreeBSD License.
+#     Please fork this repo / upload improvements to github.com.
+# 
+
+# # Echo all commands to stdout/stderr.
+# set -x
+
+# Make sure this variable isn't set b/c we chroot and use "$0" instead
+unset finch_loadpath
+
+# Load subroutines
+subr_load ()
+{
+  _____finch_subr_category="$1"
+  . "`dirname "$0"`/subr/_____load"
+}
+
+##################################################################################################
+# main
+##################################################################################################
+main ()
+{
+  # Choose action
+
+  if [ ! "$1" ]; then
+    subr_load "paths";
+
+    if [ ! `echo "$0" | grep -e "^/"` ]; then
+      command "$(readlink -f "$0")";
+
+    elif [ "$finch_realpath/etc/finch" != `dirname "$0"` ]; then
+      echo "error (1): An unexpected error has occured. Paths mistmatch. Or corrupt / missing /etc/finch/ installation folder."
+      exit 1;
+
+    else
+      # Check for confirmation breadcrumb of a completed install. If yes continue to boot if no then perform a new install.
+      if [ -e "$finch_realpath/var/db/finch/installed" ]; then
+
+        # Does the FreeBSD version of our host system still match the Finch FreeBSD version.
+        if [ "`cat "$finch_realpath/var/db/finch/installed"`" != "FreeBSD-`uname -m`-`uname -r | cut -d- -f1-2`" ]; then
+          cat_body_please_upgrade;
+          try_send_email "please_upgrade";
+          echo "finch/postinit: warning: Kernel version mismatch detected."
+          echo "finch/postinit: warning: Your Finch version != FreeBSD Kernel version. Please ugrade."
+          echo ""
+          echo "Finch: `cat "$finch_realpath/var/db/finch/installed"`"
+          echo " Host: FreeBSD-`uname -m`-`uname -r | cut -d- -f1-2`"
+          echo ""
+        fi
+
+        # Start the bootup proceedure
+        echo "Starting finch."
+        "$0" "boot" 2>&1 | tee "$finch_logpath/boot.log" | logger -t "$0 boot" 2>&1
+
+      elif [ -e "$finch_realpath/var/db/finch/installing..." ]; then
+        "$0" "install_interrupted" 2>&1 | tee -a "$finch_logpath/install.log" | logger -t "$0 install" 2>&1
+
+      elif [ -e "$finch_realpath/var/db/finch/install_failed" ]; then
+        exit 1
+
+      else
+        echo "Installing Finch..."
+        mkdir -p "$finch_logpath"
+        "$0" "install" 2>&1 | tee -a "$finch_logpath/install.log" | logger -t "$0 install" 2>&1
+        echo "Done."
+      fi
+    fi
+
+  elif [ "$1" = "boot" ]; then
+    subr_load "boot";
+    set -x # Echo all commands to stdout/stderr
+    boot_system;
+
+  elif [ "$1" = "chroot_continue_boot" ]; then
+    subr_load "boot"
+    set -x # Echo all commands to stdout/stderr
+    continue_boot_in_chroot;
+
+  elif [ "$1" = "install" ]; then
+    subr_load "install";
+    set -x # Echo all commands to stdout/stderr
+    install_system;
+
+  elif [ "$1" = "chroot_continue_install" ]; then
+    subr_load "install"
+    set -x # Echo all commands to stdout/stderr
+    continue_install_in_chroot;
+
+  elif [ "$1" = "install_interrupted" ]; then
+		cat <<- EOF
+		It looks like your host system was rebooted before finch could finish installing itself.
+		Other possible reasons: knocked reset switch, killed process tree, system instability, no disk space.
+
+		Dont Reboot!
+		  * Finch usually takes between 20 minutes and 1 hour to install.
+		  * The host system must not be rebooted during that time window.
+
+		EOF
+
+    install_failed "installation was interrupted unexpectedly"
+
+  else
+    # Display help and exit
+    head -19 "$0" | tail -18
+    exit 1
+  fi
+}
+
+
+##################################################################################################
+# Begin - our entry point.
+main "$@";
+# End
+##################################################################################################
+
+

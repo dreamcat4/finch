@@ -1,0 +1,83 @@
+#!/bin/sh
+# 
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+# portsnap_non_interactive:
+#    Call portsnap command with "cron" instead of "fetch"
+#       * May incur a random sleep delay up to 1 hour.
+#       * But not if the "jot" command is also overridden.
+# 
+
+if [ ! -x "/usr/sbin/portsnap_interactive" ]; then
+  echo "error (1): \"/usr/sbin/portsnap_interactive\" not found"
+  exit 1
+fi
+
+if [ ! -x "/usr/bin/jot" ]; then
+  echo "error (1): \"/usr/bin/jot\" not found"
+  exit 1
+fi
+
+# p_conf="/usr/local/etc/qjail.portsnap.conf"
+# portsnap -f "${p_conf}" "${action_p}"
+
+
+# Parse portsnap args, replace "fetch" with "cron"
+# Rebuild args to the bourne shell array $arg1,$arg2,$arg3...
+n=0
+unset skip
+
+if [ "$#" -gt "0" ]; then
+  for arg in "$@"; do
+      case "$arg" in
+        -d|-f|-k|-l|-p|-s)
+          eval arg$n="$arg"
+          skip="1"
+        ;;
+
+        fetch)
+          if [ "$skip" = "1" ]; then
+            eval arg$n="$arg"
+            unset skip
+          else
+            # Replace "fetch" command with "cron" command
+            eval arg$n="cron"
+          fi
+        ;;
+
+        *)
+        eval arg$n=\"$arg\"
+        unset skip
+        ;;
+      esac
+      n=`expr $n + 1`
+  done
+fi
+
+# Convert the bourne shell array $arg1,$arg2,$arg3... to single string $quoted_args
+i=0
+while [ $i -lt $n ]
+do
+  eval arg=\$arg$i
+  quoted_args="$quoted_args \"$arg\""
+  i=`expr $i + 1`
+done
+
+# Backup the "jot" command to a safe location
+if [ ! -x "/usr/bin/jot_disabled" ]; then
+  cp "/usr/bin/jot" "/usr/bin/jot_disabled"
+fi
+
+# Make jot cmd print "0" (for "sleep 0" in "portsnap cron")
+if [ -x "/usr/bin/jot_0" ]; then
+  ln -sf "/usr/bin/jot_0" "/usr/bin/jot"
+fi
+
+# Run portsnap command with modified arguments
+eval "portsnap_interactive $quoted_args"
+
+# Return the "jot" command back to normal operations.
+if [ -x "/usr/bin/jot_disabled" ]; then
+  cp -f "/usr/bin/jot_disabled" "/usr/bin/jot"
+fi
+

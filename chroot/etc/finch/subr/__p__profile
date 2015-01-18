@@ -1,0 +1,226 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+__finch_bootstrap ()
+{
+  local finch_bootstrap_url="https://raw.github.com/dreamcat4/finch/master/bootstrap"
+  SSL_NO_VERIFY_PEER=YES fetch -q -o - "$finch_bootstrap_url" | sh -s -- "$@"
+}
+
+__finch_set_prompt ()
+{
+  # set the prompt to finch
+  if [ "$0" = "su" ] || [ "${0%[^a-zA-Z]su}" != "${0}" ]; then
+    _shell="$SHELL"
+  else
+    _shell="$0"
+  fi
+  
+  if [ "$_shell" = "sh" ] || [ "${_shell%[^a-zA-Z]sh}" != "${_shell}" ]; then
+    # /bin/sh
+    _b1=""
+    _ansi_esc=""
+    _b2=""
+    _user="$(id -un)"
+
+    if [ "$(uname -iv | grep -i nas4free)" ] && [ "$(id -un)" != "root" ]; then
+      _no_W_dir="1" # there is a bug in NAS4Free-9.2 where /bin/sh barfs on \W for non-root users
+    fi
+
+  else
+    # bash
+    _b1="\["
+    _ansi_esc="\e"
+    _b2="\]"
+    _user="\u"
+  fi
+
+  case "$TERM" in
+    xterm*)
+      br="${_b1}${_ansi_esc}[1;38m${_b2}"
+      bu="${_b1}${_ansi_esc}[1;34m${_b2}"
+      bl="${_b1}${_ansi_esc}[1;30m${_b2}"
+      gr="${_b1}${_ansi_esc}[1;32m${_b2}"
+      cl="${_b1}${_ansi_esc}[0m${_b2}"
+      ;;
+  esac
+
+  if [ "$_no_W_dir" ]; then
+    PS1="${br}\h${cl} ${bl}${_user}${cl}${br}^>${cl} "
+  else
+    PS1="${br}\h${cl} ${bu}\W${cl}${br}/${cl} ${bl}${_user}${cl}${br}^>${cl} "
+  fi
+}
+
+__finch_chroot ()
+{
+  # Does the FreeBSD version of our host system still match the Finch FreeBSD version.
+  if [ -e "$finch_realpath/var/db/finch/installed" ] && [ "`cat "$finch_realpath/var/db/finch/installed"`" != "FreeBSD-`uname -m`-`uname -r | cut -d- -f1-2`" ]; then
+    cat_body_please_upgrade;
+  fi
+
+  if [ -e "$finch_realpath/etc/finch" ] && [ -c "$finch_realpath/dev/null" ]; then
+
+    # A shortcut command to chroot into "/finch"
+    if [ "$1" ]; then
+      echo "finch: chrooting to \"$finch_realpath\" for this 1 command only."
+    else
+      echo "finch: chrooting to \"$finch_realpath\"."
+    fi
+
+    _u=`id -n -u`
+    _g=`id -n -g`
+    _gs=`id -n -G | sed -e "s/ /,/g"`
+
+    __finch_set_prompt;
+
+    if [ "$#" -gt "0" ] || [ `echo "$SHELL" | grep -e "^-"` ]; then
+      command sudo -E USER="$_u" USERNAME="$_u" LOGNAME="$_u" chroot -u "$_u" -g "$_g" -G "$_gs" "$finch_realpath" "$@"
+
+    elif [ `echo "$SHELL" | grep -e "bash$"` ]; then
+      command sudo -E USER="$_u" USERNAME="$_u" LOGNAME="$_u" chroot -u "$_u" -g "$_g" -G "$_gs" "$finch_realpath" "$SHELL" "-l"
+    
+    else
+      command sudo -E USER="$_u" USERNAME="$_u" LOGNAME="$_u" chroot -u "$_u" -g "$_g" -G "$_gs" "$finch_realpath" "$SHELL"
+    fi
+
+    return "$?"
+
+  else
+    if [ "$1" ]; then
+      echo "warning (1): finch isn't running."
+      command "$@"
+      return "$?"
+
+    else
+      echo "error (1): finch isn't running."
+      return 1
+    fi
+  fi
+}
+
+# A shortcut to "bash -c help" in "/system"
+__finch_help_wrapper ()
+{
+  if [ -e "$finch_realpath/etc/finch" ] && [ -c "$finch_realpath/dev/null" ]; then
+    echo "finch: chrooting to \"$finch_realpath\" for this 1 command only."
+
+    _u=`id -n -u`
+    _g=`id -n -g`
+    _gs=`id -n -G | sed -e "s/ /,/g"`
+
+    command sudo -E USER="$_u" USERNAME="$_u" LOGNAME="$_u" chroot -u "$_u" -g "$_g" -G "$_gs" "$finch_realpath" "bash" "-c" "help" "$@"
+    return "$?"
+
+  else
+    command "$@"
+    return "$?"
+  fi
+}
+
+# Pass the command through our wrapper function
+alias help="__finch_help_wrapper"
+
+
+if [ "$0" = "su" ] || [ "${0%[^a-zA-Z]su}" != "${0}" ]; then
+  _shell="$SHELL"
+else
+  _shell="$0"
+fi
+
+if [ "$_shell" != "sh" ] && [ "${_shell%finch}" = "${_shell}" ] && [ "${_shell#${finch_realpath}/etc/finch/exports/}" = "${_shell}" ] && [ "${_shell%[^a-zA-Z]sh}" = "${_shell}" ]; then
+  # bash only
+  __finch_completion() 
+  {
+      eval "COMPREPLY=()"
+      local cur="${COMP_WORDS[COMP_CWORD]}"
+      local prev="${COMP_WORDS[COMP_CWORD-1]}"
+      local second="${COMP_WORDS[1]}"
+
+      local cmds="start stop restart status chroot man pkg qjail update refresh bootstrap realpath --version --help"
+
+      case "${prev}" in
+        finch)
+        eval "COMPREPLY=($(compgen -W "${cmds}" -- ${cur}))"
+        return 0 ;;
+      esac
+
+      case "${second}" in
+        bootstrap|update)
+        __finch_bootstrap_completion;
+        return 0 ;;
+      esac
+  }
+  complete  -o default -F __finch_completion finch
+
+  __finch_bootstrap_completion() 
+  {
+      eval "COMPREPLY=()"
+      local cur="${COMP_WORDS[COMP_CWORD]}"
+      local prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+      local bootstrap_cmds="install update move uninstall --help"
+      local long_opts="--dir --force --yes --txz-distfiles-dir --dest-dir --debug --help"
+      local opts="-d -f -y -t -e -x -h -- --help"
+
+      local i="$COMP_CWORD"
+      while [ "$i" -gt "0" ]; do
+        local last_cmd="${COMP_WORDS[i-1]}"
+        case "${last_cmd}" in
+          install)
+          local long_opts="--dir --force --yes --txz-distfiles-dir --debug"
+          local opts="-d -f -y -t -x --"
+          break
+          ;;
+          update)
+          local long_opts="--dir --force --yes --debug"
+          local opts="-d -f -y -x --"
+          break
+          ;;
+          move)
+          local long_opts="--dir --force --yes --dest-dir --debug"
+          local opts="-d -f -y -e -x --"
+          break
+          ;;
+          uninstall)
+          local long_opts="--dir --force --yes --debug"
+          local opts="-d -f -y -x --"
+          break
+          ;;
+          *)
+          i="$(expr $i - 1)"
+          ;;
+        esac
+      done
+
+      case "${prev}" in
+        finch-bootstrap|bootstrap)
+        eval "COMPREPLY=( $(compgen -W "$bootstrap_cmds" -- ${cur}) )"
+        return 0 ;;
+
+        --dir|--txz-distfiles-dir|--dest-dir)
+        return 0 ;;
+
+        -d|-t|-e)
+        return 0 ;;
+
+        *)
+        if [ "$prev" = "--help" ]; then
+          return 0
+
+        elif [ "${cur#--}" != "$cur" ]; then
+          eval "COMPREPLY=( $(compgen -W "${long_opts}" -S ' ' -- ${cur}) )"
+          return 0
+
+        else
+          eval "COMPREPLY=( $(compgen -W "${opts}" -S ' ' -- ${cur}) )"
+          return 0
+        fi
+        ;;
+      esac
+  }
+  complete  -o default -F __finch_bootstrap_completion finch-bootstrap
+
+fi # end ! /bin/sh
+
+

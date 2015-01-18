@@ -1,0 +1,137 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+update_qjail ()
+{
+  qjail="/usr/local/bin/qjail"
+  qjail_35_ver_string="qjail Version 3.5"
+  qjail_34_ver_string="qjail Version 3.4"
+  qjail_33_ver_string="qjail Version 3.3"
+  qjail_32_ver_string="qjail Version 3.2"
+
+  if [ -e "$qjail" ]; then
+    if [ "$(grep -o "$qjail_34_ver_string" "$qjail")" ]; then
+      ASSUME_ALWAYS_YES="yes" pkg remove  "qjail"
+      ASSUME_ALWAYS_YES="yes" pkg install "qjail"
+
+    elif [ "$(grep -o "$qjail_34_ver_string" "$qjail")" ]; then
+      ASSUME_ALWAYS_YES="yes" pkg remove  "qjail"
+      ASSUME_ALWAYS_YES="yes" pkg install "qjail"
+
+    elif [ "$(grep -o "$qjail_33_ver_string" "$qjail")" ]; then
+      ASSUME_ALWAYS_YES="yes" pkg remove  "qjail"
+      ASSUME_ALWAYS_YES="yes" pkg install "qjail"
+
+    elif [ "$(grep -o "$qjail_32_ver_string" "$qjail")" ]; then
+      ASSUME_ALWAYS_YES="yes" pkg remove  "qjail"
+      ASSUME_ALWAYS_YES="yes" pkg install "qjail"
+    fi
+  fi
+
+  if [ ! -e "$qjail" ]; then
+    pkg update -f
+    ASSUME_ALWAYS_YES="yes" pkg install "qjail"
+  fi
+}
+
+patch_qjail ()
+{
+  qjail="/usr/local/bin/qjail"
+  
+  if [ -e "$qjail" ]; then
+    qjail_35_ver_string="qjail Version 3.5"
+    qjail_34_ver_string="qjail Version 3.4"
+    qjail_33_ver_string="qjail Version 3.3"
+    qjail_32_ver_string="qjail Version 3.2"
+
+    if [ "$(grep -o "$qjail_35_ver_string" "$qjail")" ]; then
+      # minimally patch qjail-3.5, for FreeBSD 9.2
+      # diff -ruN qjail-3.5 qjail-3.5-92
+      qjail_35_patched_ident_string="\-ge 92"
+      qjail_35_patch_url="https://gist.githubusercontent.com/dreamcat4/bd271b5a776721d0abad/raw/ecc03b3d8c200a6887384baec679cfd3e8902049/qjail-3.5-92.patch"
+
+      if [ ! "$(grep -o "$qjail_35_patched_ident_string" "$qjail")" ]; then
+        fetch -o - "$qjail_35_patch_url" | patch -d "/" -p1 --forward --check
+        if [ "$?" -eq "0" ]; then
+          echo "Patching qjail-3.5..."
+          SSL_NO_VERIFY_PEER=YES fetch -o - "$qjail_35_patch_url" | patch -d "/" -p1 --forward
+        else
+          "Unable to patch qjail-3.5. Skipping."
+        fi
+      else
+        echo "qjail-3.5 - Already patched. Skipping."
+      fi
+      return 0
+    fi
+
+    if [ "$(grep -o "$qjail_34_ver_string" "$qjail")" ]; then
+      # minimally patch qjail-3.4, for FreeBSD 9.2, and rc.d startup bug
+      # diff -ruN qjail-3.4 qjail-3.4-92-rc-d-fix > qjail-3.4-92-rc-d-fix.patch
+      qjail_34_patched_ident_string="sysvipc"
+      qjail_34_patch_url="https://gist.githubusercontent.com/dreamcat4/a3558fe97b5e4e7cfb89/raw/bf1a218ee153bd858e12531f883f3ac250c49b26/qjail-3.4-92-rc-d-fix.patch"
+      qjail_rcd="/usr/local/etc/rc.d/qjail.bootime" # look in qjail rc.d script, and not qjail program
+
+      if [ ! "$(grep -o "$qjail_34_patched_ident_string" "$qjail_rcd")" ]; then
+        patch_output="$(fetch -q -o - "$qjail_34_patch_url" | patch -d "/" -p1 --forward --check 2>&1)"
+        failed_hunks="$(echo "$patch_output" | grep -i "hunk #[0-9]* failed")"
+        ignored_hunks="$(echo "$patch_output" | grep -i "hunk #[0-9]* ignored")"
+        if [ "$failed_hunks" ] || [ "$(echo "$ignored_hunks" | grep -v -i "hunk #1 ignored")" ]; then
+          echo "Unable to patch qjail-3.4. Skipping."
+          echo "Reason: "
+          echo "$patch_output"
+        else
+          echo "Patching qjail-3.4..."
+          SSL_NO_VERIFY_PEER=YES fetch -o - "$qjail_34_patch_url" | patch -d "/" -p1 --forward --reject-file="$(mktemp /tmp/qjail.rej)"
+        fi
+      else
+        echo "qjail-3.4 - Already patched. Skipping."
+      fi
+      return 0
+    fi
+
+    if [ "$(grep -o "$qjail_33_ver_string" "$qjail")" ]; then
+      # minimally patch qjail-3.3, for FreeBSD 9.2, devfs_ruleset, and sysvipc
+      # diff -rupN qjail-3.3 qjail-3.3-92-sysvipc-devfs_ruleset
+      qjail_33_patched_ident_string="devfs_ruleset" # or sysvipc
+      qjail_33_patch_url="https://gist.githubusercontent.com/dreamcat4/a9314076cba936ccaeea/raw/049da7215ffc8c5e810166ff7bd489731bae6710/qjail-3.3-92-sysvipc-devfs_ruleset.patch"
+
+      if [ ! "$(grep -o "$qjail_33_patched_ident_string" "$qjail")" ]; then
+        patch_output="$(fetch -q -o - "$qjail_33_patch_url" | patch -d "/" -p1 --forward --check 2>&1)"
+        failed_hunks="$(echo "$patch_output" | grep -i "hunk #[0-9]* failed")"
+
+        if [ "$(echo "$failed_hunks" | grep -v -i "hunk #6 failed")" ]; then
+          echo "Unable to patch qjail-3.3. Skipping."
+          echo "Reason: "
+          echo "$patch_output"
+        else
+          echo "Patching qjail-3.3..."
+          SSL_NO_VERIFY_PEER=YES fetch -o - "$qjail_33_patch_url" | patch -d "/" -p1 --forward --reject-file="$(mktemp /tmp/qjail.rej)"
+        fi
+      else
+        echo "qjail-3.3 - Already patched. Skipping."
+      fi
+      return 0
+    fi
+
+    if [ "$(grep -o "$qjail_32_ver_string" "$qjail")" ]; then
+      # minimally patch qjail-3.2, to auto-set the nic interface on create (if unspecified)
+      #  $ diff -cr qjail-3.2/usr/local/bin/qjail qjail-3.2-auto-nic-patch/usr/local/bin/qjail
+      qjail_32_patched_ident_string="route get"
+      qjail_32_patch_url="https://gist.githubusercontent.com/dreamcat4/9463087/raw/qjail-3.2-auto-nic.patch"
+
+      if [ ! "$(grep -o "$qjail_32_patched_ident_string" "$qjail")" ]; then
+        fetch -o - "$qjail_32_patch_url" | patch -d "/" -p1 --forward --check
+        if [ "$?" -eq "0" ]; then
+          echo "Patching qjail-3.2..."
+          SSL_NO_VERIFY_PEER=YES fetch -o - "$qjail_32_patch_url" | patch -d "/" -p1 --forward
+        else
+          "Unable to patch qjail-3.2. Skipping."
+        fi
+      else
+        echo "qjail-3.2 - Already patched. Skipping."
+      fi
+      return 0
+    fi
+
+  fi
+}

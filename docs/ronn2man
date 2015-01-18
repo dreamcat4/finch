@@ -1,0 +1,119 @@
+#!/bin/sh
+# 
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+# ronn2man:
+#    * Generate man pages from Markdown formatted ".ronn" files.
+#    * From all *.ronn files found in this doc/man subdirectory.
+#    * Then gzip & move them to finch/chroot/usr/local/man/man8.
+# 
+# For more information see:
+#       http://rtomayko.github.io/ronn/ronn-format.7.html
+# 
+# Requirements:
+#    * The "ronn" RubyGem.
+#    * A few standard POSIX tools - grep, readlink, gzip
+# 
+
+# Check dependencies
+if [ ! `command -v "ronn"` ]; then
+  if [ `command -v "gem"` ]; then
+    echo "Hmm. Couldn't find \"ronn\" on your \$path."
+    echo "We need \"ronn\" to convert these \".ronn\" markdown files into manpages."
+    echo "Perhaps you need to $ \"bundle install\" first. Then re-run this command."
+  else
+    echo "Hmmm. Rubygems (the \"gem\" command) cannot be found on your \$path."
+    echo "Please install Ruby 1.9.2 or higher, including Rubygems."
+  fi
+  exit 1
+fi
+
+# groff -Wall -mtty-char -mandoc -Tascii
+# MANWIDTH=78
+
+
+
+__abspath ()
+{
+  case "${1}" in
+    [./]*)
+    echo "$(cd ${1%/*}; pwd)/${1##*/}"
+    ;;
+    *)
+    echo "${PWD}/${1}"
+    ;;
+  esac
+}
+
+# Resolve project-specific paths
+if [ `echo "$0" | grep -e "^/"` ]; then
+  doc_man_path=`dirname "$0"`
+else
+  doc_man_path=`dirname "$(pwd)/${0#./}"`
+fi
+chroot_usr_local_man_man8_path=`__abspath "$doc_man_path/../chroot/usr/local/man/man8"`
+site_pages_path=`__abspath "$doc_man_path/io/pages"`
+
+# Set the src path, and the target path
+src_path="$doc_man_path"
+target_man_path="$chroot_usr_local_man_man8_path"
+target_html_path="$site_pages_path"
+
+# Begin
+unset hashfail
+for markdown_file in "$src_path/"*.ronn
+do
+  man_file=`basename -s ".ronn" "$markdown_file"`
+  html_file="$man_file.html"
+
+  if [ ! "<!-- $(md5 -q "$markdown_file") -->" = "$(head -1 "$target_html_path/$html_file")" ]; then
+    # rebuild
+    if [ ! "$hashfail" ]; then
+      echo "Regenerating manpages..."
+      hashfail="1"
+    fi
+
+    # Make Webpage
+    # ronn --html  --style="$src_path/html_customizations.css,toc" --manual="FreeBSD in a chroot" --organization="dreamcat4-finch" "$markdown_file"
+    # ronn --html  --style="$src_path/toc_customized.css,$src_path/html_customizations.css" --manual="FreeBSD in a chroot" --organization="dreamcat4-finch" "$markdown_file"
+    ronn --html  --style="$src_path/html_customizations.css" --manual="FreeBSD in a chroot" --organization="dreamcat4-finch" "$markdown_file"
+
+    # Copy html to target folder
+    echo "<!-- $(md5 -q "$markdown_file") -->" > "$target_html_path/$html_file"
+    cat "$src_path/$html_file" >> "$target_html_path/$html_file"
+
+    # mv "$src_path/$html_file" "$target_html_path/"
+    rm "$src_path/$html_file"
+
+    if [ "$man_file" = "finch.8" ]; then
+      # Copy finch.8.html --> manpage.html
+      cp "$target_html_path/finch.8.html" "$target_html_path/manpage.html"
+    fi
+
+    # Make manpage
+    ronn --manual="FreeBSD in a chroot" --organization="dreamcat4-finch" --roff "$markdown_file"
+
+    # Make the manpage left-justified
+    echo ".ad l" > "$src_path/$man_file.new"
+    cat "$src_path/$man_file" >> "$src_path/$man_file.new"
+    mv "$src_path/$man_file.new" "$src_path/$man_file"
+
+    # Compress and move to target folder
+    gzip --force "$src_path/$man_file"
+    mv "$src_path/$man_file.gz" "$target_man_path"
+
+
+  fi
+
+done
+
+if [ "$hashfail" ]; then
+  exit 1
+else
+  echo "Manpages up-to-date."
+  exit 0
+fi
+
+
+# End
+

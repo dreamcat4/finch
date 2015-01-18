@@ -1,0 +1,17 @@
+#!/bin/sh
+# 
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+# uname_finch:
+#    Call "uname" command ("uname_kernel") to get the kernel's uname output.
+#    Then rewrite the output to match the contents of "/var/db/finch/installed".
+# 
+#
+
+# Find the version of FreeBSD installed inside the finch chroot e.g. "9.1-RELEASE"
+finch_installed_release=`cat /var/db/finch/installed | grep -o -e "[0-9]*\.[0-9]*-RELEASE"`
+
+# Pipe the kernel's uname output | through sed, and rewrite any "X.Y-RELEASE" strings.
+uname_kernel "$@" | sed -e "s/[0-9]*\.[0-9]*-RELEASE/$finch_installed_release/g"
+
+

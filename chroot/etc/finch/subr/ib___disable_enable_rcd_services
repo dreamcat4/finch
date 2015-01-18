@@ -1,0 +1,23 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+disable_enable_rcd_services ()
+{
+  if [ ! -e "$finch_realpath/etc/rc.d__disabled_by_finch" ]; then
+    # Disable starting of unnecessary rc.d services
+    mv "$finch_realpath/etc/rc.d" "$finch_realpath/etc/rc.d__disabled_by_finch"
+    mkdir -p "$finch_realpath/etc/rc.d"
+    mkdir -p "$finch_realpath/usr/local/etc/rc.d"
+  fi
+
+  # However re-enable these needed ones
+  required_rcd_scripts="DAEMON FILESYSTEMS LOGIN NETWORKING SERVERS cron devfs ipfilter ipnat pf pflog pfsync finch"
+
+  for rcd_script in $required_rcd_scripts
+  do
+    if [ -e "${finch_realpath}/etc/rc.d__disabled_by_finch/${rcd_script}" ]; then
+      mv "${finch_realpath}/etc/rc.d__disabled_by_finch/${rcd_script}" "${finch_realpath}/etc/rc.d/"
+    fi
+  done
+}
+

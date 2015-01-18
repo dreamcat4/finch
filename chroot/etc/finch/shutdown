@@ -1,0 +1,70 @@
+#!/bin/sh
+# 
+#     _______     __                __    
+#    |   _   |   |__.-----.   .----|  |--.
+#    |.  |___|   |  |     |   |  __|     |
+#    |.  __)     |__|__|__|   |____|__|__|
+#    |:  |                                
+#    |::.|     FreeBSD in a chroot        
+#    `---`     -------------------        
+# 
+# etc/finch/shutdown:
+#     Make best-efforts attempt to gracefully shutdown Finch FreeBSD.
+# 
+# Created by:
+#     Dreamcat4 - dreamcat4@gmail.com (C 2014). FreeBSD License.
+#     Please fork this repo / upload improvements to github.com.
+# 
+
+# # Echo all commands to stdout/stderr.
+# set -x
+
+# Make sure this variable isn't set b/c we chroot and use "$0" instead
+unset finch_loadpath
+
+# Load subroutines
+subr_load ()
+{
+  _____finch_subr_category="$1"
+  . "`dirname "$0"`/subr/_____load"
+}
+
+
+##################################################################################################
+# main
+##################################################################################################
+main ()
+{
+  # Choose action
+
+  if [ ! "$1" ]; then
+    echo "Stopping finch."
+    subr_load "paths";
+    mkdir -p "$finch_logpath"
+    
+    # Proceed with the shutdown proceedure
+    "$0" "shutdown" 2>&1 | tee "$finch_logpath/shutdown.log" | logger -t "$0 shutdown" 2>&1
+
+  elif [ "$1" = "shutdown" ]; then
+    subr_load "shutdown";
+    set -x # Echo all commands to stdout/stderr
+    shutdown_system;
+
+  elif [ "$1" = "chroot_continue_shutdown" ]; then
+    subr_load "shutdown";
+    set -x # Echo all commands to stdout/stderr
+    continue_shutdown_in_chroot;
+
+  elif [ "$1" = "chroot_kill_zombies" ]; then
+    subr_load "shutdown";
+    set -x # Echo all commands to stdout/stderr
+    kill_zombies_in_chroot;
+
+  else
+    # Display help and exit
+    head -31 "$0" | tail -30
+    exit 1
+  fi
+}
+
+main "$@";

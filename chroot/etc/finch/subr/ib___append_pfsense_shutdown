@@ -1,0 +1,101 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+# /etc/inc/system.inc:
+# function system_reboot_cleanup() {
+#   /* ... */
+#   stop_packages();
+#   <--- *** we insert our custom shutdown hook here **
+# }
+
+cat_pfsense_shutdown_hook ()
+{
+	cat <<- EOF
+	  stop_packages();
+
+	// finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+
+	  \$shell = @popen("/bin/sh", "w");
+	  if (\$shell) {
+	    fwrite(\$shell, "[ -x /etc/rc.custom_shutdown ] && /etc/rc.custom_shutdown");
+	    pclose(\$shell);
+	  }
+
+	// finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+
+	EOF
+}
+
+insert_pfsense_shutdown_hook ()
+{
+  if [ -e "/etc/inc/system.inc" ]; then
+
+    if [ ! "$(cat "/etc/inc/system.inc" | grep "/etc/rc.custom_shutdown")" ]; then
+      cp "/etc/inc/system.inc" "/etc/inc/system.inc.orig"
+
+      # first part
+      sed -e "/stop_packages();/,\$d" "/etc/inc/system.inc.orig" > "/etc/inc/system.inc.new"
+
+      # middle part
+      cat_pfsense_shutdown_hook >> "/etc/inc/system.inc.new"
+
+      # last part
+      sed -e "1,/stop_packages();/d" "/etc/inc/system.inc.orig" >> "/etc/inc/system.inc.new"
+
+      mv "/etc/inc/system.inc.new" "/etc/inc/system.inc"
+    fi
+  fi
+}
+
+cat_etc_rc_custom_shutdown_header ()
+{
+	cat <<- EOF
+	#!/bin/sh
+	# 
+	# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+	# 
+	# /etc/rc.custom_shutdown:
+	#    * Put your custom shutdown scripts here.
+
+
+	EOF
+}
+
+cat_pfsense_shutdown_frag ()
+{
+	cat <<- EOF
+
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+
+	# Stop finch at system shutdown
+	if [ -x "$finch_realpath/usr/sbin/finch" ]; then
+	  "$finch_realpath/usr/sbin/finch" "stop"
+	fi
+
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+
+	EOF
+}
+
+append_pfsense_shutdown ()
+{
+  insert_pfsense_shutdown_hook;
+
+  if [ ! -e "/etc/rc.custom_shutdown" ]; then
+    cat_etc_rc_custom_shutdown_header > "/etc/rc.custom_shutdown"
+    echo "Script installed: /etc/rc.custom_shutdown"
+  fi
+
+  if [ ! -x "/etc/rc.custom_shutdown" ]; then
+    chmod +x "/etc/rc.custom_shutdown"
+  fi
+
+  if [ ! "$(cat "/etc/rc.custom_shutdown" | grep "$finch_realpath")" ]; then
+    cat_pfsense_shutdown_frag >> "/etc/rc.custom_shutdown"
+  fi
+}
+
+
+
+
+

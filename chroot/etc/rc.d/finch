@@ -1,0 +1,161 @@
+#!/bin/sh
+# KEYWORD: shutdown
+#     _______     __                __    
+#    |   _   |   |__.-----.   .----|  |--.
+#    |.  |___|   |  |     |   |  __|     |
+#    |.  __)     |__|__|__|   |____|__|__|
+#    |:  |                                
+#    |::.|     FreeBSD in a chroot        
+#    `---`     -------------------        
+# 
+# etc/rc.d/finch
+#     1. finch start --> run etc/finch/postinit
+#     2. finch stop  --> run etc/finch/shutdown
+# 
+# Created by:
+#     Dreamcat4 - dreamcat4@gmail.com (C 2014). FreeBSD License.
+#     Please fork this repo / upload improvements to github.com.
+# 
+
+finch_start ()
+{
+  __in_finch_chroot "warn" && echo "Already started." && return 0
+
+  if [ -e "$finch_realpath/etc/finch" ] && [ -c "$finch_realpath/dev/null" ]; then
+    echo "Already started."
+  else
+    if [ ! `id -u` = 0 ]; then
+      echo "error (1): You must have root privileges to run this command."
+      return 1
+    fi
+    "$finch_realpath/etc/finch/postinit"
+  fi
+}
+
+finch_stop ()
+{
+  __in_finch_chroot "error" && return 1
+
+  if [ -e "$finch_realpath/etc/finch" ] && [ -c "$finch_realpath/dev/null" ]; then
+    if [ ! `id -u` = 0 ]; then
+      echo "error (1): You must have root privileges to run this command."
+      return 1
+    fi
+
+    "$finch_realpath/etc/finch/shutdown"
+  else
+    echo "Already stopped."
+  fi
+}
+
+finch_restart ()
+{
+  __in_finch_chroot "error" && return 1
+
+  if [ ! `id -u` = 0 ]; then
+    echo "error (1): You must have root privileges to run this command."
+    return 1
+  fi
+
+  if [ -e "$finch_realpath/etc/finch" ] && [ -c "$finch_realpath/dev/null" ]; then
+    "$finch_realpath/etc/finch/shutdown"
+    "$finch_realpath/etc/finch/postinit"
+  else
+    "$finch_realpath/etc/finch/postinit"
+  fi
+}
+
+finch_status ()
+{
+  __in_finch_chroot "warn" && echo "finch is enabled." && return 0
+
+  if [ -e "$finch_realpath/etc/finch" ] && [ -c "$finch_realpath/dev/null" ]; then
+    echo "finch is enabled."
+    return 0
+  else
+    echo "finch is disabled."
+    return 1
+  fi
+}
+
+__finch_load_paths ()
+{
+  __this_file="`realpath -q "$0"`"
+
+  if [ ! "`basename "$__this_file"`" = "finch" ]; then
+    __sourced_srcipt="1"
+
+    if [ "$_file" ]; then
+      # As things currently stand in FreeBSD 10 - /etc/rc.subr:run_rc_script() sets _file=$1
+      # We can only find the rc.script filename from $_file. However this is not a public API
+      # and the name of that variable may change, breaking future verisons of FreeBSD.
+      __this_file=`readlink "$_file"`
+    else
+      echo "error (1): unrecognised caller \"$0\""
+      return 1
+    fi
+  fi
+
+  __this_dir=`dirname "$__this_file"`
+  finch_loadpath=`realpath "$__this_dir/../finch"`
+
+  if [ ! "$finch_loadpath" ]; then
+    echo "error (1): Couldn't resolve the finch loadpath. We tried: $ realpath \"$__this_dir/../../etc/finch\" but got nothing."
+    [ "$__sourced_srcipt" ] && return 1 || exit 1
+  fi
+
+  _____finch_subr_category="paths"
+  . "$finch_loadpath/subr/_____load"
+
+}
+
+
+__finch_run_as_rcd_script ()
+{
+  . /etc/rc.subr
+
+  realpath_namified_rcvar="$(echo "$finch_realpath" | sed -e "s|^\/|finch_|" -e "s|\/|_|g")"
+  name="${realpath_namified_rcvar}"
+  rcvar="${realpath_namified_rcvar}_enable"
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    eval "${realpath_namified_rcvar}_enable=YES"
+  fi
+
+  start_cmd="finch_start"
+  stop_cmd="finch_stop"
+  restart_cmd="finch_restart"
+  status_cmd="finch_status"
+
+  required_files="$finch_loadpath/postinit $finch_loadpath/shutdown $finch_loadpath/subr/_____load"
+  extra_commands="status"
+
+  load_rc_config $name
+  run_rc_command "$1"
+}
+
+if [ ! "$__p__finch_caller" ]; then
+  __finch_load_paths
+
+  if [ "`uname -iv | grep -i freenas`" ] || [ "`uname -iv | grep -i nas4free`" ]; then
+    if [ "$1" ]; then
+      case "$1" in
+        start|stop|restart|status)
+          eval "finch_${1}"
+          [ "$__sourced_srcipt" ] && return $? || exit $?
+        ;;
+
+        *)
+          echo "error (1): unrecognised rc cmd \"$1\". Valid rc cmds: [start|stop|restart|status]"
+        ;;
+      esac
+    else
+      echo "Valid rc cmds: [start|stop|restart|status]"
+      [ "$__sourced_srcipt" ] && return 1 || exit 1
+    fi
+
+  else
+    __finch_run_as_rcd_script "$@";
+  fi
+
+fi

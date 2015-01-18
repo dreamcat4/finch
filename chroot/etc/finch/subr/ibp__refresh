@@ -1,0 +1,40 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+__finch_refresh_basic ()
+{
+  # Copy host configuration files into our Finch FreeBSD chroot.
+  if [ ! `id -u` = 0 ]; then
+    echo "error (1): You must have root privileges to run this command."
+    return 1
+  fi
+  
+  echo "Refreshing /etc configuration files in $finch_realpath."
+
+  # For networking DNS resolution to work inside "/finch"
+  cp -f "/etc/resolv.conf" "$finch_realpath/etc/resolv.conf"
+
+  # For time service to work inside "/finch"
+  cp -f "/etc/localtime" "$finch_realpath/etc/localtime"
+
+  # Copy over /etc/hosts too
+  cp -f "/etc/hosts" "$finch_realpath/etc/hosts"
+
+  # Settings for user account creation
+  cp -f "/etc/pw.conf" "$finch_realpath/etc/pw.conf"
+
+  # Email account settings for sendmail (FreeNAS)
+  if [ -e "/etc/mail/aliases" ]; then
+    cp -f "/etc/mail/aliases" "$finch_realpath/etc/mail/aliases.host"
+  fi
+}
+
+__finch_refresh ()
+{
+  # Update basic configuration files
+  __finch_refresh_basic;
+
+  # Update passwd and group files
+  __finch_merge_userdb;
+}
+

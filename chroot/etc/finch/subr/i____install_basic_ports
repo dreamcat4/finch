@@ -1,0 +1,30 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+install_basic_ports ()
+{
+  # NOTICE:
+  # At the end of installation we are likely to encounter the following error.
+  # ===============================================================================================
+  # ===>  Checking if shells/bash already installed
+  # install-info: No such file or directory for /usr/local/info/bash.info
+  # pkg_add: command 'install-info --quiet /usr/local/info/bash.info /usr/local/info/dir' failed
+  # ===============================================================================================
+  # The cause of this anomaly is not known. It is likely to be some kind of side-affect of building
+  # inside our chroot environment. Unfortunately we dont know how to fix this particular issue.
+  # However the error message (as far as we know) is not serious. This breakage only seems to prevent
+  # the correct installation of accompanying "info" files. Which have fallen out of fashion for long
+  # time since most of us just rely upon the man pages instead. However if you are able to find the
+  # correct solution, please contribute a fix.
+
+  for bindir in "/usr/local/sbin" "/usr/local/bin"
+  do
+    if [ ! "`echo "$PATH" | grep "$bindir"`" ]; then
+      export PATH="$PATH:$bindir"
+    fi
+  done
+
+  # Install missing ssl certificates
+  # cd /usr/ports/security/ca_root_nss && make "BATCH=yes" "WITH=ETCSYMLINK" install clean
+}
+

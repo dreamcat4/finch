@@ -1,0 +1,27 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+bash_users ()
+{
+  admins_users="`pw group show -n admins | cut -d ":" -f 4 | sed -e "s/,/ /g"`"
+  admins_users="`echo $admins_users | sed -e "s/^root *//" | sed -e "s/ root//g"`"
+  admins_users="`echo $admins_users | sed -e "s/^admin *//" | sed -e "s/ admin//g"`"
+
+  wheel_users="`pw group show -n wheel | cut -d ":" -f 4 | sed -e "s/,/ /g"`"
+  wheel_users="`echo $wheel_users | sed -e "s/^root *//" | sed -e "s/ root//g"`"
+  wheel_users="`echo $wheel_users | sed -e "s/^admin *//" | sed -e "s/ admin//g"`"
+
+  for user in $admins_users
+  do
+    user_shell=`pw user show $user | cut -d ":" -f 10`
+    if [ "${user_shell%bash}" = "$user_shell" ] && [ "${user_shell%/sh}" = "$user_shell" ]; then
+      # Override the default root shell (tcsh) to be bash. Since tcsh isn't a POSIX.2 compliant shell.
+      pw user mod "$user" -s "/usr/local/bin/bash"
+    fi
+
+    if [ ! "$(echo "$wheel_users" | grep "$user")" ]; then
+      pw user mod "$user" -G "wheel"
+    fi
+  done
+
+}

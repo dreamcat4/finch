@@ -1,0 +1,194 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+cat_qjail_profile_frag ()
+{
+	cat <<- "EOF"
+	
+	# Added by "$0"
+
+	# ! WARNING - DO NOT MODIFY THIS FILE !
+	#   CHANGES YOU MAKE HERE WILL BE OVERWRITTEN BY FINCH ON NEXT UPDATE
+
+	#   SOLUTION - CREATE a FILE NAMED "/etc/profile.custom" INSIDE THIS FOLDER.
+	#   OR CREATE A SYMLINK NAMED "profile.custom" TO YOUR PROFILE NEXT TO THIS FILE.
+	#   If found / exists, "profile.custom" file will also be sourced at the end of
+	#   this file and take priority over these settings.
+
+	# Give ls a nicer colors
+	export CLICOLOR="YES"
+	export LSCOLORS="ExFxAgHbCxGfEdHbGbHeHa"
+	alias ls="ls -F -G -a"
+
+	# The Finch 'jail' PS1 prompt for Bash and FreeBSD's /bin/sh
+	if [ "$0" = "su" ] || [ "${0%[^a-zA-Z]su}" != "${0}" ]; then
+	  _shell="$SHELL"
+	else
+	  _shell="$0"
+	fi
+  
+	if [ "$_shell" = "sh" ] || [ "${_shell%[^a-zA-Z]sh}" != "${_shell}" ]; then
+	  # /bin/sh
+	  _b1=""
+	  _ansi_esc=""
+	  _b2=""
+	  _user="$(id -un)"
+	
+	  if [ "$(uname -iv | grep -i nas4free)" ] && [ "$(id -un)" != "root" ]; then
+	    _no_W_dir="1" # there is a bug in NAS4Free-9.2 where /bin/sh barfs on \W for non-root users
+	  fi
+	
+	else
+	  # bash
+	  _b1="\["
+	  _ansi_esc="\e"
+	  _b2="\]"
+	  _user="\u"
+	fi
+	
+	case "$TERM" in
+	  xterm*)
+	    br="${_b1}${_ansi_esc}[1;38m${_b2}"
+	    bu="${_b1}${_ansi_esc}[1;34m${_b2}"
+	    bl="${_b1}${_ansi_esc}[1;30m${_b2}"
+	    gr="${_b1}${_ansi_esc}[1;32m${_b2}"
+	    cl="${_b1}${_ansi_esc}[0m${_b2}"
+	    ;;
+	esac
+	
+	if [ "$_no_W_dir" ]; then
+	  # jail
+	  PS1="${gr}\h${cl} ${bl}${_user}${cl}${gr}~#${cl} "
+	else
+	  # jail
+	  PS1="${gr}\h${cl} ${bu}\W${cl}${gr}/${cl} ${bl}${_user}${cl}${gr}~#${cl} "
+	fi
+
+	# Set the default EDITOR and PAGER
+	export EDITOR="nano"
+	export PAGER="less"
+	
+	if [ -e "/etc/profile.custom" ]; then
+	  . "/etc/profile.custom"
+	fi
+
+	EOF
+}
+
+# Already in ib___configure_sudo
+cat_sudoers_frag ()
+{
+	cat <<- EOF
+	
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	%wheel ALL=(ALL) NOPASSWD: ALL
+	
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_realpath"
+	
+	EOF
+}
+
+install_qjail ()
+{
+  # Install qjail
+  ASSUME_ALWAYS_YES="yes" pkg install "qjail" || install_failed "couldn't install pkg qjail with PKGNG"
+
+  # This still seems necessary for some minor reason.
+  patch_qjail;
+
+  # Populate default jails directories
+  qjail install -f "/var/distfiles/finch"
+
+  # Link the ports tree into jails
+  portsnap_override on
+  qjail update -p
+  portsnap_override off
+
+  # Append to /etc/profile 
+  cat_qjail_profile_frag >> "/usr/jails/template/etc/profile"
+
+  # Enable qjail at system startup
+  sysrc "qjail_enable=YES"
+
+  # Copy resolv.conf, localtime & pw.conf
+  for etc in "/usr/jails/template/etc" "/usr/jails/flavors/default/etc" "/usr/jails/flavors/ssh-default/etc"
+  do
+    cp "/etc/resolv.conf" "$etc/"
+    cp "/etc/localtime"   "$etc/"
+    cp "/etc/pw.conf"     "$etc/"
+  done
+
+  # Ensure Finch's sudoers file has been updated
+  sudo_nopasswd_wheel="%wheel ALL=(ALL) NOPASSWD: ALL"
+
+  if [ ! -e "/usr/local/etc/sudoers" ] || \
+     [ ! "`cat "/usr/local/etc/sudoers" | grep "^$sudo_nopasswd_wheel"`" ]; then
+    cat_sudoers_frag >> "/usr/local/etc/sudoers"
+  fi
+
+  # Disable .profile
+  mv "/usr/jails/template/root/.profile" "/usr/jails/template/root/.profile__disabled_by_finch"
+
+  # FreeBSD.conf
+  mkdir -p "/usr/jails/template/usr/local/etc/pkg/"
+  cp -Rf "/usr/local/etc/pkg" "/usr/jails/template/usr/local/etc/"
+
+  # Install packages
+  mount_nullfs "/usr/jails/sharedfs" "/usr/jails/template/sharedfs"
+  export ASSUME_ALWAYS_YES="yes"
+
+  # install pkg with pkg-ng's bootstrap method
+  chroot "/usr/jails/template" "/usr/sbin/pkg" -v
+
+  # To supress pkg-ng warning message
+  # pkg: PACKAGESITE in pkg.conf is deprecated. Please create a repository configuration file
+  # pkg: Warning: use of http:// URL scheme with SRV records is deprecated: switch to pkg+http://
+  if [ -e "/usr/jails/template/usr/local/etc/pkg.conf" ]; then
+    sed -i "" -e "s/packagesite: http/packagesite: pkg+http/" "/usr/jails/template/usr/local/etc/pkg.conf"
+    mv "/usr/jails/template/usr/local/etc/pkg.conf" "/usr/jails/template/usr/local/etc/pkg.conf__disabled_by_finch"
+  fi
+
+  chroot "/usr/jails/template" "/usr/sbin/pkg" install "portmaster"
+
+  # Copy resolv.conf, localtime & pw.conf
+  for etc in "/usr/jails/template/etc" "/usr/jails/flavors/default/etc" "/usr/jails/flavors/ssh-default/etc"
+  do
+    echo "WITH_PKGNG=yes" >> "$etc/make.conf"
+  done
+
+  chroot "/usr/jails/template" "/usr/sbin/pkg" install "sudo"
+
+  # Copy sudoers into jail templates
+  for usr_local_etc in "/usr/jails/template/usr/local/etc" "/usr/jails/flavors/default/usr/local/etc" "/usr/jails/flavors/ssh-default/usr/local/etc"
+  do
+    cp "/usr/local/etc/sudoers" "$usr_local_etc/"
+  done
+
+  chroot "/usr/jails/template" "/usr/sbin/pkg" install "nano"
+  chroot "/usr/jails/template" "/usr/sbin/pkg" install "bash"
+  chroot "/usr/jails/template" "/usr/sbin/pkg" install "ca_root_nss"
+  linksafe "/usr/local/share/certs/ca-root-nss.crt" "/usr/jails/template/etc/ssl/cert.pem"
+
+  unset ASSUME_ALWAYS_YES
+  rm "/usr/jails/template/etc/resolv.conf"
+  umount "/usr/jails/template/sharedfs"
+
+  # Set bash as the default shell
+  for etc in "/usr/jails/flavors/ssh-default/etc" "/usr/jails/template/etc" 
+  do
+    pw -V "$etc" usermod "root" -s "/usr/local/bin/bash"
+  done
+
+  # Create a "finch-ssh" flavor from default
+  cp -Rf "/usr/jails/flavors/default" "/usr/jails/flavors/finch-ssh"
+  mkdir -p "/usr/jails/flavors/finch-ssh/etc/ssh/"
+  cp "/etc/ssh/sshd_config" "/usr/jails/flavors/finch-ssh/etc/ssh/"
+  cp "/usr/jails/flavors/ssh-default/etc/rc.conf" "/usr/jails/flavors/finch-ssh/etc/"
+
+  # Same as "finch-ssh" but also permit root logins
+  cp -Rf "/usr/jails/flavors/finch-ssh" "/usr/jails/flavors/finch-ssh-root"
+  printf "\n\nPermitRootLogin yes\n\n" >> "/usr/jails/flavors/finch-ssh-root/etc/ssh/sshd_config"
+
+}
+

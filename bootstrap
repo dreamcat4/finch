@@ -1,0 +1,1657 @@
+#!/bin/sh
+# 
+#     _______     __                __    
+#    |   _   |   |__.-----.   .----|  |--.
+#    |.  |___|   |  |     |   |  __|     |
+#    |.  __)     |__|__|__|   |____|__|__|
+#    |:  |                                
+#    |::.|     FreeBSD in a chroot        
+#    `---`     -------------------        
+# 
+# finch-bootstrap:
+#     Install, Update, Move, and Uninstall Finch FreeBSD.
+# 
+# Created by:
+#     Dreamcat4 - dreamcat4@gmail.com (C 2014). FreeBSD License.
+#     Please fork this repo / upload improvements to github.com.
+# 
+
+# Tarball URL
+tarball_url="https://github.com/dreamcat4/finch/archive/master.tar.gz"
+tarball_file="finch-master.tar.gz"
+
+# gh_api_token="0000000000000000000000000000000000000000"
+# get_param_token="&access_token=$gh_api_token"
+
+# Set counters
+num_abort="0"
+num_error="0"
+num_warning="0"
+
+usage ()
+{
+	cat <<- "EOF"
+	 
+	 Usage:
+	      $ finch-bootstrap "command" [--options]
+
+	 Example:
+	      $ finch-bootstrap install --dir "/mnt/disk0/finch"
+
+	 Commands:
+
+	      install   - Install a new copy of Finch FreeBSD.
+	      uninstall - Uninstall a copy of Finch FreeBSD.
+	      update    - Update the finch command and finch scripts to the latest version.
+	      move      - Move/rename the paths/locations to this copy of finch.
+
+	 Options:
+
+	      -d, --dir "{realpath}"
+	           The full installation "/path/to/finch". Defaults to "$PWD/finch".
+	           ~ if not set a new subdirectory will be created here named "finch".
+	           Internally referred to as "$finch_realpath" - the chroot directory.
+
+	      -y, --yes
+	           Do not prompt for user confirmation before continuing. Useful
+	           for unattended operations or launching from other scripts.
+
+	      -f, --force
+	           Do not exit when a potential problem is encountered. Continue
+	           regardless of all warnings and errors.
+
+	      -e, --dest-dir "{dest_dir}"
+	           (move) A destination path where to move this installation.
+	           Where the current location is specified by "--dir {realpath}".
+
+	      -t, --txz-distfiles-dir "{txz_distfiles_dir}"
+	           (install) A local folder from which to obtain the FreeBSD ".txz"
+	           distribution files from ("distfiles"), "base.txz"... etc. With this
+	           option *nothing* will be downloaded from ftp://ftp.freebsd.org.
+	           You will be locally responsible for ensuring a correct set of
+	           distribution files is present. All "*.txz" files found in the folder
+	           will be unpacked / installed to the target directory ("--dir {dir}").
+
+	      -x, --debug
+	           Debugging output. Switches on "set -x" to echo all commands.
+
+	      -h, --help
+	           Display this message and exit.
+
+	 Bugs:
+	      Can be reported at http://dreamcat4.github.io/finch/support
+
+	 Created by:
+	      Dreamcat4, dreamcat4@gmail.com (C 2014). FreeBSD License.
+
+	EOF
+  exit 1
+}
+
+parse_args ()
+{
+  finch_command="0"
+
+  if [ "$#" -gt "0" ]; then
+    for arg in "$@"
+    do
+      case "$arg" in
+        install)   finch_command=`expr $finch_command + 1`; __command="install" ;;
+        move)      finch_command=`expr $finch_command + 1`; __command="move" ;;
+        update)    finch_command=`expr $finch_command + 1`; __command="update" ;;
+        uninstall) finch_command=`expr $finch_command + 1`; __command="uninstall" ;;
+
+        -d|--dir)                next_is_finch_realpath="1" ;;
+        -y|--yes)                no_prompt="1" ;;
+        -f|--force)              force="1" ;;
+        -e|--dest-dir)           next_is_finch_dest_dir="1" ;;
+        -t|--txz-distfiles-dir)  next_is_finch_txz_distfiles_dir="1" ;;
+        -x|--debug)              finch_debug="1" ;;
+        -h|--help)               usage ;;
+
+        *)
+          if [ "$next_is_finch_realpath" ]; then
+            finch_realpath="$arg"
+            unset next_is_finch_realpath
+
+          elif [ "$next_is_finch_txz_distfiles_dir" ]; then
+            finch_txz_distfiles_dir="$arg"
+            unset next_is_finch_txz_distfiles_dir
+
+          elif [ "$next_is_finch_freebsd_version" ]; then
+            finch_freebsd_version="$arg"
+            unset next_is_next_is_finch_freebsd_version
+
+          elif [ "$next_is_finch_dest_dir" ]; then
+            finch_dest_dir="$arg"
+            unset next_is_finch_dest_dir
+
+          else
+            echo "error (1): unrecognised command line parameter - \"$arg\". \`finch-bootsrap --help\` for more info."
+            exit 1
+          fi
+        ;;
+      esac
+    done
+  else
+    usage;
+  fi
+  
+  if [ "$finch_command" = "0" ]; then
+    echo "error (1): No command specified. \`finch-bootsrap --help\` for more info."
+    exit 1
+  fi
+
+  if [ "$finch_command" -gt "1" ]; then
+    echo "error (1): You must specify only ONE command at a time. \`finch-bootsrap --help\` for more info."
+    exit 1
+  fi
+  
+  if [ "$finch_debug" ]; then
+    set -x
+  fi
+
+  if [ ! "$finch_realpath" ]; then
+    finch_realpath="$PWD/finch"
+  fi
+
+  if [ "$finch_realpath" != "/" ]; then
+    finch_realpath="${finch_realpath%/}"
+  fi
+
+  if [ "$finch_txz_distfiles_dir" != "/" ]; then
+    finch_txz_distfiles_dir="${finch_txz_distfiles_dir%/}"
+  fi
+
+  if [ "$finch_dest_dir" != "/" ]; then
+    finch_dest_dir="${finch_dest_dir%/}"
+  fi
+}
+
+cat_welcome_banner ()
+{
+	cat | xargs -0  printf <<- "EOF"
+	\033[1;38m
+	                           -=  Welcome to  =-
+	                 -------------------------------------
+	                  _______     __                __    
+	                 |   _   |   |__.-----.   .----|  |--.
+	                 |.  |___|   |  |     |   |  __|     |
+	                 |.  __)     |__|__|__|   |____|__|__|
+	                 |:  |                                
+	                 |::.|     FreeBSD in a chroot        
+	                 `---`     -------------------        
+	              
+	\033[0m
+	EOF
+}
+
+cat_ascii_art ()
+{
+	cat | xargs -0  printf <<- EOF
+	\033[1;38m
+	                                                               11111                               
+	              11                                          100000000000001                          
+	      1000000000001                                    100000000001110000001                       
+	     1000000001 10001                                100001  0011001    1000001                    
+	     100   1001   0001                              10001    01   100       00001             10001
+	     101     1001   000                            10001     001   000        0001         1100001 
+	  10000       1000   1001                          1001      100   0000        10011111000000001   
+	  1000001       1001  1001                        1001       1001  10001       900000000110001     
+	     1000001      000   000                       1001        1001  1000      00001      101       
+	        100001     0001  1001                     0001         1001 0000     0000      1001        
+	           10000    1000   001                   10001          10001       10001   10001          
+	             10000    1001  10011                 0001                      10000000001            
+	                0000   1001  1000000000111        1001                      10000000001            
+	                  0000   1001   11000000000000001110001                     1000    100001         
+	                    1001   11            111000000000001                    10001      10001       
+	                      0001                           0001                   100000000011 10001     
+	             11        1000                1011       1000                 10000111100000000001    
+	            000000111   10001        1110000001        1000               00000           11001    
+	            10000000000000000000000000000001            10001           100001                     
+	             100    110000000000000111                    10001       1000001                      
+	               001                                          100000000000001                        
+	                10001                                          100000001                           
+	                  100001                                           1001                            
+	                     1000001111               101                   000                            
+	                        100000000001         1000                   0001                           
+	                              110000001   100001                   10001                           
+	                                 10000000000000                    0000                            
+	                                    1000001110001                100001                            
+	                                              100011           100000                              
+	                                                10000000111000000001                               
+	                                                 0000000000000001                                  
+	                                              10000001                 1001                        
+	                                            000001  1001             10000                         
+	                                            100001    10001        10001                           
+	                                               10000    10001    0000     1001                     
+	                                                  0000    100011000    100001                      
+	                                                   10001   100000    10001                         
+	                                                    00000110000001 100001 1100111111111            
+	                                              111000000000111000000111111000000000000001           
+	                                       1110000000011 100001 10000001            11111001           
+	                                 1100000000011       00000000110000000000000000000010001           
+	                           100000000001          110000011101   10011                              
+	                          1000011           110000001  1                                           
+	                                       100000001                                                   
+	                                 1100000001                                                        
+	                            1100000011                                                             
+	                          1000011                                                                  
+	                            1                                                                      
+	\033[0m
+	EOF
+}
+
+warn ()
+{
+  printf '\033[1;30;43m WARNING \033[0m\033[1;37m*********************************************************************\033[0m\n'
+}
+
+err ()
+{
+  printf '\033[1;37;41m  ERROR  \033[0m\033[1;37m*********************************************************************\033[0m\n'
+}
+
+hr ()
+{
+  printf '\033[1;37m******************************************************************************\033[0m\n'
+}
+
+wrap ()
+{
+  # Settings
+
+  # lead_indent_first_para="1"
+  lead_indent_remaining_paras="1"
+  # preserve_lead_indent_first_para="1"
+  # preserve_lead_indent_remaining_paras="1"
+
+  # if [ "$lead_indent_all_paras" ]; then
+  #   lead_indent_first_para="1"
+  #   lead_indent_remaining_paras="1"
+  # fi
+
+  # if [ "$preserve_lead_indent_all_paras" ]; then
+  #   preserve_lead_indent_first_para="1"
+  #   preserve_lead_indent_remaining_paras="1"
+  # fi
+
+  set -f # Turn off shell globbing
+
+  if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+		cat <<- "EOF"
+		wrap:
+		  Wrap text with a hanging indent.
+
+		Usage:
+		  cat file | wrap
+		  cat file | wrap "$width"
+		  cat file | wrap "$width" "$indent"
+
+		Where:
+		  default_width="78"
+		  default_indent="0"
+
+		EOF
+    return 1
+  fi
+
+  default_width="78"
+  default_indent="0"
+
+  if [ "$1" ]; then
+    local MARGIN="$1"
+    shift
+    if [ "$1" ]; then
+      local INDENT="$1"
+      shift
+    else
+      local INDENT="$default_indent"
+    fi
+  else
+    local MARGIN="$default_width"
+    local INDENT="$default_indent"
+  fi
+
+  first_para="1"
+  local REMAINING=$MARGIN
+  while read line
+  do
+    if [ "$line" ]; then
+      if [ "$first_para" ]; then
+        if [ "$lead_indent_first_para" ]; then
+          printf "%${INDENT}s" ""
+
+        elif [ "$preserve_lead_indent_first_para" ]; then
+          # First line of first paragraph - preserve any existing indentation (don't auto-indent)
+          lead="$(echo "$line" | grep -o "[[:space:]]*")"
+          printf "%s" "$lead"
+          REMAINING=$(( $MARGIN - ${#lead} ))
+        fi
+        unset first_para
+      fi
+
+      for word in $line
+      do
+        if [ $(( $REMAINING - ${#word} )) -ge 0 ]; then
+          printf "%s " "${word}"
+          REMAINING=$(( $REMAINING - ${#word} - 1 ))
+        else
+          printf "\n%${INDENT}s%s " "" "$word"
+          REMAINING=$(( $MARGIN - ${#word} - ${INDENT} - 1 ))
+        fi
+      done
+    else
+      echo ""
+      echo ""
+      if [ "$lead_indent_remaining_paras" ]; then
+        # Indent the first line of all 2nd, 3rd, ... paragraphs
+        printf "%${INDENT}s" ""
+        REMAINING=$(( $MARGIN - ${INDENT} ))
+
+      elif [ "$preserve_lead_indent_remaining_paras" ]; then
+        # First line of 2nd, 3rd paragraph - preserve existing indentation (don't auto-indent)
+        lead="$(echo "$line" | grep -o "[[:space:]]*")"
+        printf "%s" "$lead"
+        REMAINING=$(( $MARGIN - ${#lead} ))
+
+      else
+        REMAINING=$(( $MARGIN ))
+      fi
+    fi
+  done
+  echo "" # Add trailing newline
+
+  set +f # Turn shell globbing back on
+}
+
+check_architecture ()
+{
+  if [ `uname -m` = "i386" ]; then
+    echo "* The architecture of this system is: \"`uname -m`\""
+    echo "\"\i386\"... Phhah!"
+    echo ""
+    warn;
+    echo "You are on a 32-bit operating system. You're recommended to at least *try* to"
+    echo "reinstall FreeBSD as a 64-bit build. Your hardware *might* support it. It is"
+    echo "now more beneficial (in terms of software compatibility) to be running 64-bits."
+    echo ""
+    flag_warning;
+
+  elif [ ! `uname -m` = "amd64" ]; then
+    echo "* The architecture of this system is: \"`uname -m`\""
+    err;
+    echo "This is not a supported architecture. We were expecting \"i386\" or \"amd64\"!"
+    echo ""
+    flag_error;
+  fi
+}
+
+check_localtime ()
+{
+  if [ ! -e "/etc/localtime" ]; then
+    echo ""
+    warn;
+    echo "You don't seem to have the file \"/etc/localtime\". It is recommended to set"
+    echo "your local timezone from \"/usr/share/timezone\" before installing. Example:"
+    echo ""
+    echo "cp \"/usr/share/zoneinfo/Etc/GMT\" \"/etc/localtime\""
+    echo ""
+    flag_warning;
+  fi
+}
+
+check_freebsd_version ()
+{
+  major_ver=`uname -r | sed -e "s/-.*$//" -e "s/\..*$//"`
+  minor_ver=`uname -r | sed -e "s/-.*$//" -e "s/^.*\.//"`
+  _rel="$(uname -r | cut -d- -f2)"
+
+  if [ "$_rel" = "RELEASE" ]; then
+
+    if [ "`uname -iv | grep -i freenas`" ] || [ "`uname -iv | grep -i nas4free`" ]; then
+
+      if [ "$major_ver" -lt "9" ]; then
+        freebsd_too_old="1"
+      fi
+      if [ "$major_ver" -eq "9" ] && [ "$minor_ver" -lt "2" ]; then
+        freebsd_too_old="1"
+      fi
+
+      if [ "$freebsd_too_old" ]; then
+        echo "* The version of FreeBSD on this system is: \"FreeBSD-`uname -r`\""
+        echo ""
+        err;
+        echo "This FreeBSD RELEASE is no longer supported by this script. Reason: pkg-ng."
+        echo "Versions of FreeBSD prior to 9.2-RELEASE are emphatically not supported."
+        echo "You should first upgrade the FreeBSD version of your host system. Then retry."
+        echo "Newer versions of FreeBSD are publicly available. Go'on with ye, go'on I say!"
+        echo ""
+        flag_error;
+      fi
+
+    else
+      if [ "$major_ver" -lt "10" ]; then
+        echo "* The version of FreeBSD on this system is: \"FreeBSD-`uname -r`\""
+        echo ""
+        err;
+        echo "This FreeBSD RELEASE is no longer supported by Finch. Reason: out of date."
+        echo "Versions of FreeBSD prior to 10.0-RELEASE of GENERIC are no longer supported."
+        echo "You should first upgrade the FreeBSD version of your host system. Then retry."
+        echo "Newer versions of FreeBSD are publicly available. Go'on with ye, go'on I say!"
+        echo ""
+        flag_error;
+      fi
+    fi
+
+  elif [ "$_rel" = "STABLE" ] || [ "$_rel" = "CURRENT" ]; then
+    echo "* The version of FreeBSD on this system is: \"FreeBSD-`uname -r`\""
+    echo "  Perhaps this is a beta ?"
+    echo ""
+    err;
+    echo "Installation onto $_rel branches of FreeBSD is not supported."
+    echo " * You cannot run \"freebsd-update\" (to apply binary patches)."
+    echo ""
+    echo "For testing / throw away only. Do not use for production."
+    echo "Upgrade your platform to a \"RELEASE\" version of FreeBSD."
+    echo ""
+    flag_error;
+
+  else
+    echo "* The version of FreeBSD on this system is: \"FreeBSD-`uname -r`\""
+    echo ""
+    err;
+
+    if [ ! "$finch_txz_distfiles_dir" ]; then
+      echo "This is not a known / recognized version of FreeBSD. So we cannot be sure"
+      echo "of the appropriate download URL to get the base system files (\"base.txz\")."
+      echo ""
+    fi
+
+    echo "Installation of a non-RELEASE version is not encouraged or recommended."
+    echo "This version cannot be easily upgraded in future with \"freebsd-update\"."
+    echo "If possible, upgrade your kernel version to something marked \"RELEASE\"."
+    echo ""
+    flag_error;
+  fi
+}
+
+check_paths ()
+{
+  if [ ! `echo "$finch_realpath" | grep "^/"` ]; then
+    err;
+    echo "The variable \$finch_realpath must be a fully specified path (start with a \"/\")"
+    echo ""
+    flag_error;
+
+  elif [ -d "$finch_realpath" ] && [ "`ls "$finch_realpath"`" ]; then
+    err;
+    echo "The directory \"$finch_realpath\" already exists and is non-empty."
+    echo "It is not WISE to mixup a fresh new FreeBSD installation with other files."
+    echo "The better idea would be to specify an EMPTY folder and install into that."
+    echo ""
+    flag_error;
+
+  elif [ -e "$finch_realpath" ] && [ ! -d "$finch_realpath" ]; then
+    err;
+    echo "There is already a file named \"$finch_realpath\"."
+    echo "So we cannot use that location for our FreeBSD installation."
+    echo ""
+    flag_error;
+  fi
+
+}
+
+check_filesystem ()
+{
+  filesystem_path="$finch_realpath"
+
+  while [ ! -e "$filesystem_path" ]
+  do
+    filesystem_path=`dirname "$filesystem_path"`
+  done
+
+  echo "* Querying filesystem at \"$filesystem_path\""
+  echo ""
+
+  filesystem=`df -m -T $filesystem_path | awk 'NR==2 {print $1}'`
+  fs_type=`df -m -T $filesystem_path | awk 'NR==2 {print $2}'`
+  size=`df -m -T $filesystem_path | awk 'NR==2 {print $3}'`
+  used=`df -m -T $filesystem_path | awk 'NR==2 {print $4}'`
+  available=`df -m -T $filesystem_path | awk 'NR==2 {print $5}'`
+  capacity=`df -m -T $filesystem_path | awk 'NR==2 {print $6}'`
+  mountpoint=`df -m -T $filesystem_path | awk 'NR==2 {print $7}'`
+ 
+  size_05g="5120"
+  size_10g="10240"
+  size_50g="51200"
+  
+  # Check if there is enough free hdd space
+  if [ "$available" -lt "$size_05g" ]; then
+    echo "* $available Megabytes free disk space."
+    echo ""
+    warn;
+    echo "You don't seem to have enough disk space to install Finch FreeBSD. This is a full-blown distribution, containing kernel, src and ports tree. On our test system (FreeBSD 9.2, amd-64) a fresh install came to 4251 MB. However you currently only have \"$available\" megabytes of free space." | wrap "76"
+    echo ""
+    flag_warning;
+  
+  elif [ "$available" -lt "$size_10g" ]; then
+    echo "* $available Megabytes free disk space."
+    echo ""
+    warn;
+    echo "You seem to have low disk space on the volume where you want to install."
+    echo "This is a full-blown distribution, containing kernel, src and ports tree."
+    echo "On our test system (FreeBSD 9.2, amd-64) a fresh install came to 4251 MB."
+    echo "Currently have a total of \"$available\" megabytes of free space."
+    echo ""
+    flag_warning;
+  fi
+
+  # Check that we are installing FreeBSD onto a FreeBSD supported filesystem
+  if [ `echo "$filesystem" | grep "/dev/md"` ]; then
+    echo "* Filesystem type is \"$fs_type\" for this volume."
+    echo ""
+    err;
+    echo "The device you have selected to install onto appears to be a RAMDISK."
+    echo "Perhaps you are in the wrong folder, or forgot to specify the correct"
+    echo "installation directory with the \"-d\" command line option?"
+    echo ""
+    flag_error;
+
+  elif [ "$fs_type" = "devfs" ]; then
+    echo "* Filesystem type is \"$fs_type\" for this volume."
+    echo ""
+    err;
+    echo "The path \"$filesystem_path\" seems to be situated on a devfs mounted path."
+    echo "Hey! Seriously? Thats for special block devices only! IT'S NOT WORTH IT MAN!"
+    echo "You need to mount a filesystem before you can specify a folder location on it."
+    echo ""
+    flag_error;
+
+  elif [ "$fs_type" = "nullfs" ]; then
+    echo "* Filesystem type is \"$fs_type\" for this volume."
+    echo ""
+    warn;
+    echo "The path \"$filesystem_path\" seems to be located on nullfs mounted folder."
+    echo "Therefore we cannot determine if the filesystem is valid. It should be either"
+    echo "UFS or ZFS - where to install FreeBSD... you might already be aware of this"
+    echo "requirement."
+    echo "You can either cd into the full real path, and rerun this installer. Or you"
+    echo "can specify the full real path with \"-d\" command line option."
+    echo ""
+    flag_warning;
+
+  elif [ "$fs_type" = "zfs" ]; then
+    echo "Filesystem type is \"$fs_type\" for this volume. FreeBSD supports installations on the zfs filesystem." | wrap "78"
+    echo ""
+
+  elif [ "$fs_type" = "ufs" ]; then
+    echo "Filesystem type is \"$fs_type\" for this volume. FreeBSD supports installations on the ufs filesystem. So long as it's not a slow usb flash drive. HDDs & SSDs only please." | wrap "78"
+    echo ""
+
+  else
+    echo "* Filesystem type is \"$fs_type\" for this volume."
+    echo ""
+    warn;
+    echo "You seem to be on a filesystem which isn't either UFS or ZFS. This may lead"
+    echo "to unknown problems occuring further down the road. FreeBSD requires that"
+    echo "the root filesystem (\"/\") provides cetain features, such as ACL permission"
+    echo "etc. etc."
+    echo "Perhaps you are aware of possible issues but would like to continue regardless."
+    echo ""
+    flag_warning;
+  fi
+}
+
+check_root ()
+{
+  echo "Checking access privileges..."
+
+  if [ `id -u` = 0 ]; then
+    echo "Ok."
+    echo ""
+  else
+    echo ""
+    err;
+    echo "User \"`id -n -u`\" - your UID isnt \"0\" (insufficient permissions)."
+    echo "You must be the root user (su or sudo) to run this installer script."
+    echo ""
+    flag_error;
+  fi
+}
+
+check_users ()
+{
+  echo "Checking administrator accounts..."
+
+  wheel_users="`pw group show -n wheel | cut -d ":" -f 4 | sed -e "s/,/ /g"`"
+  wheel_users="`echo $wheel_users | sed -e "s/^root *//" | sed -e "s/ root//g"`"
+
+  if [ ! "`uname -iv | grep -i nas4free`" ] && [ ! "`uname -iv | grep -i pfsense`" ]; then
+    # root isn't always printed by $ pw group show cmd, so we ensure to insert it manually
+    wheel_users="root $wheel_users"
+  fi
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    wheel_users=""
+  fi
+
+  for user in $wheel_users
+  do
+    # echo "$user"
+    user_shell=`pw user show $user | cut -d ":" -f 10`
+    if [ "${user_shell%bash}" = "$user_shell" ] && [ "${user_shell%/sh}" = "$user_shell" ]; then
+
+      if [ ! "$____first_newline_printed" ]; then
+        echo "" # in for loop - messy spacing
+        ____first_newline_printed="1"
+      fi
+
+      if [ "${user_shell%/csh}" = "$user_shell" ]; then
+        warn;
+        echo "Admin user: \"$user\" - the shell: \"$user_shell\" may not be supported by Finch."
+      else
+        warn;
+        echo "Admin user: \"$user\" - the shell: \"$user_shell\" is not supported by Finch."
+      fi
+      echo ""
+
+      echo "The Finch login profile requires a POSIX.2 or Bourne-type compatible shell."
+      echo "Please use Bash (or FreeBSD's /bin/sh). Those are the shells we test with."
+      echo ""
+
+      if [ "`uname -iv | grep -i nas4free`" ] || [ "`uname -iv | grep -i freenas`" ]; then
+        echo "Full instructions to change $user's login shell can be found at:"
+        echo "* http://dreamcat4.github.io/finch/install/#toc_12"
+        echo ""
+
+      else
+        echo "You can change $user's shell with the following command:"
+        echo ""
+        if [ -x "/usr/local/bin/bash" ]; then
+          echo "  $ \"pw user mod $user -s /usr/local/bin/bash\""
+        else
+          echo "pw user mod $user -s /bin/sh"
+        fi
+        echo ""
+      fi
+
+      if [ "${user_shell%/csh}" = "$user_shell" ]; then
+        echo "Alternatively, your shell *might* have a POSIX.2 / Bourne shell compatibility"
+        echo "mode. Then that mode should be enabled. In addition, the file /etc/profile"
+        echo "must be sourced during shell login. PLease refer to the shell's documentation."
+        echo ""
+      fi
+
+      flag_warning;
+    fi
+  done
+
+  if [ ! `id -u` = 0 ]; then
+  #   echo "Ok."
+  #   echo ""
+  # else
+    if [ ! "$____first_newline_printed" ]; then
+      echo "" # in for loop - messy spacing
+      ____first_newline_printed="1"
+    fi
+
+    err;
+    echo "User \"`id -n -u`\" - your UID isnt \"0\" (insufficient permissions)."
+    echo "You must be the root user (su or sudo) to run this installer script."
+    echo ""
+    flag_error;
+  fi
+
+  echo "Done."
+  echo ""
+}
+
+flag_error ()
+{
+  num_error=`expr $num_error + 1`
+  num_abort=`expr $num_abort + 1`
+}
+
+flag_warning ()
+{
+  num_warning=`expr $num_warning + 1`
+  num_abort=`expr $num_abort + 1`
+}
+
+check_required_programs()
+{
+  echo "Checking for required programs..."
+  if [ ! -x "/usr/local/bin/sudo" ]; then
+    echo ""
+    err;
+    echo "Could not find \`sudo\`. We looked for \"/usr/local/bin/sudo\"."
+    echo "You must install sudo onto your system BEFORE installing finch."
+    echo ""
+    flag_error;
+  fi
+
+  if [ ! -x "/usr/local/bin/bash" ]; then
+    echo ""
+    err;
+    echo "Could not find \`bash\`. We looked for \"/usr/local/bin/bash\"."
+    echo "You should install the bash shell before installing finch."
+    echo ""
+    flag_error;
+  fi
+  
+  if [ -x "/usr/local/bin/sudo" ] && [ -x "/usr/local/bin/bash" ]; then
+    echo "Done."
+  fi
+}
+
+preflight_checks ()
+{
+  echo "Running preflight checks..."
+  echo ""
+  check_paths;
+  check_architecture;
+  check_freebsd_version;
+  check_filesystem;
+  check_localtime;
+  check_users;
+
+  if [ ! "`uname -iv | grep -i freenas`" ] && [ ! "`uname -iv | grep -i nas4free`" ] && [ ! "`uname -iv | grep -i pfsense`" ]; then
+    freebsd_major_ver=`uname -r | sed -e "s/-.*$//" -e "s/\..*$//"`
+    if [ "$freebsd_major_ver" -lt "10" ]; then
+      check_required_programs;
+    fi
+  fi
+}
+
+print_installer_actions ()
+{
+  hr;
+  echo "Installation folders & files"
+  hr;
+  echo "Is this your desired configuration ?"
+  echo ""
+  echo "  * What we are going to install: \"FreeBSD-`uname -r`\""
+  echo ""
+  if [ "$finch_txz_distfiles_dir" ]; then
+    echo "  * Distfiles will be taken from: \"$finch_txz_distfiles_dir\""
+    echo ""
+  else
+    echo "  * Distfiles will be taken from: \"ftp://ftp.freebsd.org\""
+    echo ""
+  fi
+  echo "  * FreeBSD will be installed to: \"$finch_realpath\""
+  echo ""
+
+  if [ "`uname -iv | grep -i nas4free`" ] || [ "`uname -iv | grep -i pfsense`" ]; then
+    if [ "`uname -iv | grep -i nas4free`" ]; then
+      _platform="NAS4Free"
+    fi
+
+    if [ "`uname -iv | grep -i pfsense`" ]; then
+      _platform="pfSense"
+    fi
+
+    printf '\033[1;37;44m NOTICE \033[0m\033[1;37m**********************************************************************\033[0m\n'
+
+    echo "Finch will automatically set your root shell to be BASH."
+    echo ""
+    echo "We prefer to leave this decision to the user but $_platform does not let you configure your root account. The Finch login profile requires a POSIX.2 compliant shell so we set your root shell to be BASH from now onwards. Apologies for any inconvenience." | wrap "72"
+    echo ""
+  fi
+
+  if [ "$finch_debug" ]; then
+    # Print the list of files to be installed eg
+    # $finch_realpath/usr/local/man/man8/finch.8.gz
+    # $finch_realpath/finch/etc/postinit
+  	echo "* In the next step we will create the following files:"
+  	echo ""
+
+    export finch_realpath="$finch_realpath" # For awk ENVIRON[] to work
+    SSL_NO_VERIFY_PEER=YES fetch -q -o - "$tarball_url" | tar -tzf - | grep --only-matching -e "/chroot.*[^/]$" | grep --only-matching -e "[^^/chroot].*" | awk '{ print "    "ENVIRON["finch_realpath"]"/"$1}'
+
+    # And list any distfiles that will be copied into there
+    if [ "$finch_txz_distfiles_dir" ]; then
+      for txz_distfile in "$finch_txz_distfiles_dir/"*.txz
+      do
+        echo "    $finch_realpath/var/distfiles/finch/${txz_distfile#$finch_txz_distfiles_dir/}"
+      done
+    fi
+    echo ""
+  fi
+
+  hr;
+  echo "READY TO INSTALL FINCH SCRIPTS ?"
+  hr;
+  echo "This will prepare the target installation folder with essential FINCH scripts."
+  if [ "$finch_txz_distfiles_dir" ]; then
+    echo "And copy the local distfiles folder."
+  fi
+  echo ""
+  echo "  * Finch Download URL:"
+  echo "      $tarball_url"
+  echo ""
+  echo "OK to proceed ?"
+  echo ""
+}
+
+press_any_key ()
+{
+  if [ "$no_prompt" ]; then
+    echo "Continuing..."
+  else
+    printf "Press any key to continue..."
+    OLDSTTY=`stty -g`
+    stty -icanon -echo
+    dd bs=1 count=1 2>/dev/null
+    stty $OLDSTTY
+    # printf "\n"
+  fi
+}
+
+prompt_and_continue ()
+{
+  
+  if [ "$no_prompt" ]; then
+    echo "Continuing..."
+    echo ""
+  else
+    read -p "Press [ENTER] to continue (or CTRL^C to abort): " input < /dev/tty
+    echo ""
+  fi
+}
+
+gh_fetch ()
+{
+  file="$1"
+  query="$2"
+  SSL_NO_VERIFY_PEER=YES fetch -q -o "$file" "https://api.github.com/${query}${get_param_token}" 2> /dev/null
+
+  if [ ! -e "$file" ]; then
+    echo "finch-bootstrap: Github API Fetch failed. Probably Github API limit exceeded."
+    echo "You are allowed up to 60 API requests / hour so try again in 1 hour."
+    exit 1
+  fi
+}
+
+download_unpack_files ()
+{
+  mkdir -p "$finch_realpath/var/db/finch"
+
+  echo "SSL_NO_VERIFY_PEER=YES fetch -o \"/tmp/$tarball_file\" \"$tarball_url\"" | wrap "78"
+  SSL_NO_VERIFY_PEER=YES fetch -o "/tmp/$tarball_file" "$tarball_url" 2> /dev/null
+  printf "Unpacking files... "
+  # echo "tar --strip-components 2 --include \"*/chroot/*\" -zxvf \"/tmp/$tarball_file\" -C \"$finch_realpath\""
+  tar --strip-components 2 --include "*/chroot/*" -zxf "/tmp/$tarball_file" -C "$finch_realpath" --no-same-owner 2> /dev/null
+  echo "Done."
+
+  # update the timestamp
+  latest_update="$(stat -f %m "/tmp/$tarball_file")"
+  echo "$latest_update" > "$finch_realpath/var/db/finch/last_update"
+
+  rm "/tmp/$tarball_file"
+
+  if [ "$finch_txz_distfiles_dir" ]; then
+    if [ "`ls "$finch_txz_distfiles_dir/"*.txz`" ]; then
+      echo "Copying distfiles..."
+      mkdir -p "$finch_realpath/var/distfiles/finch/"
+
+      for txz_distfile in "$finch_txz_distfiles_dir/"*.txz
+      do
+        echo "$txz_distfile"
+        cp "$txz_distfile" "$finch_realpath/var/distfiles/finch/"
+      done
+      echo "Done."
+      echo ""
+
+    else
+      echo ""
+      err;
+      echo "We could not find any .txz files in \"$finch_txz_distfiles_dir\"."
+      echo ""
+      flag_error;
+    fi
+  fi
+
+  echo ""
+}
+
+cat_rc_conf_frag ()
+{
+	cat <<- EOF
+	
+	# finch ! DO NOT EDIT THESE LINES ! *BEGIN* - Added by Finch FreeBSD @ "$finch_dest_dir"
+	
+	${realpath_namified_rcvar}_enable="YES"
+	
+	# finch ! DO NOT EDIT THESE LINES ! **END** - Added by Finch FreeBSD @ "$finch_dest_dir"
+	
+	EOF
+}
+
+
+print_next_steps ()
+{
+  printf '\033[1;37;44m NEXT STEPS \033[0m\033[1;37m******************************************************************\033[0m\n'
+  if [ "`uname -iv | grep -i nas4free`" ] || [ "`uname -iv | grep -i freenas`" ] || [ "`uname -iv | grep -i pfsense`" ]; then
+		cat | xargs -0  printf <<- EOF
+		
+		* You must now follow the "Post Install Steps" as shown on the Finch website.
+		
+		  \033[1;30m>>>\033[0m  http://dreamcat4.github.io/finch/install/#toc_12  \033[1;30m<<<\033[0m
+		
+		EOF
+
+  else
+		cat | xargs -0  printf <<- EOF
+		READY TO INSTALL FREEBSD IN A CHROOT ?
+		\033[1;37m******************************************************************************\033[0m
+
+		* Installation will take anywhere from 20 minutes up to 1 hour.
+
+		* Further messages regarding installation progress will NOT appear there.
+		  To check progress login with another terminal and type:
+
+		  tail -99999 -f $finch_realpath/var/log/finch/install.log
+
+		OK to proceed ?
+		YOU MAY NOT CLOSE OR EXIT THIS TERMINAL WINDOW UNTIL INSTALLATION HAS COMPLETED
+
+		EOF
+  fi
+
+  if [ "`uname -iv | grep -i freenas`" ]; then
+    _freenas_root_email=`cat "/etc/aliases" | grep -e "^[^\#]*root:" | cut -d " " -f 2`
+    _smartd_email_to=`cat "/usr/local/etc/smartd.conf" | grep -o -e "-m.*" | cut -d " " -f 2`
+    
+    if [ "$_freenas_root_email" ]; then
+      _email_to="$_freenas_root_email"
+
+    elif [ "$_smartd_email_to" ]; then
+      _email_to="$_smartd_email_to"
+    fi
+    _host="FreeNAS"
+  fi
+
+  if [ "`uname -iv | grep -i nas4free`" ]; then
+    _n4f_config="/conf/config.xml"
+    if [ `command -v xml` ] && [ -e "$_n4f_config" ]; then
+      # Is smartd email report enabled?
+      _smartd_email_to=$(/usr/local/bin/xml sel -t -v "//smartd/email/to" $_n4f_config)
+      _email_from=$(/usr/local/bin/xml sel -t -v "//email/from" $_n4f_config)
+
+      # This feature only works if a "to address" is setup in smartd monitoring.
+      if [ "$_email_from" ] && [ "$_smartd_email_to" ]; then
+        _email_to="$_smartd_email_to" # <--- until theres a general "to address" email setting in nas4free
+      fi
+    fi
+    _host="NAS4Free"
+  fi
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    _email_to="$(pfsense_email_to)"
+    _host="pfSense"
+  fi
+
+  if [ "$_email_to" ]; then
+    printf '\033[1;37;44m EMAIL NOTIFICATION \033[0m\033[1;37m**********************************************************\033[0m\n'
+    echo ""
+    if [ "$_smartd_email_to" ]; then
+      _txt_frag="$_host \"smartd\" email settings"
+    else
+      _txt_frag="$_host config"
+    fi
+
+    echo "* SMTP Email settings found. We'll send you an email notification when Finch installation has completed. Auto-detected from your $_txt_frag." | wrap 78 2
+    echo ""
+    echo "  Notification email address: $_email_to"
+    echo ""
+  fi
+}
+
+pfsense_email_to ()
+{
+	php -q <<- "EOF"
+	<?php
+	require_once('config.inc');
+
+	function pfsense_email_to()
+	{
+	  global $config;
+	  $config = parse_config(true);
+
+	  if(isset($config['notifications']['smtp']['disable']))
+	        return;
+
+	  if(!$config['notifications']['smtp']['notifyemailaddress'])
+	        return;
+
+	  echo $config['notifications']['smtp']['notifyemailaddress'];
+	}
+
+	pfsense_email_to();
+	echo "\n";
+	exit
+	?>
+
+	EOF
+}
+
+install ()
+{
+  cat_welcome_banner;
+
+  preflight_checks;
+  hr;
+	echo "Preflight checks completed."
+  echo "$num_error errors, $num_warning warnings encountered."
+  
+  if [ "$num_error" -gt "0" ]; then
+    if [ "$force" ]; then
+      echo ""
+      echo "But we're going to continue anyway goddamnit!"
+
+    else
+      echo ""
+      echo "Aborting installation."
+      echo "Please read carefully the reported errors. Try to eliminate / fix them."
+      echo "Or use \"--force\" to override and continue regardless (not recommended)."
+      echo ""
+      exit 1;
+    fi
+  fi
+  echo ""
+
+  print_installer_actions;
+  prompt_and_continue;
+  download_unpack_files;
+  print_next_steps;
+
+  if [ ! "`uname -iv | grep -i freenas`" ] && [ ! "`uname -iv | grep -i nas4free`" ] && [ ! "`uname -iv | grep -i pfsense`" ]; then
+    prompt_and_continue;
+
+    cat_ascii_art;
+    echo ""
+
+    # Install proper.
+    echo "Installing..."
+
+    # if [ "`uname -iv | grep -i pfsense`" ]; then
+    #   if [ "$(pfsense_email_to)" ]; then
+    #     echo "We'll send you an email when it's done."
+    #   fi
+    # fi
+
+    "$finch_realpath/etc/finch/postinit" > "/dev/null" 2>&1
+
+    if [ "$?" != "0" ]; then
+      _install_err="true"
+    fi
+
+    if [ "$(tail -1 "$finch_realpath/var/log/finch/install.log")" = "+ exit 1" ]; then
+      _install_err="true"
+    fi
+
+    if [ "$_install_err" ]; then
+      echo ""
+      err;
+      echo ""
+      echo "An error has occurred. You can check the logfile with this command:"
+      echo "cat \"$finch_realpath/var/log/finch/install.log\""
+      echo ""
+      exit 1
+    fi
+
+    install_time=`cat "$finch_realpath/var/log/finch/install.log" | grep -o "Installation took .*"`
+    echo "$install_time"
+    echo "Done."
+    echo ""
+
+		cat | xargs -0  printf <<- EOF
+		\033[1;37m******************************************************************************\033[0m
+		INSTALLATION COMPLETE
+		\033[1;37m******************************************************************************\033[0m
+
+		One more thing. In order to use finch, you must:
+
+		1) Be a member of group wheel
+
+		   $ "pw user mod $USER -G wheel"
+
+		2) Set \`bash\` or \`sh\` as your default login shell
+
+		   $ "pw user mod $USER -s /usr/local/bin/bash"
+
+		3) Close any open terminals or shells and log back in again
+
+		   $ ". /etc/profile" will re-source profile for this shell
+
+		4) Reboot or issue "finch refresh" on the command line.
+
+		We hope that you will enjoy using Finch FreeBSD.
+
+		* Visit the project homepage at http://dreamcat4.github.io/finch
+
+		EOF
+  fi
+}
+
+delete_txt_frag ()
+{
+  local filename="$1"
+
+  if [ -e "$filename" ]; then
+    local first_line="$2"
+    local last_line="$3"
+
+    # Escape forward slashes in the pathnames for sed
+    first_line=`echo "$first_line" | sed -e "s|/|\\\\\\\/|g"`
+    last_line=`echo "$last_line" | sed -e "s|/|\\\\\\\/|g"`
+
+    # Delete txt frag $first_line --> $last_line
+    mv "$filename" "${filename}.old"
+    sed -e "/^$first_line/,/^$last_line/d" "${filename}.old" > "$filename"
+    rm "${filename}.old"
+
+    # Delete trailing whitespace lines from the file
+    mv "$filename" "${filename}.old"
+    # same as: sed '/./,/^$/!d' "${filename}.old" > "$filename"
+    cat -s "${filename}.old" > "$filename"
+  fi
+}
+
+uninstall ()
+{
+  echo "Welcome to the Finch FreeBSD Bootstrap (Un)Installer!"
+  echo ""
+
+  # Check that a FreeBSD installation exists at the specified path
+  if [ ! -e "$finch_realpath" ]; then
+    err;
+    echo "\"$finch_realpath\" does not exist. Nothing to be done."
+    echo "We require a real folder to uninstall."
+    echo ""
+    flag_error;
+
+  elif [ ! -d "$finch_realpath" ]; then
+    err;
+    echo "\"$finch_realpath\" is not a directory. We cannot continue."
+    echo "We require a real folder to uninstall."
+    echo ""
+    flag_error;
+  fi
+
+  [ "$num_error" -eq "0" ] || exit 1
+  
+  check_root;
+
+  [ "$num_error" -eq "0" ] || exit 1
+
+  hr;
+  echo "Ready to DELETE Finch FreeBSD ??"
+  echo ""
+  echo "You are about to start deleting \"$finch_realpath\""
+  echo "It's STRONGLY RECOMMENDED to first backup or migrate any guest jails and VMs."
+  echo ""
+  hr;
+  echo "OK to proceed ?"
+  echo "ALL DATA WILL BE LOST. THIS IS NOT RECOVERABLE."
+  echo ""
+
+  prompt_and_continue;
+  
+  if [ -x "$finch_realpath/etc/finch/shutdown" ]; then
+    echo "Attempting to shutdown any running services and unmount \"$finch_realpath\""
+    "$finch_realpath/etc/finch/shutdown" > "/dev/null" 2>&1
+  else
+    echo "Couldn't execute \"$finch_realpath/etc/finch/shutdown\""
+  fi
+  echo "Continuing."
+  echo ""
+
+  echo "Scrubbing \"/etc/profile\" since we are deleting the Finch system location."
+  first_line="\# finch \! DO NOT EDIT THESE LINES \! \*BEGIN\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+  last_line="\# finch \! DO NOT EDIT THESE LINES \! \*\*END\*\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+  delete_txt_frag "/etc/profile" "$first_line" "$last_line"
+
+  echo "Scrubbing \"/etc/rc.conf\" since we are deleting the Finch system location."
+  first_line="\# finch \! DO NOT EDIT THESE LINES \! \*BEGIN\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+  last_line="\# finch \! DO NOT EDIT THESE LINES \! \*\*END\*\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+  delete_txt_frag "/etc/rc.conf" "$first_line" "$last_line"
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    if [ -e "/etc/rc.custom_shutdown" ]; then
+      echo "Scrubbing \"/etc/rc.custom_shutdown\" since we are moving the Finch system location."
+      first_line="\# finch \! DO NOT EDIT THESE LINES \! \*BEGIN\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+      last_line="\# finch \! DO NOT EDIT THESE LINES \! \*\*END\*\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+      delete_txt_frag "/etc/rc.custom_shutdown" "$first_line" "$last_line"
+    fi
+  fi
+
+  echo "Continuing."
+  echo ""
+
+  # Remove symlink to rc.d script
+  realpath_namified="$(echo "$finch_realpath" | sed -e "s|^\/|finch-|" -e "s|\/|.|g")"
+  rm -f "/etc/rc.d/${realpath_namified}"
+
+  echo "Deleting \"$finch_realpath\"..."
+  chflags -R noschg "$finch_realpath"
+  rm -Rf "$finch_realpath"
+  
+  if [ -h "/usr/sbin/finch" ]; then
+    if [ "$(readlink /usr/sbin/finch)" = "$finch_realpath/usr/sbin/finch" ]; then
+      rm "/usr/sbin/finch"
+    fi
+  fi
+
+  echo "Done."
+  echo ""
+}
+
+# move or rename an finch installation
+move ()
+{
+  if [ ! -d "$finch_realpath" ]; then
+    err;
+    echo "We can't find the root folder of your existing finch installation."
+    echo "Did you specify it correctly? We looked for: \"$finch_realpath\"".
+    echo "You can specify the argument \"--dir {realpath}\" on the command line."
+    flag_error;
+  fi
+
+  [ "$num_error" -eq "0" ] || exit 1
+
+  if [ ! "$finch_dest_dir" ]; then
+    err;
+    echo "The variable \$finch_dest_dir must be set to the destination to move to."
+    echo ""
+    flag_error;
+
+  elif [ "$finch_realpath" = "$finch_dest_dir" ]; then
+    err;
+    echo "The destination path \$finch_dest_dir is the same as the current location."
+    echo ""
+    flag_error;
+  fi
+
+  [ "$num_error" -eq "0" ] || exit 1
+
+  if [ "$finch_dest_dir" ]; then
+    if [ ! `echo "$finch_dest_dir" | grep "^/"` ]; then
+      err;
+      echo "The variable \$finch_dest_dir must be a fully specified path (start with a \"/\")"
+      echo ""
+      flag_error;
+    fi
+
+    [ "$num_error" -eq "0" ] || exit 1
+
+    if [ -e "$finch_dest_dir" ] && [ ! -d "$finch_dest_dir" ]; then
+      err;
+      echo "A file already exists at the NEW finch path \"$finch_dest_dir\"."
+      echo "Move aborted. We cannot continue."
+      echo ""
+      flag_error;
+
+    elif [ -d "$finch_dest_dir" ] && [ "$(ls "$finch_dest_dir")" ]; then
+      err;
+      echo "We can't continue. There are already files in the destination to move to."
+      echo "Move aborted."
+      echo ""
+      flag_error;
+    fi
+
+    [ "$num_error" -eq "0" ] || exit 1
+  fi
+
+  check_root;
+
+  [ "$num_error" -eq "0" ] || exit 1
+
+  hr;
+  echo "Ready to MOVE Finch FreeBSD ??"
+  hr;
+  echo "You are about to start moving: \"$finch_realpath\""
+  echo "                           to: \"$finch_dest_dir\""
+  echo ""
+  echo "NOTICE:"
+  echo "During this process invoke the standard unix \"mv\" command for moving files."
+  echo "This operation is intended for moving files within the same filesytem."
+  echo ""
+  echo "*** BEWARE IF MOVING ONTO A DIFFERENT DISK OR FILESYSTEM! ***"
+  echo ""
+  echo "Transferring across disks can sometimes result in critical error or loss."
+  echo "We haven't checked the target filesystem for suitability, free space, etc."
+  echo "If the \`mv\` command fails, is interrupted, or the system crashes for any"
+  echo "reason then your finch installation may become trashed / unrecoverable!"
+  echo ""
+  echo "OK to proceed ?"
+  echo ""
+
+  prompt_and_continue;
+
+  unset finch_was_running
+  if [ -e "$finch_realpath/etc/finch" ] && [ -c "$finch_realpath/dev/null" ]; then
+    finch_was_running="1"
+    "$finch_realpath/etc/finch/shutdown"
+  fi
+
+  echo "Scrubbing \"/etc/profile\" since we are moving the Finch system location."
+  first_line="\# finch \! DO NOT EDIT THESE LINES \! \*BEGIN\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+  last_line="\# finch \! DO NOT EDIT THESE LINES \! \*\*END\*\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+  delete_txt_frag "/etc/profile" "$first_line" "$last_line"
+
+  if [ "`uname -iv | grep -i pfsense`" ]; then
+    if [ -e "/etc/rc.custom_shutdown" ]; then
+      echo "Scrubbing \"/etc/rc.custom_shutdown\" since we are moving the Finch system location."
+      first_line="\# finch \! DO NOT EDIT THESE LINES \! \*BEGIN\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+      last_line="\# finch \! DO NOT EDIT THESE LINES \! \*\*END\*\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+      delete_txt_frag "/etc/rc.custom_shutdown" "$first_line" "$last_line"
+    fi
+  fi
+
+  if [ ! "`uname -iv | grep -i freenas`" ] && [ ! "`uname -iv | grep -i nas4free`" ] && [ ! "`uname -iv | grep -i pfsense`" ]; then
+    echo "Updating /etc/rc.conf with the new Finch system location and mount point."
+    first_line="\# finch \! DO NOT EDIT THESE LINES \! \*BEGIN\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+    last_line="\# finch \! DO NOT EDIT THESE LINES \! \*\*END\*\* - Added by Finch FreeBSD @ \"$finch_realpath\""
+    delete_txt_frag "/etc/rc.conf" "$first_line" "$last_line"
+
+    echo "Symlinking new rc.d script."
+    old_realpath_namified="$(echo "$finch_realpath" | sed -e "s|^\/|finch-|" -e "s|\/|.|g")"
+    rm "/etc/rc.d/${old_realpath_namified}"
+
+    realpath_namified="$(echo "$finch_dest_dir" | sed -e "s|^\/|finch-|" -e "s|\/|.|g")"
+    realpath_namified_rcvar="$(echo "$finch_dest_dir" | sed -e "s|^\/|finch_|" -e "s|\/|_|g")"
+    ln -sf "$finch_dest_dir/etc/rc.d/finch" "/etc/rc.d/${realpath_namified}"
+  fi
+
+  echo "Continuing."
+  echo ""
+
+  # Appending of a new profile fragment will occur on the next system start
+  # So we do not worry about it here.
+
+  # Delete the realpath/realpath symlink (if present)
+  echo "Moving this finch installation to \"$finch_dest_dir\"..."
+  if [ -h "$finch_realpath/$finch_realpath" ]; then
+    rm "$finch_realpath/$finch_realpath"
+
+    # Remove any empty directories
+    parent_dir="$(dirname "$finch_realpath/$finch_realpath")"
+    while [ ! "$(ls $parent_dir)" ];
+    do
+      rmdir "$parent_dir"
+      parent_dir="$(dirname $parent_dir)"
+    done
+  fi
+
+  # Make sure the destination path is free and clear
+  mkdir -p "$(dirname "$finch_dest_dir")"
+  if [ -d "$finch_dest_dir" ]; then
+    rm -rf "$finch_dest_dir"
+  fi
+
+  # Move the whole installation to the destination dir
+  mv "$finch_realpath" "$finch_dest_dir"
+
+  # Remove any empty directories
+  parent_dir="$(dirname "$finch_realpath")"
+  while [ ! "$(ls $parent_dir)" ];
+  do
+    rmdir "$parent_dir"
+    parent_dir="$(dirname $parent_dir)"
+  done
+
+  # Update the symlink to the finch binary on host system
+  ln -sf "$finch_dest_dir/usr/sbin/finch" "/usr/sbin/"
+
+  echo "Done."
+  echo ""
+
+  hr;
+
+  if [ "`uname -iv | grep -i freenas`" ]; then
+    echo "A MINOR CHANGE TO YOUR FREENAS CONFIGURATION IS REQUIRED."
+    echo ""
+    echo "Expand \"+ System\" --> \"+ Init/Shutdown Scripts\" in the"
+    echo "FreeNAS WebGUI. Find the existing PostInit and Shutdown entries:"
+    echo ""
+    echo "$finch_realpath/etc/finch/postinit"
+    echo "$finch_realpath/etc/finch/shutdown"
+    echo ""
+    echo "Edit those entries to point to your new location:"
+    echo ""
+    echo "$finch_dest_dir/etc/finch/postinit"
+    echo "$finch_dest_dir/etc/finch/shutdown"
+    echo ""
+
+  elif [ "`uname -iv | grep -i nas4free`" ]; then
+    echo "A MINOR CHANGE TO YOUR NAS4FREE CONFIGURATION IS REQUIRED."
+    echo ""
+    echo "Please navigate to \"System|Advanced|Command Scripts\" in the"
+    echo "NAS4Free WebGUI. Find the existing PostInit and Shutdown entries:"
+    echo ""
+    echo "$finch_realpath/etc/finch/postinit"
+    echo "$finch_realpath/etc/finch/shutdown"
+    echo ""
+    echo "Edit those entries to point to your new location:"
+    echo ""
+    echo "$finch_dest_dir/etc/finch/postinit"
+    echo "$finch_dest_dir/etc/finch/shutdown"
+    echo ""
+  fi
+
+  if [ "$finch_was_running" ]; then
+    if [ "$finch_dest_dir" ]; then
+      "$finch_dest_dir/etc/finch/postinit"
+    else
+      "$finch_realpath/etc/finch/postinit"
+    fi
+  fi
+
+  echo ""
+  echo "* Update complete."
+  echo "Now logout / log back in, or type \". /etc/profile\"."
+}
+
+update ()
+{
+  finch_installedfile="$finch_realpath/var/db/finch/installed"
+
+  if [ ! -d "$finch_realpath" ]; then
+    err;
+    echo "We can't find the root folder of your existing finch installation."
+    echo "Did you specify it correctly? We looked for: \"$finch_realpath\"".
+    echo "You can specify the argument \"--dir {realpath}\" on the command line."
+    echo ""
+    flag_error;
+  fi
+
+  if [ ! -e "$finch_installedfile" ]; then
+    err;
+    echo "We can't find the finch installation file \"etc/finch/installed\"."
+    echo "Searched for: \"$finch_installedfile\""
+    echo ""
+    flag_error;
+  fi
+
+  [ "$num_error" -eq "0" ] || exit 1
+
+  shafile="$finch_realpath/var/db/finch/sha"
+  shafile_path_chroot="$finch_realpath/var/db/finch/sha.path.chroot"
+  jq="$finch_realpath/usr/local/bin/jq"
+
+  if [ -e "$finch_realpath/var/db/finch/last_update" ]; then
+    last_update="$(cat "$finch_realpath/var/db/finch/last_update")"
+  else
+    last_update="0"
+  fi
+
+  if [ -x "$jq" ]; then
+    latest_sha_json="/tmp/finch_latest_sha.json"
+    gh_fetch "$latest_sha_json" "repos/dreamcat4/finch/commits?per_page=1"
+    latest_sha="$("$jq" --raw-output ".[].sha" "$latest_sha_json")"
+
+    latest_sha_path_chroot_json="/tmp/finch_latest_sha_path_chroot.json"
+    gh_fetch "$latest_sha_path_chroot_json" "repos/dreamcat4/finch/commits?per_page=1&path=chroot"
+
+    latest_sha_path_chroot="$("$jq" --raw-output ".[].sha" "$latest_sha_path_chroot_json")"
+    latest_update_gh="$("$jq" --raw-output ".[].commit.committer.date" "$latest_sha_path_chroot_json")"
+    latest_update="$(date -jf "%Y-%m-%dT%H:%M:%SZ" "$latest_update_gh" "+%s")"
+    latest_update="$(expr $latest_update + 1)"
+
+    if [ -e "$shafile_path_chroot" ]; then
+      if [ "$latest_sha_path_chroot" = "$(cat "$shafile_path_chroot")" ]; then
+        echo "finch: Already up-to-date (\"--force\" to overide)."
+        if [ ! "$force" ]; then
+          exit 0
+        fi
+      else
+        print_commit_log="1"
+      fi
+    fi
+
+  else
+    # pre-fetch the tarball
+    SSL_NO_VERIFY_PEER=YES fetch -q -o "/tmp/$tarball_file" "$tarball_url" 2> /dev/null
+    latest_update="$(stat -f %m "/tmp/$tarball_file")"
+
+    if [ "$last_update" -eq "$latest_update" ]; then
+      echo "finch: Already up-to-date (\"--force\" to overide)."
+      if [ ! "$force" ]; then
+        rm "/tmp/$tarball_file" && exit 0
+      fi
+    fi
+  fi
+  echo "finch: Last authored on: $(date -jr "$latest_update")"
+
+  # print the changelog since last time
+  if [ "$print_commit_log" ]; then
+
+    commit_log_json="/tmp/finch_commit_log.json"
+    last_time_gh="$(date -jr "$last_update" "+%Y-%m-%dT%H:%M:%SZ")"
+    gh_fetch "$commit_log_json" "repos/dreamcat4/finch/commits?since=$last_time_gh&path=chroot"
+
+    "$jq" --raw-output "reverse" "$commit_log_json" > "${commit_log_json}.new"
+    mv "${commit_log_json}.new" "$commit_log_json"
+
+    echo ""
+    printf '\033[1;37;44m CHANGELOG \033[0m\033[1;37m*******************************************************************\033[0m\n'
+
+    i="0"
+    last_msg_lc="0"
+    while [ "true" ]; do
+
+      date_gh="$("$jq" --raw-output ".[$i].commit.committer.date" "$commit_log_json")"
+      if [ "$date_gh" = "null" ]; then
+        break
+      fi
+
+      date="$(date -jf "%Y-%m-%dT%H:%M:%SZ" "$date_gh" "+%a-%d-%b")"
+      # sha="$("$jq" --raw-output ".[$i].sha" "$commit_log_json" | cut -c1-10)"
+      msg="* $("$jq" --raw-output ".[$i].commit.message" "$commit_log_json")"
+
+      if [ ! "$date" = "$date_prev" ]; then
+        echo ""
+        printf "\033[1;34m$date\033[0m\n"
+        last_msg_lc="0"
+      fi
+      if [ "$last_msg_lc" -gt "1" ]; then
+        echo ""
+      fi
+
+      last_msg_lc="$(echo "$msg" | wc -l)"
+      echo "$msg" | wrap "76" "2"
+
+      date_prev="$date"
+      i="$(expr $i + 1)"
+    done
+    echo ""
+  fi
+  rm -f "$latest_sha_json"
+  rm -f "$latest_sha_path_chroot_json"
+  rm -f "$commit_log_json"
+
+  hr;
+  check_root;
+
+  [ "$num_error" -eq "0" ] || exit 1
+
+  hr;
+  echo "Ready to UPDATE Finch scripts to $(echo "$latest_sha" | cut -c1-10), the latest version?"
+  hr;
+  echo ""
+  echo "OK to proceed ?"
+  echo ""
+
+  prompt_and_continue;
+
+  if [ -x "$jq" ]; then
+    # Download the finch tarball
+    SSL_NO_VERIFY_PEER=YES fetch -q -o "/tmp/$tarball_file" "$tarball_url" 2> /dev/null
+  fi
+
+  unset finch_was_running
+  if [ -e "$finch_realpath/etc/finch" ] && [ -c "$finch_realpath/dev/null" ]; then
+    finch_was_running="1"
+    "$finch_realpath/etc/finch/shutdown"
+  fi
+  
+  # Unpack, and overwrite the finch scripts
+
+  # Remove all previous subroutines as these are auto-loaded
+  rm -rf "$finch_realpath/etc/finch/subr"
+
+  echo "Updating finch scripts."
+  tar --strip-components 2 --include "*/chroot/*" -zxf "/tmp/$tarball_file" -C "$finch_realpath" --no-same-owner
+
+  # update the timestamp & last commit sha
+  echo "$latest_update" > "$finch_realpath/var/db/finch/last_update"
+  if [ "$latest_sha" ]; then
+    echo "$latest_sha" > "$shafile"
+  fi
+
+  if [ "$latest_sha_path_chroot" ]; then
+    echo "$latest_sha_path_chroot" > "$shafile_path_chroot"
+  fi
+
+  echo "finch updated on: $(date)" >> "$finch_realpath/var/log/finch/install.log"
+  "$finch_realpath/usr/sbin/finch" "--version" >> "$finch_realpath/var/log/finch/install.log"
+  echo "freebsd: $(cat "$finch_realpath/var/db/finch/installed")" >> "$finch_realpath/var/log/finch/install.log"
+
+  rm "/tmp/$tarball_file"
+  # echo ""
+
+  # run finch's post_update_hook
+  "$finch_realpath/usr/sbin/finch" "__post_update_hook"
+
+  if [ "$finch_was_running" ]; then
+    "$finch_realpath/etc/finch/postinit"
+  fi
+
+  echo ""
+  echo "Update complete."
+  echo "* Now logout / log back in, or type \". /etc/profile\"."
+}
+
+
+##################################################################################################
+main ()
+{
+  parse_args $@;
+  
+  case "$__command" in
+    install)   install   ;;
+    update)    update    ;;
+    move)      move      ;;
+    uninstall) uninstall ;;
+    *)         usage     ;;
+  esac
+}
+
+# Begin -  Run main() - our entry point.
+main "$@";
+# End
+##################################################################################################
+

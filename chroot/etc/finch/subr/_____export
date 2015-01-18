@@ -1,0 +1,56 @@
+#!/bin/sh
+# 
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+# The export cmd = name of the symlink
+cmd=`basename $0`
+
+__this_file="`realpath -q "$0"`"
+__this_file="`readlink -f "$__this_file"`"
+
+__this_dir=`dirname "$__this_file"`
+finch_loadpath=`realpath "$__this_dir/.."`
+
+if [ ! "$finch_loadpath" ]; then
+  echo "error (1): Couldn't resolve the finch loadpath. We tried: $ realpath \"$__this_dir/../../etc/finch\" but got nothing."
+  exit 1
+fi
+
+if [ `id -u` = 0 ] || [ "`id -G -n | grep wheel`" ]; then
+  _____finch_subr_category="profile"
+  . "$finch_loadpath/subr/_____load"
+
+else
+  echo "error (1): finch only works for \"root\" or \"wheel\" users."
+  exit 1
+fi
+
+__run_export ()
+{
+  if __in_finch_chroot "warn"; then
+    command "$@"
+    return "$?"
+  fi
+
+  if [ -e "$finch_realpath/etc/finch" ] && [ -c "$finch_realpath/dev/null" ]; then
+      echo "finch: chrooting to \"$finch_realpath\" for this 1 command only."
+
+      _u=`id -n -u`
+      _g=`id -n -g`
+      _gs=`id -n -G | sed -e "s/ /,/g"`
+
+      __finch_set_prompt;
+      command sudo -E USER="$_u" USERNAME="$_u" LOGNAME="$_u" chroot -u "$_u" -g "$_g" -G "$_gs" "$finch_realpath" "$cmd" "$@"
+      return "$?"
+
+  else
+    echo "error (1): finch isn't running."
+    return 1
+  fi
+}
+
+# Pass the command through our wrapper function
+__run_export "$@"
+exit "$?"
+

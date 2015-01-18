@@ -1,0 +1,77 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+__in_finch_chroot ()
+{
+  if [ -e "/etc/finch/postinit" ]; then
+    if [ "$1" = "error" ]; then
+      echo "error (1): in finch chroot."
+
+    elif [ "$1" = "warn" ]; then
+      echo "warn (1): already in finch chroot."
+    fi
+    return 0
+  fi
+  return 1
+}
+
+load_subroutines ()
+{
+  # Lookup the subroutine category tag.
+  case "$_____finch_subr_category" in
+     install) tag="i???" ;;
+        boot) tag="?b??" ;;
+     profile) tag="??p?" ;;
+    shutdown) tag="???s" ;;
+    *) echo "error: Subroutine Category Tag not coded."; return 1;;
+  esac
+
+  # Load only those subroutines which are needed for the current script
+  for subr in "$finch_loadpath/subr/"${tag}_*
+  do
+    . "$subr" # Load each matching subroutine
+  done
+}
+
+# Begin "." "_____load"
+if [ ! "$_____finch_subr_category" ]; then
+  echo "error (1): etc/finch/subr/_____load called without a category argument.";
+  echo "error (1): valid category argument would be 1 subroutines set to load."
+  echo "error (1): For example: paths, install, boot, profile or shutdown."
+  # exit 1;
+fi
+
+
+if [ ! "$finch_loadpath" ]; then
+  if [ ! "${0#-}" = "${0}" ]; then
+    echo "error (1): \"\$finch_loadpath\" was not set and \$0=\"$0\"."
+    echo "error (1): \"\$finch_loadpath\" should be set as: \"/path/to/finch\"."
+    echo "Please check that it is configured correctly before sourcing."
+  
+  else
+    if [ ! "${0#/}" = "${0}" ]; then
+      finch_loadpath=`dirname $0`
+
+    else
+      finch_loadpath="$(dirname "$(readlink -f "$0")")";
+    fi
+  fi
+fi
+
+if __in_finch_chroot; then
+  finch_realpath=""
+else
+  finch_realpath="$(realpath "$finch_loadpath/../../")"
+fi
+
+finch_logpath="$finch_realpath/var/log/finch"
+
+
+if [ ! "$_____finch_subr_category" = "paths" ]; then
+  load_subroutines;
+fi
+# End "." "_____load"
+
+
+
+

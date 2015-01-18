@@ -1,0 +1,43 @@
+# Finch - FreeBSD in a chroot! - dreamcat4@gmail.com (C 2014). FreeBSD License.
+# 
+
+create_export ()
+{
+  ln -sf "../subr/_____export" "${finch_realpath}/etc/finch/exports/$1"
+}
+
+remove_export ()
+{
+  rm -f "${finch_realpath}/etc/finch/exports/$1"
+}
+
+enable_exports ()
+{
+  for file in "${finch_realpath}/etc/finch/exports/"*
+  do
+    ln -sf "../subr/_____export" "$file"
+  done
+}
+
+# unused
+disable_exports ()
+{
+  for file in "${finch_realpath}/etc/finch/exports/"*
+  do
+    rm "$file"
+    touch "$file"
+  done
+}
+
+__finch_exports_path="${finch_realpath}/etc/finch/exports"
+if [ ! "$(echo "$PATH" | grep -o "$__finch_exports_path")" ]; then
+  # Add finch/exports to $PATH
+  export PATH="$PATH:${__finch_exports_path}"
+fi
+
+# List exports
+finch_exports="`ls -m "${finch_realpath}/etc/finch/exports/"`"
+
+
+
+

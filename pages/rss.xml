@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2014-12-31</pubDate>
+    <pubDate>2015-01-18</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -546,7 +546,7 @@ fi
         No
       &lt;/td&gt;
       &lt;td&gt;
-        No
+        Yes
       &lt;/td&gt;
       &lt;td&gt;
         Yes

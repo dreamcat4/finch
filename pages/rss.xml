@@ -4,7 +4,7 @@
     <title>Finch</title>
     <description>FreeBSD... in a chroot!</description>
     <link/>
-    <pubDate>2015-01-18</pubDate>
+    <pubDate>2015-02-06</pubDate>
     <item>
       <title>FAQ</title>
       <link>/finch/faq</link>
@@ -2928,7 +2928,7 @@ qjail config -n &amp;quot;$new_jailname&amp;quot; &amp;quot;$old_jailname&amp;qu
 qjail config -m &amp;quot;$jailname&amp;quot;
 
 # Enable auto-starting of the jail during system boot
-qjail config -K &amp;quot;$jailname&amp;quot;
+qjail config -M &amp;quot;$jailname&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;h3 id="toc_4"&gt;Enable unix sockets&lt;/h3&gt;

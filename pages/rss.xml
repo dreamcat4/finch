@@ -2944,7 +2944,7 @@ qjail config -K &amp;quot;$jailname&amp;quot;
 
 &lt;pre&gt;&lt;code&gt;# Enable custom devfs_ruleset
 devfs_ruleset=&amp;quot;20&amp;quot;
-qjail config -B &amp;quot;$devfs_ruleset&amp;quot; &amp;quot;$jailname&amp;quot;
+qjail config -b &amp;quot;$devfs_ruleset&amp;quot; &amp;quot;$jailname&amp;quot;
 
 # Disable custom devfs_ruleset
 qjail config -B &amp;quot;$jailname&amp;quot;

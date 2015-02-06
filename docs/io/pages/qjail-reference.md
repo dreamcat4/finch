@@ -42,7 +42,7 @@
     qjail config -m "$jailname"
 
     # Enable auto-starting of the jail during system boot
-    qjail config -K "$jailname"
+    qjail config -M "$jailname"
 
 ### Enable unix sockets
 
@@ -56,7 +56,7 @@
 
     # Enable custom devfs_ruleset
     devfs_ruleset="20"
-    qjail config -B "$devfs_ruleset" "$jailname"
+    qjail config -b "$devfs_ruleset" "$jailname"
 
     # Disable custom devfs_ruleset
     qjail config -B "$jailname"

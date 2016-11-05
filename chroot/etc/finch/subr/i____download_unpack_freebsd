@@ -4,7 +4,7 @@
 # # How to manually download distfiles when RELEASE isn't out yet (e.g. "FreeBSD-10-RC5")
 # sh
 # mkdir "freebsd-distfiles-10-RC5" && cd "freebsd-distfiles-10-RC5"
-# for distfile in "base.txz" "doc.txz" "games.txz" "kernel.txz" "lib32.txz" "src.txz"
+# for distfile in "base.txz" "doc.txz" "kernel.txz" "lib32.txz" "src.txz"
 # do
 #   fetch "ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/10.0-RC5/$distfile"
 # done
@@ -89,7 +89,7 @@ unpack_distfiles ()
 download_unpack_freebsd ()
 {
   # # Download the FreeBSD base image and distribution files.
-  distfiles="base.txz doc.txz games.txz kernel.txz src.txz"
+  distfiles="base.txz doc.txz kernel.txz src.txz"
 
   if [ "$(uname -m)" = "amd64" ]; then
     distfiles="$distfiles lib32.txz"

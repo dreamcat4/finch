@@ -98,7 +98,7 @@ install_system ()
   echo ""
   set -x
   start_time_secs=`date -j -f "%a %b %d %T %Z %Y" "$(date)" "+%s"`
-  echo "start_time_secs" > "$finch_realpath/var/db/finch/installing..."
+  echo "$start_time_secs" > "$finch_realpath/var/db/finch/installing..."
 
   if [ -e "/etc/prd.revision" ]; then
     echo "Nas4Free Revision: $(cat "/etc/prd.revision")"

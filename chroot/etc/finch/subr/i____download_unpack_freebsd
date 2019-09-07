@@ -89,7 +89,7 @@ unpack_distfiles ()
 download_unpack_freebsd ()
 {
   # # Download the FreeBSD base image and distribution files.
-  distfiles="base.txz doc.txz kernel.txz src.txz"
+  distfiles="base.txz kernel.txz src.txz"
 
   if [ "$(uname -m)" = "amd64" ]; then
     distfiles="$distfiles lib32.txz"
